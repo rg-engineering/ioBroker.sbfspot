@@ -1,0 +1,1 @@
+# ioBroker.myhomecontrol_sbfspot
