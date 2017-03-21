@@ -1,0 +1,36 @@
+{
+  "common": {
+    "name": "myhomecontrol_sbfspot",
+    "version": "0.0.1",
+    "news": {
+      "0.0.1": {
+        "en": "initial release",
+        "de": "erste Version"
+      }
+    },
+    "title": "myHomeControl sbfspot",
+    "desc": {
+      "en": "myHomeControl sbfspot Adapter. ",
+      "de": "myHomeControl sbfspot Adapter."
+    },
+    "platform": "Javascript/Node.js",
+    "mode": "daemon",
+    "icon": "myhomecontrol.png",
+    "enabled": true,
+    "messagebox": true,
+    "extIcon": "https://github.com/rg-engineering/ioBroker.myhomecontrol_sbfspot/blob/master/admin/homecontrol.PNG",
+    "keywords": [ "myhomecontrol" ],
+    "readme": "https://github.com/rg-engineering/ioBroker.myhomecontrol_sbfspot/blob/master/README.md",
+    "loglevel": "debug",
+    "stopBeforeUpdate": true,
+    "type": "hardware",
+    "license": "GPL-3.0"
+  },
+  "native": {
+    "sbfspotIP": "localhost",
+    "sbfspotUser": "sbfspotuser",
+    "sbfspotPassword": "",
+    "sbfspotDatabasename": "sbfspot"
+  }
+}
+  
