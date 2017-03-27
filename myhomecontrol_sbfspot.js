@@ -32,7 +32,7 @@ var utils =    require(__dirname + '/lib/utils'); // Get common adapter utils
 // adapter will be restarted automatically every time as the configuration changed, e.g system.adapter.template.0
 var adapter = utils.adapter('myhomecontrol_sbfspot');
 
-
+var connection;
 
 //Some message was sent to adapter instance over message box. Used by email, pushover, text2speech, ...
 adapter.on('message', function (obj) {
@@ -120,7 +120,7 @@ function main() {
 function DB_Connect(cb) {
     var express = require("express");
     var mysql = require('mysql');
-    var connection = mysql.createConnection({
+    connection = mysql.createConnection({
         host: adapter.config.sbfspotIP || 'localhost',
         user: adapter.config.sbfspotUser || 'SBFspotUser',
         password: adapter.config.sbfspotPassword || 'logger',
@@ -141,14 +141,21 @@ function DB_Connect(cb) {
 }
 
 function GetInverters() {
-    connection.query('SELECT * from Inverters', function (err, rows, fields) {
+    var query = 'SELECT * from Inverters';
+    adapter.log.debug(query);
+    connection.query(query, function (err, rows, fields) {
         if (!err) {
             adapter.log.debug('rows ' + JSON.stringify(rows));
 
+            adapter.log.info("got data from " + rows[0].Type + " " + rows[0].Serial);
 
-            AddInverterVariables(rows[0].Type.val);
+            AddInverterVariables(rows[0].Serial);
 
-            GetInvertersData(rows[0].Serial.val);
+            adapter.setState( rows[0].Serial + ".Type", { ack: true, val: rows[0].Type});
+            adapter.setState( rows[0].Serial + ".EToday", { ack: true, val: rows[0].EToday });
+            adapter.setState( rows[0].Serial + ".ETotal", { ack: true, val: rows[0].ETotal });
+
+            GetInvertersData(rows[0].Serial);
         }
         else {
             adapter.log.error('Error while performing Query.');
@@ -157,8 +164,8 @@ function GetInverters() {
 }
 
 function GetInvertersData(serial) {
-
-    var query = 'SELECT * from SpotData where Serial =' + serial;
+    var query = 'SELECT * from SpotData  where Serial =' + serial + ' ORDER BY TimeStamp DESC LIMIT 1';
+    adapter.log.debug(query);
     connection.query(query, function (err, rows, fields) {
         if (!err) {
             adapter.log.debug('rows ' + JSON.stringify(rows));
@@ -179,43 +186,66 @@ function Disconnect() {
 }
 
 
-function AddInverterVariables(type) {
-
-    adapter.setObjectNotExists('SMA_inverter.'+type, {
-        type: 'channel',
-        role: 'inverter',
-        common: { name: 'SMA inverter '+type },
-        native: { location: adapter.config.location }
-    });
-
-    adapter.setObjectNotExists('SMA_inverter.' + type+'.SerialNo', {
-        type: 'state',
-        role: 'serial',
-        common: { name: 'SMA inverter Serialnumber' },
-        native: { location: 'SMA_inverter.' + type + '.SerialNo'}
-    });
-
-    adapter.setObjectNotExists('SMA_inverter.' + type + '.ETotal', {
-        type: 'state',
-        role: 'ertrag',
-        common: { name: 'SMA inverter Ertrag Total' },
-        native: { location: 'SMA_inverter.' + type + '.ETotal' }
-    });
-
-    adapter.setObjectNotExists('SMA_inverter.' + type + '.EToday', {
-        type: 'state',
-        role: 'ertrag',
-        common: { name: 'SMA inverter Ertrag Today' },
-        native: { location: 'SMA_inverter.' + type + '.EToday' }
-    });
-
-}
-
-function CheckInverterVariables() {
+function AddInverterVariables(serial) {
+    /*
     adapter.setObjectNotExists('SMA_inverter', {
         type: 'channel',
         role: 'inverter',
         common: { name: 'SMA inverter' },
         native: { location: adapter.config.location }
     });
+    */
+    adapter.setObjectNotExists(serial, {
+        type: 'channel',
+        role: 'inverter',
+        common: { name: serial },
+        native: { location: adapter.config.location }
+    });
+
+    adapter.setObjectNotExists( serial+'.Type', {
+        type: 'state',
+        common: { name: 'SMA inverter Serialnumber', type: 'string', role: 'serial', unit: '', read: true, write: false },
+        native: { location:  serial + '.SerialNo'}
+    });
+
+    adapter.setObjectNotExists( serial + '.ETotal', {
+        type: 'state',
+        common: { name: 'SMA inverter Ertrag Total', type: 'number', role: 'ertrag', unit: 'kW', read: true, write: false },
+        native: { location:  serial + '.ETotal' }
+    });
+
+    adapter.setObjectNotExists( serial + '.EToday', {
+        type: 'state',
+        common: { name: 'SMA inverter Ertrag Today', type: 'number', role: 'ertrag', unit: 'kW', read: true, write: false },
+        native: { location:  serial + '.EToday' }
+    });
+
 }
+
+function CheckInverterVariables() {
+
+}
+
+
+/*
+var rows =
+    [
+        {
+            'Serial': 2000562095,
+            'Name': 'SN: 2000562095',
+            'Type': 'SB 2500',
+            'SW_Version': '12.09.121.R',
+            'TimeStamp': 1490635803,
+            'TotalPac': 0,
+            'EToday': 14,
+            'ETotal': 18341,
+            'OperatingTime': 34898.7,
+            'FeedInTime': 29490.5,
+            'Status': 'OK',
+            'GridRelay': '?',
+            'Temperature': 0
+        }]
+
+rows[0].Serial
+
+*/
