@@ -34,8 +34,8 @@
         "sbfspot DB IP": { "de": "sbfspot DB IP" },
         "sbfspot DB user": { "de": "sbfspot DB user" },
         "sbfspot DB password": { "de": "sbfspot DB password" },
-        "sbfspot DB databasename": { "de": "sbfspot DB databasename" }
-
+        "sbfspot DB databasename": { "de": "sbfspot DB databasename" },
+        "Attention: adaptor should run on the same machine as mySQL database is running. then localhost can be used for DB IP": { "de": "Achtung. Der Adpater sollte auf der gleichen Maschine laufen, wie die mySQL Datenbank. Dann kann localhost als DB IP verwendet werden" }
     };
 
     
@@ -95,32 +95,36 @@
 
     <p class="translate">on save adapter restarts with new config immediately</p>
 
-    <table>
-        <tr>
-            <td class="translate">sbfspot DB IP</td>
-            <td>
-                <input type="text" id="sbfspotIP" class="value" />
-        	</td>
-        </tr>
-        <tr>
-            <td class="translate">sbfspot DB user</td>
-            <td>
-                <input type="text" id="sbfspotUser" class="value" />
-            </td>
-        </tr>
-        <tr>
-            <td class="translate">sbfspot DB password</td>
-            <td>
-                <input type="text" id="sbfspotPassword" class="value" />
-            </td>
-        </tr>
-        <tr>
-            <td class="translate">sbfspot DB databasename</td>
-            <td>
-                <input type="text" id="sbfspotDatabasename" class="value" />
-            </td>
-        </tr>
-    </table>
+    <p class="translate">
+        "Attention: adaptor should run on the same machine as mySQL database is running. then localhost can be used for DB IP"
+    </p>
+
+        <table>
+            <tr>
+                <td class="translate">sbfspot DB IP</td>
+                <td>
+                    <input type="text" id="sbfspotIP" class="value" />
+                </td>
+            </tr>
+            <tr>
+                <td class="translate">sbfspot DB user</td>
+                <td>
+                    <input type="text" id="sbfspotUser" class="value" />
+                </td>
+            </tr>
+            <tr>
+                <td class="translate">sbfspot DB password</td>
+                <td>
+                    <input type="text" id="sbfspotPassword" class="value" />
+                </td>
+            </tr>
+            <tr>
+                <td class="translate">sbfspot DB databasename</td>
+                <td>
+                    <input type="text" id="sbfspotDatabasename" class="value" />
+                </td>
+            </tr>
+        </table>
 
 </div>
 

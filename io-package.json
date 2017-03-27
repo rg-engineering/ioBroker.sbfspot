@@ -10,11 +10,12 @@
     },
     "title": "myHomeControl sbfspot",
     "desc": {
-      "en": "myHomeControl sbfspot Adapter. ",
-      "de": "myHomeControl sbfspot Adapter."
+      "en": "myHomeControl SMA inverter (sbfspot) Adapter",
+      "de": "myHomeControl SMA inverter (sbfspot) Adapter"
     },
     "platform": "Javascript/Node.js",
-    "mode": "daemon",
+    "mode": "schedule",
+    "schedule": "*/15 * * * *",
     "icon": "myhomecontrol.png",
     "enabled": true,
     "messagebox": true,
@@ -28,9 +29,9 @@
   },
   "native": {
     "sbfspotIP": "localhost",
-    "sbfspotUser": "sbfspotuser",
+    "sbfspotUser": "SBFspotUser",
     "sbfspotPassword": "",
-    "sbfspotDatabasename": "sbfspot"
+    "sbfspotDatabasename": "SBFspot"
   }
 }
   

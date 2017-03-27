@@ -1,7 +1,7 @@
 {
-  "name": "iobroker.myhomecontrol_sbfspot",
+  "name": "myhomecontrol_sbfspot",
   "version": "0.0.1",
-  "description": "ioBroker myHomeControl sbfspot Adapter",
+  "description": "ioBroker myHomeControl SMA inverter (sbfspot) Adapter",
   "author": {
     "name": "René G.",
     "email": "info@rg-engineering.eu"
@@ -17,8 +17,8 @@
   "keywords": [
     "ioBroker",
     "HomeControl",
-    "Smart Home",
-    "home automation"
+    "SMA",
+    "sbfspot"
   ],
   "repository": {
     "type": "git",

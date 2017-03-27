@@ -99,41 +99,123 @@ adapter.on('ready', function () {
 });
 
 function main() {
+    CheckInverterVariables();
 
+    DB_Connect(function () {
+        setTimeout(function () {
+            adapter.stop();
+        }, 6000);
+    });
+
+    // force terminate after 1min
+    // don't know why it does not terminate by itself...
+    setTimeout(function () {
+        adapter.log.warn('force terminate');
+        process.exit(0);
+    }, 60000);
 
 }
 
 
-function DB_Connect() {
+function DB_Connect(cb) {
     var express = require("express");
     var mysql = require('mysql');
     var connection = mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: '',
-        database: 'address_book'
+        host: adapter.config.sbfspotIP || 'localhost',
+        user: adapter.config.sbfspotUser || 'SBFspotUser',
+        password: adapter.config.sbfspotPassword || 'logger',
+        database: adapter.config.sbfspotDatabasename || 'SBFspot'
     });
     var app = express();
 
     connection.connect(function (err) {
         if (!err) {
             adapter.log.debug("Database is connected ... nn");
-
-            connection.query('SELECT * from < table name >', function (err, rows, fields) {
-                if (!err)
-                    adapter.log.debug('The solution is: ', rows);
-                else
-                    adapter.log.error('Error while performing Query.');
-            });
-
-            connection.end()
-
-
+            GetInverters();
         } else {
             adapter.log.error("Error connecting database ... nn");
         }
     });
 
+    if (cb) cb();
+}
+
+function GetInverters() {
+    connection.query('SELECT * from Inverters', function (err, rows, fields) {
+        if (!err) {
+            adapter.log.debug('rows ' + JSON.stringify(rows));
 
 
+            AddInverterVariables(rows[0].Type.val);
+
+            GetInvertersData(rows[0].Serial.val);
+        }
+        else {
+            adapter.log.error('Error while performing Query.');
+        }
+    });
+}
+
+function GetInvertersData(serial) {
+
+    var query = 'SELECT * from SpotData where Serial =' + serial;
+    connection.query(query, function (err, rows, fields) {
+        if (!err) {
+            adapter.log.debug('rows ' + JSON.stringify(rows));
+
+
+            Disconnect();
+        }
+        else {
+            adapter.log.error('Error while performing Query.');
+        }
+    });
+
+    
+}
+
+function Disconnect() {
+    connection.end();
+}
+
+
+function AddInverterVariables(type) {
+
+    adapter.setObjectNotExists('SMA_inverter.'+type, {
+        type: 'channel',
+        role: 'inverter',
+        common: { name: 'SMA inverter '+type },
+        native: { location: adapter.config.location }
+    });
+
+    adapter.setObjectNotExists('SMA_inverter.' + type+'.SerialNo', {
+        type: 'state',
+        role: 'serial',
+        common: { name: 'SMA inverter Serialnumber' },
+        native: { location: 'SMA_inverter.' + type + '.SerialNo'}
+    });
+
+    adapter.setObjectNotExists('SMA_inverter.' + type + '.ETotal', {
+        type: 'state',
+        role: 'ertrag',
+        common: { name: 'SMA inverter Ertrag Total' },
+        native: { location: 'SMA_inverter.' + type + '.ETotal' }
+    });
+
+    adapter.setObjectNotExists('SMA_inverter.' + type + '.EToday', {
+        type: 'state',
+        role: 'ertrag',
+        common: { name: 'SMA inverter Ertrag Today' },
+        native: { location: 'SMA_inverter.' + type + '.EToday' }
+    });
+
+}
+
+function CheckInverterVariables() {
+    adapter.setObjectNotExists('SMA_inverter', {
+        type: 'channel',
+        role: 'inverter',
+        common: { name: 'SMA inverter' },
+        native: { location: adapter.config.location }
+    });
 }
