@@ -1,5 +1,5 @@
 {
-  "name": "myhomecontrol_sbfspot",
+  "name": "iobroker.myhomecontrol_sbfspot",
   "version": "0.0.1",
   "description": "ioBroker myHomeControl SMA inverter (sbfspot) Adapter",
   "author": {
