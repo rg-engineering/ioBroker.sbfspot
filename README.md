@@ -1,4 +1,4 @@
-# ioBroker.myhomecontrol_sbfspot
+﻿# ioBroker.myhomecontrol_sbfspot
 ===========================
 
 This adapter reads data from SMA power inverters using sbfspot.
@@ -13,7 +13,7 @@ https://sbfspot.codeplex.com/
 
 
 #### 0.0.1
-* (Ren�) initial release
+* (René) initial release
 
 ## License
 Copyright (C) <2017>  <info@rg-engineering.eu>
