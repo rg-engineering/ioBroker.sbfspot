@@ -11,6 +11,11 @@ https://sbfspot.codeplex.com/
 
 ## Changelog
 
+#### 0.1.1
+* (René) UTF8 coding
+
+#### 0.1.0
+* (René) first release
 
 #### 0.0.1
 * (René) initial release
