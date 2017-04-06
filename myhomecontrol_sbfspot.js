@@ -408,7 +408,7 @@ var rows =
 rows[0].Serial
 
 */
-
+/*
 var rows = [
     {
         'TimeStamp': 1490714113,
@@ -438,3 +438,4 @@ var rows = [
         'GridRelay': '?',
         'Temperature': 0
     }]
+*/
