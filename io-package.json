@@ -1,4 +1,4 @@
-{
+﻿{
   "common": {
     "name": "myhomecontrol_sbfspot",
     "version": "0.1.1",
@@ -27,7 +27,7 @@
     "icon": "myhomecontrol.png",
     "enabled": true,
     "messagebox": true,
-    "extIcon": "https://github.com/rg-engineering/ioBroker.myhomecontrol_sbfspot/blob/master/admin/homecontrol.PNG",
+    "extIcon": "https://raw.githubusercontent.com/rg-engineering/ioBroker.myhomecontrol_sbfspot/master/admin/myhomecontrol.png",
     "keywords": [ "myhomecontrol" ],
     "readme": "https://github.com/rg-engineering/ioBroker.myhomecontrol_sbfspot/blob/master/README.md",
     "loglevel": "debug",
