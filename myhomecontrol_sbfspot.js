@@ -118,7 +118,7 @@ function main() {
 
 
 function DB_Connect(cb) {
-    var express = require("express");
+    //var express = require("express");
     var mysql = require('mysql');
     connection = mysql.createConnection({
         host: adapter.config.sbfspotIP || 'localhost',
@@ -126,7 +126,7 @@ function DB_Connect(cb) {
         password: adapter.config.sbfspotPassword || 'logger',
         database: adapter.config.sbfspotDatabasename || 'SBFspot'
     });
-    var app = express();
+    //var app = express();
 
     connection.connect(function (err) {
         if (!err) {
@@ -439,3 +439,4 @@ var rows = [
         'Temperature': 0
     }]
 */
+
