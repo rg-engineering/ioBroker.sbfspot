@@ -20,6 +20,12 @@ https://sbfspot.codeplex.com/
 #### 0.0.1
 * (René) initial release
 
+## Changelog
+
+#### UTF-8 coding
+if UTF-8 coding for io-package.json and package.json is used adapter can not be installed. Why?
+
+
 ## License
 Copyright (C) <2017>  <info@rg-engineering.eu>
 
