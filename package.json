@@ -1,7 +1,7 @@
 {
   "name": "iobroker.myhomecontrol_sbfspot",
-  "version": "0.1.1",
-  "description": "ioBroker myHomeControl SMA inverter (sbfspot) Adapter",
+  "version": "0.2.0",
+  "description": "ioBroker myHomeControl SMA inverter (sbfspot, Bluetooth) Adapter",
   "author": {
     "name": "René G.",
     "email": "info@rg-engineering.eu"
@@ -13,7 +13,7 @@
     }
   ],
   "homepage": "https://github.com/rg-engineering/ioBroker.myhomecontrol_sbfspot",
-  "license": "GPL-3.0",
+  "license": "MIT",
   "keywords": [
     "ioBroker",
     "HomeControl",
@@ -25,7 +25,9 @@
     "url": "https://github.com/rg-engineering/ioBroker.myhomecontrol_sbfspot"
   },
   "dependencies": {
-    "mysql": "^2.5.4"
+    "mysql": "^2.5.4",
+    "sqlite": "^2.8.0",
+    "node-bluetooth": "^1.1.0"
   },
   "devDependencies": {
     "grunt": "^0.4.5",

@@ -1,8 +1,16 @@
 {
   "common": {
     "name": "myhomecontrol_sbfspot",
-    "version": "0.1.1",
+    "version": "0.2.0",
     "news": {
+      "0.3.0": {
+        "en": "Bluetooth direct interface to inverter",
+        "de": "direktes Interface via Bluetooth zum Wechselrichter"
+      },
+      "0.2.0": {
+        "en": "sqlite added",
+        "de": "support von sqlite"
+      },
       "0.1.1": {
         "en": "UTF8 coding",
         "de": "UTF8 Kodierung"
@@ -33,13 +41,16 @@
     "loglevel": "debug",
     "stopBeforeUpdate": true,
     "type": "hardware",
-    "license": "GPL-3.0"
+    "license": "MIT"
   },
   "native": {
     "sbfspotIP": "localhost",
     "sbfspotUser": "SBFspotUser",
     "sbfspotPassword": "",
-    "sbfspotDatabasename": "SBFspot"
+    "sbfspotDatabasename": "SBFspot",
+    "useBluetooth": false,
+    "databasetype": "mySQL",
+    "sqlite_path":  ""
   }
 }
 

@@ -6,16 +6,7 @@
 
 Copyright(C)[2016, 2017][René Glaß]
 
-Dieses Programm ist freie Software.Sie können es unter den Bedingungen der GNU General Public License, wie von der Free Software 
-Foundation veröffentlicht, weitergeben und/ oder modifizieren, entweder gemäß Version 3 der Lizenz oder (nach Ihrer Option) jeder 
-späteren Version.
 
-Die Veröffentlichung dieses Programms erfolgt in der Hoffnung, daß es Ihnen von Nutzen sein wird, aber OHNE IRGENDEINE GARANTIE,
-    sogar ohne die implizite Garantie der MARKTREIFE oder der VERWENDBARKEIT FÜR EINEN BESTIMMTEN ZWECK.Details finden Sie in der
-GNU General Public License.
-
-Sie sollten ein Exemplar der GNU General Public License zusammen mit diesem Programm erhalten haben.Falls nicht,
-    siehe < http://www.gnu.org/licenses/>.
 
 */
 
@@ -26,13 +17,13 @@ Sie sollten ein Exemplar der GNU General Public License zusammen mit diesem Prog
 // you have to require the utils module and call adapter function
 var utils =    require(__dirname + '/lib/utils'); // Get common adapter utils
 
+var mysql_db = require(__dirname + '/lib/DB_sbfspot/DB_mysql_sbfspot');
 
 // you have to call the adapter function and pass a options object
 // name has to be set and has to be equal to adapters folder name and main file name excluding extension
 // adapter will be restarted automatically every time as the configuration changed, e.g system.adapter.template.0
 var adapter = utils.adapter('myhomecontrol_sbfspot');
 
-var connection;
 
 //Some message was sent to adapter instance over message box. Used by email, pushover, text2speech, ...
 adapter.on('message', function (obj) {
@@ -99,14 +90,39 @@ adapter.on('ready', function () {
 });
 
 function main() {
+
+    if (typeof adapter.databasetype == 'undefined') {
+        adapter.log.info("databasetype not defined. check settings and save");
+        adapter.config.databasetype = "mySQL";
+    }
+
     CheckInverterVariables();
 
-    DB_Connect(function () {
-        setTimeout(function () {
-            adapter.stop();
-        }, 6000);
-    });
 
+    if (adapter.config.useBluetooth) {
+        //here we use bluetooth or speedwire
+        adapter.log.info("direct bluetooth connection not implenented yet");
+    }
+    else if (adapter.config.databasetype == 'mySQL') {
+
+        adapter.log.info("start with mySQL");
+        DB_Connect(function () {
+            setTimeout(function () {
+                adapter.stop();
+            }, 6000);
+        });
+    }
+    else {
+        // here we use sqlite
+
+        adapter.log.info("start with sqlite");
+
+        DB_sqlite_Connect(function () {
+            setTimeout(function () {
+                adapter.stop();
+            }, 6000);
+        });
+    }
     // force terminate after 1min
     // don't know why it does not terminate by itself...
     setTimeout(function () {
@@ -117,101 +133,7 @@ function main() {
 }
 
 
-function DB_Connect(cb) {
-    //var express = require("express");
-    var mysql = require('mysql');
-    connection = mysql.createConnection({
-        host: adapter.config.sbfspotIP || 'localhost',
-        user: adapter.config.sbfspotUser || 'SBFspotUser',
-        password: adapter.config.sbfspotPassword || 'logger',
-        database: adapter.config.sbfspotDatabasename || 'SBFspot'
-    });
-    //var app = express();
 
-    connection.connect(function (err) {
-        if (!err) {
-            adapter.log.debug("Database is connected ... nn");
-            GetInverters();
-        } else {
-            adapter.log.error("Error connecting database ... nn");
-        }
-    });
-
-    if (cb) cb();
-}
-
-function GetInverters() {
-    var query = 'SELECT * from Inverters';
-    adapter.log.debug(query);
-    connection.query(query, function (err, rows, fields) {
-        if (!err) {
-            adapter.log.debug('rows ' + JSON.stringify(rows));
-
-            adapter.log.info("got data from " + rows[0].Type + " " + rows[0].Serial);
-
-            AddInverterVariables(rows[0].Serial);
-
-            adapter.setState( rows[0].Serial + ".Type", { ack: true, val: rows[0].Type});
-            //adapter.setState( rows[0].Serial + ".EToday", { ack: true, val: rows[0].EToday }); this is kW
-            //adapter.setState(rows[0].Serial + ".ETotal", { ack: true, val: rows[0].ETotal }); this is kW
-            adapter.setState(rows[0].Serial + ".SW_Version", { ack: true, val: rows[0].SW_Version });
-            adapter.setState(rows[0].Serial + ".TotalPac", { ack: true, val: rows[0].TotalPac });
-            adapter.setState(rows[0].Serial + ".OperatingTime", { ack: true, val: rows[0].OperatingTime });
-            adapter.setState(rows[0].Serial + ".FeedInTime", { ack: true, val: rows[0].FeedInTime });
-            adapter.setState(rows[0].Serial + ".Status", { ack: true, val: rows[0].Status });
-            adapter.setState(rows[0].Serial + ".GridRelay", { ack: true, val: rows[0].GridRelay });
-            adapter.setState(rows[0].Serial + ".Temperature", { ack: true, val: rows[0].Temperature });
-
-            GetInvertersData(rows[0].Serial);
-        }
-        else {
-            adapter.log.error('Error while performing Query.');
-        }
-    });
-}
-
-function GetInvertersData(serial) {
-    var query = 'SELECT * from SpotData  where Serial =' + serial + ' ORDER BY TimeStamp DESC LIMIT 1';
-    adapter.log.debug(query);
-    connection.query(query, function (err, rows, fields) {
-        if (!err) {
-            adapter.log.debug('rows ' + JSON.stringify(rows));
-
-            adapter.setState(rows[0].Serial + ".Pdc1", { ack: true, val: rows[0].Pdc1 });
-            adapter.setState(rows[0].Serial + ".Pdc2", { ack: true, val: rows[0].Pdc2 });
-            adapter.setState(rows[0].Serial + ".Idc1", { ack: true, val: rows[0].Idc1 });
-            adapter.setState(rows[0].Serial + ".Idc2", { ack: true, val: rows[0].Idc2 });
-            adapter.setState(rows[0].Serial + ".Udc1", { ack: true, val: rows[0].Udc1 });
-            adapter.setState(rows[0].Serial + ".Udc2", { ack: true, val: rows[0].Udc2 });
-
-            adapter.setState(rows[0].Serial + ".Pac1", { ack: true, val: rows[0].Pac1 });
-            adapter.setState(rows[0].Serial + ".Pac2", { ack: true, val: rows[0].Pac2 });
-            adapter.setState(rows[0].Serial + ".Pac3", { ack: true, val: rows[0].Pac3 });
-            adapter.setState(rows[0].Serial + ".Iac1", { ack: true, val: rows[0].Iac1 });
-            adapter.setState(rows[0].Serial + ".Iac2", { ack: true, val: rows[0].Iac2 });
-            adapter.setState(rows[0].Serial + ".Iac3", { ack: true, val: rows[0].Iac3 });
-            adapter.setState(rows[0].Serial + ".Uac1", { ack: true, val: rows[0].Uac1 });
-            adapter.setState(rows[0].Serial + ".Uac2", { ack: true, val: rows[0].Uac2 });
-            adapter.setState(rows[0].Serial + ".Uac3", { ack: true, val: rows[0].Uac3 });
-
-            adapter.setState(rows[0].Serial + ".EToday", { ack: true, val: rows[0].EToday });
-            adapter.setState(rows[0].Serial + ".ETotal", { ack: true, val: rows[0].ETotal });
-            adapter.setState(rows[0].Serial + ".Frequency", { ack: true, val: rows[0].Frequency });
-            adapter.setState(rows[0].Serial + ".BT_Signal", { ack: true, val: rows[0].BT_Signal });
-
-            Disconnect();
-        }
-        else {
-            adapter.log.error('Error while performing Query.');
-        }
-    });
-
-    
-}
-
-function Disconnect() {
-    connection.end();
-}
 
 
 function AddInverterVariables(serial) {

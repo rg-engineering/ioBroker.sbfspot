@@ -17,6 +17,8 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
+    <Compile Include="lib\DB_sbfspot\DB_mysql_sbfspot.js" />
+    <Compile Include="lib\DB_sbfspot\DB_sqlite_sbfspot.js" />
     <Compile Include="test\lib\setup.js" />
     <Compile Include="test\testAdapter.js" />
     <Compile Include="test\testPackageFiles.js" />
@@ -41,6 +43,8 @@
   <ItemGroup>
     <Folder Include="admin" />
     <Folder Include="lib" />
+    <Folder Include="lib\sbfspot\" />
+    <Folder Include="lib\DB_sbfspot\" />
     <Folder Include="tasks" />
     <Folder Include="test\" />
     <Folder Include="test\lib\" />

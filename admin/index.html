@@ -31,15 +31,27 @@
     systemDictionary = {
         "myHomeControl sbfspot adapter settings": { "de": "HomeControl sbfspot Adapter Einstellungen" },
         "on save adapter restarts with new config immediately": { "de": "Beim Speichern von Einstellungen wird der Adapter sofort neu gestartet." },
-        "sbfspot DB IP": { "de": "sbfspot DB IP" },
-        "sbfspot DB user": { "de": "sbfspot DB user" },
-        "sbfspot DB password": { "de": "sbfspot DB password" },
-        "sbfspot DB databasename": { "de": "sbfspot DB databasename" },
-        "Attention: adaptor should run on the same machine as mySQL database is running. then localhost can be used for DB IP": { "de": "Achtung. Der Adpater sollte auf der gleichen Maschine laufen, wie die mySQL Datenbank. Dann kann localhost als DB IP verwendet werden" }
+        "sbfspot DB IP": { "de": "mySQL datenbank IP", "en": "mySQL database IP" },
+        "sbfspot DB user": { "de": "mySQL Datenbank user", "de": "mySQL database user" },
+        "sbfspot DB password": { "de": "mySQL database password", "de": "mySQL database password" },
+        "sbfspot DB databasename": { "de": "mySQL database name", "de": "mySQL database name" },
+        "path to DB file": { "de": "Pfad zur sqlite Datenbank", "en": "path to sqlite database file" },
+        "type of DB": {"de": "Type der Datenbank", "en": "type of database"},
+        "Attention": { "de": "Achtung. Der Adpater sollte auf der gleichen Maschine laufen, wie die mySQL / sqlite Datenbank. Dann kann localhost als IP verwendet werden", "en": "Attention: adaptor should run on the same machine as mySQL database is running. then localhost can be used for DB IP" }
     };
 
     
-        
+    function CheckSettings(settings, onChange) {
+        console.log("start checksettings");
+        //just to be compatible with older versions...
+        if (typeof settings['databasetype'] == 'undefined') {
+            onChange(true);
+            $("#databasetype").attr("checked", true);
+            $('#databasetype.value').prop('checked', settings['databasetype']).change(function () {
+                onChange();
+            });
+        }
+    }
     
     // the function loadSettings has to exist ...
     function load(settings, onChange) {
@@ -65,6 +77,8 @@
         
         // Signal to admin, that no changes yet
         onChange(false);
+
+        CheckSettings(settings, onChange);
     }
     
 
@@ -95,14 +109,36 @@
 
     <p class="translate">on save adapter restarts with new config immediately</p>
 
-    <p class="translate">Attention: adaptor should run on the same machine as mySQL database is running. then localhost can be used for DB IP</p>
+    <p class="translate">Attention</p>
 
         <table>
+            <tr>
+                <td colspan="2" class="translate">type of DB </td>
+                <td colspan="2">
+                    <select id="databasetype" class="value">
+                        <option value="mySQL">mySQL</option>
+                        <option value="sqlite">sqlite</option>
+                    </select> 
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    mySQL
+                </td>
+                <td colspan="2">
+                    sqlite
+                </td>
+            </tr>
             <tr>
                 <td class="translate">sbfspot DB IP</td>
                 <td>
                     <input type="text" id="sbfspotIP" class="value" />
                 </td>
+                <td class="translate">path to DB file</td>
+                <td>
+                    <input type="text" id="sqlite_path" class="value" />
+                </td>
+     
             </tr>
             <tr>
                 <td class="translate">sbfspot DB user</td>
