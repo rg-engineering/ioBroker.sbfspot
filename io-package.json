@@ -1,11 +1,15 @@
 {
   "common": {
     "name": "myhomecontrol_sbfspot",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "news": {
       "0.3.0": {
         "en": "Bluetooth direct interface to inverter",
         "de": "direktes Interface via Bluetooth zum Wechselrichter"
+      },
+      "0.2.1": {
+        "en": "index.html updated",
+        "de": "index.html aktualisiert"
       },
       "0.2.0": {
         "en": "sqlite added",

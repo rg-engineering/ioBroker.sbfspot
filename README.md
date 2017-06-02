@@ -2,22 +2,24 @@
 ===========================
 
 This adapter reads data from SMA power inverters using sbfspot.
+Now both database types (mySQL and sqlite) are supported.
 
-Hint: sbfspot must and mySQL /sqllite database should be installed on the same machine as this adapter.
-use latest version from sbfspot from here
-https://sbfspot.codeplex.com/
-
+Hints: 
+* use latest version from sbfspot from https://sbfspot.codeplex.com/
+* adapter, sbfspot and databases (mySQL or sqlite) must run on the same system e.g. Raspberry PI
+* installation manual for sbfspot on Raspberry Pi (or similar) can be found under http://wiki.rg-engineering.eu/index.php?title=Install_sbfspot
 
 
 ## Changelog
 
 #### 0.3.0
-* (René) Bluetooth integration
-direct interface to inverter via Bluetooth
+* (René) Bluetooth integration for direct interface to inverter (planned)
+
+#### 0.2.1
+* (René) index.html updated
 
 #### 0.2.0
-* (René) support of sqlite
-license changed to MIT
+* (René) support of sqlite and license changed to MIT
 
 #### 0.1.1
 * (René) UTF8 coding
@@ -27,11 +29,6 @@ license changed to MIT
 
 #### 0.0.1
 * (René) initial release
-
-## Changelog
-
-#### UTF-8 coding
-if UTF-8 coding for io-package.json and package.json is used adapter can not be installed. Why?
 
 
 ## License
