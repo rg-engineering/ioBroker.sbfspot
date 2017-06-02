@@ -17,7 +17,6 @@ Copyright(C)[2016, 2017][René Glaß]
 // you have to require the utils module and call adapter function
 var utils =    require(__dirname + '/lib/utils'); // Get common adapter utils
 
-var mysql_db = require(__dirname + '/lib/DB_sbfspot/DB_mysql_sbfspot');
 
 // you have to call the adapter function and pass a options object
 // name has to be set and has to be equal to adapters folder name and main file name excluding extension
@@ -91,13 +90,20 @@ adapter.on('ready', function () {
 
 function main() {
 
-    if (typeof adapter.databasetype == 'undefined') {
+    if (typeof adapter.config.databasetype == 'undefined') {
         adapter.log.info("databasetype not defined. check settings and save");
         adapter.config.databasetype = "mySQL";
     }
 
     CheckInverterVariables();
 
+
+    // force terminate after 1min
+    // don't know why it does not terminate by itself...
+    setTimeout(function () {
+        adapter.log.warn('force terminate');
+        process.exit(0);
+    }, 60000);
 
     if (adapter.config.useBluetooth) {
         //here we use bluetooth or speedwire
@@ -123,12 +129,7 @@ function main() {
             }, 6000);
         });
     }
-    // force terminate after 1min
-    // don't know why it does not terminate by itself...
-    setTimeout(function () {
-        adapter.log.warn('force terminate');
-        process.exit(0);
-    }, 60000);
+    
 
 }
 
@@ -362,3 +363,200 @@ var rows = [
     }]
 */
 
+//*****************************************************************************************************************
+// mySQL
+//
+//
+
+//these function are used for connection to mySQL database filled by sbfspot
+
+
+var mysql_connection;
+
+function DB_Connect(cb) {
+    //var express = require("express");
+    var mysql = require('mysql');
+    mysql_connection = mysql.createConnection({
+        host: adapter.config.sbfspotIP,
+        user: adapter.config.sbfspotUser,
+        password: adapter.config.sbfspotPassword,
+        database: adapter.config.sbfspotDatabasename
+    });
+
+
+    mysql_connection.connect(function (err) {
+        if (!err) {
+            adapter.log.debug("mySql Database is connected ... ");
+            DB_GetInverters();
+        } else {
+            adapter.log.error("Error connecting mySql database ... ");
+        }
+    });
+
+    if (cb) cb();
+}
+
+function DB_GetInverters() {
+    var query = 'SELECT * from Inverters';
+    adapter.log.debug(query);
+    mysql_connection.query(query, function (err, rows, fields) {
+        if (!err) {
+            adapter.log.debug('rows ' + JSON.stringify(rows));
+
+            adapter.log.info("got data from " + rows[0].Type + " " + rows[0].Serial);
+
+            AddInverterVariables(rows[0].Serial);
+
+            adapter.setState(rows[0].Serial + ".Type", { ack: true, val: rows[0].Type });
+            //adapter.setState( rows[0].Serial + ".EToday", { ack: true, val: rows[0].EToday }); this is kW
+            //adapter.setState(rows[0].Serial + ".ETotal", { ack: true, val: rows[0].ETotal }); this is kW
+            adapter.setState(rows[0].Serial + ".SW_Version", { ack: true, val: rows[0].SW_Version });
+            adapter.setState(rows[0].Serial + ".TotalPac", { ack: true, val: rows[0].TotalPac });
+            adapter.setState(rows[0].Serial + ".OperatingTime", { ack: true, val: rows[0].OperatingTime });
+            adapter.setState(rows[0].Serial + ".FeedInTime", { ack: true, val: rows[0].FeedInTime });
+            adapter.setState(rows[0].Serial + ".Status", { ack: true, val: rows[0].Status });
+            adapter.setState(rows[0].Serial + ".GridRelay", { ack: true, val: rows[0].GridRelay });
+            adapter.setState(rows[0].Serial + ".Temperature", { ack: true, val: rows[0].Temperature });
+
+            DB_GetInvertersData(rows[0].Serial);
+        }
+        else {
+            adapter.log.error('Error while performing Query.');
+        }
+    });
+}
+
+function DB_GetInvertersData(serial) {
+    var query = 'SELECT * from SpotData  where Serial =' + serial + ' ORDER BY TimeStamp DESC LIMIT 1';
+    adapter.log.debug(query);
+    mysql_connection.query(query, function (err, rows, fields) {
+        if (!err) {
+            adapter.log.debug('rows ' + JSON.stringify(rows));
+
+            adapter.setState(rows[0].Serial + ".Pdc1", { ack: true, val: rows[0].Pdc1 });
+            adapter.setState(rows[0].Serial + ".Pdc2", { ack: true, val: rows[0].Pdc2 });
+            adapter.setState(rows[0].Serial + ".Idc1", { ack: true, val: rows[0].Idc1 });
+            adapter.setState(rows[0].Serial + ".Idc2", { ack: true, val: rows[0].Idc2 });
+            adapter.setState(rows[0].Serial + ".Udc1", { ack: true, val: rows[0].Udc1 });
+            adapter.setState(rows[0].Serial + ".Udc2", { ack: true, val: rows[0].Udc2 });
+
+            adapter.setState(rows[0].Serial + ".Pac1", { ack: true, val: rows[0].Pac1 });
+            adapter.setState(rows[0].Serial + ".Pac2", { ack: true, val: rows[0].Pac2 });
+            adapter.setState(rows[0].Serial + ".Pac3", { ack: true, val: rows[0].Pac3 });
+            adapter.setState(rows[0].Serial + ".Iac1", { ack: true, val: rows[0].Iac1 });
+            adapter.setState(rows[0].Serial + ".Iac2", { ack: true, val: rows[0].Iac2 });
+            adapter.setState(rows[0].Serial + ".Iac3", { ack: true, val: rows[0].Iac3 });
+            adapter.setState(rows[0].Serial + ".Uac1", { ack: true, val: rows[0].Uac1 });
+            adapter.setState(rows[0].Serial + ".Uac2", { ack: true, val: rows[0].Uac2 });
+            adapter.setState(rows[0].Serial + ".Uac3", { ack: true, val: rows[0].Uac3 });
+
+            adapter.setState(rows[0].Serial + ".EToday", { ack: true, val: rows[0].EToday });
+            adapter.setState(rows[0].Serial + ".ETotal", { ack: true, val: rows[0].ETotal });
+            adapter.setState(rows[0].Serial + ".Frequency", { ack: true, val: rows[0].Frequency });
+            adapter.setState(rows[0].Serial + ".BT_Signal", { ack: true, val: rows[0].BT_Signal });
+
+            DB_Disconnect();
+        }
+        else {
+            adapter.log.error('Error while performing Query.');
+        }
+    });
+
+
+}
+
+function DB_Disconnect() {
+    mysql_connection.end();
+}
+
+//***********************************************************************************************************************
+// sqlite
+//
+//
+
+//these function are used for connection to sqlite database filled by sbfspot
+
+// https://github.com/mapbox/node-sqlite3
+
+
+var sqlite_db;
+
+function DB_sqlite_Connect(cb) {
+    //var express = require("express");
+    var sqlite3 = require('sqlite3').verbose();
+
+    adapter.log.debug("--- connecting to " + adapter.config.sqlite_path);
+
+    sqlite_db = new sqlite3.Database(adapter.config.sqlite_path);
+
+
+    adapter.log.debug("sqlite Database is connected ...");
+    DB_sqlite_GetInverters();
+
+    if (cb) cb();
+}
+
+function DB_sqlite_GetInverters() {
+    var query = 'SELECT * from Inverters';
+    adapter.log.debug(query);
+
+    sqlite_db.each(query, function (err, row) {
+
+        adapter.log.debug('row ' + JSON.stringify(row));
+
+        adapter.log.info("got data from " + row.Type + " " + row.Serial);
+
+        AddInverterVariables(row.Serial);
+
+        adapter.setState(row.Serial + ".Type", { ack: true, val: row.Type });
+        //adapter.setState( rows[0].Serial + ".EToday", { ack: true, val: row.EToday }); this is kW
+        //adapter.setState(rows[0].Serial + ".ETotal", { ack: true, val: row.ETotal }); this is kW
+        adapter.setState(row.Serial + ".SW_Version", { ack: true, val: row.SW_Version });
+        adapter.setState(row.Serial + ".TotalPac", { ack: true, val: row.TotalPac });
+        adapter.setState(row.Serial + ".OperatingTime", { ack: true, val: row.OperatingTime });
+        adapter.setState(row.Serial + ".FeedInTime", { ack: true, val: row.FeedInTime });
+        adapter.setState(row.Serial + ".Status", { ack: true, val: row.Status });
+        adapter.setState(row.Serial + ".GridRelay", { ack: true, val: row.GridRelay });
+        adapter.setState(row.Serial + ".Temperature", { ack: true, val: row.Temperature });
+
+        DB_sqlite_GetInvertersData(row.Serial);
+
+    });
+}
+
+function DB_sqlite_GetInvertersData(serial) {
+    var query = 'SELECT * from SpotData  where Serial =' + serial + ' ORDER BY TimeStamp DESC LIMIT 1';
+    adapter.log.debug(query);
+    sqlite_db.each(query, function (err, row) {
+        adapter.log.debug('row ' + JSON.stringify(row));
+
+        adapter.setState(row.Serial + ".Pdc1", { ack: true, val: row.Pdc1 });
+        adapter.setState(row.Serial + ".Pdc2", { ack: true, val: row.Pdc2 });
+        adapter.setState(row.Serial + ".Idc1", { ack: true, val: row.Idc1 });
+        adapter.setState(row.Serial + ".Idc2", { ack: true, val: row.Idc2 });
+        adapter.setState(row.Serial + ".Udc1", { ack: true, val: row.Udc1 });
+        adapter.setState(row.Serial + ".Udc2", { ack: true, val: row.Udc2 });
+
+        adapter.setState(row.Serial + ".Pac1", { ack: true, val: row.Pac1 });
+        adapter.setState(row.Serial + ".Pac2", { ack: true, val: row.Pac2 });
+        adapter.setState(row.Serial + ".Pac3", { ack: true, val: row.Pac3 });
+        adapter.setState(row.Serial + ".Iac1", { ack: true, val: row.Iac1 });
+        adapter.setState(row.Serial + ".Iac2", { ack: true, val: row.Iac2 });
+        adapter.setState(row.Serial + ".Iac3", { ack: true, val: row.Iac3 });
+        adapter.setState(row.Serial + ".Uac1", { ack: true, val: row.Uac1 });
+        adapter.setState(row.Serial + ".Uac2", { ack: true, val: row.Uac2 });
+        adapter.setState(row.Serial + ".Uac3", { ack: true, val: row.Uac3 });
+
+        adapter.setState(row.Serial + ".EToday", { ack: true, val: row.EToday });
+        adapter.setState(row.Serial + ".ETotal", { ack: true, val: row.ETotal });
+        adapter.setState(row.Serial + ".Frequency", { ack: true, val: row.Frequency });
+        adapter.setState(row.Serial + ".BT_Signal", { ack: true, val: row.BT_Signal });
+
+        DB_sqlite_Disconnect();
+
+    });
+}
+
+function DB_sqlite_Disconnect() {
+    sqlite_db.close();
+}
