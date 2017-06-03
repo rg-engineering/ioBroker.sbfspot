@@ -17,19 +17,20 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
+    <Compile Include="sbfspot.js" />
     <Compile Include="test\lib\setup.js" />
     <Compile Include="test\testAdapter.js" />
     <Compile Include="test\testPackageFiles.js" />
     <Content Include=".gitignore" />
     <Content Include=".travis.yml" />
     <Content Include="appveyor.yml" />
+    <Content Include="LICENSE" />
     <Content Include="readme.txt" />
     <Content Include="todo.txt" />
     <Content Include="io-package.json" />
     <Content Include="package.json" />
     <Content Include="README.md" />
     <Compile Include="Gruntfile.js" />
-    <Compile Include="myhomecontrol_sbfspot.js" />
     <Content Include="admin\index.html" />
     <Content Include="admin\myhomecontrol.png" />
     <Content Include="admin\template.png" />
