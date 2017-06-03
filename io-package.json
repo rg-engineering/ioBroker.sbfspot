@@ -32,10 +32,10 @@
         "de": "erste Version"
       }
     },
-    "title": "myHomeControl sbfspot",
+    "title": "sbfspot",
     "desc": {
-      "en": "myHomeControl SMA inverter (sbfspot) Adapter",
-      "de": "myHomeControl SMA inverter (sbfspot) Adapter"
+      "en": "SMA inverter (sbfspot) Adapter",
+      "de": "SMA inverter (sbfspot) Adapter"
     },
     "platform": "Javascript/Node.js",
     "mode": "schedule",

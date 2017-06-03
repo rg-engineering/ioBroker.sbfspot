@@ -1,2 +1,4 @@
 
 bluetooth und speedwire
+
+/home/datalogger/projects/sbfspot/smadata/SBFspot.db
