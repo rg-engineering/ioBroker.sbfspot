@@ -1,4 +1,4 @@
-﻿# ioBroker.myhomecontrol_sbfspot
+﻿# ioBroker.sbfspot
 ===========================
 
 This adapter reads data from SMA power inverters using sbfspot.
@@ -14,6 +14,9 @@ Hints:
 
 #### 0.3.0
 * (René) Bluetooth integration for direct interface to inverter (planned)
+
+#### 0.2.2
+* (René) renamed to sbfspot
 
 #### 0.2.1
 * (René) index.html updated

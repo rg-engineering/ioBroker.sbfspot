@@ -1,11 +1,15 @@
 {
   "common": {
-    "name": "myhomecontrol_sbfspot",
-    "version": "0.2.1",
+    "name": "sbfspot",
+    "version": "0.2.2",
     "news": {
       "0.3.0": {
         "en": "Bluetooth direct interface to inverter",
         "de": "direktes Interface via Bluetooth zum Wechselrichter"
+      },
+      "0.2.2": {
+        "en": "renamed to sbfspot",
+        "de": "nach sbfspot umbenannt"
       },
       "0.2.1": {
         "en": "index.html updated",
@@ -39,9 +43,9 @@
     "icon": "myhomecontrol.png",
     "enabled": true,
     "messagebox": true,
-    "extIcon": "https://raw.githubusercontent.com/rg-engineering/ioBroker.myhomecontrol_sbfspot/master/admin/myhomecontrol.png",
-    "keywords": [ "myhomecontrol" ],
-    "readme": "https://github.com/rg-engineering/ioBroker.myhomecontrol_sbfspot/blob/master/README.md",
+    "extIcon": "https://raw.githubusercontent.com/rg-engineering/ioBroker.sbfspot/master/admin/myhomecontrol.png",
+    "keywords": [ "sbfspot" ],
+    "readme": "https://github.com/rg-engineering/ioBroker.sbfspot/blob/master/README.md",
     "loglevel": "debug",
     "stopBeforeUpdate": true,
     "type": "hardware",
