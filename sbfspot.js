@@ -302,6 +302,29 @@ function AddInverterVariables(serial) {
         native: { location: serial + '.BT_Signal' }
     });
 
+    adapter.setObjectNotExists(serial + '.history.today', {
+        type: 'state',
+        common: { name: 'SMA inverter history today (JSON)', type: 'number', role: 'ertrag', unit: 'kW', read: true, write: false },
+        native: { location: serial + '.history.today' }
+    });
+
+    adapter.setObjectNotExists(serial + '.history.last30Days', {
+        type: 'state',
+        common: { name: 'SMA inverter history last 30 days (JSON)', type: 'number', role: 'ertrag', unit: '', read: true, write: false },
+        native: { location: serial + '.history.last30Days' }
+    });
+
+    adapter.setObjectNotExists(serial + '.history.last12Months', {
+        type: 'state',
+        common: { name: 'SMA inverter history last 12 Months (JSON)', type: 'number', role: 'ertrag', unit: 'kWh', read: true, write: false },
+        native: { location: serial + '.history.last12Months' }
+    });
+
+    adapter.setObjectNotExists(serial + '.history.years', {
+        type: 'state',
+        common: { name: 'SMA inverter history years (JSON)', type: 'number', role: 'ertrag', unit: 'kWh', read: true, write: false },
+        native: { location: serial + '.history.years' }
+    });
 }
 
 function CheckInverterVariables() {
@@ -403,22 +426,25 @@ function DB_GetInverters() {
         if (!err) {
             adapter.log.debug('rows ' + JSON.stringify(rows));
 
-            adapter.log.info("got data from " + rows[0].Type + " " + rows[0].Serial);
 
-            AddInverterVariables(rows[0].Serial);
+            for (var i in rows) {
+                adapter.log.info("got data from " + rows[0].Type + " " + rows[0].Serial);
 
-            adapter.setState(rows[0].Serial + ".Type", { ack: true, val: rows[0].Type });
-            //adapter.setState( rows[0].Serial + ".EToday", { ack: true, val: rows[0].EToday }); this is kW
-            //adapter.setState(rows[0].Serial + ".ETotal", { ack: true, val: rows[0].ETotal }); this is kW
-            adapter.setState(rows[0].Serial + ".SW_Version", { ack: true, val: rows[0].SW_Version });
-            adapter.setState(rows[0].Serial + ".TotalPac", { ack: true, val: rows[0].TotalPac });
-            adapter.setState(rows[0].Serial + ".OperatingTime", { ack: true, val: rows[0].OperatingTime });
-            adapter.setState(rows[0].Serial + ".FeedInTime", { ack: true, val: rows[0].FeedInTime });
-            adapter.setState(rows[0].Serial + ".Status", { ack: true, val: rows[0].Status });
-            adapter.setState(rows[0].Serial + ".GridRelay", { ack: true, val: rows[0].GridRelay });
-            adapter.setState(rows[0].Serial + ".Temperature", { ack: true, val: rows[0].Temperature });
+                AddInverterVariables(rows[i].Serial);
 
-            DB_GetInvertersData(rows[0].Serial);
+                adapter.setState(rows[i].Serial + ".Type", { ack: true, val: rows[0].Type });
+                //adapter.setState( rows[i].Serial + ".EToday", { ack: true, val: rows[0].EToday }); this is kW
+                //adapter.setState(rows[i].Serial + ".ETotal", { ack: true, val: rows[0].ETotal }); this is kW
+                adapter.setState(rows[i].Serial + ".SW_Version", { ack: true, val: rows[0].SW_Version });
+                adapter.setState(rows[i].Serial + ".TotalPac", { ack: true, val: rows[0].TotalPac });
+                adapter.setState(rows[i].Serial + ".OperatingTime", { ack: true, val: rows[0].OperatingTime });
+                adapter.setState(rows[i].Serial + ".FeedInTime", { ack: true, val: rows[0].FeedInTime });
+                adapter.setState(rows[i].Serial + ".Status", { ack: true, val: rows[0].Status });
+                adapter.setState(rows[i].Serial + ".GridRelay", { ack: true, val: rows[0].GridRelay });
+                adapter.setState(rows[i].Serial + ".Temperature", { ack: true, val: rows[0].Temperature });
+
+                DB_GetInvertersData(rows[i].Serial);
+            }
         }
         else {
             adapter.log.error('Error while performing Query.');
@@ -427,12 +453,15 @@ function DB_GetInverters() {
 }
 
 function DB_GetInvertersData(serial) {
+
+    //SELECT * from SpotData  where Serial ='2000562095' ORDER BY TimeStamp DESC LIMIT 1
     var query = 'SELECT * from SpotData  where Serial =' + serial + ' ORDER BY TimeStamp DESC LIMIT 1';
     adapter.log.debug(query);
     mysql_connection.query(query, function (err, rows, fields) {
         if (!err) {
             adapter.log.debug('rows ' + JSON.stringify(rows));
 
+            //should only be one row...
             adapter.setState(rows[0].Serial + ".Pdc1", { ack: true, val: rows[0].Pdc1 });
             adapter.setState(rows[0].Serial + ".Pdc2", { ack: true, val: rows[0].Pdc2 });
             adapter.setState(rows[0].Serial + ".Idc1", { ack: true, val: rows[0].Idc1 });
@@ -455,6 +484,96 @@ function DB_GetInvertersData(serial) {
             adapter.setState(rows[0].Serial + ".Frequency", { ack: true, val: rows[0].Frequency });
             adapter.setState(rows[0].Serial + ".BT_Signal", { ack: true, val: rows[0].BT_Signal });
 
+            DB_CalcHistory_LastMonth(serial)
+            //DB_Disconnect();
+        }
+        else {
+            adapter.log.error('Error while performing Query.');
+        }
+    });
+}
+
+function DB_CalcHistory_LastMonth(serial) {
+
+    //täglich im aktuellen Monat
+    //SELECT from_unixtime(TimeStamp, '%Y-%m-%d') as date, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '2000562095' AND TimeStamp>= 1501542000 AND TimeStamp<= 1504133999 Group By from_unixtime(TimeStamp, '%Y-%m-%d')
+    //SELECT from_unixtime(TimeStamp, '%Y-%m-%d') as date, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '2000562095' AND TimeStamp>= 1500406746112 AND TimeStamp<= 1502998746112 Group By from_unixtime(TimeStamp, '%Y-%m-%d')
+
+
+    //SELECT from_unixtime(TimeStamp, '%Y') as date, Max(`ETotal`) as ertrag FROM `SpotData` WHERE `Serial` = '2000562095'  Group By from_unixtime(TimeStamp, '%Y')
+    
+    var dateto = new Date(); //today
+    var datefrom = new Date();
+    datefrom.setDate(datefrom.getDate() - 30);
+    //adapter.log.debug('from ' + datefrom.toDateString() + " to " + dateto.toDateString());
+    //gettime gives milliseconds!!
+    var query = "SELECT from_unixtime(TimeStamp, '%Y-%m-%d') as date, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime()/1000 + " AND TimeStamp<= " + dateto.getTime()/1000 + " Group By from_unixtime(TimeStamp, '%Y-%m-%d')";
+    adapter.log.debug(query);
+    mysql_connection.query(query, function (err, rows, fields) {
+        if (!err) {
+            adapter.log.debug('rows ' + JSON.stringify(rows));
+
+            //rows[{ "date": "2017-07-19", "ertrag": 12259 }, { "date": "2017-07-20", "ertrag": 9905 }, { "date": "2017-07-21", "ertrag": 12991 }, { "date": "2017-07-22", "ertrag": 9292 }, { "date": "2017-07-23", "ertrag": 7730 }, {
+
+
+            var oLastDays = [];
+            var daydata ={};
+
+            for (var i in rows)  {
+
+                var data = rows[i];
+
+                oLastDays.push({
+                    "date": data["date"],
+                    "value": data["ertrag"]
+                });
+                //adapter.log.debug(JSON.stringify(oLastDays));
+
+            }
+
+            adapter.setState(serial + '.history.last30Days', { ack: true, val: JSON.stringify(oLastDays) });
+
+            DB_CalcHistory_Today(serial);
+        }
+        else {
+            adapter.log.error('Error while performing Query.');
+        }
+    });
+
+
+}
+
+function DB_CalcHistory_Today(serial) {
+
+    var dateto = new Date(); //today
+
+    var datefrom = new Date();
+    datefrom.setHours(0);
+    datefrom.setMinutes(0);
+    //adapter.log.debug('from ' + datefrom.toDateString() + " to " + dateto.toDateString());
+    //gettime gives milliseconds!!
+    var query = "SELECT from_unixtime(TimeStamp, '%HH:%mm') as time, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By from_unixtime(TimeStamp, '%HH:%mm')";
+    adapter.log.debug(query);
+    mysql_connection.query(query, function (err, rows, fields) {
+        if (!err) {
+            adapter.log.debug('rows ' + JSON.stringify(rows));
+  
+            var oLastDays = [];
+            var daydata = {};
+
+            for (var i in rows) {
+
+                var data = rows[i];
+
+                oLastDays.push({
+                    "time": data["time"],
+                    "value": data["ertrag"]
+                });
+                //adapter.log.debug(JSON.stringify(oLastDays));
+            }
+
+            adapter.setState(serial + '.history.today', { ack: true, val: JSON.stringify(oLastDays) });
+
             DB_Disconnect();
         }
         else {
@@ -464,6 +583,7 @@ function DB_GetInvertersData(serial) {
 
 
 }
+
 
 function DB_Disconnect() {
     mysql_connection.end();

@@ -1,0 +1,252 @@
+﻿<!--
+    ioBroker.vis sbfspot Widget-Set
+
+
+    Copyright 10.2015-2017 René G. <info@rg-engineering.eu>
+-->
+<!-- here you can include so many css as you want -->
+<!--<link rel="stylesheet" href="widgets/weather/css/style.css" />-->
+<link href="widgets/sbfspot/css/flot.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="widgets/sbfspot/lib/js/flot/jquery.flot.js"></script>
+<script type="text/javascript" src="widgets/sbfspot/lib/js/flot/jquery.flot.time.js"></script>
+
+<!-- doku for flot : -->
+<!--  https://github.com/flot/flot/blob/master/API.md -->
+
+
+<script type="text/javascript">
+    'use strict';
+
+    if (vis.editMode) {
+        // Add words for basic widgets
+        $.extend(true, systemDictionary, {
+  
+            //"ticksonxaxix": { "en": "ticks on X axis", "de": "Anzahl Labels / X Achse", "ru": "???" },
+        });
+    }
+
+    vis.binds.sbfspot = {
+        version: "0.2.3",
+        showVersion: function () {
+            if (vis.binds.sbfspot.version) {
+                console.log('Version vis-sbfspt: ' + vis.binds.sbfspot.version);
+                vis.binds.sbfspot.version = null;
+            }
+        },
+
+        setup: {
+            intervals: {
+                '1 second': 1000,
+                '10 seconds': 10000,
+                '30 seconds': 30000,
+                '1 minute': 60000,
+                '2 minutes': 120000,
+                '5 minutes': 300000,
+                '10 minutes': 600000,
+                '30 minutes': 1800000,
+                '1 hour': 3600000,
+                '2 hours': 7200000,
+                '4 hours': 14400000,
+                '8 hours': 28800000,
+                '12 hours': 43200000,
+                '24 hours': 86400000
+            },
+            
+        },
+        history: {
+            update: function ($div) {
+                var data = $div.data('options');
+
+                if (!data.instance) {
+                    console.log("keine instanz " + data.chartType);
+
+                    $div.html("<br> <center> <font color='red'> no instance </font> </center></br>");
+                } else {
+                    //warum wir das brauchen, verstehe ich noch nicht...
+                    //ist eigentlich nur dummy... aber ohne wird plot ganz klein dargestellt ???
+                    vis.getHistory(data.oid, {
+                        instance: data.instance,
+                        count: 10,
+                        aggregate:  'average',
+                        start: new Date().getTime(),
+                        end: new Date().getTime() + 5000,
+                        timeout: 1000
+                    }, function (err, result) {
+                        var data = $div.data('options');
+                        if (err) console.log(err);
+   
+                        console.log("ShowChart begin");
+
+                    $.plot($div,
+                        [{
+                            data: {},
+                            color: "#f6ef3c",
+                            xaxis: 1,
+                            yaxis: 1,
+                            lines: { show: false },
+                            bars:
+                                {
+                                    show:  true,
+                                    barWidth: 2
+                                }
+                        }
+                        
+                        ],
+                        {
+
+                            xaxes: //xaxis mit [] geht nicht...!!!
+                              [{//das folgende geht
+                                  show: 1,
+                                  mode: "time",
+                                  tickLength: 5,
+                                  ticks: data.ticksonxaxix > 0 ? parseInt(data.ticksonxaxix) : 5,
+                                  timeformat: "%d.%b %H:%M",
+                                  monthNames: ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"]
+                              }],
+                            yaxes: //yaxis mit [] geht nicht...!!!                              
+                                [{ //das folgende geht
+                                    show: 1,
+                                    max: 15000,
+                                    min: 0,
+                                    alignTicksWithAxis: 1,
+                                    position: 'left',
+                                    ticks: 3
+                                }],
+                            grid:
+                              {
+                                  //Farben einstellen fehlt noch
+                                  backgroundColor: { colors: ["#fff", "#eee"] },
+                                  borderWidth: {
+                                      top: 1,
+                                      right: 1,
+                                      bottom: 2,
+                                      left: 2
+                                  },
+                                  //fehlt noch
+                                  //markings: nextDay
+                              }
+                        }
+                        );
+
+
+                     }); //GetHistory
+                }
+            },
+            init: function (el, view, data) {
+                var $div = $(el);
+                console.log("sbfspot init" );
+                var _data = {};
+                for (var s in data) {
+
+                    if (s[0] !== '_' && data.hasOwnProperty(s) && typeof data[s] !== 'object' && typeof data[s] !== 'function') {
+                        _data[s] = data[s];
+
+                    }
+                }
+                data = null;
+                $div.data('options', _data);
+
+                if (_data.instance) {
+
+                    var oid_today = _data.oid_today;
+                    console.log("bind " + oid_today);
+                    vis.states.bind(oid_today + '.val', function () {
+                        vis.binds.sbfspot.history.update($div);
+                    });
+ 
+                    var oid_last30days = _data.oid_last30days;
+                    console.log("bind " + oid_last30days);
+                    vis.states.bind(oid_last30days + '.val', function () {
+                        vis.binds.sbfspot.history.update($div);
+                    });
+
+                    var oid_last12months = _data.oid_last12months;
+                    console.log("bind " + oid_last12months);
+                    vis.states.bind(oid_last12months + '.val', function () {
+                        vis.binds.sbfspot.history.update($div);
+                    });
+
+                    var oid_years = _data.oid_years;
+                    console.log("bind " + oid_years);
+                    vis.states.bind(oid_years + '.val', function () {
+                        vis.binds.sbfspot.history.update($div);
+                    });
+
+                    // update every x seconds
+                    if (!vis.editMode) {
+                        $div.data('timer', setInterval(function () {
+                            vis.binds.sbfspot.history.update($div);
+                        }, parseInt(vis.binds.sbfspot.setup.intervals[_data.time_interval] / (parseInt(_data.points, 10) || 10), 10)));
+                    }
+                }
+                else {
+                    console.log("instance not set ");
+                }
+                vis.binds.weather.sbfspot.update($div);
+                if (vis.editMode) {
+                    console.log("flot version " + $.plot.version);
+                }
+            }
+        },
+    };
+
+    if (vis.editMode) {
+        vis.binds.weather.onInstanceChanged = function (widgetID, view, newId, fields) {
+            console.log('---------: ' + widgetID + ' - ' + view + ' - ' + newId + ' - ' + fields);
+
+
+            //delete all
+            vis.views[view].widgets[widgetID].data.oid_today = "";
+            vis.widgets[widgetID].data.oid_today = "";
+            vis.views[view].widgets[widgetID].data.oid_last30days = "";
+            vis.widgets[widgetID].data.oid_last30days = "";
+            vis.views[view].widgets[widgetID].data.oid_last12months = "";
+            vis.widgets[widgetID].data.oid_last12months = "";
+            vis.views[view].widgets[widgetID].data.oid_years = "";
+            vis.widgets[widgetID].data.oid_years = "";
+            
+            //then copy new values
+            if (newId.indexOf("sbfspot") > -1) {
+                vis.views[view].widgets[widgetID].data.oid_today = newId + ".today";
+                vis.widgets[widgetID].data.oid_today = newId + ".today";
+                vis.views[view].widgets[widgetID].data.oid_last30days = newId + ".last30days";
+                vis.widgets[widgetID].data.oid_last30days = newId + ".last30days";
+                vis.views[view].widgets[widgetID].data.oid_last12months = newId + ".last12months";
+                vis.widgets[widgetID].data.oid_last12months = newId + ".last12months";
+                vis.views[view].widgets[widgetID].data.oid_years = newId + ".years";
+                vis.widgets[widgetID].data.oid_years = newId + ".years";
+            }
+
+          return changed;
+        }
+
+    }
+
+    vis.binds.sbfspot.showVersion();
+
+</script>
+
+
+
+<script id="tplSbfspotShowInstance"
+        type="text/ejs"
+        class="vis-tpl"
+        data-vis-set="sbfspot"
+        data-vis-name="sbfspot"
+        data-vis-type="sbfspot"
+        data-vis-update-style="true"
+        data-vis-prev='<img src="widgets/sbfspot/img/Prev_tplSbfspot.png"></img>'
+        data-vis-attrs="instance/sbfspot/onInstanceChanged;"
+        data-vis-attrs0="time_interval[30 minutes]/select,1 second,10 seconds,30 seconds,1 minute,2 minutes,5 minutes,10 minutes,30 minutes,1 hour,2 hours,4 hours,8 hours,12 hours,24 hours;"
+        data-vis-attrs1="group.oids;oid_today/id;oid_last30days/id;oid_last12months/id;oid_years/id;"
+
+>
+
+    <div class="vis-widget <%== this.data.attr('class') %>" style="overflow: hidden; width: 210px; height: 170px;" id="<%= this.data.attr('wid') %>">
+        <div class="vis-widget-body" <%= (el1) -> vis.binds.sbfspot.history.init(el1, this.view, this.data) %>></div>
+        
+    </div>
+
+</script>
+

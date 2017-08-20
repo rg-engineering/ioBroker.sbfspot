@@ -1,11 +1,15 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "0.2.2",
+    "version": "0.2.3",
     "news": {
       "0.3.0": {
         "en": "Bluetooth direct interface to inverter",
         "de": "direktes Interface via Bluetooth zum Wechselrichter"
+      },
+      "0.2.3": {
+        "en": "history as json-objects incl. flot widget",
+        "de": "Verlauf als json-Objekte inkl. flot widget"
       },
       "0.2.2": {
         "en": "renamed to sbfspot",
