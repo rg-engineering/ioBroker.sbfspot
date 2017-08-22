@@ -21,8 +21,27 @@
     if (vis.editMode) {
         // Add words for basic widgets
         $.extend(true, systemDictionary, {
-  
-            //"ticksonxaxix": { "en": "ticks on X axis", "de": "Anzahl Labels / X Achse", "ru": "???" },
+            "1 second": { "en": "1 second", "de": "1 Sekunde", "ru": "1 ???????" },
+            "10 seconds": { "en": "10 seconds", "de": "10 Sekunden", "ru": "10 ??????" },
+            "30 seconds": { "en": "30 seconds", "de": "30 Sekunden", "ru": "30 ??????" },
+            "1 minute": { "en": "1 minute", "de": "1 Minute", "ru": "1 ??????" },
+            "2 minutes": { "en": "2 minutes", "de": "2 Minuten", "ru": "2 ??????" },
+            "5 minutes": { "en": "5 minutes", "de": "5 Minuten", "ru": "5 ?????" },
+            "10 minutes": { "en": "10 minutes", "de": "10 Minuten", "ru": "10 ?????" },
+            "30 minutes": { "en": "30 minutes", "de": "30 Minuten", "ru": "30 ?????" },
+            "1 hour": { "en": "1 hour", "de": "1 Stunde", "ru": "1 ???" },
+            "2 hours": { "en": "2 hours", "de": "2 Stunden", "ru": "2 ????" },
+            "4 hours": { "en": "4 hours", "de": "4 Stunden", "ru": "4 ????" },
+            "8 hours": { "en": "8 hours", "de": "8 Stunden", "ru": "8 ?????" },
+            "12 hours": { "en": "12 hours", "de": "12 Stunden", "ru": "12 ?????" },
+            "24 hours": { "en": "24 hours", "de": "24 Stunden", "ru": "24 ????" },
+            "instance": { "en": "sbfspot instance", "de": "sbfspot-Instanz", "ru": "?????????" },
+            "time_interval": { "en": "Time interval", "de": "Zeitintervall", "ru": "????????" },
+            "group_oids": { "en": "OIDS", "de": "OIDs", "ru": "???" },
+            "oid_today": { "en": "OID today", "de": "OID today", "ru": "???" },
+            "oid_last30days": { "en": "OID last30days", "de": "OID last30days", "ru": "???" },
+            "oid_last12months": { "en": "OID last12months", "de": "OID last12months", "ru": "???" },
+            "oid_years": { "en": "OID_years", "de": "OID_years", "ru": "???" },
         });
     }
 
@@ -192,7 +211,7 @@
     };
 
     if (vis.editMode) {
-        vis.binds.weather.onInstanceChanged = function (widgetID, view, newId, fields) {
+        vis.binds.sbfspot.onInstanceChanged = function (widgetID, view, newId, fields) {
             console.log('---------: ' + widgetID + ' - ' + view + ' - ' + newId + ' - ' + fields);
 
 
@@ -208,14 +227,18 @@
             
             //then copy new values
             if (newId.indexOf("sbfspot") > -1) {
-                vis.views[view].widgets[widgetID].data.oid_today = newId + ".today";
-                vis.widgets[widgetID].data.oid_today = newId + ".today";
-                vis.views[view].widgets[widgetID].data.oid_last30days = newId + ".last30days";
-                vis.widgets[widgetID].data.oid_last30days = newId + ".last30days";
-                vis.views[view].widgets[widgetID].data.oid_last12months = newId + ".last12months";
-                vis.widgets[widgetID].data.oid_last12months = newId + ".last12months";
-                vis.views[view].widgets[widgetID].data.oid_years = newId + ".years";
-                vis.widgets[widgetID].data.oid_years = newId + ".years";
+                //sbfspot.0.2000562095.history.last12Months
+
+                var sSerial = "2000562095";
+
+                vis.views[view].widgets[widgetID].data.oid_today = newId + "." + sSerial + ".history.today";
+                vis.widgets[widgetID].data.oid_today = newId + "." + sSerial + ".history.today";
+                vis.views[view].widgets[widgetID].data.oid_last30days = newId + "." + sSerial + ".history.last30days";
+                vis.widgets[widgetID].data.oid_last30days = newId + "." + sSerial + ".history.last30days";
+                vis.views[view].widgets[widgetID].data.oid_last12months = newId + "." + sSerial + ".history.last12months";
+                vis.widgets[widgetID].data.oid_last12months = newId + "." + sSerial + ".history.last12months";
+                vis.views[view].widgets[widgetID].data.oid_years = newId + "." + sSerial + ".history.years";
+                vis.widgets[widgetID].data.oid_years = newId + "." + sSerial + ".history.years";
             }
 
           return changed;
@@ -237,7 +260,7 @@
         data-vis-type="sbfspot"
         data-vis-update-style="true"
         data-vis-prev='<img src="widgets/sbfspot/img/Prev_tplSbfspot.png"></img>'
-        data-vis-attrs="instance/sbfspot/onInstanceChanged;"
+        data-vis-attrs="instance/sbfspot/onInstanceChanged; serial//onInstanceChanged"
         data-vis-attrs0="time_interval[30 minutes]/select,1 second,10 seconds,30 seconds,1 minute,2 minutes,5 minutes,10 minutes,30 minutes,1 hour,2 hours,4 hours,8 hours,12 hours,24 hours;"
         data-vis-attrs1="group.oids;oid_today/id;oid_last30days/id;oid_last12months/id;oid_years/id;"
 

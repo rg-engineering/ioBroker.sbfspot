@@ -21,6 +21,8 @@
     <Compile Include="test\lib\setup.js" />
     <Compile Include="test\testAdapter.js" />
     <Compile Include="test\testPackageFiles.js" />
+    <Compile Include="widgets\sbfspot\lib\js\flot\jquery.flot.js" />
+    <Compile Include="widgets\sbfspot\lib\js\flot\jquery.flot.time.js" />
     <Content Include=".gitignore" />
     <Content Include=".travis.yml" />
     <Content Include="appveyor.yml" />
@@ -38,6 +40,8 @@
     <Compile Include="tasks\jscs.js" />
     <Compile Include="tasks\jscsRules.js" />
     <Compile Include="tasks\jshint.js" />
+    <Content Include="widgets\sbfspot.html" />
+    <Content Include="widgets\sbfspot\css\flot.css" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="admin" />
@@ -48,6 +52,13 @@
     <Folder Include="typings\" />
     <Folder Include="typings\globals\" />
     <Folder Include="typings\globals\node\" />
+    <Folder Include="widgets\" />
+    <Folder Include="widgets\sbfspot\" />
+    <Folder Include="widgets\sbfspot\css\" />
+    <Folder Include="widgets\sbfspot\img\" />
+    <Folder Include="widgets\sbfspot\lib\" />
+    <Folder Include="widgets\sbfspot\lib\js\" />
+    <Folder Include="widgets\sbfspot\lib\js\flot\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="typings\globals\node\index.d.ts" />

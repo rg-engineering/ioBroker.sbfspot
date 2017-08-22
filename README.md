@@ -23,6 +23,11 @@ Hints:
 #### 0.3.0
 * (René) Bluetooth integration for direct interface to inverter (planned)
 
+#### 0.2.3
+* (René) adding historical data as datapoint (JSON)
+* (René) new vis widget to show historical data
+
+
 #### 0.2.2
 * (René) renamed to sbfspot
 
