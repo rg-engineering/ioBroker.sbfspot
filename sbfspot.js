@@ -304,7 +304,7 @@ function AddInverterVariables(serial) {
 
     adapter.setObjectNotExists(serial + '.history.today', {
         type: 'state',
-        common: { name: 'SMA inverter history today (JSON)', type: 'number', role: 'ertrag', unit: 'kW', read: true, write: false },
+        common: { name: 'SMA inverter history today (JSON)', type: 'number', role: 'ertrag', unit: '', read: true, write: false },
         native: { location: serial + '.history.today' }
     });
 
@@ -316,13 +316,13 @@ function AddInverterVariables(serial) {
 
     adapter.setObjectNotExists(serial + '.history.last12Months', {
         type: 'state',
-        common: { name: 'SMA inverter history last 12 Months (JSON)', type: 'number', role: 'ertrag', unit: 'kWh', read: true, write: false },
+        common: { name: 'SMA inverter history last 12 Months (JSON)', type: 'number', role: 'ertrag', unit: '', read: true, write: false },
         native: { location: serial + '.history.last12Months' }
     });
 
     adapter.setObjectNotExists(serial + '.history.years', {
         type: 'state',
-        common: { name: 'SMA inverter history years (JSON)', type: 'number', role: 'ertrag', unit: 'kWh', read: true, write: false },
+        common: { name: 'SMA inverter history years (JSON)', type: 'number', role: 'ertrag', unit: '', read: true, write: false },
         native: { location: serial + '.history.years' }
     });
 }
@@ -559,7 +559,7 @@ function DB_CalcHistory_Today(serial) {
             adapter.log.debug('rows ' + JSON.stringify(rows));
   
             var oLastDays = [];
-            var daydata = {};
+            //var daydata = {};
 
             for (var i in rows) {
 
@@ -573,6 +573,88 @@ function DB_CalcHistory_Today(serial) {
             }
 
             adapter.setState(serial + '.history.today', { ack: true, val: JSON.stringify(oLastDays) });
+
+            DB_CalcHistory_Years(serial);
+        }
+        else {
+            adapter.log.error('Error while performing Query.');
+        }
+    });
+
+
+}
+
+
+
+function DB_CalcHistory_Years(serial) {
+    //SELECT from_unixtime(TimeStamp, '%Y') as date, Max(`ETotal`) as ertrag FROM `SpotData` WHERE `Serial` = '2000562095'  Group By from_unixtime(TimeStamp, '%Y')
+    var query = "SELECT from_unixtime(TimeStamp, '%Y') as date, Max(`ETotal`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' Group By from_unixtime(TimeStamp, '%Y')";
+    adapter.log.debug(query);
+    mysql_connection.query(query, function (err, rows, fields) {
+        if (!err) {
+            adapter.log.debug('rows ' + JSON.stringify(rows));
+
+            var oLastYears = [];
+            //var yeardata = {};
+
+            for (var i in rows) {
+
+                var data = rows[i];
+
+                oLastYears.push({
+                    "year": data["date"],
+                    "value": data["ertrag"]
+                });
+                //adapter.log.debug(JSON.stringify(oLastDays));
+            }
+
+            adapter.setState(serial + '.history.years', { ack: true, val: JSON.stringify(oLastYears) });
+
+            DB_CalcHistory_Months(serial);
+        }
+        else {
+            adapter.log.error('Error while performing Query.');
+        }
+    });
+
+
+}
+
+function DB_CalcHistory_Months(serial) {
+
+    var dateto = new Date(); //today
+
+    var datefrom = new Date();
+    datefrom.setHours(0);
+    datefrom.setMinutes(0);
+
+    datefrom.setFullYear(dateto.getFullYear() - 1);
+    datefrom.setDate(1);
+
+    adapter.log.debug('DB_CalcHistory_Months: from ' + datefrom.toDateString() + " to " + dateto.toDateString());
+
+    //SELECT from_unixtime(TimeStamp, '%Y-%m') as date, Max(`ETotal`) as ertrag FROM `SpotData` WHERE `Serial` = '2000562095'  Group By from_unixtime(TimeStamp, '%Y-%m')
+    var query = "SELECT from_unixtime(TimeStamp, '%Y-%m') as date, Max(`ETotal`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By from_unixtime(TimeStamp, '%Y-%m')";
+    adapter.log.debug(query);
+    mysql_connection.query(query, function (err, rows, fields) {
+        if (!err) {
+            adapter.log.debug('rows ' + JSON.stringify(rows));
+
+            var oLastMonth = [];
+            //var monthdata = {};
+
+            for (var i in rows) {
+
+                var data = rows[i];
+
+                oLastMonth.push({
+                    "month": data["date"],
+                    "value": data["ertrag"]
+                });
+                //adapter.log.debug(JSON.stringify(oLastDays));
+            }
+
+            adapter.setState(serial + '.history.last12Months', { ack: true, val: JSON.stringify(oLastMonth) });
 
             DB_Disconnect();
         }
