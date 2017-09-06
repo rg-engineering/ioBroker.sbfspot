@@ -1,11 +1,11 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "0.2.3",
+    "version": "0.2.4",
     "news": {
-      "0.3.0": {
-        "en": "Bluetooth direct interface to inverter",
-        "de": "direktes Interface via Bluetooth zum Wechselrichter"
+      "0.2.4": {
+        "en": "logo changed",
+        "de": "Logo geändert"
       },
       "0.2.3": {
         "en": "history as json-objects incl. flot widget",
@@ -44,10 +44,10 @@
     "platform": "Javascript/Node.js",
     "mode": "schedule",
     "schedule": "*/15 * * * *",
-    "icon": "myhomecontrol.png",
+    "icon": "sbfspot.png",
     "enabled": true,
     "messagebox": true,
-    "extIcon": "https://raw.githubusercontent.com/rg-engineering/ioBroker.sbfspot/master/admin/myhomecontrol.png",
+    "extIcon": "https://raw.githubusercontent.com/rg-engineering/ioBroker.sbfspot/master/admin/sbfspot.png",
     "keywords": [ "sbfspot" ],
     "readme": "https://github.com/rg-engineering/ioBroker.sbfspot/blob/master/README.md",
     "loglevel": "debug",

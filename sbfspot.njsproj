@@ -25,6 +25,7 @@
     <Compile Include="widgets\sbfspot\lib\js\flot\jquery.flot.time.js" />
     <Content Include=".gitignore" />
     <Content Include=".travis.yml" />
+    <Content Include="admin\sbfspot.png" />
     <Content Include="appveyor.yml" />
     <Content Include="LICENSE" />
     <Content Include="readme.txt" />

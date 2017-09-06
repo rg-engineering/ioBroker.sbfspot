@@ -1,4 +1,4 @@
-﻿![Logo](admin/myhomecontrol.png)
+﻿![Logo](admin/sbfspot.png)
 # ioBroker.sbfspot
 ===========================
 
@@ -11,22 +11,22 @@
 
 This adapter reads data from SMA power inverters using sbfspot.
 Now both database types (mySQL and sqlite) are supported.
+Sine version 0.2.3 there is a own vis widget based on flot available to show historical data.
 
 Hints: 
-* use latest version from sbfspot from https://sbfspot.codeplex.com/
+* use latest version from sbfspot from https://sbfspot.codeplex.com/ or from https://github.com/rg-engineering/SBFspot
 * adapter, sbfspot and databases (mySQL or sqlite) must run on the same system e.g. Raspberry PI
 * installation manual for sbfspot on Raspberry Pi (or similar) can be found under http://wiki.rg-engineering.eu/index.php?title=Install_sbfspot
 
 
 ## Changelog
 
-#### 0.3.0
-* (René) Bluetooth integration for direct interface to inverter (planned)
+#### 0.2.4
+* (René) logo changed
 
 #### 0.2.3
 * (René) adding historical data as datapoint (JSON)
 * (René) new vis widget to show historical data
-
 
 #### 0.2.2
 * (René) renamed to sbfspot
