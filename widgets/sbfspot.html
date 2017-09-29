@@ -6,7 +6,7 @@
 -->
 <!-- here you can include so many css as you want -->
 <!--<link rel="stylesheet" href="widgets/weather/css/style.css" />-->
-<link href="widgets/sbfspot/css/flot.css" rel="stylesheet" type="text/css">
+<!--<link href="widgets/sbfspot/css/flot.css" rel="stylesheet" type="text/css"> -->
 
 <script type="text/javascript" src="widgets/sbfspot/lib/js/flot/jquery.flot.js"></script>
 <script type="text/javascript" src="widgets/sbfspot/lib/js/flot/jquery.flot.time.js"></script>
@@ -35,7 +35,7 @@
             "8 hours": { "en": "8 hours", "de": "8 Stunden", "ru": "8 ?????" },
             "12 hours": { "en": "12 hours", "de": "12 Stunden", "ru": "12 ?????" },
             "24 hours": { "en": "24 hours", "de": "24 Stunden", "ru": "24 ????" },
-            "instance": { "en": "sbfspot instance", "de": "sbfspot-Instanz", "ru": "?????????" },
+            "sbfspotinstance": { "en": "sbfspot instance", "de": "sbfspot-Instanz", "ru": "?????????" },
             "time_interval": { "en": "Time interval", "de": "Zeitintervall", "ru": "????????" },
             "group_oids": { "en": "OIDS", "de": "OIDs", "ru": "???" },
             "oid_today": { "en": "OID today", "de": "OID today", "ru": "???" },
@@ -96,7 +96,7 @@
             update: function ($div) {
                 var data = $div.data('options');
 
-                if (!data.instance) {
+                if (!data.sbfspotinstance) {
                     console.log("keine instanz " + data.chartType);
 
                     $div.html("<br> <center> <font color='red'> no instance </font> </center></br>");
@@ -104,7 +104,7 @@
                     //warum wir das brauchen, verstehe ich noch nicht...
                     //ist eigentlich nur dummy... aber ohne wird plot ganz klein dargestellt ???
                     vis.getHistory(data.oid, {
-                        instance: data.instance,
+                        instance: data.sbfspotinstance,
                         count: 10,
                         aggregate:  'average',
                         start: new Date().getTime(),
@@ -455,7 +455,7 @@
                 data = null;
                 $div.data('options', _data);
 
-                if (_data.instance) {
+                if (_data.sbfspotinstance) {
 
                     var oid_today = _data.oid_today;
                     console.log("bind " + oid_today);
@@ -551,15 +551,12 @@
         data-vis-type="sbfspot"
         data-vis-update-style="true"
         data-vis-prev='<img src="widgets/sbfspot/img/Prev_tplSbfspot.png"></img>'
-        data-vis-attrs="instance/sbfspot/onInstanceChanged; serial//onInstanceChanged"
+        data-vis-attrs="sbfspotinstance/sbfspot/onInstanceChanged; serial//onInstanceChanged;"
         data-vis-attrs0="time_interval[30 minutes]/select,1 second,10 seconds,30 seconds,1 minute,2 minutes,5 minutes,10 minutes,30 minutes,1 hour,2 hours,4 hours,8 hours,12 hours,24 hours;withxaxix[true]/checkbox;ticksonxaxix[5];"
-        
         data-vis-attrs1="group.today;todayvisible[true]/checkbox;todaycolor[#f1f113]/color;"
         data-vis-attrs2="group.last30days;last30daysvisible[true]/checkbox;last30dayscolor[#00b3ac]/color;"
         data-vis-attrs3="group.last12months;last12monthsvisible[true]/checkbox;last12monthscolor[#00b3ac]/color;"
         data-vis-attrs4="group.years;yearsvisible[true]/checkbox;yearscolor[#00b3ac]/color;"
-
-        
         data-vis-attrs5="group.oids;oid_today/id;oid_last30days/id;oid_last12months/id;oid_years/id;"
 
 >

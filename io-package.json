@@ -1,8 +1,12 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "0.2.4",
+    "version": "0.2.5",
     "news": {
+      "0.2.5": {
+        "en": "use install date to calculate historical values",
+        "de": "Installationsdatum verwendet, um historische Daten zu berechnen"
+      },
       "0.2.4": {
         "en": "logo changed",
         "de": "Logo geändert"
@@ -62,7 +66,8 @@
     "sbfspotDatabasename": "SBFspot",
     "useBluetooth": false,
     "databasetype": "mySQL",
-    "sqlite_path":  ""
+    "sqlite_path": "",
+    "install_date":  "2001-08-25"
   }
 }
 

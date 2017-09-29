@@ -21,6 +21,9 @@ Hints:
 
 ## Changelog
 
+#### 0.2.5
+* (René) use install date to calculate historical values
+
 #### 0.2.4
 * (René) logo changed
 

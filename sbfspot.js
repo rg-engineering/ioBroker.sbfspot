@@ -588,7 +588,7 @@ function DB_CalcHistory_Today(serial) {
 
 function DB_CalcHistory_Years(serial) {
     //SELECT from_unixtime(TimeStamp, '%Y') as date, Max(`ETotal`) as ertrag FROM `SpotData` WHERE `Serial` = '2000562095'  Group By from_unixtime(TimeStamp, '%Y')
-    var query = "SELECT from_unixtime(TimeStamp, '%Y') as date, Max(`ETotal`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' Group By from_unixtime(TimeStamp, '%Y')";
+    var query = "SELECT from_unixtime(TimeStamp, '%Y') as date, Max(`ETotal`) as ertrag, Min(`ETotal`) as startertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' Group By from_unixtime(TimeStamp, '%Y')";
     adapter.log.debug(query);
     mysql_connection.query(query, function (err, rows, fields) {
         if (!err) {
@@ -597,15 +597,50 @@ function DB_CalcHistory_Years(serial) {
             var oLastYears = [];
             //var yeardata = {};
 
+            var firstyear = true;
+            var yearvalue = 0;
             for (var i in rows) {
 
                 var data = rows[i];
 
-                oLastYears.push({
-                    "year": data["date"],
-                    "value": data["ertrag"]
-                });
-                //adapter.log.debug(JSON.stringify(oLastDays));
+                var installdate = new Date(adapter.config.install_date);
+
+                var installyear = installdate.getUTCFullYear();
+
+                if (installyear < data["date"] && firstyear == true) {
+
+                    var diff = data["date"] - installyear;
+                    var dataperyear = data["ertrag"] / (diff+1);
+
+                    adapter.log.debug("yeardiff " + diff + " value per year " + dataperyear);
+
+                    
+                    for (var n = 0; n <= diff; n++) {
+
+                        yearvalue += dataperyear;
+
+                        oLastYears.push({
+                            "year": installyear + n,
+                            "value": yearvalue
+                        });
+                    }
+
+                    /*
+                    oLastYears.push({
+                        "year": data["date"],
+                        "value": data["ertrag"]
+                    });
+                    */
+                }
+                else {
+                    yearvalue = data["ertrag"];
+                    oLastYears.push({
+                        "year": data["date"],
+                        "value": yearvalue
+                    });
+                }
+                firstyear = false;
+                
             }
 
             adapter.setState(serial + '.history.years', { ack: true, val: JSON.stringify(oLastYears) });

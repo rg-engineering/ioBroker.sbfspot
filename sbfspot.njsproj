@@ -42,7 +42,6 @@
     <Compile Include="tasks\jscsRules.js" />
     <Compile Include="tasks\jshint.js" />
     <Content Include="widgets\sbfspot.html" />
-    <Content Include="widgets\sbfspot\css\flot.css" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="admin" />
