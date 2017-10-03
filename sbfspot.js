@@ -23,6 +23,8 @@ var utils =    require(__dirname + '/lib/utils'); // Get common adapter utils
 // adapter will be restarted automatically every time as the configuration changed, e.g system.adapter.template.0
 var adapter = utils.adapter('sbfspot');
 
+var FirstValue4History;
+var FirstDate4History;
 
 //Some message was sent to adapter instance over message box. Used by email, pushover, text2speech, ...
 adapter.on('message', function (obj) {
@@ -533,6 +535,38 @@ function DB_CalcHistory_LastMonth(serial) {
 
             adapter.setState(serial + '.history.last30Days', { ack: true, val: JSON.stringify(oLastDays) });
 
+            DB_CalcHistory_Prepare(serial);
+        }
+        else {
+            adapter.log.error('Error while performing Query.');
+        }
+    });
+
+
+}
+
+function DB_CalcHistory_Prepare(serial) {
+
+    var dateto = new Date(); //today
+
+    //SELECT from_unixtime(TimeStamp, '%Y-%m-%d') as date, ETotal  FROM `SpotData` ORDER by `TimeStamp` ASC LIMIT  1
+    var query = "SELECT from_unixtime(TimeStamp, '%Y-%m-%d') as date, ETotal  FROM `SpotData` WHERE `Serial` = '" + serial +"' ORDER by `TimeStamp` ASC LIMIT  1" ;
+    adapter.log.debug(query);
+    mysql_connection.query(query, function (err, rows, fields) {
+        if (!err) {
+            adapter.log.debug('prepare: rows ' + JSON.stringify(rows));
+
+
+            for (var i in rows) {
+
+                var data = rows[i];
+
+                FirstValue4History = data["ETotal"];
+                FirstDate4History = data["date"];
+
+                adapter.log.debug(FirstDate4History + " " + FirstValue4History);
+            }
+
             DB_CalcHistory_Today(serial);
         }
         else {
@@ -542,6 +576,7 @@ function DB_CalcHistory_LastMonth(serial) {
 
 
 }
+
 
 function DB_CalcHistory_Today(serial) {
 
@@ -597,31 +632,53 @@ function DB_CalcHistory_Years(serial) {
             var oLastYears = [];
             //var yeardata = {};
 
+            var installdate = new Date(adapter.config.install_date);
+            var firstvaluedate = new Date(FirstDate4History);
+
+            //adapter.log.debug("------ " + installdate.toDateString() + " " + firstvaluedate.toDateString());
+            //adapter.log.debug("------ " + installdate.getUTCFullYear() + " < " + firstvaluedate.getUTCFullYear());
+
+            var installyear = installdate.getUTCFullYear();
             var firstyear = true;
             var yearvalue = 0;
             for (var i in rows) {
 
                 var data = rows[i];
 
-                var installdate = new Date(adapter.config.install_date);
+                if (installdate.getUTCFullYear() < firstvaluedate.getUTCFullYear() && firstyear == true) {
 
-                var installyear = installdate.getUTCFullYear();
+                    var diffyears = firstvaluedate.getUTCFullYear() - installdate.getUTCFullYear();
 
-                if (installyear < data["date"] && firstyear == true) {
+                    var monthoffirstyear = 12 - installdate.getUTCMonth();
+                    var monthoflastyear = firstvaluedate.getUTCMonth();
+                    var months = monthoffirstyear + monthoflastyear + (diffyears - 1) * 12;
 
-                    var diff = data["date"] - installyear;
-                    var dataperyear = data["ertrag"] / (diff+1);
+                    ((adapter.log.debug("---- " + monthoffirstyear + " " + monthoflastyear); 
+                    var valuepermonth = FirstValue4History / months;
 
-                    adapter.log.debug("yeardiff " + diff + " value per year " + dataperyear);
+                    //adapter.log.debug("++++ yeardiff " + diffyears + " monthdiff " + months + " value per month " + valuepermonth);
 
-                    
-                    for (var n = 0; n <= diff; n++) {
 
-                        yearvalue += dataperyear;
+                    for (var n = 0; n <= diffyears; n++) {
+
+                        if (n == 0) {
+                            yearvalue += monthoffirstyear * valuepermonth;
+                        }
+                        else if (n == (diffyears)) {
+                            yearvalue += monthoflastyear * valuepermonth + data["ertrag"] - data["startertrag"];
+
+                            //adapter.log.debug("???? " + monthoflastyear + " " + data["ertrag"] + " " + data["startertrag"]); 
+
+                        }
+                        else {
+                            yearvalue += 12 * valuepermonth;
+                        }
+
+                        adapter.log.debug((installyear + n) + " " + yearvalue); 
 
                         oLastYears.push({
                             "year": installyear + n,
-                            "value": yearvalue
+                            "value": parseInt(yearvalue)
                         });
                     }
 
@@ -640,9 +697,9 @@ function DB_CalcHistory_Years(serial) {
                     });
                 }
                 firstyear = false;
-                
-            }
 
+            }
+            adapter.log.debug(JSON.stringify(oLastYears));
             adapter.setState(serial + '.history.years', { ack: true, val: JSON.stringify(oLastYears) });
 
             DB_CalcHistory_Months(serial);
@@ -666,7 +723,7 @@ function DB_CalcHistory_Months(serial) {
     datefrom.setFullYear(dateto.getFullYear() - 1);
     datefrom.setDate(1);
 
-    adapter.log.debug('DB_CalcHistory_Months: from ' + datefrom.toDateString() + " to " + dateto.toDateString());
+    //adapter.log.debug('DB_CalcHistory_Months: from ' + datefrom.toDateString() + " to " + dateto.toDateString());
 
     //SELECT from_unixtime(TimeStamp, '%Y-%m') as date, Max(`ETotal`) as ertrag FROM `SpotData` WHERE `Serial` = '2000562095'  Group By from_unixtime(TimeStamp, '%Y-%m')
     var query = "SELECT from_unixtime(TimeStamp, '%Y-%m') as date, Max(`ETotal`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By from_unixtime(TimeStamp, '%Y-%m')";
