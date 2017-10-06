@@ -26,6 +26,13 @@ var adapter = utils.adapter('sbfspot');
 var FirstValue4History;
 var FirstDate4History;
 
+//---------- sqlite
+// https://github.com/mapbox/node-sqlite3
+var sqlite_db;
+
+//---------- mySQL
+var mysql_connection;
+
 //Some message was sent to adapter instance over message box. Used by email, pushover, text2speech, ...
 adapter.on('message', function (obj) {
 	if (obj) {
@@ -109,9 +116,9 @@ function main() {
 
     if (adapter.config.useBluetooth) {
         //here we use bluetooth or speedwire
-        adapter.log.info("direct bluetooth connection not implenented yet");
+        adapter.log.info("direct bluetooth connection not implemented yet");
     }
-    else if (adapter.config.databasetype == 'mySQL') {
+    else {
 
         adapter.log.info("start with mySQL");
         DB_Connect(function () {
@@ -120,34 +127,10 @@ function main() {
             }, 6000);
         });
     }
-    else {
-        // here we use sqlite
-
-        adapter.log.info("start with sqlite");
-
-        DB_sqlite_Connect(function () {
-            setTimeout(function () {
-                adapter.stop();
-            }, 6000);
-        });
-    }
-    
-
 }
 
-
-
-
-
 function AddInverterVariables(serial) {
-    /*
-    adapter.setObjectNotExists('SMA_inverter', {
-        type: 'channel',
-        role: 'inverter',
-        common: { name: 'SMA inverter' },
-        native: { location: adapter.config.location }
-    });
-    */
+
     adapter.setObjectNotExists(serial, {
         type: 'channel',
         role: 'inverter',
@@ -245,7 +228,6 @@ function AddInverterVariables(serial) {
         common: { name: 'SMA inverter Voltage DC 2', type: 'number', role: 'ertrag', unit: 'V', read: true, write: false },
         native: { location: serial + '.Udc2' }
     });
-
 
     adapter.setObjectNotExists(serial + '.Pac1', {
         type: 'state',
@@ -388,112 +370,157 @@ var rows = [
     }]
 */
 
-//*****************************************************************************************************************
-// mySQL
-//
-//
-
-//these function are used for connection to mySQL database filled by sbfspot
 
 
-var mysql_connection;
+
+
 
 function DB_Connect(cb) {
-    //var express = require("express");
-    var mysql = require('mysql');
-    mysql_connection = mysql.createConnection({
-        host: adapter.config.sbfspotIP,
-        user: adapter.config.sbfspotUser,
-        password: adapter.config.sbfspotPassword,
-        database: adapter.config.sbfspotDatabasename
-    });
+
+    if (adapter.config.databasetype == 'mySQL') {
+
+        adapter.log.debug("--- connecting to " + adapter.config.sbfspotIP + " " + adapter.config.sbfspotDatabasename);
+
+        //var express = require("express");
+        var mysql = require('mysql');
+        mysql_connection = mysql.createConnection({
+            host: adapter.config.sbfspotIP,
+            user: adapter.config.sbfspotUser,
+            password: adapter.config.sbfspotPassword,
+            database: adapter.config.sbfspotDatabasename
+        });
 
 
-    mysql_connection.connect(function (err) {
-        if (!err) {
-            adapter.log.debug("mySql Database is connected ... ");
-            DB_GetInverters();
-        } else {
-            adapter.log.error("Error connecting mySql database ... ");
-        }
-    });
+        mysql_connection.connect(function (err) {
+            if (!err) {
+                adapter.log.debug("mySql Database is connected ... ");
+                DB_GetInverters();
+            } else {
+                adapter.log.error("Error connecting mySql database ... ");
+            }
+        });
+    }
+    else {
+        var sqlite3 = require('sqlite3').verbose();
 
+        adapter.log.debug("--- connecting to " + adapter.config.sqlite_path);
+
+        sqlite_db = new sqlite3.Database(adapter.config.sqlite_path);
+
+        adapter.log.debug("sqlite Database is connected ...");
+        DB_GetInverters();
+
+        if (cb) cb();
+
+    }
     if (cb) cb();
 }
 
 function DB_GetInverters() {
     var query = 'SELECT * from Inverters';
     adapter.log.debug(query);
-    mysql_connection.query(query, function (err, rows, fields) {
-        if (!err) {
-            adapter.log.debug('rows ' + JSON.stringify(rows));
+    if (adapter.config.databasetype == 'mySQL') {
+        mysql_connection.query(query, function (err, rows, fields) {  
+            GetInverter(err, rows);
+        });
+    }
+    else {
+        sqlite_db.all(query, function (err, rows) {
 
-
-            for (var i in rows) {
-                adapter.log.info("got data from " + rows[0].Type + " " + rows[0].Serial);
-
-                AddInverterVariables(rows[i].Serial);
-
-                adapter.setState(rows[i].Serial + ".Type", { ack: true, val: rows[0].Type });
-                //adapter.setState( rows[i].Serial + ".EToday", { ack: true, val: rows[0].EToday }); this is kW
-                //adapter.setState(rows[i].Serial + ".ETotal", { ack: true, val: rows[0].ETotal }); this is kW
-                adapter.setState(rows[i].Serial + ".SW_Version", { ack: true, val: rows[0].SW_Version });
-                adapter.setState(rows[i].Serial + ".TotalPac", { ack: true, val: rows[0].TotalPac });
-                adapter.setState(rows[i].Serial + ".OperatingTime", { ack: true, val: rows[0].OperatingTime });
-                adapter.setState(rows[i].Serial + ".FeedInTime", { ack: true, val: rows[0].FeedInTime });
-                adapter.setState(rows[i].Serial + ".Status", { ack: true, val: rows[0].Status });
-                adapter.setState(rows[i].Serial + ".GridRelay", { ack: true, val: rows[0].GridRelay });
-                adapter.setState(rows[i].Serial + ".Temperature", { ack: true, val: rows[0].Temperature });
-
-                DB_GetInvertersData(rows[i].Serial);
-            }
-        }
-        else {
-            adapter.log.error('Error while performing Query.');
-        }
-    });
+            GetInverter(err, rows);
+        });
+    }
 }
+
+function GetInverter(err, rows) {
+    if (!err) {
+
+        adapter.log.debug('rows ' + JSON.stringify(rows));
+        for (var i in rows) {
+            
+
+            adapter.log.info("got data from " + rows[i].Type + " with ID " + rows[i].Serial);
+
+            AddInverterVariables(rows[i].Serial);
+
+            adapter.setState(rows[i].Serial + ".Type", { ack: true, val: rows[i].Type });
+            //adapter.setState( rows[i].Serial + ".EToday", { ack: true, val: rows[i].EToday }); this is kW
+            //adapter.setState(rows[i].Serial + ".ETotal", { ack: true, val: rows[i].ETotal }); this is kW
+            adapter.setState(rows[i].Serial + ".SW_Version", { ack: true, val: rows[i].SW_Version });
+            adapter.setState(rows[i].Serial + ".TotalPac", { ack: true, val: rows[i].TotalPac });
+            adapter.setState(rows[i].Serial + ".OperatingTime", { ack: true, val: rows[i].OperatingTime });
+            adapter.setState(rows[i].Serial + ".FeedInTime", { ack: true, val: rows[i].FeedInTime });
+            adapter.setState(rows[i].Serial + ".Status", { ack: true, val: rows[i].Status });
+            adapter.setState(rows[i].Serial + ".GridRelay", { ack: true, val: rows[i].GridRelay });
+            adapter.setState(rows[i].Serial + ".Temperature", { ack: true, val: rows[i].Temperature });
+
+            DB_GetInvertersData(rows[i].Serial);
+        }
+
+    }
+    else {
+        adapter.log.error('Error while performing Query.');
+    }
+
+}
+
 
 function DB_GetInvertersData(serial) {
 
     //SELECT * from SpotData  where Serial ='2000562095' ORDER BY TimeStamp DESC LIMIT 1
     var query = 'SELECT * from SpotData  where Serial =' + serial + ' ORDER BY TimeStamp DESC LIMIT 1';
     adapter.log.debug(query);
-    mysql_connection.query(query, function (err, rows, fields) {
-        if (!err) {
-            adapter.log.debug('rows ' + JSON.stringify(rows));
-
-            //should only be one row...
-            adapter.setState(rows[0].Serial + ".Pdc1", { ack: true, val: rows[0].Pdc1 });
-            adapter.setState(rows[0].Serial + ".Pdc2", { ack: true, val: rows[0].Pdc2 });
-            adapter.setState(rows[0].Serial + ".Idc1", { ack: true, val: rows[0].Idc1 });
-            adapter.setState(rows[0].Serial + ".Idc2", { ack: true, val: rows[0].Idc2 });
-            adapter.setState(rows[0].Serial + ".Udc1", { ack: true, val: rows[0].Udc1 });
-            adapter.setState(rows[0].Serial + ".Udc2", { ack: true, val: rows[0].Udc2 });
-
-            adapter.setState(rows[0].Serial + ".Pac1", { ack: true, val: rows[0].Pac1 });
-            adapter.setState(rows[0].Serial + ".Pac2", { ack: true, val: rows[0].Pac2 });
-            adapter.setState(rows[0].Serial + ".Pac3", { ack: true, val: rows[0].Pac3 });
-            adapter.setState(rows[0].Serial + ".Iac1", { ack: true, val: rows[0].Iac1 });
-            adapter.setState(rows[0].Serial + ".Iac2", { ack: true, val: rows[0].Iac2 });
-            adapter.setState(rows[0].Serial + ".Iac3", { ack: true, val: rows[0].Iac3 });
-            adapter.setState(rows[0].Serial + ".Uac1", { ack: true, val: rows[0].Uac1 });
-            adapter.setState(rows[0].Serial + ".Uac2", { ack: true, val: rows[0].Uac2 });
-            adapter.setState(rows[0].Serial + ".Uac3", { ack: true, val: rows[0].Uac3 });
-
-            adapter.setState(rows[0].Serial + ".EToday", { ack: true, val: rows[0].EToday });
-            adapter.setState(rows[0].Serial + ".ETotal", { ack: true, val: rows[0].ETotal });
-            adapter.setState(rows[0].Serial + ".Frequency", { ack: true, val: rows[0].Frequency });
-            adapter.setState(rows[0].Serial + ".BT_Signal", { ack: true, val: rows[0].BT_Signal });
-
-            DB_CalcHistory_LastMonth(serial)
-            //DB_Disconnect();
-        }
-        else {
-            adapter.log.error('Error while performing Query.');
-        }
-    });
+    if (adapter.config.databasetype == 'mySQL') {
+        //we only get one row = last one
+        mysql_connection.query(query, function (err, rows, fields) {
+            GetInverterData(err, rows,serial);
+        });
+    }
+    else {
+        sqlite_db.all(query, function (err, rows) {
+            GetInverterterData(err, rows,serial);
+        });
+    }
 }
+
+function GetInverterData(err, rows,serial) {
+    if (!err) {
+        adapter.log.debug('rows ' + JSON.stringify(rows));
+
+        for (var i in rows) {
+            //must only be one row...
+            adapter.setState(rows[i].Serial + ".Pdc1", { ack: true, val: rows[i].Pdc1 });
+            adapter.setState(rows[i].Serial + ".Pdc2", { ack: true, val: rows[i].Pdc2 });
+            adapter.setState(rows[i].Serial + ".Idc1", { ack: true, val: rows[i].Idc1 });
+            adapter.setState(rows[i].Serial + ".Idc2", { ack: true, val: rows[i].Idc2 });
+            adapter.setState(rows[i].Serial + ".Udc1", { ack: true, val: rows[i].Udc1 });
+            adapter.setState(rows[i].Serial + ".Udc2", { ack: true, val: rows[i].Udc2 });
+
+            adapter.setState(rows[i].Serial + ".Pac1", { ack: true, val: rows[i].Pac1 });
+            adapter.setState(rows[i].Serial + ".Pac2", { ack: true, val: rows[i].Pac2 });
+            adapter.setState(rows[i].Serial + ".Pac3", { ack: true, val: rows[i].Pac3 });
+            adapter.setState(rows[i].Serial + ".Iac1", { ack: true, val: rows[i].Iac1 });
+            adapter.setState(rows[i].Serial + ".Iac2", { ack: true, val: rows[i].Iac2 });
+            adapter.setState(rows[i].Serial + ".Iac3", { ack: true, val: rows[i].Iac3 });
+            adapter.setState(rows[i].Serial + ".Uac1", { ack: true, val: rows[i].Uac1 });
+            adapter.setState(rows[i].Serial + ".Uac2", { ack: true, val: rows[i].Uac2 });
+            adapter.setState(rows[i].Serial + ".Uac3", { ack: true, val: rows[i].Uac3 });
+
+            adapter.setState(rows[i].Serial + ".EToday", { ack: true, val: rows[i].EToday });
+            adapter.setState(rows[i].Serial + ".ETotal", { ack: true, val: rows[i].ETotal });
+            adapter.setState(rows[i].Serial + ".Frequency", { ack: true, val: rows[i].Frequency });
+            adapter.setState(rows[i].Serial + ".BT_Signal", { ack: true, val: rows[i].BT_Signal });
+        }
+
+        //to do
+        DB_CalcHistory_LastMonth(serial)
+        //DB_Disconnect();
+    }
+    else {
+        adapter.log.error('Error while performing Query.');
+    }
+}
+
 
 function DB_CalcHistory_LastMonth(serial) {
 
@@ -503,78 +530,101 @@ function DB_CalcHistory_LastMonth(serial) {
 
 
     //SELECT from_unixtime(TimeStamp, '%Y') as date, Max(`ETotal`) as ertrag FROM `SpotData` WHERE `Serial` = '2000562095'  Group By from_unixtime(TimeStamp, '%Y')
-    
+
     var dateto = new Date(); //today
     var datefrom = new Date();
     datefrom.setDate(datefrom.getDate() - 30);
     //adapter.log.debug('from ' + datefrom.toDateString() + " to " + dateto.toDateString());
     //gettime gives milliseconds!!
-    var query = "SELECT from_unixtime(TimeStamp, '%Y-%m-%d') as date, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime()/1000 + " AND TimeStamp<= " + dateto.getTime()/1000 + " Group By from_unixtime(TimeStamp, '%Y-%m-%d')";
+    var query = "SELECT from_unixtime(TimeStamp, '%Y-%m-%d') as date, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By from_unixtime(TimeStamp, '%Y-%m-%d')";
     adapter.log.debug(query);
-    mysql_connection.query(query, function (err, rows, fields) {
-        if (!err) {
-            adapter.log.debug('rows ' + JSON.stringify(rows));
+    if (adapter.config.databasetype == 'mySQL') {
+        mysql_connection.query(query, function (err, rows, fields) {
 
-            //rows[{ "date": "2017-07-19", "ertrag": 12259 }, { "date": "2017-07-20", "ertrag": 9905 }, { "date": "2017-07-21", "ertrag": 12991 }, { "date": "2017-07-22", "ertrag": 9292 }, { "date": "2017-07-23", "ertrag": 7730 }, {
+            CalcHistory_LastMonth(err, rows,serial);
+        });
+    }
+    else {
+        sqlite_db.all(query, function (err, rows) {
+            
+            CalcHistory_LastMonth(err, rows,serial);
+        });
+    };
+}
+
+function CalcHistory_LastMonth(err, rows,serial) {
+
+    if (!err) {
+        adapter.log.debug('rows ' + JSON.stringify(rows));
+
+        //rows[{ "date": "2017-07-19", "ertrag": 12259 }, { "date": "2017-07-20", "ertrag": 9905 }, { "date": "2017-07-21", "ertrag": 12991 }, { "date": "2017-07-22", "ertrag": 9292 }, { "date": "2017-07-23", "ertrag": 7730 }, {
 
 
-            var oLastDays = [];
-            var daydata ={};
+        var oLastDays = [];
+        var daydata = {};
 
-            for (var i in rows)  {
+        for (var i in rows) {
 
-                var data = rows[i];
+            var data = rows[i];
 
-                oLastDays.push({
-                    "date": data["date"],
-                    "value": data["ertrag"]
-                });
-                //adapter.log.debug(JSON.stringify(oLastDays));
+            oLastDays.push({
+                "date": data["date"],
+                "value": data["ertrag"]
+            });
+            //adapter.log.debug(JSON.stringify(oLastDays));
 
-            }
-
-            adapter.setState(serial + '.history.last30Days', { ack: true, val: JSON.stringify(oLastDays) });
-
-            DB_CalcHistory_Prepare(serial);
         }
-        else {
-            adapter.log.error('Error while performing Query.');
-        }
-    });
 
+        adapter.setState(serial + '.history.last30Days', { ack: true, val: JSON.stringify(oLastDays) });
+
+        DB_CalcHistory_Prepare(serial);
+    }
+    else {
+        adapter.log.error('Error while performing Query.');
+    }
 
 }
+
+
 
 function DB_CalcHistory_Prepare(serial) {
 
     var dateto = new Date(); //today
 
     //SELECT from_unixtime(TimeStamp, '%Y-%m-%d') as date, ETotal  FROM `SpotData` ORDER by `TimeStamp` ASC LIMIT  1
-    var query = "SELECT from_unixtime(TimeStamp, '%Y-%m-%d') as date, ETotal  FROM `SpotData` WHERE `Serial` = '" + serial +"' ORDER by `TimeStamp` ASC LIMIT  1" ;
+    var query = "SELECT from_unixtime(TimeStamp, '%Y-%m-%d') as date, ETotal  FROM `SpotData` WHERE `Serial` = '" + serial + "' ORDER by `TimeStamp` ASC LIMIT  1";
     adapter.log.debug(query);
-    mysql_connection.query(query, function (err, rows, fields) {
-        if (!err) {
-            adapter.log.debug('prepare: rows ' + JSON.stringify(rows));
 
+    if (adapter.config.databasetype == 'mySQL') {
+        mysql_connection.query(query, function (err, rows, fields) {
+            CalcHistory_Prepare(err, rows, serial);
+        });
+    }
+    else {
+        sqlite_db.all(query, function (err, rows) {
+            CalcHistory_Prepare(err, rows, serial);
+        });
+    }
+}
+function CalcHistory_Prepare(err, rows, serial) {
+    if (!err) {
+        adapter.log.debug('prepare: rows ' + JSON.stringify(rows));
 
-            for (var i in rows) {
+        for (var i in rows) {
 
-                var data = rows[i];
+            var data = rows[i];
 
-                FirstValue4History = data["ETotal"];
-                FirstDate4History = data["date"];
+            FirstValue4History = data["ETotal"];
+            FirstDate4History = data["date"];
 
-                adapter.log.debug(FirstDate4History + " " + FirstValue4History);
-            }
-
-            DB_CalcHistory_Today(serial);
+            adapter.log.debug(FirstDate4History + " " + FirstValue4History);
         }
-        else {
-            adapter.log.error('Error while performing Query.');
-        }
-    });
 
-
+        DB_CalcHistory_Today(serial);
+    }
+    else {
+        adapter.log.error('Error while performing Query.');
+    }
 }
 
 
@@ -589,34 +639,43 @@ function DB_CalcHistory_Today(serial) {
     //gettime gives milliseconds!!
     var query = "SELECT from_unixtime(TimeStamp, '%HH:%mm') as time, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By from_unixtime(TimeStamp, '%HH:%mm')";
     adapter.log.debug(query);
-    mysql_connection.query(query, function (err, rows, fields) {
-        if (!err) {
-            adapter.log.debug('rows ' + JSON.stringify(rows));
-  
-            var oLastDays = [];
-            //var daydata = {};
+    if (adapter.config.databasetype == 'mySQL') {
+        mysql_connection.query(query, function (err, rows, fields) {
+            CalcHistory_Today(err, rows, serial);
+        });
+    }
+    else {
+        sqlite_db.all(query, function (err, rows) {
+            CalcHistory_Today(err, rows, serial);
+        });
 
-            for (var i in rows) {
+    }
+}
+function CalcHistory_Today(err, rows, serial) {
+    if (!err) {
+        adapter.log.debug('rows ' + JSON.stringify(rows));
 
-                var data = rows[i];
+        var oLastDays = [];
+        //var daydata = {};
 
-                oLastDays.push({
-                    "time": data["time"],
-                    "value": data["ertrag"]
-                });
-                //adapter.log.debug(JSON.stringify(oLastDays));
-            }
+        for (var i in rows) {
 
-            adapter.setState(serial + '.history.today', { ack: true, val: JSON.stringify(oLastDays) });
+            var data = rows[i];
 
-            DB_CalcHistory_Years(serial);
+            oLastDays.push({
+                "time": data["time"],
+                "value": data["ertrag"]
+            });
+            //adapter.log.debug(JSON.stringify(oLastDays));
         }
-        else {
-            adapter.log.error('Error while performing Query.');
-        }
-    });
 
+        adapter.setState(serial + '.history.today', { ack: true, val: JSON.stringify(oLastDays) });
 
+        DB_CalcHistory_Years(serial);
+    }
+    else {
+        adapter.log.error('Error while performing Query.');
+    }
 }
 
 
@@ -625,91 +684,103 @@ function DB_CalcHistory_Years(serial) {
     //SELECT from_unixtime(TimeStamp, '%Y') as date, Max(`ETotal`) as ertrag FROM `SpotData` WHERE `Serial` = '2000562095'  Group By from_unixtime(TimeStamp, '%Y')
     var query = "SELECT from_unixtime(TimeStamp, '%Y') as date, Max(`ETotal`) as ertrag, Min(`ETotal`) as startertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' Group By from_unixtime(TimeStamp, '%Y')";
     adapter.log.debug(query);
-    mysql_connection.query(query, function (err, rows, fields) {
-        if (!err) {
-            adapter.log.debug('rows ' + JSON.stringify(rows));
+    if (adapter.config.databasetype == 'mySQL') {
+        mysql_connection.query(query, function (err, rows, fields) {
+            CalcHistory_Years(err, rows, serial);
+        });
+    }
+    else {
+        sqlite_db.all(query, function (err, rows) {
+            CalcHistory_Years(err, rows, serial);
+        });
 
-            var oLastYears = [];
-            //var yeardata = {};
-
-            var installdate = new Date(adapter.config.install_date);
-            var firstvaluedate = new Date(FirstDate4History);
-
-            //adapter.log.debug("------ " + installdate.toDateString() + " " + firstvaluedate.toDateString());
-            //adapter.log.debug("------ " + installdate.getUTCFullYear() + " < " + firstvaluedate.getUTCFullYear());
-
-            var installyear = installdate.getUTCFullYear();
-            var firstyear = true;
-            var yearvalue = 0;
-            for (var i in rows) {
-
-                var data = rows[i];
-
-                if (installdate.getUTCFullYear() < firstvaluedate.getUTCFullYear() && firstyear == true) {
-
-                    var diffyears = firstvaluedate.getUTCFullYear() - installdate.getUTCFullYear();
-
-                    var monthoffirstyear = 12 - installdate.getUTCMonth();
-                    var monthoflastyear = firstvaluedate.getUTCMonth();
-                    var months = monthoffirstyear + monthoflastyear + (diffyears - 1) * 12;
-
-                    ((adapter.log.debug("---- " + monthoffirstyear + " " + monthoflastyear); 
-                    var valuepermonth = FirstValue4History / months;
-
-                    //adapter.log.debug("++++ yeardiff " + diffyears + " monthdiff " + months + " value per month " + valuepermonth);
+    }
+}
 
 
-                    for (var n = 0; n <= diffyears; n++) {
 
-                        if (n == 0) {
-                            yearvalue += monthoffirstyear * valuepermonth;
-                        }
-                        else if (n == (diffyears)) {
-                            yearvalue += monthoflastyear * valuepermonth + data["ertrag"] - data["startertrag"];
+function CalcHistory_Years(err, rows, serial) {
+    if (!err) {
+        adapter.log.debug('rows ' + JSON.stringify(rows));
 
-                            //adapter.log.debug("???? " + monthoflastyear + " " + data["ertrag"] + " " + data["startertrag"]); 
+        var oLastYears = [];
+        //var yeardata = {};
 
-                        }
-                        else {
-                            yearvalue += 12 * valuepermonth;
-                        }
+        var installdate = new Date(adapter.config.install_date);
+        var firstvaluedate = new Date(FirstDate4History);
 
-                        adapter.log.debug((installyear + n) + " " + yearvalue); 
+        //adapter.log.debug("------ " + installdate.toDateString() + " " + firstvaluedate.toDateString());
+        //adapter.log.debug("------ " + installdate.getUTCFullYear() + " < " + firstvaluedate.getUTCFullYear());
 
-                        oLastYears.push({
-                            "year": installyear + n,
-                            "value": parseInt(yearvalue)
-                        });
+        var installyear = installdate.getUTCFullYear();
+        var firstyear = true;
+        var yearvalue = 0;
+        for (var i in rows) {
+
+            var data = rows[i];
+
+            if (installdate.getUTCFullYear() < firstvaluedate.getUTCFullYear() && firstyear == true) {
+
+                var diffyears = firstvaluedate.getUTCFullYear() - installdate.getUTCFullYear();
+
+                var monthoffirstyear = 12 - installdate.getUTCMonth();
+                var monthoflastyear = firstvaluedate.getUTCMonth();
+                var months = monthoffirstyear + monthoflastyear + (diffyears - 1) * 12;
+
+                //adapter.log.debug("---- " + monthoffirstyear + " " + monthoflastyear); 
+                var valuepermonth = FirstValue4History / months;
+
+                //adapter.log.debug("++++ yeardiff " + diffyears + " monthdiff " + months + " value per month " + valuepermonth);
+
+
+                for (var n = 0; n <= diffyears; n++) {
+
+                    if (n == 0) {
+                        yearvalue += monthoffirstyear * valuepermonth;
+                    }
+                    else if (n == (diffyears)) {
+                        yearvalue += monthoflastyear * valuepermonth + data["ertrag"] - data["startertrag"];
+
+                        //adapter.log.debug("???? " + monthoflastyear + " " + data["ertrag"] + " " + data["startertrag"]); 
+
+                    }
+                    else {
+                        yearvalue += 12 * valuepermonth;
                     }
 
-                    /*
-                    oLastYears.push({
-                        "year": data["date"],
-                        "value": data["ertrag"]
-                    });
-                    */
-                }
-                else {
-                    yearvalue = data["ertrag"];
-                    oLastYears.push({
-                        "year": data["date"],
-                        "value": yearvalue
-                    });
-                }
-                firstyear = false;
+                    adapter.log.debug((installyear + n) + " " + yearvalue);
 
+                    oLastYears.push({
+                        "year": installyear + n,
+                        "value": parseInt(yearvalue)
+                    });
+                }
+
+                /*
+                oLastYears.push({
+                    "year": data["date"],
+                    "value": data["ertrag"]
+                });
+                */
             }
-            adapter.log.debug(JSON.stringify(oLastYears));
-            adapter.setState(serial + '.history.years', { ack: true, val: JSON.stringify(oLastYears) });
+            else {
+                yearvalue = data["ertrag"];
+                oLastYears.push({
+                    "year": data["date"],
+                    "value": yearvalue
+                });
+            }
+            firstyear = false;
 
-            DB_CalcHistory_Months(serial);
         }
-        else {
-            adapter.log.error('Error while performing Query.');
-        }
-    });
+        adapter.log.debug(JSON.stringify(oLastYears));
+        adapter.setState(serial + '.history.years', { ack: true, val: JSON.stringify(oLastYears) });
 
-
+        DB_CalcHistory_Months(serial);
+    }
+    else {
+        adapter.log.error('Error while performing Query.');
+    }
 }
 
 function DB_CalcHistory_Months(serial) {
@@ -728,129 +799,54 @@ function DB_CalcHistory_Months(serial) {
     //SELECT from_unixtime(TimeStamp, '%Y-%m') as date, Max(`ETotal`) as ertrag FROM `SpotData` WHERE `Serial` = '2000562095'  Group By from_unixtime(TimeStamp, '%Y-%m')
     var query = "SELECT from_unixtime(TimeStamp, '%Y-%m') as date, Max(`ETotal`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By from_unixtime(TimeStamp, '%Y-%m')";
     adapter.log.debug(query);
-    mysql_connection.query(query, function (err, rows, fields) {
-        if (!err) {
-            adapter.log.debug('rows ' + JSON.stringify(rows));
+    if (adapter.config.databasetype == 'mySQL') {
+        mysql_connection.query(query, function (err, rows, fields) {
+            CalcHistory_Months(err, rows, serial);
+        });
+    }
+    else {
+        sqlite_db.all(query, function (err, rows) {
+            CalcHistory_Months(err, rows, serial);
+        });
 
-            var oLastMonth = [];
-            //var monthdata = {};
+    }
+}
 
-            for (var i in rows) {
+function CalcHistory_Months(err, rows, serial) {
+    if (!err) {
+        adapter.log.debug('rows ' + JSON.stringify(rows));
 
-                var data = rows[i];
+        var oLastMonth = [];
+        //var monthdata = {};
 
-                oLastMonth.push({
-                    "month": data["date"],
-                    "value": data["ertrag"]
-                });
-                //adapter.log.debug(JSON.stringify(oLastDays));
-            }
+        for (var i in rows) {
 
-            adapter.setState(serial + '.history.last12Months', { ack: true, val: JSON.stringify(oLastMonth) });
+            var data = rows[i];
 
-            DB_Disconnect();
+            oLastMonth.push({
+                "month": data["date"],
+                "value": data["ertrag"]
+            });
+            //adapter.log.debug(JSON.stringify(oLastDays));
         }
-        else {
-            adapter.log.error('Error while performing Query.');
-        }
-    });
 
+        adapter.setState(serial + '.history.last12Months', { ack: true, val: JSON.stringify(oLastMonth) });
 
+        DB_Disconnect();
+    }
+    else {
+        adapter.log.error('Error while performing Query.');
+    }
 }
 
 
 function DB_Disconnect() {
-    mysql_connection.end();
-}
 
-//***********************************************************************************************************************
-// sqlite
-//
-//
-
-//these function are used for connection to sqlite database filled by sbfspot
-
-// https://github.com/mapbox/node-sqlite3
-
-
-var sqlite_db;
-
-function DB_sqlite_Connect(cb) {
-    //var express = require("express");
-    var sqlite3 = require('sqlite3').verbose();
-
-    adapter.log.debug("--- connecting to " + adapter.config.sqlite_path);
-
-    sqlite_db = new sqlite3.Database(adapter.config.sqlite_path);
-
-
-    adapter.log.debug("sqlite Database is connected ...");
-    DB_sqlite_GetInverters();
-
-    if (cb) cb();
-}
-
-function DB_sqlite_GetInverters() {
-    var query = 'SELECT * from Inverters';
-    adapter.log.debug(query);
-
-    sqlite_db.each(query, function (err, row) {
-
-        adapter.log.debug('row ' + JSON.stringify(row));
-
-        adapter.log.info("got data from " + row.Type + " " + row.Serial);
-
-        AddInverterVariables(row.Serial);
-
-        adapter.setState(row.Serial + ".Type", { ack: true, val: row.Type });
-        //adapter.setState( rows[0].Serial + ".EToday", { ack: true, val: row.EToday }); this is kW
-        //adapter.setState(rows[0].Serial + ".ETotal", { ack: true, val: row.ETotal }); this is kW
-        adapter.setState(row.Serial + ".SW_Version", { ack: true, val: row.SW_Version });
-        adapter.setState(row.Serial + ".TotalPac", { ack: true, val: row.TotalPac });
-        adapter.setState(row.Serial + ".OperatingTime", { ack: true, val: row.OperatingTime });
-        adapter.setState(row.Serial + ".FeedInTime", { ack: true, val: row.FeedInTime });
-        adapter.setState(row.Serial + ".Status", { ack: true, val: row.Status });
-        adapter.setState(row.Serial + ".GridRelay", { ack: true, val: row.GridRelay });
-        adapter.setState(row.Serial + ".Temperature", { ack: true, val: row.Temperature });
-
-        DB_sqlite_GetInvertersData(row.Serial);
-
-    });
-}
-
-function DB_sqlite_GetInvertersData(serial) {
-    var query = 'SELECT * from SpotData  where Serial =' + serial + ' ORDER BY TimeStamp DESC LIMIT 1';
-    adapter.log.debug(query);
-    sqlite_db.each(query, function (err, row) {
-        adapter.log.debug('row ' + JSON.stringify(row));
-
-        adapter.setState(row.Serial + ".Pdc1", { ack: true, val: row.Pdc1 });
-        adapter.setState(row.Serial + ".Pdc2", { ack: true, val: row.Pdc2 });
-        adapter.setState(row.Serial + ".Idc1", { ack: true, val: row.Idc1 });
-        adapter.setState(row.Serial + ".Idc2", { ack: true, val: row.Idc2 });
-        adapter.setState(row.Serial + ".Udc1", { ack: true, val: row.Udc1 });
-        adapter.setState(row.Serial + ".Udc2", { ack: true, val: row.Udc2 });
-
-        adapter.setState(row.Serial + ".Pac1", { ack: true, val: row.Pac1 });
-        adapter.setState(row.Serial + ".Pac2", { ack: true, val: row.Pac2 });
-        adapter.setState(row.Serial + ".Pac3", { ack: true, val: row.Pac3 });
-        adapter.setState(row.Serial + ".Iac1", { ack: true, val: row.Iac1 });
-        adapter.setState(row.Serial + ".Iac2", { ack: true, val: row.Iac2 });
-        adapter.setState(row.Serial + ".Iac3", { ack: true, val: row.Iac3 });
-        adapter.setState(row.Serial + ".Uac1", { ack: true, val: row.Uac1 });
-        adapter.setState(row.Serial + ".Uac2", { ack: true, val: row.Uac2 });
-        adapter.setState(row.Serial + ".Uac3", { ack: true, val: row.Uac3 });
-
-        adapter.setState(row.Serial + ".EToday", { ack: true, val: row.EToday });
-        adapter.setState(row.Serial + ".ETotal", { ack: true, val: row.ETotal });
-        adapter.setState(row.Serial + ".Frequency", { ack: true, val: row.Frequency });
-        adapter.setState(row.Serial + ".BT_Signal", { ack: true, val: row.BT_Signal });
-
-        DB_sqlite_Disconnect();
-
-    });
-}
-
-function DB_sqlite_Disconnect() {
-    sqlite_db.close();
+    adapter.log.debug("disconnect database");
+    if (adapter.config.databasetype == 'mySQL') {
+        mysql_connection.end();
+    }
+    else {
+        sqlite_db.close();
+    }
 }
