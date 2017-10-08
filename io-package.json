@@ -1,8 +1,12 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "0.2.5",
+    "version": "0.2.6",
     "news": {
+      "0.2.6": {
+        "en": "bug fix for android app",
+        "de": "Fehlerbehebung für android app"
+      },
       "0.2.5": {
         "en": "use install date to calculate historical values",
         "de": "Installationsdatum verwendet, um historische Daten zu berechnen"

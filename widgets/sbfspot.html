@@ -67,7 +67,7 @@
     }
 
     vis.binds.sbfspot = {
-        version: "0.2.5",
+        version: "0.2.6",
         showVersion: function () {
             if (vis.binds.sbfspot.version) {
                 console.log('Version vis-sbfspt: ' + vis.binds.sbfspot.version);
@@ -135,14 +135,20 @@
                             //[{"time":"06H:08m","value":0},{"time":"07H:08m","value":60},{"time":"08H:08m","value":181},{"time":"09H:08m","value":401},{"time":"10H:08m","value":1917},{"time":"11H:08m","value":3839},{"time":"12H:08m","value":5905},{"time":"13H:08m","value":8025},{"time":"14H:08m","value":10052},{"time":"15H:08m","value":11844},{"time":"16H:08m","value":13159},{"time":"17H:08m","value":13773},{"time":"18H:08m","value":13875},{"time":"19H:08m","value":13911},{"time":"20H:08m","value":13911}] kW
                             var oVals = oData_today[i];
                             var sDate = oVals["time"];
-                            var value = parseInt(oVals["value"]);
+                            var value = parseInt(oVals["value"],10);
 
                             var diff = value - oldValue;
                             oldValue = value;
 
-                            var hour = parseInt(sDate.substring(0, 2));
-                            var minute = parseInt(sDate.substring(4, 7));
-                            
+                            //on new android app this goas fail; don't know why...
+                            //var hour = parseInt(sDate.substring(0, 2));
+                            //var minute = parseInt(sDate.substring(4, 7));
+
+                            var DateArray = sDate.split(":");
+                            var minute = parseInt(DateArray[1],10);
+                            var hour = parseInt(DateArray[0],10);
+
+
                             var oDate = new Date();
                             oDate.setHours(hour);
                             oDate.setMinutes(minute);
@@ -179,9 +185,17 @@
                             var value = parseInt(oVals["value"]);
                             var value = value / 1000;
                             //2017-08-12
-                            var day = parseInt(sDate.substring(8, 10));
-                            var month = parseInt(sDate.substring(5, 7));
-                            var year = parseInt(sDate.substring(0, 4));
+
+                            //on new android app this goas fail; don't know why...
+                            //var day = parseInt(sDate.substring(8, 10));
+                            //var month = parseInt(sDate.substring(5, 7));
+                            //var year = parseInt(sDate.substring(0, 4));
+
+                            var DateArray = sDate.split("-");
+                            var day = parseInt(DateArray[2],10);
+                            var month = parseInt(DateArray[1],10);
+                            var year = parseInt(DateArray[0],10);
+
                             month--;
 
                             var oDate = new Date(year, month, day, 12, 0, 0, 0);
@@ -216,12 +230,21 @@
 
                             var oVals = oData[i];
                             var sDate = oVals["month"];
-                            var value = parseInt(oVals["value"]);
+                            var value = parseInt(oVals["value"],10);
                             var value = value / 1000;
                             //2016-09
                             
-                            var month = parseInt(sDate.substring(5, 7));
-                            var year = parseInt(sDate.substring(0, 4));
+                            //console.log(sDate);
+                            //on new android app this goas fail; don't know why...
+                            //var month = parseInt(sDate.substring(5, 7));
+                            //var year = parseInt(sDate.substring(0, 4));
+
+                            var DateArray = sDate.split("-");
+                            var month = parseInt(DateArray[1],10);
+                            var year = parseInt(DateArray[0],10);
+
+                            console.log("array " + DateArray[0] + " / " + DateArray[1]);
+
                             month--;
 
                             var oDate = new Date(year, month, 1, 12, 0, 0, 0);
@@ -232,7 +255,7 @@
                                 if (diff < minY_months) minY_months = diff;
                                 if (diff > maxY_months) maxY_months = diff;
 
-                                console.log(oDate.toDateString() + " : " + diff);
+                                console.log(oDate.toDateString() + " : " + diff + " (" + year + "," + month + ")");
 
                                 values_months.push([oDate, diff]);
                             }
@@ -259,8 +282,8 @@
                         for (var i = 0; i < oData.length; i++) {
 
                             var oVals = oData[i];
-                            var year = parseInt(oVals["year"]);
-                            var value = parseInt(oVals["value"]);
+                            var year = parseInt(oVals["year"],10);
+                            var value = parseInt(oVals["value"],10);
                             var value = value / 1000;
                             //2016
 
@@ -362,7 +385,7 @@
                                   show: data.withxaxix & data.todayvisible,
                                   mode: "time",
                                   tickLength: 5,
-                                  ticks: data.ticksonxaxix > 0 ? parseInt(data.ticksonxaxix) : 5,
+                                  ticks: data.ticksonxaxix > 0 ? parseInt(data.ticksonxaxix,10) : 5,
                                   timeformat: "%H:%M",
                                   monthNames: ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"],
                                   color: data.tickscolor,
@@ -374,7 +397,7 @@
                                   show: data.withxaxix & data.last30daysvisible,
                                   mode: "time",
                                   tickLength: 5,
-                                  ticks: data.ticksonxaxix > 0 ? parseInt(data.ticksonxaxix) : 5,
+                                  ticks: data.ticksonxaxix > 0 ? parseInt(data.ticksonxaxix,10) : 5,
                                   timeformat: "%d.%b",
                                   monthNames: ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"],
                                   color: data.tickscolor,
@@ -386,7 +409,7 @@
                                   show: data.withxaxix & data.last12monthsvisible,
                                   mode: "time",
                                   tickLength: 5,
-                                  ticks: data.ticksonxaxix > 0 ? parseInt(data.ticksonxaxix) : 5,
+                                  ticks: data.ticksonxaxix > 0 ? parseInt(data.ticksonxaxix,10) : 5,
                                   timeformat: "%b %Y",
                                   monthNames: ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"],
                                   color: data.tickscolor,
@@ -398,7 +421,7 @@
                                   show: data.withxaxix & data.yearsvisible,
                                   mode: "time",
                                   tickLength: 5,
-                                  ticks: data.ticksonxaxix > 0 ? parseInt(data.ticksonxaxix) : 5,
+                                  ticks: data.ticksonxaxix > 0 ? parseInt(data.ticksonxaxix,10) : 5,
                                   timeformat: "%Y",
                                   monthNames: ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"],
                                   color: data.tickscolor,

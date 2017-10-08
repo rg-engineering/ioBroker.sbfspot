@@ -11,7 +11,7 @@
 
 This adapter reads data from SMA power inverters using sbfspot.
 Now both database types (mySQL and sqlite) are supported.
-Sine version 0.2.3 there is a own vis widget based on flot available to show historical data.
+Since version 0.2.3 there is a own vis widget based on flot available to show historical data.
 
 Hints: 
 * use latest version from sbfspot from https://sbfspot.codeplex.com/ or from https://github.com/rg-engineering/SBFspot
@@ -20,6 +20,9 @@ Hints:
 
 
 ## Changelog
+
+#### 0.2.6
+* (René) bug fix for android app > 1.0.6
 
 #### 0.2.5
 * (René) use install date to calculate historical values
