@@ -61,7 +61,13 @@
     "loglevel": "debug",
     "stopBeforeUpdate": true,
     "type": "hardware",
-    "license": "MIT"
+    "license": "MIT",
+    "authors": [
+      {
+        "name": "René G.",
+        "email": "info@rg-engineering.eu"
+      }
+    ]
   },
   "native": {
     "sbfspotIP": "localhost",
