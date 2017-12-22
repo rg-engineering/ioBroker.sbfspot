@@ -19,8 +19,8 @@
     "url": "https://github.com/rg-engineering/ioBroker.sbfspot"
   },
   "dependencies": {
-    "mysql": "^2.15.0",
-    "sqlite3": "^3.1.13"
+    "mysql": "^2.13.0",
+    "sqlite3": "3.1.7"
   },
   "devDependencies": {
     "grunt": "^1.0.1",
