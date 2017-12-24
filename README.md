@@ -21,6 +21,9 @@ Hints:
 
 ## Changelog
 
+#### 1.0.0
+* (René) first stable release
+
 #### 0.2.6
 * (René) bug fix for android app > 1.0.6
 

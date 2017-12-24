@@ -1,8 +1,12 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "0.2.6",
+    "version": "1.0.0",
     "news": {
+      "1.0.0": {
+        "en": "first stable release",
+        "de": "erste stabile Version"
+      },
       "0.2.6": {
         "en": "bug fix for android app",
         "de": "Fehlerbehebung für android app"
