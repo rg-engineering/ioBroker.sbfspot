@@ -1,8 +1,12 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "news": {
+      "1.0.1": {
+        "en": "bug fix for sqlite",
+        "de": "Fehlerbehebung für sqlite"
+      },
       "1.0.0": {
         "en": "first stable release",
         "de": "erste stabile Version"

@@ -21,6 +21,9 @@ Hints:
 
 ## Changelog
 
+#### 1.0.1
+* (René) bug fix for sqlite
+
 #### 1.0.0
 * (René) first stable release
 

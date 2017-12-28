@@ -120,7 +120,7 @@ function main() {
     }
     else {
 
-        adapter.log.info("start with mySQL");
+        
         DB_Connect(function () {
             setTimeout(function () {
                 adapter.stop();
@@ -378,7 +378,7 @@ var rows = [
 function DB_Connect(cb) {
 
     if (adapter.config.databasetype == 'mySQL') {
-
+        adapter.log.info("start with mySQL");
         adapter.log.debug("--- connecting to " + adapter.config.sbfspotIP + " " + adapter.config.sbfspotDatabasename);
 
         //var express = require("express");
@@ -402,7 +402,7 @@ function DB_Connect(cb) {
     }
     else {
         var sqlite3 = require('sqlite3').verbose();
-
+        adapter.log.info("start with sqlite");
         adapter.log.debug("--- connecting to " + adapter.config.sqlite_path);
 
         sqlite_db = new sqlite3.Database(adapter.config.sqlite_path);
@@ -478,7 +478,7 @@ function DB_GetInvertersData(serial) {
     }
     else {
         sqlite_db.all(query, function (err, rows) {
-            GetInverterterData(err, rows,serial);
+            GetInverterData(err, rows,serial);
         });
     }
 }
@@ -528,26 +528,35 @@ function DB_CalcHistory_LastMonth(serial) {
     //SELECT from_unixtime(TimeStamp, '%Y-%m-%d') as date, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '2000562095' AND TimeStamp>= 1501542000 AND TimeStamp<= 1504133999 Group By from_unixtime(TimeStamp, '%Y-%m-%d')
     //SELECT from_unixtime(TimeStamp, '%Y-%m-%d') as date, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '2000562095' AND TimeStamp>= 1500406746112 AND TimeStamp<= 1502998746112 Group By from_unixtime(TimeStamp, '%Y-%m-%d')
 
-
+    //füy mySQL:
     //SELECT from_unixtime(TimeStamp, '%Y') as date, Max(`ETotal`) as ertrag FROM `SpotData` WHERE `Serial` = '2000562095'  Group By from_unixtime(TimeStamp, '%Y')
+    //für sqlite
+    //SELECT  strftime('%Y-%m-%d ', datetime(TimeStamp, 'unixepoch')) as date, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '2000562095' AND TimeStamp>= 1511859131.474 AND TimeStamp<= 1514451131.474 Group By strftime('%Y-%m-%d ', datetime(TimeStamp, 'unixepoch'))
 
     var dateto = new Date(); //today
     var datefrom = new Date();
     datefrom.setDate(datefrom.getDate() - 30);
     //adapter.log.debug('from ' + datefrom.toDateString() + " to " + dateto.toDateString());
     //gettime gives milliseconds!!
-    var query = "SELECT from_unixtime(TimeStamp, '%Y-%m-%d') as date, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By from_unixtime(TimeStamp, '%Y-%m-%d')";
+
+    var query = "";
+    if (adapter.config.databasetype == 'mySQL') {
+        query = "SELECT from_unixtime(TimeStamp, '%Y-%m-%d') as date, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By from_unixtime(TimeStamp, '%Y-%m-%d')";
+    }
+    else {
+        query = "SELECT strftime('%Y-%m-%d', datetime(TimeStamp, 'unixepoch')) as date, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By strftime('%Y-%m-%d', datetime(TimeStamp, 'unixepoch'))";
+    }
     adapter.log.debug(query);
     if (adapter.config.databasetype == 'mySQL') {
         mysql_connection.query(query, function (err, rows, fields) {
 
-            CalcHistory_LastMonth(err, rows,serial);
+        CalcHistory_LastMonth(err, rows,serial);
         });
     }
     else {
         sqlite_db.all(query, function (err, rows) {
             
-            CalcHistory_LastMonth(err, rows,serial);
+        CalcHistory_LastMonth(err, rows,serial);
         });
     };
 }
@@ -592,7 +601,13 @@ function DB_CalcHistory_Prepare(serial) {
     var dateto = new Date(); //today
 
     //SELECT from_unixtime(TimeStamp, '%Y-%m-%d') as date, ETotal  FROM `SpotData` ORDER by `TimeStamp` ASC LIMIT  1
-    var query = "SELECT from_unixtime(TimeStamp, '%Y-%m-%d') as date, ETotal  FROM `SpotData` WHERE `Serial` = '" + serial + "' ORDER by `TimeStamp` ASC LIMIT  1";
+    var query = "";
+    if (adapter.config.databasetype == 'mySQL') {
+        query = "SELECT from_unixtime(TimeStamp, '%Y-%m-%d') as date, ETotal  FROM `SpotData` WHERE `Serial` = '" + serial + "' ORDER by `TimeStamp` ASC LIMIT  1";
+    }
+    else {
+        query = "SELECT strftime('%Y-%m-%d', datetime(TimeStamp, 'unixepoch')) as date, ETotal  FROM `SpotData` WHERE `Serial` = '" + serial + "' ORDER by `TimeStamp` ASC LIMIT  1";
+    }
     adapter.log.debug(query);
 
     if (adapter.config.databasetype == 'mySQL') {
@@ -637,7 +652,14 @@ function DB_CalcHistory_Today(serial) {
     datefrom.setMinutes(0);
     //adapter.log.debug('from ' + datefrom.toDateString() + " to " + dateto.toDateString());
     //gettime gives milliseconds!!
-    var query = "SELECT from_unixtime(TimeStamp, '%HH:%mm') as time, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By from_unixtime(TimeStamp, '%HH:%mm')";
+
+    var query = "";
+    if (adapter.config.databasetype == 'mySQL') {
+        query = "SELECT from_unixtime(TimeStamp, '%HH:%mm') as time, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By from_unixtime(TimeStamp, '%HH:%mm')";
+    }
+    else {
+        query = "SELECT strftime('%HH-%mm', datetime(TimeStamp, 'unixepoch')) as time, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By strftime('%HH-%mm', datetime(TimeStamp, 'unixepoch'))";
+    }
     adapter.log.debug(query);
     if (adapter.config.databasetype == 'mySQL') {
         mysql_connection.query(query, function (err, rows, fields) {
@@ -682,7 +704,14 @@ function CalcHistory_Today(err, rows, serial) {
 
 function DB_CalcHistory_Years(serial) {
     //SELECT from_unixtime(TimeStamp, '%Y') as date, Max(`ETotal`) as ertrag FROM `SpotData` WHERE `Serial` = '2000562095'  Group By from_unixtime(TimeStamp, '%Y')
-    var query = "SELECT from_unixtime(TimeStamp, '%Y') as date, Max(`ETotal`) as ertrag, Min(`ETotal`) as startertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' Group By from_unixtime(TimeStamp, '%Y')";
+
+    var query = "";
+    if (adapter.config.databasetype == 'mySQL') {
+        query = "SELECT from_unixtime(TimeStamp, '%Y') as date, Max(`ETotal`) as ertrag, Min(`ETotal`) as startertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' Group By from_unixtime(TimeStamp, '%Y')";
+    }
+    else {
+        query = "SELECT strftime('%Y', datetime(TimeStamp, 'unixepoch')) as date, Max(`ETotal`) as ertrag, Min(`ETotal`) as startertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' Group By strftime('%Y', datetime(TimeStamp, 'unixepoch'))";
+    }
     adapter.log.debug(query);
     if (adapter.config.databasetype == 'mySQL') {
         mysql_connection.query(query, function (err, rows, fields) {
@@ -797,7 +826,14 @@ function DB_CalcHistory_Months(serial) {
     //adapter.log.debug('DB_CalcHistory_Months: from ' + datefrom.toDateString() + " to " + dateto.toDateString());
 
     //SELECT from_unixtime(TimeStamp, '%Y-%m') as date, Max(`ETotal`) as ertrag FROM `SpotData` WHERE `Serial` = '2000562095'  Group By from_unixtime(TimeStamp, '%Y-%m')
-    var query = "SELECT from_unixtime(TimeStamp, '%Y-%m') as date, Max(`ETotal`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By from_unixtime(TimeStamp, '%Y-%m')";
+
+    var query = "";
+    if (adapter.config.databasetype == 'mySQL') {
+        query = "SELECT from_unixtime(TimeStamp, '%Y-%m') as date, Max(`ETotal`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By from_unixtime(TimeStamp, '%Y-%m')";
+    }
+    else {
+        query = "SELECT strftime('%Y-%m', datetime(TimeStamp, 'unixepoch')) as date, Max(`ETotal`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By strftime('%Y-%m', datetime(TimeStamp, 'unixepoch'))";
+    }
     adapter.log.debug(query);
     if (adapter.config.databasetype == 'mySQL') {
         mysql_connection.query(query, function (err, rows, fields) {
