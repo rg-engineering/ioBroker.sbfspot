@@ -364,7 +364,7 @@
                         },
                         {
                             data: data.yearsvisible ? values_years : {},
-                            color: data.lastyearscolor,
+                            color: data.yearscolor,
                             //label: "years [kWh]",
                             //hoverable: true,
                             xaxis: 4,
@@ -414,7 +414,7 @@
                                   monthNames: ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"],
                                   color: data.tickscolor,
                                   font: {
-                                      color: data.axislabelcolor
+                                      color: data.last12monthscolor
                                   }
                               },
                               {//das folgende geht
@@ -440,7 +440,7 @@
                                     ticks: 3,
                                     color: data.tickscolor,
                                     font: {
-                                        color: data.axislabelcolor
+                                        color: data.todaycolor
                                     }
                                 },
                                 { //das folgende geht
@@ -452,7 +452,7 @@
                                     ticks: 3,
                                     color: data.tickscolor,
                                     font: {
-                                        color: data.axislabelcolor
+                                        color: data.last30dayscolor
                                     }
                                 },
                                 { //das folgende geht
@@ -464,7 +464,7 @@
                                     ticks: 3,
                                     color: data.tickscolor,
                                     font: {
-                                        color: data.axislabelcolor
+                                        color: data.last12monthscolor
                                     }
                                 },
                                 { //das folgende geht
@@ -476,7 +476,7 @@
                                     ticks: 3,
                                     color: data.tickscolor,
                                     font: {
-                                        color: data.axislabelcolor
+                                        color: data.yearscolor
                                     }
                                 }
                                 ],
