@@ -1,8 +1,12 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "news": {
+      "1.1.0": {
+        "en": "y axis improvements",
+        "de": "Verbesserungen für Y Achse"
+      },
       "1.0.1": {
         "en": "bug fix for sqlite",
         "de": "Fehlerbehebung für sqlite"

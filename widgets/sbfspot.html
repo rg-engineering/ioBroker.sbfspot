@@ -21,6 +21,7 @@
     if (vis.editMode) {
         // Add words for basic widgets
         $.extend(true, systemDictionary, {
+            "sbfspot": { "en": "sbfspot", "de": "sbfspot", "ru": "sbfspot" },
             "1 second": { "en": "1 second", "de": "1 Sekunde", "ru": "1 ???????" },
             "10 seconds": { "en": "10 seconds", "de": "10 Sekunden", "ru": "10 ??????" },
             "30 seconds": { "en": "30 seconds", "de": "30 Sekunden", "ru": "30 ??????" },
@@ -45,29 +46,43 @@
             "ticksonxaxix": { "en": "ticks on X axis", "de": "Anzahl Labels / X Achse", "ru": "???" },
 
             "group_today": { "en": "today", "de": "heute", "ru": "???" },
-            "todayvisible": { "en": "visible", "de": "anzeigen", "ru": "???" },
+            "todayvisible": { "en": "visible", "de": "sichtbar", "ru": "???" },
             "todaycolor": { "en": "color", "de": "Farbe", "ru": "???" },
             "group_last30days": { "en": "last 30 days", "de": "letzte 30 Tage", "ru": "???" },
-            "last30daysvisible": { "en": "visible", "de": "anzeigen", "ru": "???" },
+            "last30daysvisible": { "en": "visible", "de": "sichtbar", "ru": "???" },
             "last30dayscolor": { "en": "color", "de": "Farbe", "ru": "???" },
             "group_last12months": { "en": "last 12 months", "de": "letzte 12 Monate", "ru": "???" },
-            "last12monthsvisible": { "en": "visible", "de": "anzeigen", "ru": "???" },
+            "last12monthsvisible": { "en": "visible", "de": "sichtbar", "ru": "???" },
             "last12monthscolor": { "en": "color", "de": "Farbe", "ru": "???" },
 
             "group_years": { "en": "years", "de": "Jahre", "ru": "???" },
-            "yearsvisible": { "en": "visible", "de": "anzeigen", "ru": "???" },
+            "yearsvisible": { "en": "visible", "de": "sichtbar", "ru": "???" },
             "yearscolor": { "en": "color", "de": "Farbe", "ru": "???" },
 
             "withxaxix": { "en": "show X axis", "de": "Zeige X-Achse", "ru": "???" },
             "axislabelcolor": { "en": "color axis label", "de": "Farbe Achsbeschriftung", "ru": "???" },
             "tickscolor": { "en": "color axis ticks", "de": "Farbe Achsmarke", "ru": "???" },
 
+            "todayDateFormat": { "en": "format for date/time on x-axis", "de": "Datum-/Zeitformat X-Achse", "ru": "todayDateFormat" },
+            "last30daysDateFormat": { "en": "format for date/time on x-axis", "de": "Datum-/Zeitformat X-Achse", "ru": "last30daysDateFormat" },
+            "last12monthsDateFormat": { "en": "format for date/time on x-axis", "de": "Datum-/Zeitformat X-Achse", "ru": "last12monthsDateFormat" },
+            "yearsDateFormat": { "en": "format for date/time on x-axis", "de": "Datum-/Zeitformat X-Achse", "ru": "yearsDateFormat" },
+
 
         });
     }
 
+    function xwhFormatter(val, axis) {
+        if (val > 1000000)
+            return (val / 1000000).toFixed(axis.tickDecimals) + " MWh";
+        else if (val > 1000)
+            return (val / 1000).toFixed(axis.tickDecimals) + " kWh";
+        else
+            return val.toFixed(axis.tickDecimals) + " Wh";
+    }
+
     vis.binds.sbfspot = {
-        version: "0.2.6",
+        version: "1.1.0",
         showVersion: function () {
             if (vis.binds.sbfspot.version) {
                 console.log('Version vis-sbfspot: ' + vis.binds.sbfspot.version);
@@ -183,7 +198,7 @@
                             var oVals = oData[i];
                             var sDate = oVals["date"];
                             var value = parseInt(oVals["value"]);
-                            var value = value / 1000;
+                            var value = value;
                             //2017-08-12
 
                             //on new android app this goas fail; don't know why...
@@ -231,7 +246,7 @@
                             var oVals = oData[i];
                             var sDate = oVals["month"];
                             var value = parseInt(oVals["value"],10);
-                            var value = value / 1000;
+                            var value = value;
                             //2016-09
                             
                             //console.log(sDate);
@@ -284,7 +299,7 @@
                             var oVals = oData[i];
                             var year = parseInt(oVals["year"],10);
                             var value = parseInt(oVals["value"],10);
-                            var value = value / 1000;
+                            var value = value;
                             //2016
 
                             var oDate = new Date(year, 0, 1, 12, 0, 0, 0);
@@ -386,7 +401,7 @@
                                   mode: "time",
                                   tickLength: 5,
                                   ticks: data.ticksonxaxix > 0 ? parseInt(data.ticksonxaxix,10) : 5,
-                                  timeformat: "%H:%M",
+                                  timeformat: data.todayDateFormat, // "%H:%M",
                                   monthNames: ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"],
                                   color: data.tickscolor,
                                   font: {
@@ -398,7 +413,7 @@
                                   mode: "time",
                                   tickLength: 5,
                                   ticks: data.ticksonxaxix > 0 ? parseInt(data.ticksonxaxix,10) : 5,
-                                  timeformat: "%d.%b",
+                                  timeformat: data.last30daysDateFormat, //"%d.%b",
                                   monthNames: ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"],
                                   color: data.tickscolor,
                                   font: {
@@ -410,7 +425,7 @@
                                   mode: "time",
                                   tickLength: 5,
                                   ticks: data.ticksonxaxix > 0 ? parseInt(data.ticksonxaxix,10) : 5,
-                                  timeformat: "%b %Y",
+                                  timeformat: data.last12monthsDateFormat, //"%b %Y",
                                   monthNames: ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"],
                                   color: data.tickscolor,
                                   font: {
@@ -422,7 +437,7 @@
                                   mode: "time",
                                   tickLength: 5,
                                   ticks: data.ticksonxaxix > 0 ? parseInt(data.ticksonxaxix,10) : 5,
-                                  timeformat: "%Y",
+                                  timeformat: data.yearsDateFormat, //"%Y",
                                   monthNames: ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"],
                                   color: data.tickscolor,
                                   font: {
@@ -432,7 +447,7 @@
                               ],
                             yaxes: //yaxis mit [] geht nicht...!!!                              
                                 [{ //das folgende geht
-                                    show: data.todayvisible,
+                                show: data.todayvisible && data.todaywithy,
                                     max: maxY_today,
                                     min: minY_today,
                                     //alignTicksWithAxis: 1,
@@ -441,10 +456,11 @@
                                     color: data.tickscolor,
                                     font: {
                                         color: data.todaycolor
-                                    }
+                                    },
+                                    tickFormatter: xwhFormatter
                                 },
                                 { //das folgende geht
-                                    show: data.last30daysvisible,
+                                    show: data.last30daysvisible && data.last30dayswithy,
                                     max: maxY_30days,
                                     min: minY_30days,
                                     //alignTicksWithAxis: 1,
@@ -453,10 +469,11 @@
                                     color: data.tickscolor,
                                     font: {
                                         color: data.last30dayscolor
-                                    }
+                                    },
+                                    tickFormatter: xwhFormatter
                                 },
                                 { //das folgende geht
-                                    show: data.last12monthsvisible,
+                                    show: data.last12monthsvisible && data.last12monthswithy,
                                     max: maxY_months,
                                     min: minY_months,
                                     //alignTicksWithAxis: 1,
@@ -465,10 +482,11 @@
                                     color: data.tickscolor,
                                     font: {
                                         color: data.last12monthscolor
-                                    }
+                                    },
+                                    tickFormatter: xwhFormatter
                                 },
                                 { //das folgende geht
-                                    show: data.yearsvisible,
+                                    show: data.yearsvisible && data.yearswithy,
                                     max: maxY_years,
                                     min: minY_years,
                                     //alignTicksWithAxis: 1,
@@ -477,7 +495,8 @@
                                     color: data.tickscolor,
                                     font: {
                                         color: data.yearscolor
-                                    }
+                                    },
+                                    tickFormatter: xwhFormatter
                                 }
                                 ],
                             grid:
@@ -552,7 +571,7 @@
                 }
                 vis.binds.sbfspot.history.update($div);
                 if (vis.editMode) {
-                    console.log("flot version " + $.plot.version);
+                    console.log("flot version " + $.plot.version + " for sbfspot");
                 }
             }
         },
@@ -612,10 +631,10 @@
         data-vis-prev='<img src="widgets/sbfspot/img/Prev_tplSbfspot.png"></img>'
         data-vis-attrs="sbfspotinstance/sbfspot/onInstanceChanged; serial//onInstanceChanged;"
         data-vis-attrs0="time_interval[30 minutes]/select,1 second,10 seconds,30 seconds,1 minute,2 minutes,5 minutes,10 minutes,30 minutes,1 hour,2 hours,4 hours,8 hours,12 hours,24 hours;withxaxix[true]/checkbox;ticksonxaxix[5];axislabelcolor[#ffffff]/color;tickscolor[#ffffff]/color;"
-        data-vis-attrs1="group.today;todayvisible[true]/checkbox;todaycolor[#f1f113]/color;"
-        data-vis-attrs2="group.last30days;last30daysvisible[true]/checkbox;last30dayscolor[#00b3ac]/color;"
-        data-vis-attrs3="group.last12months;last12monthsvisible[true]/checkbox;last12monthscolor[#00b3ac]/color;"
-        data-vis-attrs4="group.years;yearsvisible[true]/checkbox;yearscolor[#00b3ac]/color;"
+        data-vis-attrs1="group.today;todayvisible[true]/checkbox;todaycolor[#f1f113]/color;todaywithy[true]/checkbox;todayDateFormat[%H:%M];"
+        data-vis-attrs2="group.last30days;last30daysvisible[true]/checkbox;last30dayscolor[#00b3ac]/color;last30dayswithy[true]/checkbox;last30daysDateFormat[%d.%b];"
+        data-vis-attrs3="group.last12months;last12monthsvisible[true]/checkbox;last12monthscolor[#00b3ac]/color;last12monthswithy[true]/checkbox;last12monthsDateFormat[%b %Y];"
+        data-vis-attrs4="group.years;yearsvisible[true]/checkbox;yearscolor[#00b3ac]/color;yearswithy[true]/checkbox;yearsDateFormat[%Y];"
         data-vis-attrs5="group.oids;oid_today/id;oid_last30days/id;oid_last12months/id;oid_years/id;"
 
 >

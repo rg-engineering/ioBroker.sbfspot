@@ -21,6 +21,11 @@ Hints:
 
 ## Changelog
 
+#### 1.1.0
+* (René) autoscale of y axis
+* (René) color for y axis 
+* (René) adjustable date format 
+
 #### 1.0.1
 * (René) bug fix for sqlite
 
