@@ -68,6 +68,12 @@
             "last12monthsDateFormat": { "en": "format for date/time on x-axis", "de": "Datum-/Zeitformat X-Achse", "ru": "last12monthsDateFormat" },
             "yearsDateFormat": { "en": "format for date/time on x-axis", "de": "Datum-/Zeitformat X-Achse", "ru": "yearsDateFormat" },
 
+            "serial": { "en": "Inverter Serial No.", "de": "WR Serial-Nr.", "ru": "serial" },
+            "todaywithy": { "en": "show Y axis", "de": "zeige Y Achse", "ru": "todaywithy" },
+            "last30dayswithy": { "en": "show Y axis", "de": "zeige Y Achse", "ru": "last30dayswithy" },
+            "last12monthswithy": { "en": "show Y axis", "de": "zeige Y Achse", "ru": "last12monthswithy" },
+            "yearswithy": { "en": "show Y axis", "de": "zeige Y Achse", "ru": "yearswithy" },
+
 
         });
     }
@@ -131,7 +137,7 @@
                         var data = $div.data('options');
                         if (err) console.log(err);
    
-                        console.log("ShowChart begin");
+                        console.log("ShowChart sbfspot begin");
 
 
                         //today ======================================================================
@@ -139,43 +145,46 @@
                         var maxY_today = 0;
                         var minY_today = 0;
 
-                        var oid_today = data.oid_today;
-                        var oData_today = JSON.parse(vis.states[oid_today + '.val']);
+                        try {
+                            var oid_today = data.oid_today;
+                            var oData_today = JSON.parse(vis.states[oid_today + '.val']);
 
-                        //console.log("oData " + oData_today.length);
-                        //console.log(JSON.stringify(oData_today));
+                            //console.log("oData " + oData_today.length);
+                            //console.log(JSON.stringify(oData_today));
 
-                        var oldValue=0;
-                        for (var i = 0; i < oData_today.length; i++) {
-                            //[{"time":"06H:08m","value":0},{"time":"07H:08m","value":60},{"time":"08H:08m","value":181},{"time":"09H:08m","value":401},{"time":"10H:08m","value":1917},{"time":"11H:08m","value":3839},{"time":"12H:08m","value":5905},{"time":"13H:08m","value":8025},{"time":"14H:08m","value":10052},{"time":"15H:08m","value":11844},{"time":"16H:08m","value":13159},{"time":"17H:08m","value":13773},{"time":"18H:08m","value":13875},{"time":"19H:08m","value":13911},{"time":"20H:08m","value":13911}] kW
-                            var oVals = oData_today[i];
-                            var sDate = oVals["time"];
-                            var value = parseInt(oVals["value"],10);
+                            var oldValue = 0;
+                            for (var i = 0; i < oData_today.length; i++) {
+                                //[{"time":"06H:08m","value":0},{"time":"07H:08m","value":60},{"time":"08H:08m","value":181},{"time":"09H:08m","value":401},{"time":"10H:08m","value":1917},{"time":"11H:08m","value":3839},{"time":"12H:08m","value":5905},{"time":"13H:08m","value":8025},{"time":"14H:08m","value":10052},{"time":"15H:08m","value":11844},{"time":"16H:08m","value":13159},{"time":"17H:08m","value":13773},{"time":"18H:08m","value":13875},{"time":"19H:08m","value":13911},{"time":"20H:08m","value":13911}] kW
+                                var oVals = oData_today[i];
+                                var sDate = oVals["time"];
+                                var value = parseInt(oVals["value"], 10);
 
-                            var diff = value - oldValue;
-                            oldValue = value;
+                                var diff = value - oldValue;
+                                oldValue = value;
 
-                            //on new android app this goas fail; don't know why...
-                            //var hour = parseInt(sDate.substring(0, 2));
-                            //var minute = parseInt(sDate.substring(4, 7));
+                                //on new android app this goas fail; don't know why...
+                                //var hour = parseInt(sDate.substring(0, 2));
+                                //var minute = parseInt(sDate.substring(4, 7));
 
-                            var DateArray = sDate.split(":");
-                            var minute = parseInt(DateArray[1],10);
-                            var hour = parseInt(DateArray[0],10);
+                                var DateArray = sDate.split(":");
+                                var minute = parseInt(DateArray[1], 10);
+                                var hour = parseInt(DateArray[0], 10);
 
 
-                            var oDate = new Date();
-                            oDate.setHours(hour);
-                            oDate.setMinutes(minute);
+                                var oDate = new Date();
+                                oDate.setHours(hour);
+                                oDate.setMinutes(minute);
 
-                            if (diff < minY_today) minY_today = diff;
-                            if (diff > maxY_today) maxY_today = diff;
+                                if (diff < minY_today) minY_today = diff;
+                                if (diff > maxY_today) maxY_today = diff;
 
-                            //console.log(oDate.toString() + " : " + diff);
+                                //console.log(oDate.toString() + " : " + diff);
 
-                            values_today.push([oDate, diff]);
+                                values_today.push([oDate, diff]);
+                            }
+                        } catch (e) {
+                            console.log('exception catch in today [' + e + ']');
                         }
-
                         var barwidth_today = 0;
                         barwidth_today = 1000 * 60 * 60 * 0.5; //0,5 h
 
@@ -186,44 +195,47 @@
                         var maxY_30days = 0;
                         var minY_30days = 0;
 
-                        var oid_last30days = data.oid_last30days;
-                        var oData = JSON.parse(vis.states[oid_last30days + '.val']);
+                        try {
+                            var oid_last30days = data.oid_last30days;
+                            var oData = JSON.parse(vis.states[oid_last30days + '.val']);
 
-                        //console.log("oData " + oData.length);
-                        //console.log(JSON.stringify(oData));
-                        //[{ "date": "2017-07-27", "value": 4045 }, { "date": "2017-07-28", "value": 10050 }, { "date": "2017-07-29", "value": 10442 }, { "date": "2017-07-30", "value": 13448 }, { "date": "2017-07-31", "value": 13476 }, { "date": "2017-08-01", "value": 12294 }, { "date": "2017-08-02", "value": 9084 }, { "date": "2017-08-03", "value": 3626 }, { "date": "2017-08-04", "value": 8504 }, { "date": "2017-08-05", "value": 12037 }, { "date": "2017-08-06", "value": 9725 }, { "date": "2017-08-07", "value": 13577 }, { "date": "2017-08-08", "value": 13310 }, { "date": "2017-08-09", "value": 12120 }, { "date": "2017-08-10", "value": 1391 }, { "date": "2017-08-11", "value": 2447 }, { "date": "2017-08-12", "value": 5659 }, { "date": "2017-08-13", "value": 5388 }, { "date": "2017-08-14", "value": 11364 }, { "date": "2017-08-15", "value": 12985 }, { "date": "2017-08-16", "value": 7504 }, { "date": "2017-08-17", "value": 9294 }, { "date": "2017-08-18", "value": 8594 }, { "date": "2017-08-19", "value": 10459 }, { "date": "2017-08-20", "value": 7991 }, { "date": "2017-08-21", "value": 10881 }, { "date": "2017-08-22", "value": 9715 }, { "date": "2017-08-23", "value": 13911 }, { "date": "2017-08-24", "value": 9016 }, { "date": "2017-08-25", "value": 11051 }, { "date": "2017-08-26", "value": 155 }]
+                            //console.log("oData " + oData.length);
+                            //console.log(JSON.stringify(oData));
+                            //[{ "date": "2017-07-27", "value": 4045 }, { "date": "2017-07-28", "value": 10050 }, { "date": "2017-07-29", "value": 10442 }, { "date": "2017-07-30", "value": 13448 }, { "date": "2017-07-31", "value": 13476 }, { "date": "2017-08-01", "value": 12294 }, { "date": "2017-08-02", "value": 9084 }, { "date": "2017-08-03", "value": 3626 }, { "date": "2017-08-04", "value": 8504 }, { "date": "2017-08-05", "value": 12037 }, { "date": "2017-08-06", "value": 9725 }, { "date": "2017-08-07", "value": 13577 }, { "date": "2017-08-08", "value": 13310 }, { "date": "2017-08-09", "value": 12120 }, { "date": "2017-08-10", "value": 1391 }, { "date": "2017-08-11", "value": 2447 }, { "date": "2017-08-12", "value": 5659 }, { "date": "2017-08-13", "value": 5388 }, { "date": "2017-08-14", "value": 11364 }, { "date": "2017-08-15", "value": 12985 }, { "date": "2017-08-16", "value": 7504 }, { "date": "2017-08-17", "value": 9294 }, { "date": "2017-08-18", "value": 8594 }, { "date": "2017-08-19", "value": 10459 }, { "date": "2017-08-20", "value": 7991 }, { "date": "2017-08-21", "value": 10881 }, { "date": "2017-08-22", "value": 9715 }, { "date": "2017-08-23", "value": 13911 }, { "date": "2017-08-24", "value": 9016 }, { "date": "2017-08-25", "value": 11051 }, { "date": "2017-08-26", "value": 155 }]
 
-                        for (var i = 0; i < oData.length; i++) {
+                            for (var i = 0; i < oData.length; i++) {
 
-                            var oVals = oData[i];
-                            var sDate = oVals["date"];
-                            var value = parseInt(oVals["value"]);
-                            var value = value;
-                            //2017-08-12
+                                var oVals = oData[i];
+                                var sDate = oVals["date"];
+                                var value = parseInt(oVals["value"]);
+                                var value = value;
+                                //2017-08-12
 
-                            //on new android app this goas fail; don't know why...
-                            //var day = parseInt(sDate.substring(8, 10));
-                            //var month = parseInt(sDate.substring(5, 7));
-                            //var year = parseInt(sDate.substring(0, 4));
+                                //on new android app this goas fail; don't know why...
+                                //var day = parseInt(sDate.substring(8, 10));
+                                //var month = parseInt(sDate.substring(5, 7));
+                                //var year = parseInt(sDate.substring(0, 4));
 
-                            var DateArray = sDate.split("-");
-                            var day = parseInt(DateArray[2],10);
-                            var month = parseInt(DateArray[1],10);
-                            var year = parseInt(DateArray[0],10);
+                                var DateArray = sDate.split("-");
+                                var day = parseInt(DateArray[2], 10);
+                                var month = parseInt(DateArray[1], 10);
+                                var year = parseInt(DateArray[0], 10);
 
-                            month--;
+                                month--;
 
-                            var oDate = new Date(year, month, day, 12, 0, 0, 0);
+                                var oDate = new Date(year, month, day, 12, 0, 0, 0);
 
-                            if (value < minY_30days) minY_30days = value;
-                            if (value > maxY_30days) maxY_30days = value;
+                                if (value < minY_30days) minY_30days = value;
+                                if (value > maxY_30days) maxY_30days = value;
 
-                            //console.log(oDate.toDateString() + " : " + value);
+                                //console.log(oDate.toDateString() + " : " + value);
 
-                            values_30days.push([oDate, value]);
+                                values_30days.push([oDate, value]);
 
+                            }
+                        } catch (e) {
+                            console.log('exception catch in last 30 days [' + e + ']');
                         }
-
                         var barwidth_30days = 0;
                         barwidth_30days = 1000 * 60 * 60 * 12 ; //12 h
 
@@ -233,51 +245,54 @@
                         var maxY_months = 0;
                         var minY_months = 0;
 
-                        var oid_last12months = data.oid_last12months;
-                        var oData = JSON.parse(vis.states[oid_last12months + '.val']);
+                        try {
+                            var oid_last12months = data.oid_last12months;
+                            var oData = JSON.parse(vis.states[oid_last12months + '.val']);
 
-                        console.log("oData " + oData.length);
-                        console.log(JSON.stringify(oData));
-                        //[{"month":"2016-09","value":17886174},{"month":"2016-10","value":17973503},{"month":"2016-11","value":18020416},{"month":"2016-12","value":18052202},{"month":"2017-01","value":18077080},{"month":"2017-02","value":18171050},{"month":"2017-03","value":18384397},{"month":"2017-04","value":18602474},{"month":"2017-05","value":18909431},{"month":"2017-06","value":19236280},{"month":"2017-07","value":19522862},{"month":"2017-08","value":19754944}]
+                            console.log("oData " + oData.length);
+                            console.log(JSON.stringify(oData));
+                            //[{"month":"2016-09","value":17886174},{"month":"2016-10","value":17973503},{"month":"2016-11","value":18020416},{"month":"2016-12","value":18052202},{"month":"2017-01","value":18077080},{"month":"2017-02","value":18171050},{"month":"2017-03","value":18384397},{"month":"2017-04","value":18602474},{"month":"2017-05","value":18909431},{"month":"2017-06","value":19236280},{"month":"2017-07","value":19522862},{"month":"2017-08","value":19754944}]
 
-                        var oldValue = 0;
-                        for (var i = 0; i < oData.length; i++) {
+                            var oldValue = 0;
+                            for (var i = 0; i < oData.length; i++) {
 
-                            var oVals = oData[i];
-                            var sDate = oVals["month"];
-                            var value = parseInt(oVals["value"],10);
-                            var value = value;
-                            //2016-09
-                            
-                            //console.log(sDate);
-                            //on new android app this goas fail; don't know why...
-                            //var month = parseInt(sDate.substring(5, 7));
-                            //var year = parseInt(sDate.substring(0, 4));
+                                var oVals = oData[i];
+                                var sDate = oVals["month"];
+                                var value = parseInt(oVals["value"], 10);
+                                var value = value;
+                                //2016-09
 
-                            var DateArray = sDate.split("-");
-                            var month = parseInt(DateArray[1],10);
-                            var year = parseInt(DateArray[0],10);
+                                //console.log(sDate);
+                                //on new android app this goas fail; don't know why...
+                                //var month = parseInt(sDate.substring(5, 7));
+                                //var year = parseInt(sDate.substring(0, 4));
 
-                            console.log("array " + DateArray[0] + " / " + DateArray[1]);
+                                var DateArray = sDate.split("-");
+                                var month = parseInt(DateArray[1], 10);
+                                var year = parseInt(DateArray[0], 10);
 
-                            month--;
+                                console.log("array " + DateArray[0] + " / " + DateArray[1]);
 
-                            var oDate = new Date(year, month, 1, 12, 0, 0, 0);
+                                month--;
 
-                            var diff = value - oldValue;
-                            
-                            if (oldValue > 0) {
-                                if (diff < minY_months) minY_months = diff;
-                                if (diff > maxY_months) maxY_months = diff;
+                                var oDate = new Date(year, month, 1, 12, 0, 0, 0);
 
-                                console.log(oDate.toDateString() + " : " + diff + " (" + year + "," + month + ")");
+                                var diff = value - oldValue;
 
-                                values_months.push([oDate, diff]);
+                                if (oldValue > 0) {
+                                    if (diff < minY_months) minY_months = diff;
+                                    if (diff > maxY_months) maxY_months = diff;
+
+                                    console.log(oDate.toDateString() + " : " + diff + " (" + year + "," + month + ")");
+
+                                    values_months.push([oDate, diff]);
+                                }
+                                oldValue = value;
+
                             }
-                            oldValue = value;
-
+                        } catch (e) {
+                            console.log('exception catch in last 12 months [' + e + ']');
                         }
-
                         var barwidth_months = 0;
                         barwidth_months = 1000 * 60 * 60 * 24 * 15; //15 days
 
@@ -286,43 +301,46 @@
                         var maxY_years = 0;
                         var minY_years = 0;
 
-                        var oid_lastyears = data.oid_years;
-                        var oData = JSON.parse(vis.states[oid_lastyears + '.val']);
+                        try {
+                            var oid_lastyears = data.oid_years;
+                            var oData = JSON.parse(vis.states[oid_lastyears + '.val']);
 
-                        console.log("oData " + oData.length);
-                        console.log(JSON.stringify(oData));
-                        //[{"year":"2016","value":18052202},{"year":"2017","value":19754944}]
+                            console.log("oData " + oData.length);
+                            console.log(JSON.stringify(oData));
+                            //[{"year":"2016","value":18052202},{"year":"2017","value":19754944}]
 
-                        var oldValue = 0;
-                        for (var i = 0; i < oData.length; i++) {
+                            var oldValue = 0;
+                            for (var i = 0; i < oData.length; i++) {
 
-                            var oVals = oData[i];
-                            var year = parseInt(oVals["year"],10);
-                            var value = parseInt(oVals["value"],10);
-                            var value = value;
-                            //2016
+                                var oVals = oData[i];
+                                var year = parseInt(oVals["year"], 10);
+                                var value = parseInt(oVals["value"], 10);
+                                var value = value;
+                                //2016
 
-                            var oDate = new Date(year, 0, 1, 12, 0, 0, 0);
+                                var oDate = new Date(year, 0, 1, 12, 0, 0, 0);
 
-                            var diff = value - oldValue;
-                            
-                            if (oldValue > 0) {
-                                if (diff < minY_years) minY_years = diff;
-                                if (diff > maxY_years) maxY_years = diff;
+                                var diff = value - oldValue;
 
-                                console.log(oDate.toDateString() + " : " + diff);
+                                if (oldValue > 0) {
+                                    if (diff < minY_years) minY_years = diff;
+                                    if (diff > maxY_years) maxY_years = diff;
 
-                                values_years.push([oDate, diff]);
+                                    console.log(oDate.toDateString() + " : " + diff);
+
+                                    values_years.push([oDate, diff]);
+                                }
+                                else {
+                                    console.log(oDate.toDateString() + " : " + value);
+
+                                    values_years.push([oDate, value]);
+                                }
+                                oldValue = value;
+
                             }
-                            else {
-                                console.log(oDate.toDateString() + " : " + value);
-
-                                values_years.push([oDate, value]); 
-                            }
-                            oldValue = value;
-
+                        } catch (e) {
+                            console.log('exception catch in years [' + e + ']');
                         }
-
                         var barwidth_years = 0;
                         barwidth_years = 1000 * 60 * 60 * 24 * 182; //365/2=182 days
 
@@ -397,7 +415,7 @@
 
                             xaxes: //xaxis mit [] geht nicht...!!!
                               [{//das folgende geht
-                                  show: data.withxaxix & data.todayvisible,
+                                  show: data.withxaxix && data.todayvisible,
                                   mode: "time",
                                   tickLength: 5,
                                   ticks: data.ticksonxaxix > 0 ? parseInt(data.ticksonxaxix,10) : 5,
@@ -409,7 +427,7 @@
                                   }
                               },
                               {//das folgende geht
-                                  show: data.withxaxix & data.last30daysvisible,
+                                  show: data.withxaxix && data.last30daysvisible,
                                   mode: "time",
                                   tickLength: 5,
                                   ticks: data.ticksonxaxix > 0 ? parseInt(data.ticksonxaxix,10) : 5,
@@ -421,7 +439,7 @@
                                   }
                               },
                               {//das folgende geht
-                                  show: data.withxaxix & data.last12monthsvisible,
+                                  show: data.withxaxix && data.last12monthsvisible,
                                   mode: "time",
                                   tickLength: 5,
                                   ticks: data.ticksonxaxix > 0 ? parseInt(data.ticksonxaxix,10) : 5,
@@ -429,11 +447,11 @@
                                   monthNames: ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"],
                                   color: data.tickscolor,
                                   font: {
-                                      color: data.last12monthscolor
+                                      color: data.axislabelcolor
                                   }
                               },
                               {//das folgende geht
-                                  show: data.withxaxix & data.yearsvisible,
+                                  show: data.withxaxix && data.yearsvisible,
                                   mode: "time",
                                   tickLength: 5,
                                   ticks: data.ticksonxaxix > 0 ? parseInt(data.ticksonxaxix,10) : 5,
@@ -591,15 +609,17 @@
             vis.widgets[widgetID].data.oid_last12months = "";
             vis.views[view].widgets[widgetID].data.oid_years = "";
             vis.widgets[widgetID].data.oid_years = "";
-            
+
             //then copy new values
-            if (newId.indexOf("sbfspot") > -1) {
+            //if (newId.indexOf("sbfspot") > -1) {
+
+            if (fields.indexOf("sbfspotinstance") > -1 ) {
                 //sbfspot.0.2000562095.history.last12Months
 
                 //var sSerial = "2000562095";
                 var sSerial = vis.widgets[widgetID].data.serial;
 
-                console.log('calc new oids with serial' + sSerial);
+                console.log('calc new oids with serial ' + sSerial + " Instance " + newId );
                 vis.views[view].widgets[widgetID].data.oid_today = newId + "." + sSerial + ".history.today";
                 vis.widgets[widgetID].data.oid_today = newId + "." + sSerial + ".history.today";
                 vis.views[view].widgets[widgetID].data.oid_last30days = newId + "." + sSerial + ".history.last30Days";
@@ -610,7 +630,25 @@
                 vis.widgets[widgetID].data.oid_years = newId + "." + sSerial + ".history.years";
             }
 
-          return changed;
+            else if ( fields.indexOf("serial") > -1) {
+                //sbfspot.0.2000562095.history.last12Months
+
+                //var sSerial = "2000562095";
+                var sSerial = vis.widgets[widgetID].data.serial;
+                var sInstance = vis.widgets[widgetID].data.sbfspotinstance;
+
+                console.log('calc new oids with serial ' + sSerial + " Instance " + sInstance );
+                vis.views[view].widgets[widgetID].data.oid_today = sInstance + "." + sSerial + ".history.today";
+                vis.widgets[widgetID].data.oid_today = sInstance + "." + sSerial + ".history.today";
+                vis.views[view].widgets[widgetID].data.oid_last30days = sInstance + "." + sSerial + ".history.last30Days";
+                vis.widgets[widgetID].data.oid_last30days = sInstance + "." + sSerial + ".history.last30Days";
+                vis.views[view].widgets[widgetID].data.oid_last12months = sInstance + "." + sSerial + ".history.last12Months";
+                vis.widgets[widgetID].data.oid_last12months = sInstance + "." + sSerial + ".history.last12Months";
+                vis.views[view].widgets[widgetID].data.oid_years = sInstance + "." + sSerial + ".history.years";
+                vis.widgets[widgetID].data.oid_years = sInstance + "." + sSerial + ".history.years";
+            }
+
+            return changed;
         }
 
     }
