@@ -38,42 +38,22 @@
             "24 hours": { "en": "24 hours", "de": "24 Stunden", "ru": "24 ????" },
             "sbfspotinstance": { "en": "sbfspot instance", "de": "sbfspot-Instanz", "ru": "?????????" },
             "time_interval": { "en": "Time interval", "de": "Zeitintervall", "ru": "????????" },
-            "group_oids": { "en": "OIDS", "de": "OIDs", "ru": "???" },
-            "oid_today": { "en": "OID today", "de": "OID today", "ru": "???" },
-            "oid_last30days": { "en": "OID last30days", "de": "OID last30days", "ru": "???" },
-            "oid_last12months": { "en": "OID last12months", "de": "OID last12months", "ru": "???" },
-            "oid_years": { "en": "OID_years", "de": "OID_years", "ru": "???" },
+
+            "sel_today": { "en": "today", "de": "heute", "ru": "sel_today" },
+            "sel_last30days": { "en": "last 30 days", "de": "30 Tage", "ru": "sel_last30days" },
+            "sel_last12months": { "en": "last 12 months", "de": "12 Monate", "ru": "sel_last12months" },
+            "sel_years": { "en": "years", "de": "Jahre", "ru": "sel_years" },
+            "serial": { "en": "inverter serial No.", "de": "WR Seriennummer", "ru": "serial" },
+            "valueselect": { "en": "select", "de": "Auswahl", "ru": "valueselect" },
+            "withxaxix": { "en": "show X axis", "de": "zeige X Achse", "ru": "withxaxix" },
             "ticksonxaxix": { "en": "ticks on X axis", "de": "Anzahl Labels / X Achse", "ru": "???" },
-
-            "group_today": { "en": "today", "de": "heute", "ru": "???" },
-            "todayvisible": { "en": "visible", "de": "sichtbar", "ru": "???" },
-            "todaycolor": { "en": "color", "de": "Farbe", "ru": "???" },
-            "group_last30days": { "en": "last 30 days", "de": "letzte 30 Tage", "ru": "???" },
-            "last30daysvisible": { "en": "visible", "de": "sichtbar", "ru": "???" },
-            "last30dayscolor": { "en": "color", "de": "Farbe", "ru": "???" },
-            "group_last12months": { "en": "last 12 months", "de": "letzte 12 Monate", "ru": "???" },
-            "last12monthsvisible": { "en": "visible", "de": "sichtbar", "ru": "???" },
-            "last12monthscolor": { "en": "color", "de": "Farbe", "ru": "???" },
-
-            "group_years": { "en": "years", "de": "Jahre", "ru": "???" },
-            "yearsvisible": { "en": "visible", "de": "sichtbar", "ru": "???" },
-            "yearscolor": { "en": "color", "de": "Farbe", "ru": "???" },
-
-            "withxaxix": { "en": "show X axis", "de": "Zeige X-Achse", "ru": "???" },
             "axislabelcolor": { "en": "color axis label", "de": "Farbe Achsbeschriftung", "ru": "???" },
             "tickscolor": { "en": "color axis ticks", "de": "Farbe Achsmarke", "ru": "???" },
-
-            "todayDateFormat": { "en": "format for date/time on x-axis", "de": "Datum-/Zeitformat X-Achse", "ru": "todayDateFormat" },
-            "last30daysDateFormat": { "en": "format for date/time on x-axis", "de": "Datum-/Zeitformat X-Achse", "ru": "last30daysDateFormat" },
-            "last12monthsDateFormat": { "en": "format for date/time on x-axis", "de": "Datum-/Zeitformat X-Achse", "ru": "last12monthsDateFormat" },
-            "yearsDateFormat": { "en": "format for date/time on x-axis", "de": "Datum-/Zeitformat X-Achse", "ru": "yearsDateFormat" },
-
-            "serial": { "en": "Inverter Serial No.", "de": "WR Serial-Nr.", "ru": "serial" },
-            "todaywithy": { "en": "show Y axis", "de": "zeige Y Achse", "ru": "todaywithy" },
-            "last30dayswithy": { "en": "show Y axis", "de": "zeige Y Achse", "ru": "last30dayswithy" },
-            "last12monthswithy": { "en": "show Y axis", "de": "zeige Y Achse", "ru": "last12monthswithy" },
-            "yearswithy": { "en": "show Y axis", "de": "zeige Y Achse", "ru": "yearswithy" },
-
+            "graphcolor": { "en": "color graph", "de": "Farbe Graph", "ru": "graphcolor" },
+            "withyaxix": { "en": "show Y axis", "de": "zeige Y Achse", "ru": "withyaxix" },
+            "graphDateFormat": { "en": "Date Format for X axis", "de": "Datumsformat für X-Achse", "ru": "graphDateFormat" },
+            "group_oids": { "en": "OID's", "de": "OID's", "ru": "group_oids" },
+            "oid_value": { "en": "OID values", "de": "OID Werte", "ru": "oid_value" },
 
         });
     }
@@ -88,7 +68,7 @@
     }
 
     vis.binds.sbfspot = {
-        version: "1.1.0",
+        version: "2.0.0",
         showVersion: function () {
             if (vis.binds.sbfspot.version) {
                 console.log('Version vis-sbfspot: ' + vis.binds.sbfspot.version);
@@ -113,6 +93,12 @@
                 '12 hours': 43200000,
                 '24 hours': 86400000
             },
+            datasel: {
+                'sel_today': 1,
+                'sel_last30days': 2,
+                'sel_last12months': 3,
+                'sel_years':4
+            }
             
         },
         history: {
@@ -139,7 +125,157 @@
    
                         console.log("ShowChart sbfspot begin");
 
+                        var values = [];
+                        var maxY = -9999;
+                        var minY = 9999;
 
+                        try {
+                            var oid_value = data.oid_value;
+                            var oData = JSON.parse(vis.states[oid_value + '.val']);
+
+                            //console.log("oData " + oData.length);
+                            //console.log(JSON.stringify(oData));
+
+                            var $sel = vis.binds.sbfspot.setup.datasel[data.valueselect];
+
+                            console.log("sel " + $sel);
+
+                            var oldValue = 0;
+                            for (var i = 0; i < oData.length; i++) {
+                                //[{"time":"06H:08m","value":0},{"time":"07H:08m","value":60},{"time":"08H:08m","value":181},{"time":"09H:08m","value":401},{"time":"10H:08m","value":1917},{"time":"11H:08m","value":3839},{"time":"12H:08m","value":5905},{"time":"13H:08m","value":8025},{"time":"14H:08m","value":10052},{"time":"15H:08m","value":11844},{"time":"16H:08m","value":13159},{"time":"17H:08m","value":13773},{"time":"18H:08m","value":13875},{"time":"19H:08m","value":13911},{"time":"20H:08m","value":13911}] kW
+                                //[{ "date": "2017-07-27", "value": 4045 }, { "date": "2017-07-28", "value": 10050 }, { "date": "2017-07-29", "value": 10442 }, { "date": "2017-07-30", "value": 13448 }, { "date": "2017-07-31", "value": 13476 }, { "date": "2017-08-01", "value": 12294 }, { "date": "2017-08-02", "value": 9084 }, { "date": "2017-08-03", "value": 3626 }, { "date": "2017-08-04", "value": 8504 }, { "date": "2017-08-05", "value": 12037 }, { "date": "2017-08-06", "value": 9725 }, { "date": "2017-08-07", "value": 13577 }, { "date": "2017-08-08", "value": 13310 }, { "date": "2017-08-09", "value": 12120 }, { "date": "2017-08-10", "value": 1391 }, { "date": "2017-08-11", "value": 2447 }, { "date": "2017-08-12", "value": 5659 }, { "date": "2017-08-13", "value": 5388 }, { "date": "2017-08-14", "value": 11364 }, { "date": "2017-08-15", "value": 12985 }, { "date": "2017-08-16", "value": 7504 }, { "date": "2017-08-17", "value": 9294 }, { "date": "2017-08-18", "value": 8594 }, { "date": "2017-08-19", "value": 10459 }, { "date": "2017-08-20", "value": 7991 }, { "date": "2017-08-21", "value": 10881 }, { "date": "2017-08-22", "value": 9715 }, { "date": "2017-08-23", "value": 13911 }, { "date": "2017-08-24", "value": 9016 }, { "date": "2017-08-25", "value": 11051 }, { "date": "2017-08-26", "value": 155 }]
+                                //[{"month":"2016-09","value":17886174},{"month":"2016-10","value":17973503},{"month":"2016-11","value":18020416},{"month":"2016-12","value":18052202},{"month":"2017-01","value":18077080},{"month":"2017-02","value":18171050},{"month":"2017-03","value":18384397},{"month":"2017-04","value":18602474},{"month":"2017-05","value":18909431},{"month":"2017-06","value":19236280},{"month":"2017-07","value":19522862},{"month":"2017-08","value":19754944}]
+                                //[{"year":"2016","value":18052202},{"year":"2017","value":19754944}]
+
+                                if ($sel == 1) {
+                                    var oVals = oData[i];
+                                    var sDate = oVals["time"];
+                                    var value = parseInt(oVals["value"], 10);
+
+                                    var diff = value - oldValue;
+                                    oldValue = value;
+
+                                    var DateArray = sDate.split(":");
+                                    var minute = parseInt(DateArray[1], 10);
+                                    var hour = parseInt(DateArray[0], 10);
+
+                                    var oDate = new Date();
+                                    oDate.setHours(hour);
+                                    oDate.setMinutes(minute);
+
+                                    if (diff < minY) minY = diff;
+                                    if (diff > maxY) maxY = diff;
+
+                                    //console.log(oDate.toString() + " : " + diff);
+
+                                    values.push([oDate, diff]);
+                                }
+                                else if ($sel == 2) {
+                                    var oVals = oData[i];
+                                    var sDate = oVals["date"];
+                                    var value = parseInt(oVals["value"]);
+                                    var value = value;
+                                    //2017-08-12
+
+                                    var DateArray = sDate.split("-");
+                                    var day = parseInt(DateArray[2], 10);
+                                    var month = parseInt(DateArray[1], 10);
+                                    var year = parseInt(DateArray[0], 10);
+
+                                    month--;
+
+                                    var oDate = new Date(year, month, day, 12, 0, 0, 0);
+
+                                    if (value < minY) minY = value;
+                                    if (value > maxY) maxY = value;
+
+                                    //console.log(oDate.toDateString() + " : " + value);
+
+                                    values.push([oDate, value]);
+                                }
+                                else if ($sel == 3) {
+                                    var oVals = oData[i];
+                                    var sDate = oVals["month"];
+                                    var value = parseInt(oVals["value"], 10);
+                                    var value = value;
+                                    //2016-09
+
+                                    //console.log(sDate);
+                                    //on new android app this goas fail; don't know why...
+                                    //var month = parseInt(sDate.substring(5, 7));
+                                    //var year = parseInt(sDate.substring(0, 4));
+
+                                    var DateArray = sDate.split("-");
+                                    var month = parseInt(DateArray[1], 10);
+                                    var year = parseInt(DateArray[0], 10);
+
+                                    console.log("array " + DateArray[0] + " / " + DateArray[1]);
+
+                                    month--;
+
+                                    var oDate = new Date(year, month, 1, 12, 0, 0, 0);
+
+                                    var diff = value - oldValue;
+
+                                    if (oldValue > 0) {
+                                        if (diff < minY) minY = diff;
+                                        if (diff > maxY) maxY = diff;
+
+                                        console.log(oDate.toDateString() + " : " + diff + " (" + year + "," + month + ")");
+
+                                        values.push([oDate, diff]);
+                                    }
+                                    oldValue = value;
+
+                                }
+                                else if ($sel == 4) {
+                                    var oVals = oData[i];
+                                    var year = parseInt(oVals["year"], 10);
+                                    var value = parseInt(oVals["value"], 10);
+                                    var value = value;
+                                    //2016
+
+                                    var oDate = new Date(year, 0, 1, 12, 0, 0, 0);
+
+                                    var diff = value - oldValue;
+
+                                    if (oldValue > 0) {
+                                        if (diff < minY) minY = diff;
+                                        if (diff > maxY) maxY = diff;
+
+                                        console.log(oDate.toDateString() + " : " + diff);
+
+                                        values.push([oDate, diff]);
+                                    }
+                                    else {
+                                        console.log(oDate.toDateString() + " : " + value);
+
+                                        values.push([oDate, value]);
+                                    }
+                                    oldValue = value;
+
+                                }
+                            }
+                        } catch (e) {
+                            console.log('exception catch in parse data [' + e + ']');
+                        }
+                        var barwidth = 0;
+                        if ($sel == 1) {
+                            barwidth = 1000 * 60 * 60 * 0.5; //0,5 h
+                        }
+                        else if ($sel == 2) {
+                            barwidth = 1000 * 60 * 60 * 12; //12 h
+                        }
+                        else if ($sel == 3) {
+                            barwidth = 1000 * 60 * 60 * 24 * 15; //15 days
+                        }
+                        else if ($sel == 4) {
+                            barwidth = 1000 * 60 * 60 * 24 * 182; //365/2=182 days
+                        }
+
+                        //sbfspot.0.2000562095.history.last30Days
+
+                        /*
                         //today ======================================================================
                         var values_today = [];
                         var maxY_today = 0;
@@ -351,11 +487,12 @@
                         //console.log("last30daysvisible " + data.last30daysvisible);
                         //console.log("withxaxix " + data.withxaxix);
                         //console.log("ticksonxaxix " + data.ticksonxaxix);
+                        */
 
                     $.plot($div,
                         [{
-                            data: data.todayvisible ? values_today : {},
-                            color: data.todaycolor,
+                            data:  values,
+                            color: data.graphcolor,
                             //label: "today [Wh]",
                             //hoverable: true,
                             xaxis: 1,
@@ -364,158 +501,44 @@
                             bars:
                                 {
                                     show:  true,
-                                    barWidth: barwidth_today
+                                    barWidth: barwidth
                                 }
                         },
-                        {
-                            data: data.last30daysvisible ? values_30days : {},
-                            color: data.last30dayscolor,
-                            //label: "last 30 days [kWh]",
-                            //hoverable: true,
-                            xaxis: 2,
-                            yaxis: 2,
-                            lines: { show: false },
-                            bars:
-                                {
-                                    show: true,
-                                    barWidth: barwidth_30days
-                                }
-                        },
-                        {
-                            data: data.last12monthsvisible ? values_months : {},
-                            color: data.last12monthscolor,
-                            //label: "last 12 months [kWh]",
-                            //hoverable: true,
-                            xaxis: 3,
-                            yaxis: 3,
-                            lines: { show: false },
-                            bars:
-                                {
-                                    show: true,
-                                    barWidth: barwidth_months
-                                }
-                        },
-                        {
-                            data: data.yearsvisible ? values_years : {},
-                            color: data.yearscolor,
-                            //label: "years [kWh]",
-                            //hoverable: true,
-                            xaxis: 4,
-                            yaxis: 4,
-                            lines: { show: false },
-                            bars:
-                                {
-                                    show: true,
-                                    barWidth: barwidth_years
-                                }
-                        }
+                        
                         
                         ],
                         {
 
-                            xaxes: //xaxis mit [] geht nicht...!!!
-                              [{//das folgende geht
-                                  show: data.withxaxix && data.todayvisible,
+                            xaxes: 
+                              [{
+                                  show: data.withxaxix,
                                   mode: "time",
                                   tickLength: 5,
                                   ticks: data.ticksonxaxix > 0 ? parseInt(data.ticksonxaxix,10) : 5,
-                                  timeformat: data.todayDateFormat, // "%H:%M",
+                                  timeformat: data.graphDateFormat, 
                                   monthNames: ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"],
                                   color: data.tickscolor,
                                   font: {
                                       color: data.axislabelcolor
                                   }
                               },
-                              {//das folgende geht
-                                  show: data.withxaxix && data.last30daysvisible,
-                                  mode: "time",
-                                  tickLength: 5,
-                                  ticks: data.ticksonxaxix > 0 ? parseInt(data.ticksonxaxix,10) : 5,
-                                  timeformat: data.last30daysDateFormat, //"%d.%b",
-                                  monthNames: ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"],
-                                  color: data.tickscolor,
-                                  font: {
-                                      color: data.axislabelcolor
-                                  }
-                              },
-                              {//das folgende geht
-                                  show: data.withxaxix && data.last12monthsvisible,
-                                  mode: "time",
-                                  tickLength: 5,
-                                  ticks: data.ticksonxaxix > 0 ? parseInt(data.ticksonxaxix,10) : 5,
-                                  timeformat: data.last12monthsDateFormat, //"%b %Y",
-                                  monthNames: ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"],
-                                  color: data.tickscolor,
-                                  font: {
-                                      color: data.axislabelcolor
-                                  }
-                              },
-                              {//das folgende geht
-                                  show: data.withxaxix && data.yearsvisible,
-                                  mode: "time",
-                                  tickLength: 5,
-                                  ticks: data.ticksonxaxix > 0 ? parseInt(data.ticksonxaxix,10) : 5,
-                                  timeformat: data.yearsDateFormat, //"%Y",
-                                  monthNames: ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"],
-                                  color: data.tickscolor,
-                                  font: {
-                                      color: data.axislabelcolor
-                                  }
-                              }
+                              
                               ],
-                            yaxes: //yaxis mit [] geht nicht...!!!                              
-                                [{ //das folgende geht
-                                show: data.todayvisible && data.todaywithy,
-                                    max: maxY_today,
-                                    min: minY_today,
+                            yaxes:                           
+                                [{ 
+                                show: data.withyaxix,
+                                    max: maxY,
+                                    min: minY,
                                     //alignTicksWithAxis: 1,
                                     position: 'left',
                                     ticks: 3,
                                     color: data.tickscolor,
                                     font: {
-                                        color: data.todaycolor
+                                        color: data.graphcolor
                                     },
                                     tickFormatter: xwhFormatter
                                 },
-                                { //das folgende geht
-                                    show: data.last30daysvisible && data.last30dayswithy,
-                                    max: maxY_30days,
-                                    min: minY_30days,
-                                    //alignTicksWithAxis: 1,
-                                    position: 'left',
-                                    ticks: 3,
-                                    color: data.tickscolor,
-                                    font: {
-                                        color: data.last30dayscolor
-                                    },
-                                    tickFormatter: xwhFormatter
-                                },
-                                { //das folgende geht
-                                    show: data.last12monthsvisible && data.last12monthswithy,
-                                    max: maxY_months,
-                                    min: minY_months,
-                                    //alignTicksWithAxis: 1,
-                                    position: 'left',
-                                    ticks: 3,
-                                    color: data.tickscolor,
-                                    font: {
-                                        color: data.last12monthscolor
-                                    },
-                                    tickFormatter: xwhFormatter
-                                },
-                                { //das folgende geht
-                                    show: data.yearsvisible && data.yearswithy,
-                                    max: maxY_years,
-                                    min: minY_years,
-                                    //alignTicksWithAxis: 1,
-                                    position: 'left',
-                                    ticks: 3,
-                                    color: data.tickscolor,
-                                    font: {
-                                        color: data.yearscolor
-                                    },
-                                    tickFormatter: xwhFormatter
-                                }
+                                
                                 ],
                             grid:
                               {
@@ -553,29 +576,13 @@
 
                 if (_data.sbfspotinstance) {
 
-                    var oid_today = _data.oid_today;
-                    console.log("bind " + oid_today);
-                    vis.states.bind(oid_today + '.val', function () {
+                    var oid_value = _data.oid_value;
+                    console.log("bind " + oid_value);
+                    vis.states.bind(oid_value + '.val', function () {
                         vis.binds.sbfspot.history.update($div);
                     });
  
-                    var oid_last30days = _data.oid_last30days;
-                    console.log("bind " + oid_last30days);
-                    vis.states.bind(oid_last30days + '.val', function () {
-                        vis.binds.sbfspot.history.update($div);
-                    });
-
-                    var oid_last12months = _data.oid_last12months;
-                    console.log("bind " + oid_last12months);
-                    vis.states.bind(oid_last12months + '.val', function () {
-                        vis.binds.sbfspot.history.update($div);
-                    });
-
-                    var oid_years = _data.oid_years;
-                    console.log("bind " + oid_years);
-                    vis.states.bind(oid_years + '.val', function () {
-                        vis.binds.sbfspot.history.update($div);
-                    });
+                    
 
                     // update every x seconds
                     if (!vis.editMode) {
@@ -600,52 +607,61 @@
             console.log('---------: ' + widgetID + ' - ' + view + ' - ' + newId + ' - ' + fields);
 
             var changed = [];
-            //delete all
-            vis.views[view].widgets[widgetID].data.oid_today = "";
-            vis.widgets[widgetID].data.oid_today = "";
-            vis.views[view].widgets[widgetID].data.oid_last30days = "";
-            vis.widgets[widgetID].data.oid_last30days = "";
-            vis.views[view].widgets[widgetID].data.oid_last12months = "";
-            vis.widgets[widgetID].data.oid_last12months = "";
-            vis.views[view].widgets[widgetID].data.oid_years = "";
-            vis.widgets[widgetID].data.oid_years = "";
+            //delete all oid's
+            vis.views[view].widgets[widgetID].data.oid_value = "";
+            vis.widgets[widgetID].data.oid_value = "";
 
-            //then copy new values
-            //if (newId.indexOf("sbfspot") > -1) {
+            //sbfspot.0.2000562095.history.last30Days
+            
 
-            if (fields.indexOf("sbfspotinstance") > -1 ) {
-                //sbfspot.0.2000562095.history.last12Months
+            //then copy new values into oid
+            if ((fields.indexOf("serial") > -1) || (fields.indexOf("sbfspotinstance") > -1) || fields.indexOf("valueselect") > -1) {
 
-                //var sSerial = "2000562095";
-                var sSerial = vis.widgets[widgetID].data.serial;
-
-                console.log('calc new oids with serial ' + sSerial + " Instance " + newId );
-                vis.views[view].widgets[widgetID].data.oid_today = newId + "." + sSerial + ".history.today";
-                vis.widgets[widgetID].data.oid_today = newId + "." + sSerial + ".history.today";
-                vis.views[view].widgets[widgetID].data.oid_last30days = newId + "." + sSerial + ".history.last30Days";
-                vis.widgets[widgetID].data.oid_last30days = newId + "." + sSerial + ".history.last30Days";
-                vis.views[view].widgets[widgetID].data.oid_last12months = newId + "." + sSerial + ".history.last12Months";
-                vis.widgets[widgetID].data.oid_last12months = newId + "." + sSerial + ".history.last12Months";
-                vis.views[view].widgets[widgetID].data.oid_years = newId + "." + sSerial + ".history.years";
-                vis.widgets[widgetID].data.oid_years = newId + "." + sSerial + ".history.years";
-            }
-
-            else if ( fields.indexOf("serial") > -1) {
-                //sbfspot.0.2000562095.history.last12Months
-
-                //var sSerial = "2000562095";
                 var sSerial = vis.widgets[widgetID].data.serial;
                 var sInstance = vis.widgets[widgetID].data.sbfspotinstance;
+                var sValueSet = "today";
 
-                console.log('calc new oids with serial ' + sSerial + " Instance " + sInstance );
-                vis.views[view].widgets[widgetID].data.oid_today = sInstance + "." + sSerial + ".history.today";
-                vis.widgets[widgetID].data.oid_today = sInstance + "." + sSerial + ".history.today";
-                vis.views[view].widgets[widgetID].data.oid_last30days = sInstance + "." + sSerial + ".history.last30Days";
-                vis.widgets[widgetID].data.oid_last30days = sInstance + "." + sSerial + ".history.last30Days";
-                vis.views[view].widgets[widgetID].data.oid_last12months = sInstance + "." + sSerial + ".history.last12Months";
-                vis.widgets[widgetID].data.oid_last12months = sInstance + "." + sSerial + ".history.last12Months";
-                vis.views[view].widgets[widgetID].data.oid_years = sInstance + "." + sSerial + ".history.years";
-                vis.widgets[widgetID].data.oid_years = sInstance + "." + sSerial + ".history.years";
+                
+
+                var $sel = vis.widgets[widgetID].data.valueselect;
+
+                console.log("+++++++ " + $sel + " " + vis.binds.sbfspot.setup.datasel[$sel]);
+
+                switch (vis.binds.sbfspot.setup.datasel[$sel]) {
+                    case 1:
+                        vis.views[view].widgets[widgetID].data.graphDateFormat = "%H:%M";
+                        vis.widgets[widgetID].data.graphDateFormat = "%H:%M";
+                        sValueSet = "today";
+                        break;
+                    case 2:
+                        vis.views[view].widgets[widgetID].data.graphDateFormat = "%d.%b";
+                        vis.widgets[widgetID].data.graphDateFormat = "%d.%b";
+                        sValueSet = "last30Days";
+                        break;
+                    case 3:
+                        vis.views[view].widgets[widgetID].data.graphDateFormat = "%b %Y";
+                        vis.widgets[widgetID].data.graphDateFormat = "%b %Y";
+                        sValueSet = "last12Months";
+                        break;
+                    case 4:
+                        vis.views[view].widgets[widgetID].data.graphDateFormat = "%Y";
+                        vis.widgets[widgetID].data.graphDateFormat = "%Y";
+                        sValueSet = "years";
+                        break;
+                    default: break;
+                }
+
+                console.log('calc new oids with serial ' + sSerial + " Instance " + sInstance + " " + sValueSet);
+
+                vis.views[view].widgets[widgetID].data.oid_value = sInstance + "." + sSerial + ".history." + sValueSet;
+                vis.widgets[widgetID].data.oid_value = sInstance + "." + sSerial + ".history." + sValueSet;
+            
+
+            
+               
+
+                
+
             }
 
             return changed;
@@ -667,13 +683,10 @@
         data-vis-type="sbfspot"
         data-vis-update-style="true"
         data-vis-prev='<img src="widgets/sbfspot/img/Prev_tplSbfspot.png"></img>'
-        data-vis-attrs="sbfspotinstance/sbfspot/onInstanceChanged; serial//onInstanceChanged;"
+        data-vis-attrs="sbfspotinstance/sbfspot/onInstanceChanged; serial//onInstanceChanged;valueselect[sel_today]/select,sel_today,sel_last30days,sel_last12months,sel_years/onInstanceChanged;"
         data-vis-attrs0="time_interval[30 minutes]/select,1 second,10 seconds,30 seconds,1 minute,2 minutes,5 minutes,10 minutes,30 minutes,1 hour,2 hours,4 hours,8 hours,12 hours,24 hours;withxaxix[true]/checkbox;ticksonxaxix[5];axislabelcolor[#ffffff]/color;tickscolor[#ffffff]/color;"
-        data-vis-attrs1="group.today;todayvisible[true]/checkbox;todaycolor[#f1f113]/color;todaywithy[true]/checkbox;todayDateFormat[%H:%M];"
-        data-vis-attrs2="group.last30days;last30daysvisible[true]/checkbox;last30dayscolor[#00b3ac]/color;last30dayswithy[true]/checkbox;last30daysDateFormat[%d.%b];"
-        data-vis-attrs3="group.last12months;last12monthsvisible[true]/checkbox;last12monthscolor[#00b3ac]/color;last12monthswithy[true]/checkbox;last12monthsDateFormat[%b %Y];"
-        data-vis-attrs4="group.years;yearsvisible[true]/checkbox;yearscolor[#00b3ac]/color;yearswithy[true]/checkbox;yearsDateFormat[%Y];"
-        data-vis-attrs5="group.oids;oid_today/id;oid_last30days/id;oid_last12months/id;oid_years/id;"
+        data-vis-attrs1="graphcolor[#f1f113]/color;withyaxix[true]/checkbox;graphDateFormat[%H:%M];"
+        data-vis-attrs2="group.oids;oid_value/id;"
 
 >
 
