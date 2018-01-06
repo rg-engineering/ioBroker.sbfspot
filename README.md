@@ -21,6 +21,9 @@ Hints:
 
 ## Changelog
 
+#### 2.0.1
+* (René) Support of admin3
+
 #### 2.0.0
 * (René) since we always use one graph per widget, only one is supported now
 		Attention: widget is not compatible with version 1.x.x; just check settings in widget after installation!

@@ -1,8 +1,18 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "news": {
+      "2.0.1": {
+        "en": "Support of admin3",
+        "de": "Unterstützung von admin3",
+        "ru": "????????? admin3",
+        "pt": "Suporte de admin3",
+        "nl": "Ondersteuning van admin3",
+        "fr": "Support de admin3",
+        "it": "Supporto di admin3",
+        "es": "Soporte de admin3"
+      },
       "2.0.0": {
         "en": "reduce to only one graph",
         "de": "nur ein Graph pro widget"
@@ -61,9 +71,27 @@
       }
     },
     "title": "sbfspot",
-    "desc": {
+    "titleLang": {
       "en": "SMA inverter (sbfspot) Adapter",
-      "de": "SMA inverter (sbfspot) Adapter"
+      "de": "SMA Wechselrichter (sbfspot) Adapter",
+      "ru": "??????? SMA-????????? (sbfspot)",
+      "pt": "Adaptador SMA inversor (sbfspot)",
+      "nl": "SMA-omvormer (sbfspot) Adapter",
+      "fr": "Adaptateur d'onduleur SMA (sbfspot)",
+      "it": "Adattatore per inverter SMA (sbfspot)",
+      "es": "Adaptador inversor SMA (sbfspot)",
+      "pl": "Adapter falownika SMA (sbfspot)"
+    },
+    "desc": {
+      "en": "SMA inverter (sbfspot) Adapter with vis widget",
+      "de": "SMA-Wechselrichter (sbfspot) Adapter mit Vis-Widget",
+      "ru": "??????????????? SMA (sbfspot) ? ????????? ?????????",
+      "pt": "Inversor SMA (sbfspot) Adaptador com vis widget",
+      "nl": "SMA-omvormer (sbfspot) Adapter met vis-widget",
+      "fr": "SMA inverter (sbfspot) Adaptateur avec vis widget",
+      "it": "Adattatore SMA (sbfspot) Adattatore con widget vis",
+      "es": "Adaptador de inversor SMA (sbfspot) con widget de vis",
+      "pl": "Adapter falownika SMA (sbfspot) z wid?etem vis"
     },
     "platform": "Javascript/Node.js",
     "mode": "schedule",
@@ -84,6 +112,7 @@
     "stopBeforeUpdate": true,
     "type": "hardware",
     "license": "MIT",
+    "materialize": true,
     "authors": [
       {
         "name": "René G.",

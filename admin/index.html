@@ -22,27 +22,13 @@
 <link rel="stylesheet" type="text/css" href="../../css/adapter.css"/>
 <script type="text/javascript" src="../../js/translate.js"></script>
 <script type="text/javascript" src="../../js/adapter-settings.js"></script>
-
+<script type="text/javascript" src="words.js"></script>
 
 <!-- you have to define 2 functions in the global scope: -->
 <script type="text/javascript">
 
     // Dictionary (systemDictionary is global variable from adapter-settings.js)
-    systemDictionary = {
-        "sbfspot adapter settings": { "de": "sbfspot Adapter Einstellungen" },
-        "on save adapter restarts with new config immediately": { "de": "Beim Speichern von Einstellungen wird der Adapter sofort neu gestartet." },
-        "sbfspot DB IP": { "de": "mySQL Datenbank-IP", "en": "mySQL database IP" },
-        "sbfspot DB user": { "de": "mySQL Datenbank-Benutzer", "en": "mySQL database user" },
-        "sbfspot DB password": { "de": "mySQL Datenbank_Passwort", "en": "mySQL database password" },
-        "sbfspot DB databasename": { "de": "mySQL Datenbank-Name", "en": "mySQL database name" },
-        "path to DB file": { "de": "Pfad zur sqlite-Datenbank", "en": "path to sqlite database file" },
-        "type of DB": {"de": "Type der Datenbank", "en": "type of database"},
-        "Attention": { "de": "Der Adapter, sbfspot und die Datenbank sollte auf dem gleichen System laufen", "en": "adapter, sbfspot and database should run on the same system" },
-        "Hint mySQL": { "de": "Hinweis für mySQL: localhost kann als IP verwendet werden", "en": "hint for mySQL: use localhost as IP" },
-        "Hint sqlite": { "de": "Hinweis für sqlite: Der Pfad muss komplett inkl. Datenbankfilename angegeben werden. z.Bsp. /home/pi/sbfspot/smadata/SBFspot.db", "en": "hint for sqlite: enter the complete path incl. database file name e.g. /home/pi/sbfspot/smadata/SBFspot.db" },
-        "install_date": { "de": "Installationsdatum PV-Anlage", "en": "install date PV-System"},
-        "install_date_desc": { "de": "wird für Berechnung der Statistik im vis widget verwendet", "en": "used for calculation of history in vis widget" }
-    };
+    
 
     
     function CheckSettings(settings, onChange) {
