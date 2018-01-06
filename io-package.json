@@ -5,8 +5,8 @@
     "news": {
       "2.0.1": {
         "en": "Support of admin3",
-        "de": "Unterst�tzung von admin3",
-        "ru": "????????? admin3",
+        "de": "Unterstützung von admin3",
+        "ru": "Поддержка admin3",
         "pt": "Suporte de admin3",
         "nl": "Ondersteuning van admin3",
         "fr": "Support de admin3",
@@ -19,11 +19,11 @@
       },
       "1.1.0": {
         "en": "y axis improvements",
-        "de": "Verbesserungen f�r Y Achse"
+        "de": "Verbesserungen für Y Achse"
       },
       "1.0.1": {
         "en": "bug fix for sqlite",
-        "de": "Fehlerbehebung f�r sqlite"
+        "de": "Fehlerbehebung für sqlite"
       },
       "1.0.0": {
         "en": "first stable release",
@@ -31,7 +31,7 @@
       },
       "0.2.6": {
         "en": "bug fix for android app",
-        "de": "Fehlerbehebung f�r android app"
+        "de": "Fehlerbehebung für android app"
       },
       "0.2.5": {
         "en": "use install date to calculate historical values",
@@ -39,7 +39,7 @@
       },
       "0.2.4": {
         "en": "logo changed",
-        "de": "Logo ge�ndert"
+        "de": "Logo geändert"
       },
       "0.2.3": {
         "en": "history as json-objects incl. flot widget",
@@ -70,22 +70,22 @@
         "de": "erste Version"
       }
     },
-    "title": "sbfspot",
+    "title": "SMA inverter (sbfspot)",
     "titleLang": {
-      "en": "SMA inverter (sbfspot) Adapter",
-      "de": "SMA Wechselrichter (sbfspot) Adapter",
-      "ru": "??????? SMA-????????? (sbfspot)",
-      "pt": "Adaptador SMA inversor (sbfspot)",
-      "nl": "SMA-omvormer (sbfspot) Adapter",
-      "fr": "Adaptateur d'onduleur SMA (sbfspot)",
-      "it": "Adattatore per inverter SMA (sbfspot)",
-      "es": "Adaptador inversor SMA (sbfspot)",
-      "pl": "Adapter falownika SMA (sbfspot)"
+      "en": "SMA inverter (sbfspot)",
+      "de": "SMA Wechselrichter (sbfspot)",
+      "ru": "Преобразователь SMA (sbfspot)",
+      "pt": "SMA inversor (sbfspot)",
+      "nl": "SMA-omvormer (sbfspot)",
+      "fr": "d'onduleur SMA (sbfspot)",
+      "it": "Inverter SMA (sbfspot)",
+      "es": "Inversor SMA (sbfspot)",
+      "pl": "Falownika SMA (sbfspot)"
     },
     "desc": {
       "en": "SMA inverter (sbfspot) Adapter with vis widget",
       "de": "SMA-Wechselrichter (sbfspot) Adapter mit Vis-Widget",
-      "ru": "??????????????? SMA (sbfspot) ? ????????? ?????????",
+      "ru": "Преобразователь SMA (sbfspot) с vis-виджетами",
       "pt": "Inversor SMA (sbfspot) Adaptador com vis widget",
       "nl": "SMA-omvormer (sbfspot) Adapter met vis-widget",
       "fr": "SMA inverter (sbfspot) Adaptateur avec vis widget",
@@ -115,7 +115,7 @@
     "materialize": true,
     "authors": [
       {
-        "name": "Ren� G.",
+        "name": "René G.",
         "email": "info@rg-engineering.eu"
       }
     ]
