@@ -17,9 +17,6 @@
     <!-- you have to define 2 functions in the global scope: -->
     <script type="text/javascript">
 
-        // Dictionary (systemDictionary is global variable from adapter-settings.js)
-
-
 
         function CheckSettings(settings, onChange) {
             console.log("start checksettings");
@@ -88,11 +85,11 @@
             </div>
         </div>
 
-        <p class="translate">on save adapter restarts with new config immediately</p>
+        <p class="translate">restart_hint</p>
 
         <p class="translate">Attention</p>
-        <p class="translate">Hint mySQL</p>
-        <p class="translate">Hint sqlite</p>
+        <p class="translate">Hint_mySQL</p>
+        <p class="translate">Hint_sqlite</p>
 
         <div class="row">
             <div class="col s12">
@@ -109,7 +106,7 @@
                     <option value="mySQL" class="translate">mySQL</option>
                     <option value="sqlite" class="translate">sqlite</option>
                 </select>
-                <label for="databasetype" class="translate">type of DB</label>
+                <label for="databasetype" class="translate">type_of_DB</label>
             </div>
         </div>
         <div class="row">
@@ -123,29 +120,29 @@
         <div class="row">
             <div class="col s6">
                 <input type="text" id="sbfspotIP" class="value" />
-                <label for="sbfspotIP" class="translate">sbfspot DB IP</label>
+                <label for="sbfspotIP" class="translate">sbfspot_DB_IP</label>
             </div>
             <div class="col s6">
                 <input type="text" id="sqlite_path" class="value" />
-                <label for="sqlite_path" class="translate">path to DB file</label>
+                <label for="sqlite_path" class="translate">path_to_DB_file</label>
             </div>
         </div>
         <div class="row">
             <div class="col s6">
                 <input type="text" id="sbfspotUser" class="value" />
-                <label for="sbfspotUser" class="translate">sbfspot DB user</label>
+                <label for="sbfspotUser" class="translate">sbfspot_DB_user</label>
             </div>
         </div>
         <div class="row">
             <div class="col s6">
                 <input type="text" id="sbfspotPassword" class="value" />
-                <label for="sbfspotPassword" class="translate">sbfspot DB password</label>
+                <label for="sbfspotPassword" class="translate">sbfspot_DB_password</label>
             </div>
         </div>
         <div class="row">
             <div class="col s6">
                 <input type="text" id="sbfspotDatabasename" class="value" />
-                <label for="sbfspotDatabasename" class="translate">sbfspot DB databasename</label>
+                <label for="sbfspotDatabasename" class="translate">sbfspot_DB_databasename</label>
             </div>
         </div>
     </div>
