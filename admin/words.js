@@ -98,6 +98,18 @@ systemDictionary = {
         "es": "base de datos mySQL IP",
         "pl": "IP bazy danych MySQL"
     },
+    "sbfspot_DB_port":
+    {
+        "en": "mySQL database port",
+        "de": "mySQL Datenbank-Port",
+        "ru": "Port-адрес mySQL",
+        "pt": "banco de dados MySQL",
+        "nl": "mySQL database port",
+        "fr": "base de données mySQL port",
+        "it": "port del database mySQL",
+        "es": "base de datos mySQL port",
+        "pl": "port bazy danych MySQL"
+    },
     "sbfspot_DB_databasename":
     {
         "en": "mySQL database name",
