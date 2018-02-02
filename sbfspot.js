@@ -386,6 +386,7 @@ function DB_Connect(cb) {
         mysql_connection = mysql.createConnection({
             host: adapter.config.sbfspotIP,
             user: adapter.config.sbfspotUser,
+            port: adapter.config.sbfspotPort,
             password: adapter.config.sbfspotPassword,
             database: adapter.config.sbfspotDatabasename
         });
