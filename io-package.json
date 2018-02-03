@@ -1,8 +1,19 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "2.0.1",
+    "version": "2.1.0",
     "news": {
+      "2.1.0": {
+        "en": "Support MariaDB",
+        "de": "Unterstütze MariaDB",
+        "ru": "Поддержка MariaDB",
+        "pt": "Suporte MariaDB",
+        "nl": "Steun MariaDB",
+        "fr": "Soutenez MariaDB",
+        "it": "Supporto MariaDB",
+        "es": "Soporte MariaDB",
+        "pl": "Wspieraj MariaDB"
+      },
       "2.0.1": {
         "en": "Support of admin3",
         "de": "Unterstützung von admin3",
@@ -11,11 +22,19 @@
         "nl": "Ondersteuning van admin3",
         "fr": "Support de admin3",
         "it": "Supporto di admin3",
-        "es": "Soporte de admin3"
+        "es": "Soporte de admin3",
+        "pl": "Wsparcie dla administratora3"
       },
       "2.0.0": {
         "en": "reduce to only one graph",
-        "de": "nur ein Graph pro widget"
+        "de": "auf nur eine Grafik reduzieren",
+        "ru": "свести только к одному графику",
+        "pt": "reduzir apenas um gráfico",
+        "nl": "reduceer tot slechts één grafiek",
+        "fr": "réduire à un seul graphique",
+        "it": "ridurre a un solo grafico",
+        "es": "reducir a solo un gráfico",
+        "pl": "zredukować do tylko jednego wykresu"
       },
       "1.1.0": {
         "en": "y axis improvements",

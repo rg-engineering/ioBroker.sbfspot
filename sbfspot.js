@@ -377,21 +377,36 @@ var rows = [
 
 function DB_Connect(cb) {
 
-    if (adapter.config.databasetype == 'mySQL') {
-        adapter.log.info("start with mySQL");
-        adapter.log.debug("--- connecting to " + adapter.config.sbfspotIP + " " + adapter.config.sbfspotDatabasename);
+    if (adapter.config.databasetype == 'mySQL' || adapter.config.databasetype == 'MariaDB') {
 
         //var express = require("express");
         var mysql = require('mysql');
-        mysql_connection = mysql.createConnection({
-            host: adapter.config.sbfspotIP,
-            user: adapter.config.sbfspotUser,
-            port: adapter.config.sbfspotPort,
-            password: adapter.config.sbfspotPassword,
-            database: adapter.config.sbfspotDatabasename
-        });
 
+        if (adapter.config.databasetype == 'MariaDB') {
+            adapter.log.info("start with MariaDB");
+            adapter.log.debug("--- connecting to " + adapter.config.sbfspotIP + " " + adapter.config.sbfspotPort + " " + adapter.config.sbfspotDatabasename);
 
+            mysql_connection = mysql.createConnection({
+                host: adapter.config.sbfspotIP,
+                user: adapter.config.sbfspotUser,
+                port: adapter.config.sbfspotPort,
+                password: adapter.config.sbfspotPassword,
+                database: adapter.config.sbfspotDatabasename
+            });
+
+        }
+        else {
+            adapter.log.info("start with mySQL");
+            adapter.log.debug("--- connecting to " + adapter.config.sbfspotIP + " " + adapter.config.sbfspotDatabasename);
+
+            mysql_connection = mysql.createConnection({
+                host: adapter.config.sbfspotIP,
+                user: adapter.config.sbfspotUser,
+                password: adapter.config.sbfspotPassword,
+                database: adapter.config.sbfspotDatabasename
+            });
+        }
+        
         mysql_connection.connect(function (err) {
             if (!err) {
                 adapter.log.debug("mySql Database is connected ... ");

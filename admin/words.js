@@ -16,15 +16,15 @@ systemDictionary = {
     },
     "Hint_mySQL":
     {
-        "en": "hint for mySQL: use localhost as IP",
-        "de": "Hinweis für mySQL: localhost kann als IP verwendet werden",
-        "ru": "подсказка для mySQL: используйте localhost как IP-адрес",
-        "pt": "sugestão para mySQL: use localhost como IP",
-        "nl": "hint voor mySQL: gebruik localhost als IP",
-        "fr": "indice pour mySQL: utilisez localhost comme IP",
-        "it": "suggerimento per mySQL: usa localhost come IP",
-        "es": "sugerencia para mySQL: use localhost como IP",
-        "pl": "wskazówka dla mySQL: u?yj localhost jako IP"
+        "en": "hint for mySQL: use localhost as IP; port is used for MariaDB only",
+        "de": "Tipp für mySQL: benutze localhost als IP; Port wird nur für MariaDB verwendet",
+        "ru": "подсказка для mySQL: используйте localhost как IP; порт используется только для MariaDB",
+        "pt": "sugestão para mySQL: use localhost como IP; A porta é usada somente para MariaDB",
+        "nl": "hint voor mySQL: gebruik localhost als IP; poort wordt alleen gebruikt voor MariaDB",
+        "fr": "indice pour mySQL: utilise localhost comme IP; le port est utilisé pour MariaDB uniquement",
+        "it": "suggerimento per mySQL: usa localhost come IP; la porta è utilizzata solo per MariaDB",
+        "es": "sugerencia para mySQL: use localhost como IP; el puerto se usa solo para MariaDB",
+        "pl": "wskazówka dla mySQL: użyj localhost jako IP; port jest używany tylko w MariaDB"
     },
     "Hint_sqlite":
     {
@@ -100,15 +100,15 @@ systemDictionary = {
     },
     "sbfspot_DB_port":
     {
-        "en": "mySQL database port",
-        "de": "mySQL Datenbank-Port",
-        "ru": "Port-адрес mySQL",
-        "pt": "banco de dados MySQL",
-        "nl": "mySQL database port",
-        "fr": "base de données mySQL port",
-        "it": "port del database mySQL",
-        "es": "base de datos mySQL port",
-        "pl": "port bazy danych MySQL"
+        "en": "MariaDB database port",
+        "de": "MariaDB Datenbankport",
+        "ru": "Порт базы данных MariaDB",
+        "pt": "Porta da base de dados MariaDB",
+        "nl": "MariaDB databasepoort",
+        "fr": "Port de base de données MariaDB",
+        "it": "Porta del database MariaDB",
+        "es": "Puerto de base de datos MariaDB",
+        "pl": "Port bazy danych MariaDB"
     },
     "sbfspot_DB_databasename":
     {

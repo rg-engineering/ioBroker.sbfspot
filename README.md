@@ -21,6 +21,9 @@ Hints:
 
 ## Changelog
 
+#### 2.1.0
+* (René) Support MariaDB
+
 #### 2.0.1
 * (René) Support of admin3
 
