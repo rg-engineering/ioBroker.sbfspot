@@ -5,38 +5,50 @@ systemDictionary = {
     "Attention":
     {
         "en": "adapter, sbfspot and database should run on the same system",
-        "de": "Der Adapter, sbfspot und die Datenbank sollte auf dem gleichen System laufen",
+        "de": "adapter, sbfspot und database sollten auf demselben system laufen",
         "ru": "адаптер, sbfspot и база данных должны работать в одной системе",
         "pt": "adaptador, sbfspot e banco de dados devem ser executados no mesmo sistema",
         "nl": "adapter, sbfspot en database moeten op hetzelfde systeem worden uitgevoerd",
         "fr": "L'adaptateur, sbfspot et la base de données doivent fonctionner sur le même système",
         "it": "adattatore, sbfspot e database dovrebbero essere eseguiti sullo stesso sistema",
         "es": "adaptador, sbfspot y base de datos deben ejecutarse en el mismo sistema",
-        "pl": "adapter, sbfspot i baza danych powinny dzia?a? w tym samym systemie"
+        "pl": "adapter, sbfspot i baza danych powinny działać w tym samym systemie"
     },
-    "Hint_mySQL":
+    "sbfspot_DB_IP_descr":
     {
-        "en": "hint for mySQL: use localhost as IP; port is used for MariaDB only",
-        "de": "Tipp für mySQL: benutze localhost als IP; Port wird nur für MariaDB verwendet",
-        "ru": "подсказка для mySQL: используйте localhost как IP; порт используется только для MariaDB",
-        "pt": "sugestão para mySQL: use localhost como IP; A porta é usada somente para MariaDB",
-        "nl": "hint voor mySQL: gebruik localhost als IP; poort wordt alleen gebruikt voor MariaDB",
-        "fr": "indice pour mySQL: utilise localhost comme IP; le port est utilisé pour MariaDB uniquement",
-        "it": "suggerimento per mySQL: usa localhost come IP; la porta è utilizzata solo per MariaDB",
-        "es": "sugerencia para mySQL: use localhost como IP; el puerto se usa solo para MariaDB",
-        "pl": "wskazówka dla mySQL: użyj localhost jako IP; port jest używany tylko w MariaDB"
+        "en": "you can use 'localhost' as IP",
+        "de": "Sie können \"localhost\" als IP verwenden",
+        "ru": "вы можете использовать «localhost» в качестве IP-адреса",
+        "pt": "você pode usar 'localhost' como IP",
+        "nl": "u kunt 'localhost' als IP gebruiken",
+        "fr": "vous pouvez utiliser 'localhost' comme adresse IP",
+        "it": "puoi usare 'localhost' come IP",
+        "es": "puedes usar 'localhost' como IP",
+        "pl": "możesz użyć \"localhost\" jako IP"
     },
-    "Hint_sqlite":
+    "sbfspot_DB_port_descr":
     {
-        "en": "hint for sqlite: enter the complete path incl. database file name e.g. /home/pi/sbfspot/smadata/SBFspot.db",
-        "de": "Hinweis für sqlite: Der Pfad muss komplett inkl. Datenbankfilename angegeben werden. z.Bsp. /home/pi/sbfspot/smadata/SBFspot.db",
-        "ru": "подсказка для sqlite: введите полный путь, вкл. имя файла базы данных, например. /home/pi/sbfspot/smadata/SBFspot.db",
-        "pt": "sugestão para sqlite: insira o caminho completo incl. nome do arquivo do banco de dados, e. /home/pi/sbfspot/smadata/SBFspot.db",
-        "nl": "hint voor sqlite: vul het volledige pad in incl. databasebestandsnaam, b.v. /home/pi/sbfspot/smadata/SBFspot.db",
-        "fr": "indice pour sqlite: entrez le chemin complet incl. nom de fichier de base de données, par ex. /home/pi/sbfspot/smadata/SBFspot.db",
-        "it": "suggerimento per sqlite: inserire il percorso completo incl. nome del file di database, ad es. /home/pi/sbfspot/smadata/SBFspot.db",
-        "es": "pista para sqlite: ingrese la ruta completa incl. nombre de archivo de base de datos, p. /home/pi/sbfspot/smadata/SBFspot.db",
-        "pl": "wskazówka dla sqlite: wprowad? pe?n? ?cie?k? w??cznie nazwa pliku bazy danych, np. /home/pi/sbfspot/smadata/SBFspot.db"
+        "en": "port is used for MariaDB only",
+        "de": "Port wird nur für MariaDB verwendet",
+        "ru": "порт используется только для MariaDB",
+        "pt": "A porta é usada somente para MariaDB",
+        "nl": "poort wordt alleen gebruikt voor MariaDB",
+        "fr": "le port est utilisé pour MariaDB uniquement",
+        "it": "la porta è utilizzata solo per MariaDB",
+        "es": "el puerto se usa solo para MariaDB",
+        "pl": "port jest używany tylko w MariaDB"
+    },
+    "path_to_DB_file_descr":
+    {
+        "en": "enter the complete path incl. database file name e.g. /home/pi/sbfspot/smadata/SBFspot.db",
+        "de": "geben Sie den kompletten Pfad inkl. Datenbankdateiname z.B. /home/pi/sbfspot/smadata/SBFspot.db",
+        "ru": "введите полный путь, включая. имя файла базы данных, например. /home/pi/sbfspot/smadata/SBFspot.db",
+        "pt": "insira o caminho completo incl. nome do arquivo do banco de dados, e. /home/pi/sbfspot/smadata/SBFspot.db",
+        "nl": "vul het complete pad in incl. databasebestandsnaam, b.v. /home/pi/sbfspot/smadata/SBFspot.db",
+        "fr": "entrez le chemin complet incl. nom de fichier de base de données, par ex. /home/pi/sbfspot/smadata/SBFspot.db",
+        "it": "inserisci il percorso completo incl. nome del file di database, ad es. /home/pi/sbfspot/smadata/SBFspot.db",
+        "es": "ingrese la ruta completa incl. nombre de archivo de base de datos, p. /home/pi/sbfspot/smadata/SBFspot.db",
+        "pl": "wprowadź pełną ścieżkę włącznie nazwa pliku bazy danych, np. /home/pi/sbfspot/smadata/SBFspot.db"
     },
     "install_date":
     {
@@ -53,38 +65,38 @@ systemDictionary = {
     "install_date_desc":
     {
         "en": "used for calculation of history in vis widget",
-        "de": "wird für Berechnung der Statistik im vis widget verwendet",
+        "de": "verwendet für die Berechnung der Geschichte in vis Widget",
         "ru": "используется для расчета истории в виджетах",
         "pt": "usado para calcular o histórico no vis widget",
         "nl": "gebruikt voor de berekening van de geschiedenis in vis widget",
         "fr": "utilisé pour le calcul de l'histoire dans vis widget",
         "it": "utilizzato per il calcolo della cronologia nel widget vis",
         "es": "utilizado para el cálculo de la historia en el widget vis",
-        "pl": "s?u?y do obliczania historii w widgecie vis"
+        "pl": "służy do obliczania historii w widgecie vis"
     },
     "restart_hint":
     {
         "en": "on save adapter restarts with new config immediately",
-        "de": "Beim Speichern von Einstellungen wird der Adapter sofort neu gestartet.",
+        "de": "Beim Speichern wird der Adapter sofort mit der neuen Konfiguration neu gestartet",
         "ru": "на перезаписываемом адаптере перезагружается с новой конфигурацией немедленно",
         "pt": "no adaptador de salvar reinicia com nova configuração imediatamente",
         "nl": "on save-adapter wordt onmiddellijk opnieuw opgestart met nieuwe config",
         "fr": "sur l'adaptateur de sauvegarde redémarre avec la nouvelle config immédiatement",
         "it": "su save adapter si riavvia immediatamente con la nuova configurazione",
         "es": "en el adaptador de guardar se reinicia con nueva configuración de inmediato",
-        "pl": "na karcie save natychmiast uruchamia si? z now? konfiguracj?"
+        "pl": "na karcie save natychmiast uruchamia się z nową konfiguracją"
     },
     "path_to_DB_file":
     {
         "en": "path to sqlite database file",
-        "de": "Pfad zur sqlite-Datenbank",
+        "de": "Pfad zur SQLite-Datenbankdatei",
         "ru": "путь к файлу базы данных sqlite",
         "pt": "caminho para o arquivo de banco de dados sqlite",
         "nl": "pad naar sqlite databasebestand",
         "fr": "chemin vers le fichier de base de données sqlite",
         "it": "percorso per il file di database sqlite",
         "es": "ruta al archivo de base de datos sqlite",
-        "pl": "?cie?ka do pliku bazy danych sqlite"
+        "pl": "ścieżka do pliku bazy danych sqlite"
     },
     "sbfspot_DB_IP":
     {
@@ -125,26 +137,26 @@ systemDictionary = {
     "sbfspot_DB_password":
     {
         "en": "mySQL database password",
-        "de": "mySQL Datenbank_Passwort",
+        "de": "MySQL-Datenbankkennwort",
         "ru": "пароль базы данных mySQL",
         "pt": "senha do banco de dados mySQL",
         "nl": "mySQL database wachtwoord",
         "fr": "Mot de passe de base de données mySQL",
         "it": "password del database mySQL",
         "es": "contraseña de la base de datos mySQL",
-        "pl": "Has?o bazy danych MySQL"
+        "pl": "Hasło bazy danych MySQL"
     },
     "sbfspot_DB_user":
 {
         "en": "mySQL database user",
-        "de": "mySQL Datenbank-Benutzer",
+        "de": "Benutzer der mySQL-Datenbank",
         "ru": "Пользователь базы данных mySQL",
         "pt": "usuário do banco de dados mySQL",
         "nl": "mySQL-databasegebruiker",
         "fr": "utilisateur de base de données mySQL",
         "it": "utente del database mySQL",
         "es": "usuario de la base de datos mySQL",
-        "pl": "u?ytkownik bazy danych mySQL"
+        "pl": "użytkownik bazy danych mySQL"
     },
     "sbfspot_adapter_settings":
 {
