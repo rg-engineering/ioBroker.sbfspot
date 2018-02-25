@@ -38,7 +38,6 @@
             "24 hours": { "en": "24 hours", "de": "24 Stunden", "ru": "24 ????" },
             "sbfspotinstance": { "en": "sbfspot instance", "de": "sbfspot-Instanz", "ru": "?????????" },
             "time_interval": { "en": "Time interval", "de": "Zeitintervall", "ru": "????????" },
-
             "sel_today": { "en": "today", "de": "heute", "ru": "sel_today" },
             "sel_last30days": { "en": "last 30 days", "de": "30 Tage", "ru": "sel_last30days" },
             "sel_last12months": { "en": "last 12 months", "de": "12 Monate", "ru": "sel_last12months" },
@@ -50,11 +49,12 @@
             "axislabelcolor": { "en": "color axis label", "de": "Farbe Achsbeschriftung", "ru": "???" },
             "tickscolor": { "en": "color axis ticks", "de": "Farbe Achsmarke", "ru": "???" },
             "graphcolor": { "en": "color graph", "de": "Farbe Graph", "ru": "graphcolor" },
+            "nobgcolor": { "en": "no background color", "de": "keine Farbe Hintergrund", "ru": "nobgcolor" },
             "withyaxix": { "en": "show Y axis", "de": "zeige Y Achse", "ru": "withyaxix" },
             "graphDateFormat": { "en": "Date Format for X axis", "de": "Datumsformat für X-Achse", "ru": "graphDateFormat" },
             "group_oids": { "en": "OID's", "de": "OID's", "ru": "group_oids" },
             "oid_value": { "en": "OID values", "de": "OID Werte", "ru": "oid_value" },
-
+            "withborder": { "en": "show border", "de": "Rahmen anzeigen", "ru": "withborder" },
         });
     }
 
@@ -543,12 +543,12 @@
                             grid:
                               {
                                   //Farben einstellen fehlt noch
-                                  backgroundColor: { colors: ["#fff", "#eee"] },
+                                  backgroundColor: data.nobgcolor ? null : { colors: ["#fff", "#eee"] },
                                   borderWidth: {
-                                      top: 1,
-                                      right: 1,
-                                      bottom: 2,
-                                      left: 2
+                                      top: data.withborder ? 1 : 0,
+                                      right: data.withborder ? 1 : 0,
+                                      bottom: data.withborder ? 2 : 0,
+                                      left: data.withborder ? 2 : 0
                                   },
                                   //fehlt noch
                                   //markings: nextDay
@@ -685,12 +685,12 @@
         data-vis-prev='<img src="widgets/sbfspot/img/Prev_tplSbfspot.png"></img>'
         data-vis-attrs="sbfspotinstance/sbfspot/onInstanceChanged; serial//onInstanceChanged;valueselect[sel_today]/select,sel_today,sel_last30days,sel_last12months,sel_years/onInstanceChanged;"
         data-vis-attrs0="time_interval[30 minutes]/select,1 second,10 seconds,30 seconds,1 minute,2 minutes,5 minutes,10 minutes,30 minutes,1 hour,2 hours,4 hours,8 hours,12 hours,24 hours;withxaxix[true]/checkbox;ticksonxaxix[5];axislabelcolor[#ffffff]/color;tickscolor[#ffffff]/color;"
-        data-vis-attrs1="graphcolor[#f1f113]/color;withyaxix[true]/checkbox;graphDateFormat[%H:%M];"
+        data-vis-attrs1="graphcolor[#f1f113]/color;nobgcolor[true]/checkbox;withyaxix[true]/checkbox;graphDateFormat[%H:%M];withborder[true]/checkbox;"
         data-vis-attrs2="group.oids;oid_value/id;"
 
 >
 
-    <div class="vis-widget <%== this.data.attr('class') %>" style="overflow: hidden; width: 210px; height: 170px;" id="<%= this.data.attr('wid') %>">
+    <div class="vis-widget <%== this.data.attr('class') %>" style="overflow: hidden;" id="<%= this.data.attr('wid') %>">
         <div class="vis-widget-body" <%= (el1) -> vis.binds.sbfspot.history.init(el1, this.view, this.data) %>></div>
         
     </div>
