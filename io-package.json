@@ -1,8 +1,19 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "2.1.0",
+    "version": "2.2.0",
     "news": {
+      "2.2.0": {
+        "en": "background color and border and bugfix for admin3",
+        "de": "Hintergrundfarbe und Rahmen und Bugfix für admin3",
+        "ru": "цвет фона и граница и исправление для admin3",
+        "pt": "cor de fundo e borda e bugfix para admin3",
+        "nl": "achtergrondkleur en rand en bugfix voor admin3",
+        "fr": "couleur de fond et bordure et correction de bugs pour admin3",
+        "it": "colore di sfondo e bordo e bugfix per admin3",
+        "es": "color de fondo y borde y corrección de errores para admin3",
+        "pl": "kolor tła i obramowanie oraz poprawka dla administratora3"
+      },
       "2.1.0": {
         "en": "Support MariaDB",
         "de": "Unterstütze MariaDB",

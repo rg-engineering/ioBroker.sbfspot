@@ -21,6 +21,10 @@ Hints:
 
 ## Changelog
 
+#### 2.2.0
+* (Nis) background color and border
+* (René) bug fixes in admin3
+
 #### 2.1.0
 * (René) Support MariaDB
 

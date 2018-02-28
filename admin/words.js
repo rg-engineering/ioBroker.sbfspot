@@ -74,18 +74,7 @@ systemDictionary = {
         "es": "utilizado para el cálculo de la historia en el widget vis",
         "pl": "służy do obliczania historii w widgecie vis"
     },
-    "restart_hint":
-    {
-        "en": "on save adapter restarts with new config immediately",
-        "de": "Beim Speichern wird der Adapter sofort mit der neuen Konfiguration neu gestartet",
-        "ru": "на перезаписываемом адаптере перезагружается с новой конфигурацией немедленно",
-        "pt": "no adaptador de salvar reinicia com nova configuração imediatamente",
-        "nl": "on save-adapter wordt onmiddellijk opnieuw opgestart met nieuwe config",
-        "fr": "sur l'adaptateur de sauvegarde redémarre avec la nouvelle config immédiatement",
-        "it": "su save adapter si riavvia immediatamente con la nuova configurazione",
-        "es": "en el adaptador de guardar se reinicia con nueva configuración de inmediato",
-        "pl": "na karcie save natychmiast uruchamia się z nową konfiguracją"
-    },
+
     "path_to_DB_file":
     {
         "en": "path to sqlite database file",

@@ -88,6 +88,7 @@
             showHideSettings();
 
             CheckSettings(settings, onChange);
+            M.updateTextFields();
         }
 
 
@@ -135,11 +136,7 @@
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col s12 m8 l5">
-                        <span class="translate">restart_hint</span>
-                    </div>
-                </div>
+
                 <div class="row">
                     <div class="col s12 m8 l5">
                         <span class="translate">Attention</span>
@@ -147,7 +144,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col s12">
+                    <div class="input-field col s12">
                         <input type="date" id="install_date" class="value" />
                         <label for="install_date" class="translate">install_date</label>
                         <br />
@@ -156,7 +153,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col s12">
+                    <div class="input-field col s12">
                         <select id="databasetype" class="value">
                             <option value="mySQL" class="translate">mySQL</option>
                             <option value="MariaDB" class="translate">MariaDB</option>
@@ -170,7 +167,7 @@
             <!--  settings for mySQL / MariaDB -->
             <div id="tab-mysql" class="col s12 page-mysql" >
                 <div class="row">
-                    <div class="col s6 col-mysql-ip">
+                    <div class="input-field col s6 col-mysql-ip">
                         <input type="text" id="sbfspotIP" class="value" />
                         <label for="sbfspotIP" class="translate">sbfspot_DB_IP</label>
                         <br />
@@ -178,7 +175,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col s6 col-mysql-port">
+                    <div class="input-field col s6 col-mysql-port">
                         <input type="text" id="sbfspotPort" class="value" />
                         <label for="sbfspotPort" class="translate">sbfspot_DB_port</label>
                         <br />
@@ -186,19 +183,19 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col s6 col-mysql-user">
+                    <div class="input-field col s6 col-mysql-user">
                         <input type="text" id="sbfspotUser" class="value" />
                         <label for="sbfspotUser" class="translate">sbfspot_DB_user</label>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col s6 col-mysql-password">
+                    <div class="input-field col s6 col-mysql-password">
                         <input type="text" id="sbfspotPassword" class="value" />
                         <label for="sbfspotPassword" class="translate">sbfspot_DB_password</label>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col s6 col-mysql-name">
+                    <div class="input-field col s6 col-mysql-name">
                         <input type="text" id="sbfspotDatabasename" class="value" />
                         <label for="sbfspotDatabasename" class="translate">sbfspot_DB_databasename</label>
                     </div>
@@ -210,7 +207,7 @@
 
                 <div class="row">
 
-                    <div class="col s6 col-mysql-path">
+                    <div class="input-field col s6 col-mysql-path">
                         <input type="text" id="sqlite_path" class="value" />
                         <label for="sqlite_path" class="translate">path_to_DB_file</label>
                         <br />
