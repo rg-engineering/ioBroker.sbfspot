@@ -14,6 +14,9 @@
     <script type="text/javascript" src="words.js"></script>
 
 
+
+
+
     <script type="text/javascript">
 
         function showHideSettings() {
@@ -22,28 +25,37 @@
 
             if ($type.prop('value') == "mySQL") {
                 $('.col-mysql-ip').show();
+                $('.col-mysql-ip-descr').show();
                 $('.col-mysql-port').hide();
+                $('.col-mysql-port-descr').hide();
                 $('.col-mysql-user').show();
                 $('.col-mysql-password').show();
                 $('.col-mysql-name').show();
                 $('.col-mysql-path').hide();
-                
+                $('.col-mysql-path-descr').hide();
+
             }
             else if ($type.prop('value') == "MariaDB") {
                 $('.col-mysql-ip').show();
+                $('.col-mysql-ip-descr').show();
                 $('.col-mysql-port').show();
+                $('.col-mysql-port-descr').show();
                 $('.col-mysql-user').show();
                 $('.col-mysql-password').show();
                 $('.col-mysql-name').show();
                 $('.col-mysql-path').hide();
+                $('.col-mysql-path-descr').hide();
             }
             else if ($type.prop('value') == "sqlite") {
                 $('.col-mysql-ip').hide();
+                $('.col-mysql-ip-descr').hide();
                 $('.col-mysql-port').hide();
+                $('.col-mysql-port-descr').hide();
                 $('.col-mysql-user').hide();
                 $('.col-mysql-password').hide();
                 $('.col-mysql-name').hide();
                 $('.col-mysql-path').show();
+                $('.col-mysql-path-descr').show();
             }
         }
 
@@ -81,6 +93,8 @@
                     });
                 }
             }
+
+            
 
 
             // Signal to admin, that no changes yet
@@ -138,22 +152,27 @@
 
 
                 <div class="row">
-                    <div class="col s12 m8 l5">
+                    <div class="col s6 ">
                         <span class="translate">Attention</span>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="input-field col s12">
-                        <input type="date" id="install_date" class="value" />
-                        <label for="install_date" class="translate">install_date</label>
-                        <br />
-                        <label for="install_date" class="translate">install_date_desc</label>
+                    <form class="col s6 ">
+                        <div class="row">
+                            <label class="translate">install_date</label>
+                            <input type="text" id="install_date" class="value" />
+
+                        </div>
+                    </form>
+
+                    <div class="col s6">
+                        <span class="translate">install_date_desc</span>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="input-field col s12">
+                    <div class="input-field col s6">
                         <select id="databasetype" class="value">
                             <option value="mySQL" class="translate">mySQL</option>
                             <option value="MariaDB" class="translate">MariaDB</option>
@@ -170,16 +189,21 @@
                     <div class="input-field col s6 col-mysql-ip">
                         <input type="text" id="sbfspotIP" class="value" />
                         <label for="sbfspotIP" class="translate">sbfspot_DB_IP</label>
-                        <br />
-                        <label for="sbfspotIP" class="translate">sbfspot_DB_IP_descr</label>
+                    </div>
+                    <div class="col s6 m8 l5 col-mysql-ip-descr">
+                        <span class="translate">sbfspot_DB_IP_descr</span>
                     </div>
                 </div>
+
+
                 <div class="row">
                     <div class="input-field col s6 col-mysql-port">
-                        <input type="text" id="sbfspotPort" class="value" />
+                        <input type="number" id="sbfspotPort" class="value" />
                         <label for="sbfspotPort" class="translate">sbfspot_DB_port</label>
-                        <br />
-                        <label for="sbfspotIP" class="translate">sbfspot_DB_port_descr</label>
+                       
+                    </div>
+                    <div class="col s6 col-mysql-port-descr">
+                        <span class="translate">sbfspot_DB_port_descr</span>
                     </div>
                 </div>
                 <div class="row">
@@ -187,8 +211,7 @@
                         <input type="text" id="sbfspotUser" class="value" />
                         <label for="sbfspotUser" class="translate">sbfspot_DB_user</label>
                     </div>
-                </div>
-                <div class="row">
+
                     <div class="input-field col s6 col-mysql-password">
                         <input type="text" id="sbfspotPassword" class="value" />
                         <label for="sbfspotPassword" class="translate">sbfspot_DB_password</label>
@@ -210,9 +233,9 @@
                     <div class="input-field col s6 col-mysql-path">
                         <input type="text" id="sqlite_path" class="value" />
                         <label for="sqlite_path" class="translate">path_to_DB_file</label>
-                        <br />
-                        <label for="sqlite_path" class="translate">path_to_DB_file_descr</label>
-
+                    </div>
+                    <div class="col s6 m8 l5 col-mysql-path-descr">
+                        <span class="translate">path_to_DB_file_descr</span>
                     </div>
                 </div>
 

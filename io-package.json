@@ -152,13 +152,14 @@
   },
   "native": {
     "sbfspotIP": "localhost",
+    "sbfspotPort":  3306,
     "sbfspotUser": "SBFspotUser",
     "sbfspotPassword": "",
     "sbfspotDatabasename": "SBFspot",
     "useBluetooth": false,
     "databasetype": "mySQL",
     "sqlite_path": "",
-    "install_date":  "2001-08-25"
+    "install_date": "2001-08-25"
   }
 }
 

@@ -28,15 +28,15 @@ systemDictionary = {
     },
     "sbfspot_DB_port_descr":
     {
-        "en": "port is used for MariaDB only",
-        "de": "Port wird nur für MariaDB verwendet",
-        "ru": "порт используется только для MariaDB",
-        "pt": "A porta é usada somente para MariaDB",
-        "nl": "poort wordt alleen gebruikt voor MariaDB",
-        "fr": "le port est utilisé pour MariaDB uniquement",
-        "it": "la porta è utilizzata solo per MariaDB",
-        "es": "el puerto se usa solo para MariaDB",
-        "pl": "port jest używany tylko w MariaDB"
+        "en": "default 3306",
+        "de": "Standard 3306",
+        "ru": "по умолчанию 3306",
+        "pt": "padrão 3306",
+        "nl": "standaard 3306",
+        "fr": "par défaut 3306",
+        "it": "predefinito 3306",
+        "es": "predeterminado 3306",
+        "pl": "domyślnie 3306"
     },
     "path_to_DB_file_descr":
     {
@@ -89,63 +89,63 @@ systemDictionary = {
     },
     "sbfspot_DB_IP":
     {
-        "en": "mySQL database IP",
-        "de": "mySQL Datenbank-IP",
-        "ru": "IP-адрес mySQL",
-        "pt": "banco de dados MySQL",
-        "nl": "mySQL database IP",
-        "fr": "base de données mySQL IP",
-        "it": "IP del database mySQL",
-        "es": "base de datos mySQL IP",
-        "pl": "IP bazy danych MySQL"
+        "en": "database IP",
+        "de": "Datenbank-IP",
+        "ru": "IP-адрес",
+        "pt": "banco de dadosL",
+        "nl": "database IP",
+        "fr": "base de données IP",
+        "it": "IP del databaseL",
+        "es": "base de datos IP",
+        "pl": "IP bazy danych"
     },
     "sbfspot_DB_port":
     {
-        "en": "MariaDB database port",
-        "de": "MariaDB Datenbankport",
-        "ru": "Порт базы данных MariaDB",
-        "pt": "Porta da base de dados MariaDB",
+        "en": "database port",
+        "de": "Datenbankport",
+        "ru": "Порт базы данных",
+        "pt": "Porta da base de dados",
         "nl": "MariaDB databasepoort",
-        "fr": "Port de base de données MariaDB",
-        "it": "Porta del database MariaDB",
-        "es": "Puerto de base de datos MariaDB",
-        "pl": "Port bazy danych MariaDB"
+        "fr": "Port de base de données",
+        "it": "Porta del database",
+        "es": "Puerto de base de datos",
+        "pl": "Port bazy danych"
     },
     "sbfspot_DB_databasename":
     {
-        "en": "mySQL database name",
-        "de": "mySQL Datenbank-Name",
-        "ru": "Имя базы данных mySQL",
-        "pt": "Nome do banco de dados mySQL",
-        "nl": "mySQL-databasenaam",
-        "fr": "Nom de la base de données mySQL",
-        "it": "nome del database mySQL",
-        "es": "nombre de la base de datos mySQL",
-        "pl": "nazwa bazy danych mySQL"
+        "en": "database name",
+        "de": "Datenbank-Name",
+        "ru": "Имя базы данных",
+        "pt": "Nome do banco de dados",
+        "nl": "databasenaam",
+        "fr": "Nom de la base de données",
+        "it": "nome del database",
+        "es": "nombre de la base de datos",
+        "pl": "nazwa bazy danych"
     },
     "sbfspot_DB_password":
     {
-        "en": "mySQL database password",
-        "de": "MySQL-Datenbankkennwort",
-        "ru": "пароль базы данных mySQL",
-        "pt": "senha do banco de dados mySQL",
-        "nl": "mySQL database wachtwoord",
-        "fr": "Mot de passe de base de données mySQL",
-        "it": "password del database mySQL",
-        "es": "contraseña de la base de datos mySQL",
-        "pl": "Hasło bazy danych MySQL"
+        "en": "database password",
+        "de": "Datenbankkennwort",
+        "ru": "пароль базы данных",
+        "pt": "senha do banco de dados",
+        "nl": "database wachtwoord",
+        "fr": "Mot de passe de base de données",
+        "it": "password del database",
+        "es": "contraseña de la base de datos",
+        "pl": "Hasło bazy danychL"
     },
     "sbfspot_DB_user":
 {
-        "en": "mySQL database user",
-        "de": "Benutzer der mySQL-Datenbank",
-        "ru": "Пользователь базы данных mySQL",
-        "pt": "usuário do banco de dados mySQL",
+        "en": "database user",
+        "de": "Benutzer der Datenbank",
+        "ru": "Пользователь базы данных ",
+        "pt": "usuário do banco de dados",
         "nl": "mySQL-databasegebruiker",
-        "fr": "utilisateur de base de données mySQL",
-        "it": "utente del database mySQL",
-        "es": "usuario de la base de datos mySQL",
-        "pl": "użytkownik bazy danych mySQL"
+        "fr": "utilisateur de base de données",
+        "it": "utente del database",
+        "es": "usuario de la base de datos",
+        "pl": "użytkownik bazy danych"
     },
     "sbfspot_adapter_settings":
 {
