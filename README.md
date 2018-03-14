@@ -21,6 +21,9 @@ Hints:
 
 ## Changelog
 
+#### 2.2.1
+* (René) close database connection after last query result is available (e.g. to support more than one inverter)
+
 #### 2.2.0
 * (Nis) background color and border
 * (René) bug fixes in admin3

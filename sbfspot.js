@@ -25,6 +25,7 @@ var adapter = utils.adapter('sbfspot');
 
 var FirstValue4History;
 var FirstDate4History;
+var numOfInverters;
 
 //---------- sqlite
 // https://github.com/mapbox/node-sqlite3
@@ -434,6 +435,7 @@ function DB_Connect(cb) {
 
 function DB_GetInverters() {
     var query = 'SELECT * from Inverters';
+    numOfInverters = 0;
     adapter.log.debug(query);
     if (adapter.config.databasetype == 'mySQL' || adapter.config.databasetype == 'MariaDB') {
         mysql_connection.query(query, function (err, rows, fields) {  
@@ -454,7 +456,7 @@ function GetInverter(err, rows) {
         adapter.log.debug('rows ' + JSON.stringify(rows));
         for (var i in rows) {
             
-
+            
             adapter.log.info("got data from " + rows[i].Type + " with ID " + rows[i].Serial);
 
             AddInverterVariables(rows[i].Serial);
@@ -469,7 +471,7 @@ function GetInverter(err, rows) {
             adapter.setState(rows[i].Serial + ".Status", { ack: true, val: rows[i].Status });
             adapter.setState(rows[i].Serial + ".GridRelay", { ack: true, val: rows[i].GridRelay });
             adapter.setState(rows[i].Serial + ".Temperature", { ack: true, val: rows[i].Temperature });
-
+            numOfInverters++;
             DB_GetInvertersData(rows[i].Serial);
         }
 
@@ -894,11 +896,19 @@ function CalcHistory_Months(err, rows, serial) {
 
 function DB_Disconnect() {
 
-    adapter.log.debug("disconnect database");
-    if (adapter.config.databasetype == 'mySQL' || adapter.config.databasetype == 'MariaDB') {
-        mysql_connection.end();
+    numOfInverters--;
+    // wait for all data paths... last data path will close connection
+
+    if (numOfInverters == 0) {
+        adapter.log.debug("disconnect database");
+        if (adapter.config.databasetype == 'mySQL' || adapter.config.databasetype == 'MariaDB') {
+            mysql_connection.end();
+        }
+        else {
+            sqlite_db.close();
+        }
     }
     else {
-        sqlite_db.close();
+        adapter.log.debug("need to wait for disconnect");
     }
 }

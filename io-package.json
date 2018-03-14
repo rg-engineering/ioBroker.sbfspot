@@ -1,8 +1,12 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "2.2.0",
+    "version": "2.2.1",
     "news": {
+      "2.2.1": {
+        "en": "close database connection after last query result is available"
+        
+      },
       "2.2.0": {
         "en": "background color and border and bugfix for admin3",
         "de": "Hintergrundfarbe und Rahmen und Bugfix für admin3",
