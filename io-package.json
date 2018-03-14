@@ -4,8 +4,15 @@
     "version": "2.2.1",
     "news": {
       "2.2.1": {
-        "en": "close database connection after last query result is available"
-        
+        "en": "close of database connection after last query result is available",
+        "de": "Abschluss der Datenbankverbindung, nachdem das letzte Abfrageergebnis verfügbar ist",
+        "ru": "закрытие соединения с базой данных после получения последнего результата запроса",
+        "pt": "O fim da conexão do banco de dados após o último resultado da consulta está disponível",
+        "nl": "Sluit de databaseverbinding nadat het laatste queryresultaat beschikbaar is",
+        "fr": "fermeture de la connexion à la base de données après la dernière requête est disponible",
+        "it": "la chiusura della connessione al database dopo l'ultimo risultato della query è disponibile",
+        "es": "cierre de la conexión de la base de datos después de que esté disponible el último resultado de la consulta",
+        "pl": "zamknięcie połączenia z bazą danych po uzyskaniu ostatniego wyniku zapytania"
       },
       "2.2.0": {
         "en": "background color and border and bugfix for admin3",

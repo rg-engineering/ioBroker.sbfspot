@@ -22,7 +22,7 @@ Hints:
 ## Changelog
 
 #### 2.2.1
-* (René) close database connection after last query result is available (e.g. to support more than one inverter)
+* (René) close of database connection after last query result is available (e.g. to support more than one inverter)
 
 #### 2.2.0
 * (Nis) background color and border
