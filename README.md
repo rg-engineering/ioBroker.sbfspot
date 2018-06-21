@@ -20,6 +20,8 @@ Hints:
 
 
 ## Changelog
+#### 2.2.2
+* (René) add timestamp of last update
 
 #### 2.2.1
 * (René) close of database connection after last query result is available (e.g. to support more than one inverter)

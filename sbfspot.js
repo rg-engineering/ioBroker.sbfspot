@@ -287,6 +287,20 @@ function AddInverterVariables(serial) {
         native: { location: serial + '.BT_Signal' }
     });
 
+    adapter.setObjectNotExists(serial + '.timestamp', {
+        type: 'state',
+        common: { name: 'SMA inverter timestamp', type: 'number', role: 'ertrag', unit: '', read: true, write: false },
+        native: { location: serial + '.timestamp' }
+    });
+
+    adapter.setObjectNotExists(serial + '.lastup', {
+        type: 'state',
+        common: { name: 'SMA inverter lastup', type: 'string', role: 'ertrag', unit: '', read: true, write: false },
+        native: { location: serial + '.lastup' }
+    });
+
+    
+
     adapter.setObjectNotExists(serial + '.history.today', {
         type: 'state',
         common: { name: 'SMA inverter history today (JSON)', type: 'number', role: 'ertrag', unit: '', read: true, write: false },
@@ -471,6 +485,21 @@ function GetInverter(err, rows) {
             adapter.setState(rows[i].Serial + ".Status", { ack: true, val: rows[i].Status });
             adapter.setState(rows[i].Serial + ".GridRelay", { ack: true, val: rows[i].GridRelay });
             adapter.setState(rows[i].Serial + ".Temperature", { ack: true, val: rows[i].Temperature });
+            adapter.setState(rows[i].Serial + ".timestamp", { ack: true, val: rows[i].TimeStamp });
+
+           
+            var oDate = new Date(rows[i].TimeStamp * 1000);
+            var nDate = oDate.getDate();
+            var nMonth = oDate.getMonth() + 1;
+            var nYear = oDate.getFullYear();
+            var nHours = oDate.getHours();
+            var nMinutes = oDate.getMinutes();
+            var nSeconds = oDate.getSeconds();
+            var sLastup = nDate + "." + nMonth + "." + nYear + " " + nHours + ":" + nMinutes + ":" + nSeconds
+
+            adapter.setState(rows[i].Serial + ".lastup", { ack: true, val: sLastup });
+
+
             numOfInverters++;
             DB_GetInvertersData(rows[i].Serial);
         }

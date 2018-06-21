@@ -1,166 +1,177 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "2.2.1",
+    "version": "2.2.2",
     "news": {
-      "2.2.1": {
-        "en": "close of database connection after last query result is available",
-        "de": "Abschluss der Datenbankverbindung, nachdem das letzte Abfrageergebnis verfügbar ist",
-        "ru": "закрытие соединения с базой данных после получения последнего результата запроса",
-        "pt": "O fim da conexão do banco de dados após o último resultado da consulta está disponível",
-        "nl": "Sluit de databaseverbinding nadat het laatste queryresultaat beschikbaar is",
-        "fr": "fermeture de la connexion à la base de données après la dernière requête est disponible",
-        "it": "la chiusura della connessione al database dopo l'ultimo risultato della query è disponibile",
-        "es": "cierre de la conexión de la base de datos después de que esté disponible el último resultado de la consulta",
-        "pl": "zamknięcie połączenia z bazą danych po uzyskaniu ostatniego wyniku zapytania"
+      "2.2.2": {
+        "en": "add timestamp of last update",
+        "de": "Zeitstempel des letzten Updates hinzufügen",
+        "ru": "добавить отметку времени последнего обновления",
+        "pt": "adicionar timestamp da última atualização",
+        "nl": "voeg een tijdstempel toe van de laatste update",
+        "fr": "ajouter l'horodatage de la dernière mise à jour",
+        "it": "aggiungi timestamp dell'ultimo aggiornamento",
+        "es": "agregar marca de tiempo de la última actualización",
+        "pl": "dodaj znacznik czasu ostatniej aktualizacji"
       },
-      "2.2.0": {
-        "en": "background color and border and bugfix for admin3",
-        "de": "Hintergrundfarbe und Rahmen und Bugfix für admin3",
-        "ru": "цвет фона и граница и исправление для admin3",
-        "pt": "cor de fundo e borda e bugfix para admin3",
-        "nl": "achtergrondkleur en rand en bugfix voor admin3",
-        "fr": "couleur de fond et bordure et correction de bugs pour admin3",
-        "it": "colore di sfondo e bordo e bugfix per admin3",
-        "es": "color de fondo y borde y corrección de errores para admin3",
-        "pl": "kolor tła i obramowanie oraz poprawka dla administratora3"
+        "2.2.1": {
+          "en": "close of database connection after last query result is available",
+          "de": "Abschluss der Datenbankverbindung, nachdem das letzte Abfrageergebnis verfügbar ist",
+          "ru": "закрытие соединения с базой данных после получения последнего результата запроса",
+          "pt": "O fim da conexão do banco de dados após o último resultado da consulta está disponível",
+          "nl": "Sluit de databaseverbinding nadat het laatste queryresultaat beschikbaar is",
+          "fr": "fermeture de la connexion à la base de données après la dernière requête est disponible",
+          "it": "la chiusura della connessione al database dopo l'ultimo risultato della query è disponibile",
+          "es": "cierre de la conexión de la base de datos después de que esté disponible el último resultado de la consulta",
+          "pl": "zamknięcie połączenia z bazą danych po uzyskaniu ostatniego wyniku zapytania"
+        },
+        "2.2.0": {
+          "en": "background color and border and bugfix for admin3",
+          "de": "Hintergrundfarbe und Rahmen und Bugfix für admin3",
+          "ru": "цвет фона и граница и исправление для admin3",
+          "pt": "cor de fundo e borda e bugfix para admin3",
+          "nl": "achtergrondkleur en rand en bugfix voor admin3",
+          "fr": "couleur de fond et bordure et correction de bugs pour admin3",
+          "it": "colore di sfondo e bordo e bugfix per admin3",
+          "es": "color de fondo y borde y corrección de errores para admin3",
+          "pl": "kolor tła i obramowanie oraz poprawka dla administratora3"
+        },
+        "2.1.0": {
+          "en": "Support MariaDB",
+          "de": "Unterstütze MariaDB",
+          "ru": "Поддержка MariaDB",
+          "pt": "Suporte MariaDB",
+          "nl": "Steun MariaDB",
+          "fr": "Soutenez MariaDB",
+          "it": "Supporto MariaDB",
+          "es": "Soporte MariaDB",
+          "pl": "Wspieraj MariaDB"
+        },
+        "2.0.1": {
+          "en": "Support of admin3",
+          "de": "Unterstützung von admin3",
+          "ru": "Поддержка admin3",
+          "pt": "Suporte de admin3",
+          "nl": "Ondersteuning van admin3",
+          "fr": "Support de admin3",
+          "it": "Supporto di admin3",
+          "es": "Soporte de admin3",
+          "pl": "Wsparcie dla administratora3"
+        },
+        "2.0.0": {
+          "en": "reduce to only one graph",
+          "de": "auf nur eine Grafik reduzieren",
+          "ru": "свести только к одному графику",
+          "pt": "reduzir apenas um gráfico",
+          "nl": "reduceer tot slechts één grafiek",
+          "fr": "réduire à un seul graphique",
+          "it": "ridurre a un solo grafico",
+          "es": "reducir a solo un gráfico",
+          "pl": "zredukować do tylko jednego wykresu"
+        },
+        "1.1.0": {
+          "en": "y axis improvements",
+          "de": "Verbesserungen für Y Achse"
+        },
+        "1.0.1": {
+          "en": "bug fix for sqlite",
+          "de": "Fehlerbehebung für sqlite"
+        },
+        "1.0.0": {
+          "en": "first stable release",
+          "de": "erste stabile Version"
+        },
+        "0.2.6": {
+          "en": "bug fix for android app",
+          "de": "Fehlerbehebung für android app"
+        },
+        "0.2.5": {
+          "en": "use install date to calculate historical values",
+          "de": "Installationsdatum verwendet, um historische Daten zu berechnen"
+        },
+        "0.2.4": {
+          "en": "logo changed",
+          "de": "Logo geändert"
+        },
+        "0.2.3": {
+          "en": "history as json-objects incl. flot widget",
+          "de": "Verlauf als json-Objekte inkl. flot widget"
+        },
+        "0.2.2": {
+          "en": "renamed to sbfspot",
+          "de": "nach sbfspot umbenannt"
+        },
+        "0.2.1": {
+          "en": "index.html updated",
+          "de": "index.html aktualisiert"
+        },
+        "0.2.0": {
+          "en": "sqlite added",
+          "de": "support von sqlite"
+        },
+        "0.1.1": {
+          "en": "UTF8 coding",
+          "de": "UTF8 Kodierung"
+        },
+        "0.1.0": {
+          "en": "first release",
+          "de": "erste freigegebene Version"
+        },
+        "0.0.1": {
+          "en": "initial release",
+          "de": "erste Version"
+        }
       },
-      "2.1.0": {
-        "en": "Support MariaDB",
-        "de": "Unterstütze MariaDB",
-        "ru": "Поддержка MariaDB",
-        "pt": "Suporte MariaDB",
-        "nl": "Steun MariaDB",
-        "fr": "Soutenez MariaDB",
-        "it": "Supporto MariaDB",
-        "es": "Soporte MariaDB",
-        "pl": "Wspieraj MariaDB"
+      "title": "SMA inverter (sbfspot)",
+      "titleLang": {
+        "en": "SMA inverter (sbfspot)",
+        "de": "SMA Wechselrichter (sbfspot)",
+        "ru": "Преобразователь SMA (sbfspot)",
+        "pt": "SMA inversor (sbfspot)",
+        "nl": "SMA-omvormer (sbfspot)",
+        "fr": "d'onduleur SMA (sbfspot)",
+        "it": "Inverter SMA (sbfspot)",
+        "es": "Inversor SMA (sbfspot)",
+        "pl": "Falownika SMA (sbfspot)"
       },
-      "2.0.1": {
-        "en": "Support of admin3",
-        "de": "Unterstützung von admin3",
-        "ru": "Поддержка admin3",
-        "pt": "Suporte de admin3",
-        "nl": "Ondersteuning van admin3",
-        "fr": "Support de admin3",
-        "it": "Supporto di admin3",
-        "es": "Soporte de admin3",
-        "pl": "Wsparcie dla administratora3"
+      "desc": {
+        "en": "SMA inverter (sbfspot) Adapter with vis widget",
+        "de": "SMA-Wechselrichter (sbfspot) Adapter mit Vis-Widget",
+        "ru": "Преобразователь SMA (sbfspot) с vis-виджетами",
+        "pt": "Inversor SMA (sbfspot) Adaptador com vis widget",
+        "nl": "SMA-omvormer (sbfspot) Adapter met vis-widget",
+        "fr": "SMA inverter (sbfspot) Adaptateur avec vis widget",
+        "it": "Adattatore SMA (sbfspot) Adattatore con widget vis",
+        "es": "Adaptador de inversor SMA (sbfspot) con widget de vis",
+        "pl": "Adapter falownika SMA (sbfspot) z wid?etem vis"
       },
-      "2.0.0": {
-        "en": "reduce to only one graph",
-        "de": "auf nur eine Grafik reduzieren",
-        "ru": "свести только к одному графику",
-        "pt": "reduzir apenas um gráfico",
-        "nl": "reduceer tot slechts één grafiek",
-        "fr": "réduire à un seul graphique",
-        "it": "ridurre a un solo grafico",
-        "es": "reducir a solo un gráfico",
-        "pl": "zredukować do tylko jednego wykresu"
-      },
-      "1.1.0": {
-        "en": "y axis improvements",
-        "de": "Verbesserungen für Y Achse"
-      },
-      "1.0.1": {
-        "en": "bug fix for sqlite",
-        "de": "Fehlerbehebung für sqlite"
-      },
-      "1.0.0": {
-        "en": "first stable release",
-        "de": "erste stabile Version"
-      },
-      "0.2.6": {
-        "en": "bug fix for android app",
-        "de": "Fehlerbehebung für android app"
-      },
-      "0.2.5": {
-        "en": "use install date to calculate historical values",
-        "de": "Installationsdatum verwendet, um historische Daten zu berechnen"
-      },
-      "0.2.4": {
-        "en": "logo changed",
-        "de": "Logo geändert"
-      },
-      "0.2.3": {
-        "en": "history as json-objects incl. flot widget",
-        "de": "Verlauf als json-Objekte inkl. flot widget"
-      },
-      "0.2.2": {
-        "en": "renamed to sbfspot",
-        "de": "nach sbfspot umbenannt"
-      },
-      "0.2.1": {
-        "en": "index.html updated",
-        "de": "index.html aktualisiert"
-      },
-      "0.2.0": {
-        "en": "sqlite added",
-        "de": "support von sqlite"
-      },
-      "0.1.1": {
-        "en": "UTF8 coding",
-        "de": "UTF8 Kodierung"
-      },
-      "0.1.0": {
-        "en": "first release",
-        "de": "erste freigegebene Version"
-      },
-      "0.0.1": {
-        "en": "initial release",
-        "de": "erste Version"
-      }
+      "platform": "Javascript/Node.js",
+      "mode": "schedule",
+      "schedule": "*/15 * * * *",
+      "icon": "sbfspot.png",
+      "enabled": true,
+      "messagebox": true,
+      "extIcon": "https://raw.githubusercontent.com/rg-engineering/ioBroker.sbfspot/master/admin/sbfspot.png",
+      "keywords": [ "sbfspot" ],
+      "dependencies": [
+        {
+          "js-controller": ">=0.12.0",
+          "admin": ">=1.6.10"
+        }
+      ],
+      "readme": "https://github.com/rg-engineering/ioBroker.sbfspot/blob/master/README.md",
+      "loglevel": "debug",
+      "stopBeforeUpdate": true,
+      "type": "hardware",
+      "license": "MIT",
+      "materialize": true,
+      "authors": [
+        {
+          "name": "René G.",
+          "email": "info@rg-engineering.eu"
+        }
+      ]
     },
-    "title": "SMA inverter (sbfspot)",
-    "titleLang": {
-      "en": "SMA inverter (sbfspot)",
-      "de": "SMA Wechselrichter (sbfspot)",
-      "ru": "Преобразователь SMA (sbfspot)",
-      "pt": "SMA inversor (sbfspot)",
-      "nl": "SMA-omvormer (sbfspot)",
-      "fr": "d'onduleur SMA (sbfspot)",
-      "it": "Inverter SMA (sbfspot)",
-      "es": "Inversor SMA (sbfspot)",
-      "pl": "Falownika SMA (sbfspot)"
-    },
-    "desc": {
-      "en": "SMA inverter (sbfspot) Adapter with vis widget",
-      "de": "SMA-Wechselrichter (sbfspot) Adapter mit Vis-Widget",
-      "ru": "Преобразователь SMA (sbfspot) с vis-виджетами",
-      "pt": "Inversor SMA (sbfspot) Adaptador com vis widget",
-      "nl": "SMA-omvormer (sbfspot) Adapter met vis-widget",
-      "fr": "SMA inverter (sbfspot) Adaptateur avec vis widget",
-      "it": "Adattatore SMA (sbfspot) Adattatore con widget vis",
-      "es": "Adaptador de inversor SMA (sbfspot) con widget de vis",
-      "pl": "Adapter falownika SMA (sbfspot) z wid?etem vis"
-    },
-    "platform": "Javascript/Node.js",
-    "mode": "schedule",
-    "schedule": "*/15 * * * *",
-    "icon": "sbfspot.png",
-    "enabled": true,
-    "messagebox": true,
-    "extIcon": "https://raw.githubusercontent.com/rg-engineering/ioBroker.sbfspot/master/admin/sbfspot.png",
-    "keywords": [ "sbfspot" ],
-    "dependencies": [
-      {
-        "js-controller": ">=0.12.0",
-        "admin": ">=1.6.10"
-      }
-    ],
-    "readme": "https://github.com/rg-engineering/ioBroker.sbfspot/blob/master/README.md",
-    "loglevel": "debug",
-    "stopBeforeUpdate": true,
-    "type": "hardware",
-    "license": "MIT",
-    "materialize": true,
-    "authors": [
-      {
-        "name": "René G.",
-        "email": "info@rg-engineering.eu"
-      }
-    ]
-  },
   "native": {
     "sbfspotIP": "localhost",
     "sbfspotPort":  3306,
