@@ -298,7 +298,11 @@ function AddInverterVariables(serial) {
         common: { name: 'SMA inverter lastup', type: 'string', role: 'ertrag', unit: '', read: true, write: false },
         native: { location: serial + '.lastup' }
     });
-
+    adapter.setObjectNotExists(serial + '.error', {
+        type: 'state',
+        common: { name: 'SMA inverter error', type: 'string', role: 'ertrag', unit: '', read: true, write: false },
+        native: { location: serial + '.error' }
+    });
     
 
     adapter.setObjectNotExists(serial + '.history.today', {
@@ -499,6 +503,15 @@ function GetInverter(err, rows) {
 
             adapter.setState(rows[i].Serial + ".lastup", { ack: true, val: sLastup });
 
+            var oToday = new Date();
+            var sError = "none";
+            if (Math.abs(oDate.getTime() - oToday.getTime()) > (24 * 60 * 60 * 1000)) {
+
+                sError = "sbfspot no update since " + sLastup + " ";
+
+                adapter.log.debug(sError);
+            }
+            adapter.setState(rows[i].Serial + ".error", { ack: true, val: sError });
 
             numOfInverters++;
             DB_GetInvertersData(rows[i].Serial);
