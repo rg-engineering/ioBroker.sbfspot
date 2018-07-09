@@ -20,6 +20,9 @@ Hints:
 
 
 ## Changelog
+#### 2.2.3
+* (René) the same as 2.2.2
+
 #### 2.2.2
 * (René) add timestamp of last update
 
