@@ -20,69 +20,72 @@ Hints:
 
 
 ## Changelog
-#### 2.2.3
+### 2.2.4 (2018-08-19)
+* (René) bugfix for ticks on X
+
+### 2.2.3
 * (René) the same as 2.2.2
 
-#### 2.2.2
+### 2.2.2
 * (René) add timestamp of last update
 
-#### 2.2.1
+### 2.2.1
 * (René) close of database connection after last query result is available (e.g. to support more than one inverter)
 
-#### 2.2.0
+### 2.2.0
 * (Nis) background color and border
 * (René) bug fixes in admin3
 
-#### 2.1.0
+### 2.1.0
 * (René) Support MariaDB
 
-#### 2.0.1
+### 2.0.1
 * (René) Support of admin3
 
-#### 2.0.0
+### 2.0.0
 * (René) since we always use one graph per widget, only one is supported now
 		Attention: widget is not compatible with version 1.x.x; just check settings in widget after installation!
 
-#### 1.1.0
+### 1.1.0
 * (René) autoscale of y axis
 * (René) color for y axis 
 * (René) adjustable date format 
 
-#### 1.0.1
+### 1.0.1
 * (René) bug fix for sqlite
 
-#### 1.0.0
+### 1.0.0
 * (René) first stable release
 
-#### 0.2.6
+### 0.2.6
 * (René) bug fix for android app > 1.0.6
 
-#### 0.2.5
+### 0.2.5
 * (René) use install date to calculate historical values
 
-#### 0.2.4
+### 0.2.4
 * (René) logo changed
 
-#### 0.2.3
+### 0.2.3
 * (René) adding historical data as datapoint (JSON)
 * (René) new vis widget to show historical data
 
-#### 0.2.2
+### 0.2.2
 * (René) renamed to sbfspot
 
-#### 0.2.1
+### 0.2.1
 * (René) index.html updated
 
-#### 0.2.0
+### 0.2.0
 * (René) support of sqlite and license changed to MIT
 
-#### 0.1.1
+### 0.1.1
 * (René) UTF8 coding
 
-#### 0.1.0
+### 0.1.0
 * (René) first release
 
-#### 0.0.1
+### 0.0.1
 * (René) initial release
 
 

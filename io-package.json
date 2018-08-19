@@ -1,8 +1,19 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "2.2.3",
+    "version": "2.2.4",
     "news": {
+      "2.2.4": {
+        "en": "bugfix for ticks on X",
+        "de": "Bugfix für Ticks auf X",
+        "ru": "исправление для тиков на X",
+        "pt": "bugfix para carrapatos no X",
+        "nl": "bugfix voor ticks op X",
+        "fr": "correction de bugs pour les tiques sur X",
+        "it": "bugfix per tick su X",
+        "es": "corrección de errores para tics en X",
+        "pl": "łatka dla ticków na X"
+      },
       "2.2.3": {
         "en": "same as 2.2.2",
         "de": "wie 2.2.2"
