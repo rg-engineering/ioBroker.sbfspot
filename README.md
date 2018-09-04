@@ -4,7 +4,8 @@
 
 [![NPM version](https://img.shields.io/npm/v/iobroker.sbfspot.svg)](https://www.npmjs.com/package/iobroker.sbfspot)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.sbfspot.svg)](https://www.npmjs.com/package/iobroker.sbfspot)
-
+[![Tests](https://travis-ci.org/rg-engineering/ioBroker.sbfspot.svg?branch=master)](https://travis-ci.org/rg-engineering/ioBroker.sbfspot)
+[![Build Status](https://travis-ci.org/rg-engineering/ioBroker.sbfspot.svg?branch=master)](https://travis-ci.org/rg-engineering/ioBroker.sbfspot)
 [![NPM](https://nodei.co/npm/iobroker.sbfspot.png?downloads=true)](https://nodei.co/npm/iobroker.sbfspot/)
 
 
