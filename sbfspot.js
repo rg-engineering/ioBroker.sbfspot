@@ -549,6 +549,20 @@ function GetInverterData(err, rows,serial) {
 
         for (var i in rows) {
             //must only be one row...
+
+            // check if it is really today, otherwise set to zero
+            var oDate = new Date(rows[i].TimeStamp * 1000);
+            var nDay = oDate.getDate();
+            var nMonth = oDate.getMonth() + 1;
+            var nYear = oDate.getFullYear();
+
+            var oDateToday = new Date();
+            var nDayToday = oDate.getDate();
+            var nMonthToday = oDate.getMonth() + 1;
+            var nYearToday = oDate.getFullYear();
+
+
+
             adapter.setState(rows[i].Serial + ".Pdc1", { ack: true, val: rows[i].Pdc1 });
             adapter.setState(rows[i].Serial + ".Pdc2", { ack: true, val: rows[i].Pdc2 });
             adapter.setState(rows[i].Serial + ".Idc1", { ack: true, val: rows[i].Idc1 });
@@ -566,7 +580,12 @@ function GetInverterData(err, rows,serial) {
             adapter.setState(rows[i].Serial + ".Uac2", { ack: true, val: rows[i].Uac2 });
             adapter.setState(rows[i].Serial + ".Uac3", { ack: true, val: rows[i].Uac3 });
 
-            adapter.setState(rows[i].Serial + ".EToday", { ack: true, val: rows[i].EToday });
+            if (nDay == nDayToday && nMonth == nMonthToday && nYear == nYearToday) {
+                adapter.setState(rows[i].Serial + ".EToday", { ack: true, val: rows[i].EToday });
+            }
+            else {
+                adapter.setState(rows[i].Serial + ".EToday", { ack: true, val: 0 });
+            }
             adapter.setState(rows[i].Serial + ".ETotal", { ack: true, val: rows[i].ETotal });
             adapter.setState(rows[i].Serial + ".Frequency", { ack: true, val: rows[i].Frequency });
             adapter.setState(rows[i].Serial + ".BT_Signal", { ack: true, val: rows[i].BT_Signal });
