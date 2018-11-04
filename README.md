@@ -21,6 +21,10 @@ Hints:
 * for Raspberry Pi there is a semi-automated configuration tool available under https://github.com/SBFspot/sbfspot-config
 
 ## Changelog
+
+### 2.2.5 (2018-11-04)
+* (René) reset yield if no new value from today
+
 ### 2.2.4 (2018-08-19)
 * (René) bugfix for ticks on X
 
@@ -91,7 +95,7 @@ Hints:
 
 
 ## License
-Copyright (C) <2017>  <info@rg-engineering.eu>
+Copyright (C) <2017-2018>  <info@rg-engineering.eu>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

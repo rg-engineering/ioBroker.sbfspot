@@ -1,8 +1,19 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "2.2.4",
+    "version": "2.2.5",
     "news": {
+      "2.2.5": {
+        "en": "reset yield if no new value from today",
+        "de": "Ertrag zurücksetzen, wenn kein neuer Wert von heute",
+        "ru": "сбросить доход, если не будет нового значения с сегодняшнего дня",
+        "pt": "redefinir o rendimento se não houver um novo valor a partir de hoje",
+        "nl": "reset opbrengst als er geen nieuwe waarde vanaf vandaag is",
+        "fr": "réinitialiser le rendement si aucune nouvelle valeur à partir d'aujourd'hui",
+        "it": "resettare il rendimento se non ci sono nuovi valori da oggi",
+        "es": "restablecer el rendimiento si no hay un nuevo valor a partir de hoy",
+        "pl": "zresetować plon, jeśli nie pojawi się nowa wartość od dzisiaj"
+      },
       "2.2.4": {
         "en": "bugfix for ticks on X",
         "de": "Bugfix für Ticks auf X",
