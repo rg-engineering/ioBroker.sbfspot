@@ -1,8 +1,22 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "2.2.5",
+    "version": "2.3.0",
     "news": {
+      "2.3.0": {
+        "en": "support of compact adapter",
+        "de": "Unterstützung des Kompaktadapters",
+        "ru": "поддержка компактного адаптера",
+        "pt": "suporte de adaptador compacto",
+        "nl": "ondersteuning voor compacte adapter",
+        "fr": "support de l'adaptateur compact",
+        "it": "supporto di adattatore compatto",
+        "es": "soporte de adaptador compacto",
+        "pl": "obsługa adaptera kompaktowego"
+      },
+      "2.2.6": {
+        "en": "upgrade packages"
+      },
       "2.2.5": {
         "en": "reset yield if no new value from today",
         "de": "Ertrag zurücksetzen, wenn kein neuer Wert von heute",
@@ -148,59 +162,60 @@
         "de": "erste Version"
       }
     },
-      "title": "SMA inverter (sbfspot)",
-      "titleLang": {
-        "en": "SMA inverter (sbfspot)",
-        "de": "SMA Wechselrichter (sbfspot)",
-        "ru": "Преобразователь SMA (sbfspot)",
-        "pt": "SMA inversor (sbfspot)",
-        "nl": "SMA-omvormer (sbfspot)",
-        "fr": "d'onduleur SMA (sbfspot)",
-        "it": "Inverter SMA (sbfspot)",
-        "es": "Inversor SMA (sbfspot)",
-        "pl": "Falownika SMA (sbfspot)"
-      },
-      "desc": {
-        "en": "SMA inverter (sbfspot) Adapter with vis widget",
-        "de": "SMA-Wechselrichter (sbfspot) Adapter mit Vis-Widget",
-        "ru": "Преобразователь SMA (sbfspot) с vis-виджетами",
-        "pt": "Inversor SMA (sbfspot) Adaptador com vis widget",
-        "nl": "SMA-omvormer (sbfspot) Adapter met vis-widget",
-        "fr": "SMA inverter (sbfspot) Adaptateur avec vis widget",
-        "it": "Adattatore SMA (sbfspot) Adattatore con widget vis",
-        "es": "Adaptador de inversor SMA (sbfspot) con widget de vis",
-        "pl": "Adapter falownika SMA (sbfspot) z wid?etem vis"
-      },
-      "platform": "Javascript/Node.js",
-      "mode": "schedule",
-      "schedule": "*/15 * * * *",
-      "icon": "sbfspot.png",
-      "enabled": true,
-      "messagebox": true,
-      "extIcon": "https://raw.githubusercontent.com/rg-engineering/ioBroker.sbfspot/master/admin/sbfspot.png",
-      "keywords": [ "sbfspot" ],
-      "dependencies": [
-        {
-          "js-controller": ">=0.12.0",
-          "admin": ">=1.6.10"
-        }
-      ],
-      "readme": "https://github.com/rg-engineering/ioBroker.sbfspot/blob/master/README.md",
-      "loglevel": "debug",
-      "stopBeforeUpdate": true,
-      "type": "hardware",
-      "license": "MIT",
-      "materialize": true,
-      "authors": [
-        {
-          "name": "René G.",
-          "email": "info@rg-engineering.eu"
-        }
-      ]
+    "title": "SMA inverter (sbfspot)",
+    "titleLang": {
+      "en": "SMA inverter (sbfspot)",
+      "de": "SMA Wechselrichter (sbfspot)",
+      "ru": "Преобразователь SMA (sbfspot)",
+      "pt": "SMA inversor (sbfspot)",
+      "nl": "SMA-omvormer (sbfspot)",
+      "fr": "d'onduleur SMA (sbfspot)",
+      "it": "Inverter SMA (sbfspot)",
+      "es": "Inversor SMA (sbfspot)",
+      "pl": "Falownika SMA (sbfspot)"
     },
+    "desc": {
+      "en": "SMA inverter (sbfspot) Adapter with vis widget",
+      "de": "SMA-Wechselrichter (sbfspot) Adapter mit Vis-Widget",
+      "ru": "Преобразователь SMA (sbfspot) с vis-виджетами",
+      "pt": "Inversor SMA (sbfspot) Adaptador com vis widget",
+      "nl": "SMA-omvormer (sbfspot) Adapter met vis-widget",
+      "fr": "SMA inverter (sbfspot) Adaptateur avec vis widget",
+      "it": "Adattatore SMA (sbfspot) Adattatore con widget vis",
+      "es": "Adaptador de inversor SMA (sbfspot) con widget de vis",
+      "pl": "Adapter falownika SMA (sbfspot) z wid?etem vis"
+    },
+    "platform": "Javascript/Node.js",
+    "mode": "schedule",
+    "schedule": "*/15 * * * *",
+    "icon": "sbfspot.png",
+    "enabled": true,
+    "messagebox": true,
+    "extIcon": "https://raw.githubusercontent.com/rg-engineering/ioBroker.sbfspot/master/admin/sbfspot.png",
+    "keywords": [ "sbfspot" ],
+    "dependencies": [
+      {
+        "js-controller": ">=0.12.0",
+        "admin": ">=1.6.10"
+      }
+    ],
+    "readme": "https://github.com/rg-engineering/ioBroker.sbfspot/blob/master/README.md",
+    "loglevel": "debug",
+    "stopBeforeUpdate": true,
+    "type": "hardware",
+    "license": "MIT",
+    "materialize": true,
+    "compact": true,
+    "authors": [
+      {
+        "name": "René G.",
+        "email": "info@rg-engineering.eu"
+      }
+    ]
+  },
   "native": {
     "sbfspotIP": "localhost",
-    "sbfspotPort":  3306,
+    "sbfspotPort": 3306,
     "sbfspotUser": "SBFspotUser",
     "sbfspotPassword": "",
     "sbfspotDatabasename": "SBFspot",
