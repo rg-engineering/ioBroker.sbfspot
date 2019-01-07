@@ -166,7 +166,7 @@ function main() {
     setTimeout(function () {
         adapter.log.warn('force terminate');
         //process.exit(0);
-        adapter.terminate ? adapter.terminate() : process.exit(15);
+        adapter.terminate ? adapter.terminate() : process.exit(11);
     }, 60000);
 
     if (adapter.config.useBluetooth) {
@@ -179,7 +179,8 @@ function main() {
         DB_Connect(function () {
             setTimeout(function () {
                 //adapter.stop();
-                adapter.terminate ? adapter.terminate() : process.exit(15);
+                adapter.log.warn('force terminate in connect');
+                adapter.terminate ? adapter.terminate() : process.exit(11);
             }, 6000);
         });
     }
@@ -487,6 +488,8 @@ function DB_Connect(cb) {
                 DB_GetInverters();
             } else {
                 adapter.log.error("Error connecting mySql database ... ");
+
+                adapter.terminate ? adapter.terminate() : process.exit(0);
             }
         });
     }
@@ -1026,6 +1029,11 @@ function DB_Disconnect() {
         else {
             sqlite_db.close();
         }
+
+        adapter.log.info("all done ... ");
+
+        adapter.terminate ? adapter.terminate() : process.exit(0);
+
     }
     else {
         adapter.log.debug("need to wait for disconnect");
@@ -1033,9 +1041,9 @@ function DB_Disconnect() {
 }
 
 // If started as allInOne/compact mode => return function to create instance
-if (typeof module !== undefined && module.parent) {
+if (module && module.parent) {
     module.exports = startAdapter;
 } else {
     // or start the instance directly
     startAdapter();
-}
+} 
