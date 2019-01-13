@@ -431,7 +431,7 @@ function DB_Connect(cb) {
                 adapter.log.debug("mySql Database is connected ... ");
                 DB_GetInverters();
             } else {
-                adapter.log.error("Error connecting mySql database ... ");
+                adapter.log.error("Error connecting mySql database ... " + err);
             }
         });
     }
@@ -440,12 +440,21 @@ function DB_Connect(cb) {
         adapter.log.info("start with sqlite");
         adapter.log.debug("--- connecting to " + adapter.config.sqlite_path);
 
-        sqlite_db = new sqlite3.Database(adapter.config.sqlite_path);
+        sqlite_db = new sqlite3.Database(adapter.config.sqlite_path,
+            function (err) {
+                // error handling;
+                if (!err) {
+                    adapter.log.debug("sqlite Database is connected ...");
+                    DB_GetInverters();
+                }
+                else {
+                    adapter.log.error("Error while performing Query / connection ... " + err);
 
-        adapter.log.debug("sqlite Database is connected ...");
-        DB_GetInverters();
+                    adapter.terminate ? adapter.terminate() : process.exit(0);
+                }
+            });
 
-        if (cb) cb();
+
 
     }
     if (cb) cb();
@@ -519,7 +528,7 @@ function GetInverter(err, rows) {
 
     }
     else {
-        adapter.log.error('Error while performing Query.');
+        adapter.log.error('Error while performing Query. ' + err);
     }
 
 }
@@ -599,7 +608,7 @@ function GetInverterData(err, rows,serial) {
         //DB_Disconnect();
     }
     else {
-        adapter.log.error('Error while performing Query.');
+        adapter.log.error('Error while performing Query. ' + err);
     }
 }
 
@@ -671,7 +680,7 @@ function CalcHistory_LastMonth(err, rows,serial) {
         DB_CalcHistory_Prepare(serial);
     }
     else {
-        adapter.log.error('Error while performing Query.');
+        adapter.log.error('Error while performing Query. ' + err);
     }
 
 }
@@ -720,7 +729,7 @@ function CalcHistory_Prepare(err, rows, serial) {
         DB_CalcHistory_Today(serial);
     }
     else {
-        adapter.log.error('Error while performing Query.');
+        adapter.log.error('Error while performing Query. ' + err);
     }
 }
 
@@ -778,7 +787,7 @@ function CalcHistory_Today(err, rows, serial) {
         DB_CalcHistory_Years(serial);
     }
     else {
-        adapter.log.error('Error while performing Query.');
+        adapter.log.error('Error while performing Query. ' + err);
     }
 }
 
@@ -890,7 +899,7 @@ function CalcHistory_Years(err, rows, serial) {
         DB_CalcHistory_Months(serial);
     }
     else {
-        adapter.log.error('Error while performing Query.');
+        adapter.log.error('Error while performing Query. ' + err);
     }
 }
 
@@ -953,7 +962,7 @@ function CalcHistory_Months(err, rows, serial) {
         DB_Disconnect();
     }
     else {
-        adapter.log.error('Error while performing Query.');
+        adapter.log.error('Error while performing Query. ' + err);
     }
 }
 
