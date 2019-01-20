@@ -147,13 +147,13 @@ function AddInverterVariables(serial) {
 
     adapter.setObjectNotExists( serial + '.ETotal', {
         type: 'state',
-        common: { name: 'SMA inverter Ertrag Total', type: 'number', role: 'ertrag', unit: 'W', read: true, write: false },
+        common: { name: 'SMA inverter Ertrag Total', type: 'number', role: 'ertrag', unit: 'Wh', read: true, write: false },
         native: { location:  serial + '.ETotal' }
     });
 
     adapter.setObjectNotExists( serial + '.EToday', {
         type: 'state',
-        common: { name: 'SMA inverter Ertrag Today', type: 'number', role: 'ertrag', unit: 'W', read: true, write: false },
+        common: { name: 'SMA inverter Ertrag Today', type: 'number', role: 'ertrag', unit: 'Wh', read: true, write: false },
         native: { location:  serial + '.EToday' }
     });
 
