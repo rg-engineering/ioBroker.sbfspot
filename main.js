@@ -76,7 +76,7 @@ var numOfInverters;
 
 //---------- sqlite
 // https://github.com/mapbox/node-sqlite3
-var sqlite_db;
+let sqlite_db;
 
 //---------- mySQL
 var mysql_connection;
@@ -203,13 +203,13 @@ function AddInverterVariables(serial) {
 
     adapter.setObjectNotExists( serial + '.ETotal', {
         type: 'state',
-        common: { name: 'SMA inverter Ertrag Total', type: 'number', role: 'ertrag', unit: 'W', read: true, write: false },
+        common: { name: 'SMA inverter Ertrag Total', type: 'number', role: 'ertrag', unit: 'Wh', read: true, write: false },
         native: { location:  serial + '.ETotal' }
     });
 
     adapter.setObjectNotExists( serial + '.EToday', {
         type: 'state',
-        common: { name: 'SMA inverter Ertrag Today', type: 'number', role: 'ertrag', unit: 'W', read: true, write: false },
+        common: { name: 'SMA inverter Ertrag Today', type: 'number', role: 'ertrag', unit: 'Wh', read: true, write: false },
         native: { location:  serial + '.EToday' }
     });
 
@@ -487,7 +487,7 @@ function DB_Connect(cb) {
                 adapter.log.debug("mySql Database is connected ... ");
                 DB_GetInverters();
             } else {
-                adapter.log.error("Error connecting mySql database ... ");
+                adapter.log.error("Error connecting mySql database ... " + err);
 
                 adapter.terminate ? adapter.terminate() : process.exit(0);
             }
@@ -496,14 +496,28 @@ function DB_Connect(cb) {
     else {
         var sqlite3 = require('sqlite3').verbose();
         adapter.log.info("start with sqlite");
-        adapter.log.debug("--- connecting to " + adapter.config.sqlite_path);
+        //adapter.log.debug("--- connecting to " + adapter.config.sqlite_path);
 
-        sqlite_db = new sqlite3.Database(adapter.config.sqlite_path);
+        const path = require('path')
+        const dbPath = path.resolve(__dirname, adapter.config.sqlite_path)
 
-        adapter.log.debug("sqlite Database is connected ...");
-        DB_GetInverters();
+        adapter.log.debug("--- connecting to " + dbPath);
 
-        if (cb) cb();
+        sqlite_db = new sqlite3.Database(dbPath, sqlite3.OPEN_READWRITE,
+            function (err) {
+                // error handling;
+                if (!err) {
+                    adapter.log.debug("sqlite Database is connected ..." );
+                    DB_GetInverters();
+                }
+                else {
+                    adapter.log.error("Error while performing Query / connection ... " + err);
+
+                    //adapter.terminate ? adapter.terminate() : process.exit(0);
+                }
+            });
+
+
 
     }
     if (cb) cb();
@@ -577,7 +591,10 @@ function GetInverter(err, rows) {
 
     }
     else {
-        adapter.log.error('Error while performing Query.');
+        adapter.log.error('Error while performing Query in GetInverter. ' + err);
+
+        //Schreibrechte auf den DB-Ordner???
+
     }
 
 }
@@ -657,7 +674,7 @@ function GetInverterData(err, rows,serial) {
         //DB_Disconnect();
     }
     else {
-        adapter.log.error('Error while performing Query.');
+        adapter.log.error('Error while performing Query in GetInverterData. ' + err);
     }
 }
 
@@ -729,7 +746,7 @@ function CalcHistory_LastMonth(err, rows,serial) {
         DB_CalcHistory_Prepare(serial);
     }
     else {
-        adapter.log.error('Error while performing Query.');
+        adapter.log.error('Error while performing Query in CalcHistory_LastMonth. ' + err);
     }
 
 }
@@ -778,7 +795,7 @@ function CalcHistory_Prepare(err, rows, serial) {
         DB_CalcHistory_Today(serial);
     }
     else {
-        adapter.log.error('Error while performing Query.');
+        adapter.log.error('Error while performing Query in CalcHistory_Prepare. ' + err);
     }
 }
 
@@ -836,7 +853,7 @@ function CalcHistory_Today(err, rows, serial) {
         DB_CalcHistory_Years(serial);
     }
     else {
-        adapter.log.error('Error while performing Query.');
+        adapter.log.error('Error while performing Query in CalcHistory_Today. ' + err);
     }
 }
 
@@ -948,7 +965,7 @@ function CalcHistory_Years(err, rows, serial) {
         DB_CalcHistory_Months(serial);
     }
     else {
-        adapter.log.error('Error while performing Query.');
+        adapter.log.error('Error while performing Query in CalcHistory_Years. ' + err);
     }
 }
 
@@ -1011,7 +1028,7 @@ function CalcHistory_Months(err, rows, serial) {
         DB_Disconnect();
     }
     else {
-        adapter.log.error('Error while performing Query.');
+        adapter.log.error('Error while performing Query in CalcHistory_Months. ' + err);
     }
 }
 
