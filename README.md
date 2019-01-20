@@ -22,8 +22,9 @@ Hints:
 
 ## Changelog
 
-### 2.3.0 (2019-01-06)
+### 2.3.0 (2019-01-20)
 * (René) support of compact mode
+* (René) add additional error information in log
 
 ### 2.2.5 (2018-11-26)
 * (René) upgrade packages
