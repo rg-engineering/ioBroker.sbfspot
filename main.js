@@ -33,37 +33,13 @@ function startAdapter(options) {
         name: 'sbfspot',
         ready: function () {
             try {
+                //adapter.log.debug('start');
                 main();
             }
             catch (e) {
                 adapter.log.error('exception catch after ready [' + e + ']');
             }
-        },
-
-        // is called if a subscribed object changes
-        objectChange: function (id, obj) {
-            // Warning, obj can be null if it was deleted
-            adapter.log.debug('objectChange ' + id + ' ' + JSON.stringify(obj));
-
-            //feuert auch, wenn adapter im admin anghalten oder gestartet wird...
-
-            if (obj == null && myPort != null) {
-                myPort.close();
-            }
-        },
-
-        // is called if a subscribed state changes
-        stateChange: function (id, state) {
-            // Warning, state can be null if it was deleted
-            adapter.log.debug('stateChange ' + id + ' ' + JSON.stringify(state));
-
-            // you can use the ack flag to detect if it is status (true) or command (false)
-            if (state && !state.ack) {
-                adapter.log.info('ack is not set!');
-            }
-        },
-
-
+        }
     });
     adapter = new utils.Adapter(options);
 
