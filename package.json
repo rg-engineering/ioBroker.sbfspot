@@ -18,7 +18,7 @@
     "type": "git",
     "url": "https://github.com/rg-engineering/ioBroker.sbfspot"
   },
-  "Dependencies": {
+  "dependencies": {
     "mysql": "^2.16.0",
     "sqlite3": "^4.0.4",
     "@iobroker/adapter-core": "^1.0.3"
