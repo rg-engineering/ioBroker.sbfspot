@@ -20,3 +20,5 @@ admin/i18n
 hs_err_pid*
 *.orig
 *_neu.*
+/.project
+/.settings/
