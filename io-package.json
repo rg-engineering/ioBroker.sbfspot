@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "2.3.0",
+    "version": "2.3.1",
     "news": {
+      "2.3.1": {
+        "en": "bug fix: with sqlite \"today\" data were not shown",
+        "de": "Fehlerbehebung: Mit sqlite \"Today\" wurden keine Daten angezeigt",
+        "ru": "исправление ошибки: с sqlite \"сегодня\" данные не отображались",
+        "pt": "correção de bug: com dados \"hoje\" do sqlite não foram mostrados",
+        "nl": "fout opgelost: met sqlite \"vandaag\" werden gegevens niet getoond",
+        "fr": "correction de bug: avec sqlite \"aujourd'hui\" les données n'étaient pas affichées",
+        "it": "correzione bug: con sqlite i dati \"oggi\" non venivano mostrati",
+        "es": "corrección de errores: con sqlite \"hoy\" los datos no se mostraron",
+        "pl": "naprawienie błędu: dane sqlite \"today\" nie zostały wyświetlone",
+        "zh-cn": "错误修复：使用sqlite“今天”数据未显示"
+      },
       "2.3.0": {
         "en": "support of compact adapter",
         "de": "Unterstützung des Kompaktadapters",

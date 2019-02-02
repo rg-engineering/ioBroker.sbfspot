@@ -520,49 +520,59 @@ function GetInverter(err, rows) {
     if (!err) {
 
         adapter.log.debug('rows ' + JSON.stringify(rows));
-        for (var i in rows) {
-            
-            
-            adapter.log.info("got data from " + rows[i].Type + " with ID " + rows[i].Serial);
 
-            AddInverterVariables(rows[i].Serial);
+        if (rows.length > 0) {
 
-            adapter.setState(rows[i].Serial + ".Type", { ack: true, val: rows[i].Type });
-            //adapter.setState( rows[i].Serial + ".EToday", { ack: true, val: rows[i].EToday }); this is kW
-            //adapter.setState(rows[i].Serial + ".ETotal", { ack: true, val: rows[i].ETotal }); this is kW
-            adapter.setState(rows[i].Serial + ".SW_Version", { ack: true, val: rows[i].SW_Version });
-            adapter.setState(rows[i].Serial + ".TotalPac", { ack: true, val: rows[i].TotalPac });
-            adapter.setState(rows[i].Serial + ".OperatingTime", { ack: true, val: rows[i].OperatingTime });
-            adapter.setState(rows[i].Serial + ".FeedInTime", { ack: true, val: rows[i].FeedInTime });
-            adapter.setState(rows[i].Serial + ".Status", { ack: true, val: rows[i].Status });
-            adapter.setState(rows[i].Serial + ".GridRelay", { ack: true, val: rows[i].GridRelay });
-            adapter.setState(rows[i].Serial + ".Temperature", { ack: true, val: rows[i].Temperature });
-            adapter.setState(rows[i].Serial + ".timestamp", { ack: true, val: rows[i].TimeStamp });
+            for (var i in rows) {
 
-           
-            var oDate = new Date(rows[i].TimeStamp * 1000);
-            var nDate = oDate.getDate();
-            var nMonth = oDate.getMonth() + 1;
-            var nYear = oDate.getFullYear();
-            var nHours = oDate.getHours();
-            var nMinutes = oDate.getMinutes();
-            var nSeconds = oDate.getSeconds();
-            var sLastup = nDate + "." + nMonth + "." + nYear + " " + nHours + ":" + nMinutes + ":" + nSeconds
 
-            adapter.setState(rows[i].Serial + ".lastup", { ack: true, val: sLastup });
+                adapter.log.info("got data from " + rows[i].Type + " with ID " + rows[i].Serial);
 
-            var oToday = new Date();
-            var sError = "none";
-            if (Math.abs(oDate.getTime() - oToday.getTime()) > (24 * 60 * 60 * 1000)) {
+                AddInverterVariables(rows[i].Serial);
 
-                sError = "sbfspot no update since " + sLastup + " ";
+                adapter.setState(rows[i].Serial + ".Type", { ack: true, val: rows[i].Type });
+                //adapter.setState( rows[i].Serial + ".EToday", { ack: true, val: rows[i].EToday }); this is kW
+                //adapter.setState(rows[i].Serial + ".ETotal", { ack: true, val: rows[i].ETotal }); this is kW
+                adapter.setState(rows[i].Serial + ".SW_Version", { ack: true, val: rows[i].SW_Version });
+                adapter.setState(rows[i].Serial + ".TotalPac", { ack: true, val: rows[i].TotalPac });
+                adapter.setState(rows[i].Serial + ".OperatingTime", { ack: true, val: rows[i].OperatingTime });
+                adapter.setState(rows[i].Serial + ".FeedInTime", { ack: true, val: rows[i].FeedInTime });
+                adapter.setState(rows[i].Serial + ".Status", { ack: true, val: rows[i].Status });
+                adapter.setState(rows[i].Serial + ".GridRelay", { ack: true, val: rows[i].GridRelay });
+                adapter.setState(rows[i].Serial + ".Temperature", { ack: true, val: rows[i].Temperature });
+                adapter.setState(rows[i].Serial + ".timestamp", { ack: true, val: rows[i].TimeStamp });
 
-                adapter.log.debug(sError);
+
+                var oDate = new Date(rows[i].TimeStamp * 1000);
+                var nDate = oDate.getDate();
+                var nMonth = oDate.getMonth() + 1;
+                var nYear = oDate.getFullYear();
+                var nHours = oDate.getHours();
+                var nMinutes = oDate.getMinutes();
+                var nSeconds = oDate.getSeconds();
+                var sLastup = nDate + "." + nMonth + "." + nYear + " " + nHours + ":" + nMinutes + ":" + nSeconds
+
+                adapter.setState(rows[i].Serial + ".lastup", { ack: true, val: sLastup });
+
+                var oToday = new Date();
+                var sError = "none";
+                if (Math.abs(oDate.getTime() - oToday.getTime()) > (24 * 60 * 60 * 1000)) {
+
+                    sError = "sbfspot no update since " + sLastup + " ";
+
+                    adapter.log.debug(sError);
+                }
+                adapter.setState(rows[i].Serial + ".error", { ack: true, val: sError });
+
+                numOfInverters++;
+                DB_GetInvertersData(rows[i].Serial);
             }
-            adapter.setState(rows[i].Serial + ".error", { ack: true, val: sError });
-
-            numOfInverters++;
-            DB_GetInvertersData(rows[i].Serial);
+        }
+        else {
+            //
+            adapter.log.debug("no inverter data found");
+            DB_AddDummyData();
+           
         }
 
     }
@@ -791,7 +801,7 @@ function DB_CalcHistory_Today(serial) {
         query = "SELECT from_unixtime(TimeStamp, '%H:%i') as time, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By from_unixtime(TimeStamp, '%H:%i')";
     }
     else {
-        query = "SELECT strftime('%H-%i', datetime(TimeStamp, 'unixepoch')) as time, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By strftime('%H-%i', datetime(TimeStamp, 'unixepoch'))";
+        query = "SELECT strftime('%H:%m', datetime(TimeStamp, 'unixepoch')) as time, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By strftime('%H-%i', datetime(TimeStamp, 'unixepoch'))";
     }
     adapter.log.debug(query);
     if (adapter.config.databasetype == 'mySQL' || adapter.config.databasetype == 'MariaDB') {
@@ -1008,6 +1018,43 @@ function CalcHistory_Months(err, rows, serial) {
     }
 }
 
+function DB_AddDummyData() {
+    adapter.log.debug("add dummy data");
+
+    //INSERT INTO`Inverters`(`Serial`, `Name`, `Type`, `SW_Version`, `TimeStamp`, `TotalPac`, `EToday`, `ETotal`, `OperatingTime`, `FeedInTime`, `Status`, `GridRelay`, `Temperature`) VALUES([value - 1], [value - 2], [value - 3], [value - 4], [value - 5], [value - 6], [value - 7], [value - 8], [value - 9], [value - 10], [value - 11], [value - 12], [value - 13])
+    var query = "";
+    query = "INSERT INTO`Inverters`(`Serial`, `Name`, `Type`, `SW_Version`, `TimeStamp`, `TotalPac`,"
+    query += " `EToday`, `ETotal`, `OperatingTime`, `FeedInTime`, `Status`, `GridRelay`, `Temperature`) VALUES(";
+    query += " 12345678, `SN: 1234567`, `SB Dummy`, `0.0` , 1548776704 , 0 ,";
+    query += " 3, 3512, 50, 45, `okay`,  `?`, 37 ";
+    query += ")";
+
+    adapter.log.debug(query);
+    if (adapter.config.databasetype == 'mySQL' || adapter.config.databasetype == 'MariaDB') {
+        mysql_connection.query(query, function (err, result) {
+
+            if (err) {
+
+            }
+
+            adapter.terminate ? adapter.terminate() : process.exit(0);
+        });
+    }
+    else {
+        sqlite_db.all(query, function (err, rows) {
+
+            if (err) {
+
+            }
+
+            adapter.terminate ? adapter.terminate() : process.exit(0);
+        });
+
+    }
+
+    
+
+}
 
 function DB_Disconnect() {
 

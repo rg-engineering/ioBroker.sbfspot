@@ -22,6 +22,9 @@ Hints:
 
 ## Changelog
 
+### 2.3.1 (2019-02-02)
+* (René) bug fix: with sqlite "today" data were not shown
+
 ### 2.3.0 (2019-01-20)
 * (René) support of compact mode
 * (René) add additional error information in log
