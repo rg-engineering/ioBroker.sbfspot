@@ -22,6 +22,9 @@ Hints:
 
 ## Changelog
 
+### 2.3.2 (2019-02-03)
+* (René) due to install problems downgrade of sqlite3 package
+
 ### 2.3.1 (2019-02-02)
 * (René) bug fix: with sqlite "today" data were not shown
 

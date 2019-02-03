@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "2.3.1",
+    "version": "2.3.2",
     "news": {
+      "2.3.2": {
+        "en": "downgrade sqlite3 package",
+        "de": "sqlite3-Paket herunterstufen",
+        "ru": "понизить пакет sqlite3",
+        "pt": "pacote sqlite3 de downgrade",
+        "nl": "downlare sqlite3-pakket",
+        "fr": "rétrograder le paquet sqlite3",
+        "it": "downgrade del pacchetto sqlite3",
+        "es": "bajar el paquete sqlite3",
+        "pl": "downgrade pakiet sqlite3",
+        "zh-cn": "降级sqlite3包"
+      },
       "2.3.1": {
         "en": "bug fix: with sqlite \"today\" data were not shown",
         "de": "Fehlerbehebung: Mit sqlite \"Today\" wurden keine Daten angezeigt",
