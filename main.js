@@ -142,7 +142,7 @@ function main() {
     setTimeout(function () {
         adapter.log.warn('force terminate');
         //process.exit(0);
-        adapter.terminate ? adapter.terminate() : process.exit(11);
+        adapter.terminate ? adapter.terminate(15) : process.exit(15);
     }, 60000);
 
     if (adapter.config.useBluetooth) {
@@ -156,7 +156,7 @@ function main() {
             setTimeout(function () {
                 //adapter.stop();
                 adapter.log.warn('force terminate in connect');
-                adapter.terminate ? adapter.terminate() : process.exit(11);
+                adapter.terminate ? adapter.terminate(15) : process.exit(15);
             }, 6000);
         });
     }
@@ -465,7 +465,7 @@ function DB_Connect(cb) {
             } else {
                 adapter.log.error("Error connecting mySql database ... " + err);
 
-                adapter.terminate ? adapter.terminate() : process.exit(0);
+                adapter.terminate ? adapter.terminate(11) : process.exit(11);
             }
         });
     }
@@ -1037,7 +1037,7 @@ function DB_AddDummyData() {
 
             }
 
-            adapter.terminate ? adapter.terminate() : process.exit(0);
+            adapter.terminate ? adapter.terminate(11) : process.exit(11);
         });
     }
     else {
@@ -1047,7 +1047,7 @@ function DB_AddDummyData() {
 
             }
 
-            adapter.terminate ? adapter.terminate() : process.exit(0);
+            adapter.terminate ? adapter.terminate(11) : process.exit(11);
         });
 
     }
