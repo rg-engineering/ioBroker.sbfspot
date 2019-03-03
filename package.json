@@ -3,10 +3,9 @@
   "version": "2.3.2",
   "description": "sbfspot (SMA inverter) Adapter",
   "author": {
-    "name": "René G.",
+    "name": "Renï¿½ G.",
     "email": "info@rg-engineering.eu"
   },
-
   "homepage": "https://github.com/rg-engineering/ioBroker.sbfspot",
   "license": "MIT",
   "keywords": [
@@ -27,15 +26,16 @@
   },
   "devDependencies": {
     "gulp": "^4.0.0",
-    "mocha": "^5.2.0",
-    "chai": "^4.2.0"
+    "mocha": "^6.0.2",
+    "chai": "^4.2.0",
+    "@iobroker/adapter-core": "^1.0.3"
   },
   "main": "main.js",
   "bugs": {
     "url": "https://github.com/rg-engineering/ioBroker.sbfspot"
   },
   "scripts": {
-    "test": "node node_modules/mocha/bin/mocha"
+    "test": "node node_modules/mocha/bin/mocha --exit"
   },
   "readmeFilename": "README.md"
 }
