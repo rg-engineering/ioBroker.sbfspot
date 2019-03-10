@@ -1,6 +1,6 @@
 ﻿![Logo](admin/sbfspot.png)
 # ioBroker.sbfspot
-===========================
+![Number of Installations](http://iobroker.live/badges/sbfspot-installed.svg) ![Number of Installations](http://iobroker.live/badges/sbfspot-stable.svg) ===========================
 
 [![NPM version](https://img.shields.io/npm/v/iobroker.sbfspot.svg)](https://www.npmjs.com/package/iobroker.sbfspot)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.sbfspot.svg)](https://www.npmjs.com/package/iobroker.sbfspot)
