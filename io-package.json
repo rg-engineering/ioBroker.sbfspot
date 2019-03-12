@@ -38,9 +38,6 @@
         "es": "soporte de adaptador compacto",
         "pl": "obsługa adaptera kompaktowego"
       },
-      "2.2.6": {
-        "en": "upgrade packages"
-      },
       "2.2.5": {
         "en": "reset yield if no new value from today",
         "de": "Ertrag zurücksetzen, wenn kein neuer Wert von heute",
@@ -62,10 +59,6 @@
         "it": "bugfix per tick su X",
         "es": "corrección de errores para tics en X",
         "pl": "łatka dla ticków na X"
-      },
-      "2.2.3": {
-        "en": "same as 2.2.2",
-        "de": "wie 2.2.2"
       },
       "2.2.2": {
         "en": "add timestamp of last update",
@@ -99,91 +92,6 @@
         "it": "colore di sfondo e bordo e bugfix per admin3",
         "es": "color de fondo y borde y corrección de errores para admin3",
         "pl": "kolor tła i obramowanie oraz poprawka dla administratora3"
-      },
-      "2.1.0": {
-        "en": "Support MariaDB",
-        "de": "Unterstütze MariaDB",
-        "ru": "Поддержка MariaDB",
-        "pt": "Suporte MariaDB",
-        "nl": "Steun MariaDB",
-        "fr": "Soutenez MariaDB",
-        "it": "Supporto MariaDB",
-        "es": "Soporte MariaDB",
-        "pl": "Wspieraj MariaDB"
-      },
-      "2.0.1": {
-        "en": "Support of admin3",
-        "de": "Unterstützung von admin3",
-        "ru": "Поддержка admin3",
-        "pt": "Suporte de admin3",
-        "nl": "Ondersteuning van admin3",
-        "fr": "Support de admin3",
-        "it": "Supporto di admin3",
-        "es": "Soporte de admin3",
-        "pl": "Wsparcie dla administratora3"
-      },
-      "2.0.0": {
-        "en": "reduce to only one graph",
-        "de": "auf nur eine Grafik reduzieren",
-        "ru": "свести только к одному графику",
-        "pt": "reduzir apenas um gráfico",
-        "nl": "reduceer tot slechts één grafiek",
-        "fr": "réduire à un seul graphique",
-        "it": "ridurre a un solo grafico",
-        "es": "reducir a solo un gráfico",
-        "pl": "zredukować do tylko jednego wykresu"
-      },
-      "1.1.0": {
-        "en": "y axis improvements",
-        "de": "Verbesserungen für Y Achse"
-      },
-      "1.0.1": {
-        "en": "bug fix for sqlite",
-        "de": "Fehlerbehebung für sqlite"
-      },
-      "1.0.0": {
-        "en": "first stable release",
-        "de": "erste stabile Version"
-      },
-      "0.2.6": {
-        "en": "bug fix for android app",
-        "de": "Fehlerbehebung für android app"
-      },
-      "0.2.5": {
-        "en": "use install date to calculate historical values",
-        "de": "Installationsdatum verwendet, um historische Daten zu berechnen"
-      },
-      "0.2.4": {
-        "en": "logo changed",
-        "de": "Logo geändert"
-      },
-      "0.2.3": {
-        "en": "history as json-objects incl. flot widget",
-        "de": "Verlauf als json-Objekte inkl. flot widget"
-      },
-      "0.2.2": {
-        "en": "renamed to sbfspot",
-        "de": "nach sbfspot umbenannt"
-      },
-      "0.2.1": {
-        "en": "index.html updated",
-        "de": "index.html aktualisiert"
-      },
-      "0.2.0": {
-        "en": "sqlite added",
-        "de": "support von sqlite"
-      },
-      "0.1.1": {
-        "en": "UTF8 coding",
-        "de": "UTF8 Kodierung"
-      },
-      "0.1.0": {
-        "en": "first release",
-        "de": "erste freigegebene Version"
-      },
-      "0.0.1": {
-        "en": "initial release",
-        "de": "erste Version"
       }
     },
     "title": "SMA inverter (sbfspot)",
