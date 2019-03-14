@@ -465,7 +465,7 @@ function DB_Connect(cb) {
             } else {
                 adapter.log.error("Error connecting mySql database ... " + err);
 
-                adapter.terminate ? adapter.terminate(11) : process.exit(11);
+                adapter.terminate ? adapter.terminate(15) : process.exit(15);
             }
         });
     }
@@ -1072,7 +1072,7 @@ function DB_Disconnect() {
 
         adapter.log.info("all done ... ");
 
-        adapter.terminate ? adapter.terminate() : process.exit(0);
+        adapter.terminate ? adapter.terminate(0) : process.exit(0);
 
     }
     else {
