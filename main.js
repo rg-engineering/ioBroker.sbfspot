@@ -155,7 +155,7 @@ function main() {
         DB_Connect(function () {
             setTimeout(function () {
                 //adapter.stop();
-                adapter.log.warn('force terminate in connect');
+                adapter.log.error('force terminate in connect');
                 adapter.terminate ? adapter.terminate(15) : process.exit(15);
             }, 6000);
         });
