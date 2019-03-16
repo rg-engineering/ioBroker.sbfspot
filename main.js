@@ -130,8 +130,8 @@ adapter.on('unload', function (callback) {
 function main() {
 
     if (typeof adapter.config.databasetype == 'undefined') {
-        adapter.log.info("databasetype not defined. check settings and save");
-        adapter.config.databasetype = "mySQL";
+        adapter.log.error("databasetype not defined. check and update settings and save");
+        adapter.terminate ? adapter.terminate(0) : process.exit(0);
     }
 
     CheckInverterVariables();
