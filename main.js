@@ -131,7 +131,7 @@ function main() {
 
     if (typeof adapter.config.databasetype == 'undefined') {
         adapter.log.error("databasetype not defined. check and update settings and save");
-        adapter.terminate ? adapter.terminate(0) : process.exit(0);
+        adapter.terminate ? adapter.terminate(11) : process.exit(11);
     }
 
     CheckInverterVariables();
@@ -142,7 +142,7 @@ function main() {
     setTimeout(function () {
         adapter.log.warn('force terminate');
         //process.exit(0);
-        adapter.terminate ? adapter.terminate(0) : process.exit(0);
+        adapter.terminate ? adapter.terminate(11) : process.exit(11);
     }, 60000);
 
     if (adapter.config.useBluetooth) {
@@ -156,7 +156,7 @@ function main() {
             setTimeout(function () {
                 //adapter.stop();
                 adapter.log.error('force terminate in connect');
-                adapter.terminate ? adapter.terminate(0) : process.exit(0);
+                adapter.terminate ? adapter.terminate(11) : process.exit(11);
             }, 6000);
         });
     }
@@ -465,7 +465,7 @@ function DB_Connect(cb) {
             } else {
                 adapter.log.error("Error connecting mySql database ... " + err);
 
-                adapter.terminate ? adapter.terminate(0) : process.exit(0);
+                adapter.terminate ? adapter.terminate(11) : process.exit(11);
             }
         });
     }
@@ -1072,7 +1072,7 @@ function DB_Disconnect() {
 
         adapter.log.info("all done ... ");
 
-        adapter.terminate ? adapter.terminate(0) : process.exit(0);
+        adapter.terminate ? adapter.terminate(11) : process.exit(11);
 
     }
     else {
