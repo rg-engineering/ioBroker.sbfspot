@@ -1,6 +1,6 @@
 {
   "name": "iobroker.sbfspot",
-  "version": "2.3.2",
+  "version": "2.3.3",
   "description": "sbfspot (SMA inverter) Adapter",
   "author": {
     "name": "Ren� G.",

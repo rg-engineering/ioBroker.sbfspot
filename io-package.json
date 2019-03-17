@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "2.3.2",
+    "version": "2.3.3",
     "news": {
       "2.3.2": {
         "en": "downgrade sqlite3 package",
