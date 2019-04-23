@@ -3,7 +3,7 @@
   "version": "2.3.3",
   "description": "sbfspot (SMA inverter) Adapter",
   "author": {
-    "name": "Ren� G.",
+    "name": "René G.",
     "email": "info@rg-engineering.eu"
   },
   "homepage": "https://github.com/rg-engineering/ioBroker.sbfspot",
@@ -28,7 +28,7 @@
     "gulp": "^4.0.0",
     "mocha": "^6.0.2",
     "chai": "^4.2.0",
-    "@iobroker/testing": "^1.1.16"
+    "@iobroker/testing": "^1.2.0"
   },
   "main": "main.js",
   "bugs": {
