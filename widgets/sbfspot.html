@@ -7,16 +7,44 @@
 <!-- here you can include so many css as you want -->
 <!--<link rel="stylesheet" href="widgets/weather/css/style.css" />-->
 <!--<link href="widgets/sbfspot/css/flot.css" rel="stylesheet" type="text/css"> -->
-
-<script type="text/javascript" src="widgets/sbfspot/lib/js/flot/jquery.flot.js"></script>
-<script type="text/javascript" src="widgets/sbfspot/lib/js/flot/jquery.flot.time.js"></script>
+<!--
+<script type="text/javascript" src="widgets/weather/lib/js/flot/jquery.flot.js"></script>
+<script type="text/javascript" src="widgets/weather/lib/js/flot/jquery.flot.time.js"></script>
+    -->
+<!-- <script language="javascript" type="text/javascript" src="widgets/weather/lib/js/flot/jquery.js"></script> -->
+<script language="javascript" type="text/javascript" src="widgets/weather/lib/js/flot/jquery.canvaswrapper.js"></script>
+<script language="javascript" type="text/javascript" src="widgets/weather/lib/js/flot/jquery.colorhelpers.js"></script>
+<script language="javascript" type="text/javascript" src="widgets/weather/lib/js/flot/jquery.flot.js"></script>
+<script language="javascript" type="text/javascript" src="widgets/weather/lib/js/flot/jquery.flot.saturated.js"></script>
+<script language="javascript" type="text/javascript" src="widgets/weather/lib/js/flot/jquery.flot.browser.js"></script>
+<script language="javascript" type="text/javascript" src="widgets/weather/lib/js/flot/jquery.flot.drawSeries.js"></script>
+<script language="javascript" type="text/javascript" src="widgets/weather/lib/js/flot/jquery.flot.uiConstants.js"></script>
+<script language="javascript" type="text/javascript" src="widgets/weather/lib/js/flot/jquery.flot.time.js"></script>
+<script language="javascript" type="text/javascript" src="widgets/weather/lib/js/flot/jquery.flot.legend.js"></script>
 
 <!-- doku for flot : -->
 <!--  https://github.com/flot/flot/blob/master/API.md -->
 
+<style>
+    .chart-placeholder {
+        width: 100%;
+        height: 100%;
+        font-size: 14px;
+        line-height: 1.2em;
+    }
+
+    .legendLayer .background {
+        fill: rgba(255, 255, 255, 0.85);
+        stroke: rgba(0, 0, 0, 0.85);
+        stroke-width: 1;
+    }
+</style>
+
 
 <script type="text/javascript">
     'use strict';
+
+    var MarkingColor = "eaebe5";
 
     if (vis.editMode) {
         // Add words for basic widgets
@@ -55,7 +83,16 @@
             "group_oids": { "en": "OID's", "de": "OID's", "ru": "group_oids" },
             "oid_value": { "en": "OID values", "de": "OID Werte", "ru": "oid_value" },
             "withborder": { "en": "show border", "de": "Rahmen anzeigen", "ru": "withborder" },
+
+            "markingcolor": { "en": "color marking", "de": "Farbe Hervorhebung", "ru": "???" },
+            "withmarking": { "en": "with marking", "de": "Hervorhebungen", "ru": "???" },
+
+            "graphName": { "en": "Name", "de": "Name", "ru": "graphName" },
         });
+    }
+
+    function SetMarkingColor(color) {
+        MarkingColor = color;
     }
 
     function xwhFormatter(val, axis) {
@@ -67,8 +104,107 @@
             return val.toFixed(axis.tickDecimals) + " Wh";
     }
 
+    function legendformater(label, series) {
+
+        //wenn keine Daten, dann ausblenden ->  (return null)
+        if (series.data == null || typeof series.data == "undefined" || typeof series.data[0] == "undefined") {
+
+            console.log('legendformater no label ');
+            return null;
+        }
+        else {
+            console.log('legendformater label ' + label);
+            return label;
+        }
+    }
+
+    function GridMarkings(axes) {
+
+        var markings = [];
+        var minDate = new Date(axes.xaxis.min);
+
+        const dayDiff = (axes.xaxis.max - axes.xaxis.min) / 1000 / 60 / 60 / 24;
+        console.log('GridMarkings: DayDiff ' + dayDiff+ ' (' + axes.xaxis.max + ' ' + axes.xaxis.min + ')');
+
+        var i = minDate.getTime();
+
+        //if we only few hours then we need markings per hour otherwise per day
+        if (dayDiff > 2) {
+            do {
+                markings.push({ xaxis: { from: i, to: i + 24 * 60 * 60 * 1000 }, color: MarkingColor });
+                i += 2 * 24 * 60 * 60 * 1000;
+            } while (i < axes.xaxis.max);
+
+        }
+        else {
+            do {
+                markings.push({ xaxis: { from: i, to: i + 60 * 60 * 1000 }, color: MarkingColor });
+                i += 2 * 60 * 60 * 1000;
+            } while (i < axes.xaxis.max);
+        }
+        return markings;
+
+    }
+
+    function CalcTicks4X(axis) {
+        xxx
+        var ticks = [];
+
+        var minDate = new Date(axis.min);
+
+        const dayDiff = (axis.max - axis.min) / 1000 / 60 / 60 / 24;
+
+        console.log('CalcTicks4X: DayDiff ' + dayDiff + ' (' + axis.max + ' ' + axis.min + ')');
+
+
+        // to do 
+        /*
+        if (dayDiff > 400) { //in years
+            minDate.setUTCHours(12);
+            minDate.setUTCMinutes(0);
+            var i = minDate.getTime();
+            do {
+                ticks.push([i]);
+                i += 24 * 60 * 60 * 1000;
+            } while (i < axis.max);
+        }
+
+        else if (dayDiff > 25) { // in months
+            minDate.setUTCHours(12);
+            minDate.setUTCMinutes(0);
+            var i = minDate.getTime();
+            do {
+                ticks.push([i]);
+                i += 24 * 60 * 60 * 1000;
+            } while (i < axis.max);
+        }
+        
+        
+        else if (dayDiff > 2) {*/
+        if (dayDiff > 2) {
+            minDate.setUTCHours(12);
+            minDate.setUTCMinutes(0);
+            var i = minDate.getTime();
+            do {
+                ticks.push([i]);
+                i += 24 * 60 * 60 * 1000;
+            } while (i < axis.max);
+        }
+        else {
+            minDate.setUTCHours(0);
+            minDate.setUTCMinutes(0);
+            var i = minDate.getTime();
+            do {
+                ticks.push([i]);
+                i += 6 * 60 * 60 * 1000;
+            } while (i < axis.max);
+        }
+        return ticks;
+    }
+
+
     vis.binds.sbfspot = {
-        version: "2.0.1",
+        version: "2.3.4",
         showVersion: function () {
             if (vis.binds.sbfspot.version) {
                 console.log('Version vis-sbfspot: ' + vis.binds.sbfspot.version);
@@ -97,33 +233,49 @@
                 'sel_today': 1,
                 'sel_last30days': 2,
                 'sel_last12months': 3,
-                'sel_years':4
+                'sel_years': 4
             }
-            
+
         },
         history: {
-            update: function ($div) {
-                var data = $div.data('options');
 
-                if (!data.sbfspotinstance) {
-                    console.log("keine instanz " + data.chartType);
+            init: function (widgetID, view, data1, style) {
+                var $div = $('#' + widgetID);
+                console.log("sbfspot history (" + widgetID + ")");
+                var data = {};
+                for (var s in data1) {
+                    if (s[0] !== '_' && data1.hasOwnProperty(s) && typeof data1[s] !== 'object' && typeof data1[s] !== 'function') {
+                        data[s] = data1[s];
+                    }
 
-                    $div.html("<br> <center> <font color='red'> no instance </font> </center></br>");
-                } else {
-                    //warum wir das brauchen, verstehe ich noch nicht...
-                    //ist eigentlich nur dummy... aber ohne wird plot ganz klein dargestellt ???
-                    vis.getHistory(data.oid, {
-                        instance: data.sbfspotinstance,
-                        count: 10,
-                        aggregate:  'average',
-                        start: new Date().getTime(),
-                        end: new Date().getTime() + 5000,
-                        timeout: 1000
-                    }, function (err, result) {
-                        var data = $div.data('options');
-                        if (err) console.log(err);
-   
-                        console.log("ShowChart sbfspot begin");
+                }
+
+                function update() {
+
+                    console.log("ShowChart sbfspot  (" + widgetID + ")");
+
+                    var $div = $('#' + widgetID);
+                    // if nothing found => wait
+                    if (!$div.length) {
+                        return setTimeout(function () {
+                            console.log("need to wait... (" + widgetID + ")");
+                            update();
+                        }, 1000);
+                    }
+
+                    console.log("ShowChart sbfspot begin (" + widgetID + ")");
+
+                    if (!data || !data.sbfspotinstance) {
+                        console.log("keine instanz  (" + widgetID + ")");
+                        $div.html("<br> <center> <font color='red'> no instance for sbfspot specified </font> </center></br>");
+                    }
+
+                    else {
+
+                        SetMarkingColor(data.markingcolor);
+
+                        var dateMin = -1;
+                        var dateMax = -1;
 
                         var values = [];
                         var maxY = -9999;
@@ -132,6 +284,12 @@
                         try {
                             var oid_value = data.oid_value;
                             var oData = JSON.parse(vis.states[oid_value + '.val']);
+
+                            if (oData === null || typeof oData == "undefined" || oData.length < 1) {
+                                $div.html("<br> <center> <font color='red'>no data available yet for sbfspot</font> </center></br>");
+                                return;
+                            }
+
 
                             //console.log("oData " + oData.length);
                             //console.log(JSON.stringify(oData));
@@ -168,6 +326,13 @@
 
                                     //console.log(oDate.toString() + " : " + diff);
 
+                                    var date = oDate.getTime();
+
+                                    if (dateMin === -1) {
+                                        dateMin = date;
+                                    }
+                                    dateMax = date;
+
                                     values.push([oDate, diff]);
                                 }
                                 else if ($sel == 2) {
@@ -190,7 +355,12 @@
                                     if (value > maxY) maxY = value;
 
                                     //console.log(oDate.toDateString() + " : " + value);
+                                    var date = oDate.getTime();
 
+                                    if (dateMin === -1) {
+                                        dateMin = date;
+                                    }
+                                    dateMax = date;
                                     values.push([oDate, value]);
                                 }
                                 else if ($sel == 3) {
@@ -213,7 +383,8 @@
 
                                     month--;
 
-                                    var oDate = new Date(year, month, 1, 12, 0, 0, 0);
+                                    //mid of month
+                                    var oDate = new Date(year, month, 15, 12, 0, 0, 0);
 
                                     var diff = value - oldValue;
 
@@ -222,6 +393,13 @@
                                         if (diff > maxY) maxY = diff;
 
                                         console.log(oDate.toDateString() + " : " + diff + " (" + year + "," + month + ")");
+
+                                        var date = oDate.getTime();
+
+                                        if (dateMin === -1) {
+                                            dateMin = date;
+                                        }
+                                        dateMax = date;
 
                                         values.push([oDate, diff]);
                                     }
@@ -235,7 +413,8 @@
                                     var value = value;
                                     //2016
 
-                                    var oDate = new Date(year, 0, 1, 12, 0, 0, 0);
+                                    // mid of year
+                                    var oDate = new Date(year, 5, 30, 12, 0, 0, 0);
 
                                     var diff = value - oldValue;
 
@@ -244,11 +423,22 @@
                                         if (diff > maxY) maxY = diff;
 
                                         console.log(oDate.toDateString() + " : " + diff);
+                                        var date = oDate.getTime();
+
+                                        if (dateMin === -1) {
+                                            dateMin = date;
+                                        }
+                                        dateMax = date;
 
                                         values.push([oDate, diff]);
                                     }
                                     else {
                                         console.log(oDate.toDateString() + " : " + value);
+                                        var date = oDate.getTime();
+                                        if (dateMin === -1) {
+                                            dateMin = date;
+                                        }
+                                        dateMax = date;
 
                                         values.push([oDate, value]);
                                     }
@@ -272,122 +462,128 @@
                         else if ($sel == 4) {
                             barwidth = 1000 * 60 * 60 * 24 * 182; //365/2=182 days
                         }
-
+                        console.log("barwidth = " + barwidth); // in ms
                         //sbfspot.0.2000562095.history.last30Days
 
                         var ticksX = data.ticksonxaxix > 0 ? parseInt(data.ticksonxaxix, 10) : 5;
 
                         if (ticksX > values.length) {
                             ticksX = values.length;
-                            console.log('reduce ticks on X to ' + ticksX );
+                            console.log('reduce ticks on X to ' + ticksX);
                         }
 
-                    $.plot($div,
-                        [{
-                            data:  values,
-                            color: data.graphcolor,
-                            //label: "today [Wh]",
-                            //hoverable: true,
-                            xaxis: 1,
-                            yaxis: 1,
-                            lines: { show: false },
-                            bars:
+                        $.plot($div,
+                            [{
+                                data: values,
+                                color: data.graphcolor,
+                                label: data.graphName,
+                                xaxis: 1,
+                                yaxis: 1,
+                                lines: { show: false },
+                                bars:
                                 {
-                                    show:  true,
-                                    barWidth: barwidth
+                                    show: true,
+                                    barWidth: [barwidth, true],
+                                    align: "center",
+                                    horizontal: false
                                 }
-                        },
-                        
-                        
-                        ],
-                        {
+                            },
 
-                            xaxes: 
-                              [{
-                                  show: data.withxaxix,
-                                  mode: "time",
-                                  tickLength: 5,
-                                    ticks: ticksX,
-                                  timeformat: data.graphDateFormat, 
-                                  monthNames: ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"],
-                                  color: data.tickscolor,
-                                  font: {
-                                      color: data.axislabelcolor
-                                  }
-                              },
-                              
-                              ],
-                            yaxes:                           
-                                [{ 
-                                show: data.withyaxix,
-                                    max: maxY,
-                                    min: minY,
-                                    //alignTicksWithAxis: 1,
-                                    position: 'left',
-                                    ticks: 3,
-                                    color: data.tickscolor,
-                                    font: {
-                                        color: data.graphcolor
+
+                            ],
+                            {
+
+                                xaxes:
+                                    [{
+                                        show: data.withxaxix,
+                                        mode: "time",
+                                        timeBase: "milliseconds",
+                                        tickLength: 5,
+                                        min: dateMin,
+                                        max: dateMax,
+                                        //ticks: data.ticksonxaxix > 0 ? parseInt(data.ticksonxaxix, 10) : 5,
+                                        ticks: ticksX > -1 ? ticksX : CalcTicks4X,
+                                        autoScale: "none",
+                                        timeformat: data.graphDateFormat,
+                                        monthNames: ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"],
+                                        color: data.tickscolor,
+                                        font: {
+                                            color: data.axislabelcolor
+                                        },
+                                        timezone: "browser"
                                     },
-                                    tickFormatter: xwhFormatter
+
+                                    ],
+                                yaxes:
+                                    [{
+                                        show: data.withyaxix,
+                                        max: maxY,
+                                        min: minY,
+                                        //alignTicksWithAxis: 1,
+                                        position: 'left',
+                                        ticks: 3,
+                                        color: data.tickscolor,
+                                        font: {
+                                            color: data.graphcolor
+                                        },
+                                        tickFormatter: xwhFormatter
+                                    },
+
+                                    ],
+                                grid:
+                                {
+                                    markings: data.withmarking ? GridMarkings : null,
+
+                                    backgroundColor: data.nobgcolor ? null : { colors: ["#fff", "#eee"] },
+                                    borderWidth: {
+                                        top: data.withborder ? 1 : 0,
+                                        right: data.withborder ? 1 : 0,
+                                        bottom: data.withborder ? 2 : 0,
+                                        left: data.withborder ? 2 : 0
+                                    },
+
                                 },
-                                
-                                ],
-                            grid:
-                              {
-                                  //Farben einstellen fehlt noch
-                                  backgroundColor: data.nobgcolor ? null : { colors: ["#fff", "#eee"] },
-                                  borderWidth: {
-                                      top: data.withborder ? 1 : 0,
-                                      right: data.withborder ? 1 : 0,
-                                      bottom: data.withborder ? 2 : 0,
-                                      left: data.withborder ? 2 : 0
-                                  },
-                                  //fehlt noch
-                                  //markings: nextDay
-                              }
-                        }
+                                legend: {
+                                    show: data.withlegend,
+                                    labelFormatter: legendformater,
+                                    //labelBoxBorderColor: color,
+                                    //noColumns: number,
+                                    position: data.legendposition,
+                                    //margin: number of pixels or [x margin, y margin]
+                                    backgroundColor: null,
+                                    backgroundOpacity: 0,
+                                    container: null,
+                                    sorted: false
+                                }
+                            }
                         );
 
 
-                     }); //GetHistory
-                }
-            },
-            init: function (el, view, data) {
-                var $div = $(el);
-                console.log("sbfspot init" );
-                var _data = {};
-                for (var s in data) {
-
-                    if (s[0] !== '_' && data.hasOwnProperty(s) && typeof data[s] !== 'object' && typeof data[s] !== 'function') {
-                        _data[s] = data[s];
-
                     }
-                }
-                data = null;
-                $div.data('options', _data);
+                };
 
-                if (_data.sbfspotinstance) {
+                if (data.sbfspotinstance) {
 
-                    var oid_value = _data.oid_value;
+                    var oid_value = data.oid_value;
                     console.log("bind " + oid_value);
                     vis.states.bind(oid_value + '.val', function () {
                         vis.binds.sbfspot.history.update($div);
                     });
- 
-                    
+
+
 
                     // update every x seconds
                     if (!vis.editMode) {
                         $div.data('timer', setInterval(function () {
                             vis.binds.sbfspot.history.update($div);
-                        }, parseInt(vis.binds.sbfspot.setup.intervals[_data.time_interval] / (parseInt(_data.points, 10) || 10), 10)));
+                        }, parseInt(vis.binds.sbfspot.setup.intervals[data.time_interval] / (parseInt(data.points, 10) || 10), 10)));
                     }
                 }
                 else {
                     console.log("instance not set ");
                 }
-                vis.binds.sbfspot.history.update($div);
+                update();
+
                 if (vis.editMode) {
                     console.log("flot version " + $.plot.version + " for sbfspot");
                 }
@@ -405,7 +601,7 @@
             vis.widgets[widgetID].data.oid_value = "";
 
             //sbfspot.0.2000562095.history.last30Days
-            
+
 
             //then copy new values into oid
             if ((fields.indexOf("serial") > -1) || (fields.indexOf("sbfspotinstance") > -1) || fields.indexOf("valueselect") > -1) {
@@ -414,7 +610,7 @@
                 var sInstance = vis.widgets[widgetID].data.sbfspotinstance;
                 var sValueSet = "today";
 
-                
+
 
                 var $sel = vis.widgets[widgetID].data.valueselect;
 
@@ -448,12 +644,12 @@
 
                 vis.views[view].widgets[widgetID].data.oid_value = sInstance + "." + sSerial + ".history." + sValueSet;
                 vis.widgets[widgetID].data.oid_value = sInstance + "." + sSerial + ".history." + sValueSet;
-            
 
-            
-               
 
-                
+
+
+
+
 
             }
 
@@ -477,16 +673,17 @@
         data-vis-update-style="true"
         data-vis-prev='<img src="widgets/sbfspot/img/Prev_tplSbfspot.png"></img>'
         data-vis-attrs="sbfspotinstance/sbfspot/onInstanceChanged; serial//onInstanceChanged;valueselect[sel_today]/select,sel_today,sel_last30days,sel_last12months,sel_years/onInstanceChanged;"
-        data-vis-attrs0="time_interval[30 minutes]/select,1 second,10 seconds,30 seconds,1 minute,2 minutes,5 minutes,10 minutes,30 minutes,1 hour,2 hours,4 hours,8 hours,12 hours,24 hours;withxaxix[true]/checkbox;ticksonxaxix[5];axislabelcolor[#ffffff]/color;tickscolor[#ffffff]/color;"
-        data-vis-attrs1="graphcolor[#f1f113]/color;nobgcolor[true]/checkbox;withyaxix[true]/checkbox;graphDateFormat[%H:%M];withborder[true]/checkbox;"
-        data-vis-attrs2="group.oids;oid_value/id;"
-
->
+        data-vis-attrs0="time_interval[30 minutes]/select,1 second,10 seconds,30 seconds,1 minute,2 minutes,5 minutes,10 minutes,30 minutes,1 hour,2 hours,4 hours,8 hours,12 hours,24 hours;withxaxix[true]/checkbox;ticksonxaxix[5];withmarking[true]/checkbox;markingcolor[#eaebe5]/color;;axislabelcolor[#ffffff]/color;tickscolor[#ffffff]/color;"
+        data-vis-attrs1="graphName;graphcolor[#f1f113]/color;nobgcolor[true]/checkbox;withyaxix[true]/checkbox;graphDateFormat[%H:%M];withborder[true]/checkbox;withlegend[false]/checkbox;legendposition[ne]/select,ne,nw,se,sw;"
+        data-vis-attrs2="group.oids;oid_value/id;">
 
     <div class="vis-widget <%== this.data.attr('class') %>" style="overflow: hidden;" id="<%= this.data.attr('wid') %>">
-        <div class="vis-widget-body" <%= (el1) -> vis.binds.sbfspot.history.init(el1, this.view, this.data) %>></div>
-        
+        <div class="vis-sbfspot-widget-body"
+             <%= vis.binds.sbfspot.history.init(this.data.wid, this.view, this.data, this.style) %>>
+        </div>
     </div>
+
+
 
 </script>
 
