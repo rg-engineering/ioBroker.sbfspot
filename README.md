@@ -8,6 +8,9 @@
 
 [![NPM](https://nodei.co/npm/iobroker.sbfspot.png?downloads=true)](https://nodei.co/npm/iobroker.sbfspot/)
 
+**If you like it, please consider a donation:**
+                                                                          
+[![paypal](https://www.paypalobjects.com/en_US/DK/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YBAZTEBT9SYC2&source=url)
 
 
 This adapter reads data from SMA power inverters using sbfspot.
@@ -24,6 +27,9 @@ Since version 0.2.3 there is a own vis widget based on flot available to show hi
 * please create issues at [github](https://github.com/rg-engineering/ioBroker.sbfspot/issues) if you find bugs or whish new features
 
 ## Changelog
+
+## 2.4.0 (2019-12-xx)
+* (René) update to my own flot 3.0
 
 ## 2.3.4 (2019-10-31)
 * (René) update flot to version 3.0

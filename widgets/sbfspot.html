@@ -4,23 +4,20 @@
 
     Copyright 10.2015-2017 René G. <info@rg-engineering.eu>
 -->
-<!-- here you can include so many css as you want -->
-<!--<link rel="stylesheet" href="widgets/weather/css/style.css" />-->
-<!--<link href="widgets/sbfspot/css/flot.css" rel="stylesheet" type="text/css"> -->
 <!--
-<script type="text/javascript" src="widgets/weather/lib/js/flot/jquery.flot.js"></script>
-<script type="text/javascript" src="widgets/weather/lib/js/flot/jquery.flot.time.js"></script>
-    -->
-<!-- <script language="javascript" type="text/javascript" src="widgets/weather/lib/js/flot/jquery.js"></script> -->
-<script language="javascript" type="text/javascript" src="widgets/weather/lib/js/flot/jquery.canvaswrapper.js"></script>
-<script language="javascript" type="text/javascript" src="widgets/weather/lib/js/flot/jquery.colorhelpers.js"></script>
-<script language="javascript" type="text/javascript" src="widgets/weather/lib/js/flot/jquery.flot.js"></script>
-<script language="javascript" type="text/javascript" src="widgets/weather/lib/js/flot/jquery.flot.saturated.js"></script>
-<script language="javascript" type="text/javascript" src="widgets/weather/lib/js/flot/jquery.flot.browser.js"></script>
-<script language="javascript" type="text/javascript" src="widgets/weather/lib/js/flot/jquery.flot.drawSeries.js"></script>
-<script language="javascript" type="text/javascript" src="widgets/weather/lib/js/flot/jquery.flot.uiConstants.js"></script>
-<script language="javascript" type="text/javascript" src="widgets/weather/lib/js/flot/jquery.flot.time.js"></script>
-<script language="javascript" type="text/javascript" src="widgets/weather/lib/js/flot/jquery.flot.legend.js"></script>
+<script language="javascript" type="text/javascript" src="widgets/weather/lib/js/flot/jquery.js"></script>
+-->
+<script language="javascript" type="text/javascript" src="widgets/sbfspot/flot/jquery.canvaswrapper.js"></script>
+<script language="javascript" type="text/javascript" src="widgets/sbfspot/lib/js/flot/jquery.colorhelpers.js"></script>
+<script language="javascript" type="text/javascript" src="widgets/sbfspot/lib/js/flot/jquery.flot.js"></script>
+<script language="javascript" type="text/javascript" src="widgets/sbfspot/lib/js/flot/jquery.flot.saturated.js"></script>
+<script language="javascript" type="text/javascript" src="widgets/sbfspot/lib/js/flot/jquery.flot.browser.js"></script>
+<script language="javascript" type="text/javascript" src="widgets/sbfspot/lib/js/flot/jquery.flot.drawSeries.js"></script>
+<script language="javascript" type="text/javascript" src="widgets/sbfspot/lib/js/flot/jquery.flot.uiConstants.js"></script>
+<script language="javascript" type="text/javascript" src="widgets/sbfspot/lib/js/flot/jquery.flot.time.js"></script>
+<script language="javascript" type="text/javascript" src="widgets/sbfspot/lib/js/flot/jquery.flot.legend.js"></script>
+
+<script language="javascript" type="text/javascript" src="widgets/sbfspot/lib/js/flot/jquery.flot.axislabels_V2.js"></script>
 
 <!-- doku for flot : -->
 <!--  https://github.com/flot/flot/blob/master/API.md -->
@@ -49,162 +46,651 @@
     if (vis.editMode) {
         // Add words for basic widgets
         $.extend(true, systemDictionary, {
-            "sbfspot": { "en": "sbfspot", "de": "sbfspot", "ru": "sbfspot" },
-            "1 second": { "en": "1 second", "de": "1 Sekunde", "ru": "1 ???????" },
-            "10 seconds": { "en": "10 seconds", "de": "10 Sekunden", "ru": "10 ??????" },
-            "30 seconds": { "en": "30 seconds", "de": "30 Sekunden", "ru": "30 ??????" },
-            "1 minute": { "en": "1 minute", "de": "1 Minute", "ru": "1 ??????" },
-            "2 minutes": { "en": "2 minutes", "de": "2 Minuten", "ru": "2 ??????" },
-            "5 minutes": { "en": "5 minutes", "de": "5 Minuten", "ru": "5 ?????" },
-            "10 minutes": { "en": "10 minutes", "de": "10 Minuten", "ru": "10 ?????" },
-            "30 minutes": { "en": "30 minutes", "de": "30 Minuten", "ru": "30 ?????" },
-            "1 hour": { "en": "1 hour", "de": "1 Stunde", "ru": "1 ???" },
-            "2 hours": { "en": "2 hours", "de": "2 Stunden", "ru": "2 ????" },
-            "4 hours": { "en": "4 hours", "de": "4 Stunden", "ru": "4 ????" },
-            "8 hours": { "en": "8 hours", "de": "8 Stunden", "ru": "8 ?????" },
-            "12 hours": { "en": "12 hours", "de": "12 Stunden", "ru": "12 ?????" },
-            "24 hours": { "en": "24 hours", "de": "24 Stunden", "ru": "24 ????" },
-            "sbfspotinstance": { "en": "sbfspot instance", "de": "sbfspot-Instanz", "ru": "?????????" },
-            "time_interval": { "en": "Time interval", "de": "Zeitintervall", "ru": "????????" },
-            "sel_today": { "en": "today", "de": "heute", "ru": "sel_today" },
-            "sel_last30days": { "en": "last 30 days", "de": "30 Tage", "ru": "sel_last30days" },
-            "sel_last12months": { "en": "last 12 months", "de": "12 Monate", "ru": "sel_last12months" },
-            "sel_years": { "en": "years", "de": "Jahre", "ru": "sel_years" },
-            "serial": { "en": "inverter serial No.", "de": "WR Seriennummer", "ru": "serial" },
-            "valueselect": { "en": "select", "de": "Auswahl", "ru": "valueselect" },
-            "withxaxix": { "en": "show X axis", "de": "zeige X Achse", "ru": "withxaxix" },
-            "ticksonxaxix": { "en": "ticks on X axis", "de": "Anzahl Labels / X Achse", "ru": "???" },
-            "axislabelcolor": { "en": "color axis label", "de": "Farbe Achsbeschriftung", "ru": "???" },
-            "tickscolor": { "en": "color axis ticks", "de": "Farbe Achsmarke", "ru": "???" },
-            "graphcolor": { "en": "color graph", "de": "Farbe Graph", "ru": "graphcolor" },
-            "nobgcolor": { "en": "no background color", "de": "keine Farbe Hintergrund", "ru": "nobgcolor" },
-            "withyaxix": { "en": "show Y axis", "de": "zeige Y Achse", "ru": "withyaxix" },
-            "graphDateFormat": { "en": "Date Format for X axis", "de": "Datumsformat für X-Achse", "ru": "graphDateFormat" },
-            "group_oids": { "en": "OID's", "de": "OID's", "ru": "group_oids" },
-            "oid_value": { "en": "OID values", "de": "OID Werte", "ru": "oid_value" },
-            "withborder": { "en": "show border", "de": "Rahmen anzeigen", "ru": "withborder" },
 
-            "markingcolor": { "en": "color marking", "de": "Farbe Hervorhebung", "ru": "???" },
-            "withmarking": { "en": "with marking", "de": "Hervorhebungen", "ru": "???" },
+            "sbfspot": {
+                "en": "sbfspot",
+                "de": "sbfspot",
+                "ru": "sbfspot",
+                "pt": "sbfspot",
+                "nl": "sbfspot",
+                "fr": "sbfspot",
+                "it": "sbfspot",
+                "es": "sbfspot",
+                "pl": "sbfspot",
+                "zh-cn": "sbfspot"
+            },
 
-            "graphName": { "en": "Name", "de": "Name", "ru": "graphName" },
+            "1 second": {
+                "en": "1 second",
+                "de": "1 Sekunde",
+                "ru": "1 секунда",
+                "pt": "1 segundo",
+                "nl": "1 seconde",
+                "fr": "1 seconde",
+                "it": "1 secondo",
+                "es": "1 segundo",
+                "pl": "1 sekunda",
+                "zh-cn": "1秒"
+            },
+            "10 seconds": {
+                "en": "10 seconds",
+                "de": "10 Sekunden",
+                "ru": "10 секунд",
+                "pt": "10 segundos",
+                "nl": "10 seconden",
+                "fr": "10 secondes",
+                "it": "10 secondi",
+                "es": "10 segundos",
+                "pl": "10 sekund",
+                "zh-cn": "10秒"
+            },
+            "30 seconds": {
+                "en": "30 seconds",
+                "de": "30 Sekunden",
+                "ru": "30 секунд",
+                "pt": "30 segundos",
+                "nl": "30 seconden",
+                "fr": "30 secondes",
+                "it": "30 secondi",
+                "es": "30 segundos",
+                "pl": "30 sekund",
+                "zh-cn": "30秒"
+            },
+            "1 minute": {
+                "en": "1 minute",
+                "de": "1 Minute",
+                "ru": "1 минута",
+                "pt": "1 minuto",
+                "nl": "1 minuut",
+                "fr": "1 minute",
+                "it": "1 minuto",
+                "es": "1 minuto",
+                "pl": "1 minuta",
+                "zh-cn": "1分钟"
+            },
+            "2 minutes": {
+                "en": "2 minutes",
+                "de": "2 Minuten",
+                "ru": "2 минуты",
+                "pt": "2 minutos",
+                "nl": "2 minuten",
+                "fr": "2 minutes",
+                "it": "2 minuti",
+                "es": "2 minutos",
+                "pl": "2 minuty",
+                "zh-cn": "2分钟"
+            },
+            "5 minutes": {
+                "en": "5 minutes",
+                "de": "5 Minuten",
+                "ru": "5 минут",
+                "pt": "5 minutos",
+                "nl": "5 minuten",
+                "fr": "5 minutes",
+                "it": "5 minuti",
+                "es": "5 minutos",
+                "pl": "5 minut",
+                "zh-cn": "5分钟"
+            },
+            "10 minutes": {
+                "en": "10 minutes",
+                "de": "10 Minuten",
+                "ru": "10 минут",
+                "pt": "10 minutos",
+                "nl": "10 minuten",
+                "fr": "10 minutes",
+                "it": "10 minuti",
+                "es": "10 minutos",
+                "pl": "10 minut",
+                "zh-cn": "10分钟"
+            },
+            "30 minutes": {
+                "en": "30 minutes",
+                "de": "30 Minuten",
+                "ru": "30 минут",
+                "pt": "30 minutos",
+                "nl": "30 minuten",
+                "fr": "30 minutes",
+                "it": "30 minuti",
+                "es": "30 minutos",
+                "pl": "30 minut",
+                "zh-cn": "30分钟"
+            },
+            "1 hour": {
+                "en": "1 hour",
+                "de": "1 Stunde",
+                "ru": "1 час",
+                "pt": "1 hora",
+                "nl": "1 uur",
+                "fr": "1 heure",
+                "it": "1 ora",
+                "es": "1 hora",
+                "pl": "1 godzina",
+                "zh-cn": "1小时"
+            },
+            "2 hours": {
+                "en": "2 hours",
+                "de": "2 Stunden",
+                "ru": "два часа",
+                "pt": "2 horas",
+                "nl": "twee uur",
+                "fr": "2 heures",
+                "it": "2 ore",
+                "es": "2 horas",
+                "pl": "2 godziny",
+                "zh-cn": "2小时"
+            },
+            "4 hours": {
+                "en": "4 hours",
+                "de": "4 Stunden",
+                "ru": "4 часа",
+                "pt": "4 horas",
+                "nl": "4 uur",
+                "fr": "4 heures",
+                "it": "4 ore",
+                "es": "4 horas",
+                "pl": "4 godziny",
+                "zh-cn": "4个小时"
+            },
+            "8 hours": {
+                "en": "8 hours",
+                "de": "8 Stunden",
+                "ru": "8 часов",
+                "pt": "8 horas",
+                "nl": "8 uur",
+                "fr": "8 heures",
+                "it": "8 ore",
+                "es": "8 horas",
+                "pl": "8 godzin",
+                "zh-cn": "8小时"
+            },
+            "12 hours": {
+                "en": "12 hours",
+                "de": "12 Stunden",
+                "ru": "12 часов",
+                "pt": "12 horas",
+                "nl": "12 uren",
+                "fr": "12 heures",
+                "it": "12 ore",
+                "es": "12 horas",
+                "pl": "12 godzin",
+                "zh-cn": "12小时"
+            },
+            "24 hours": {
+                "en": "24 hours",
+                "de": "24 Stunden",
+                "ru": "24 часа",
+                "pt": "24 horas",
+                "nl": "24 uur",
+                "fr": "24 heures",
+                "it": "24 ore",
+                "es": "24 horas",
+                "pl": "24 godziny",
+                "zh-cn": "24小时"
+            },
+            "sbfspotinstance": {
+                "en": "sbfspot instance",
+                "de": "sbfspot-Instanz",
+                "ru": "экземпляр sbfspot",
+                "pt": "instância sbfspot",
+                "nl": "sbfspot-instantie",
+                "fr": "instance de sbfspot",
+                "it": "istanza sbfspot",
+                "es": "instancia de sbfspot",
+                "pl": "instancja sbfspot",
+                "zh-cn": "sbfspot实例"
+            },
+            "time_interval": {
+                "en": "Time interval",
+                "de": "Zeitintervall",
+                "ru": "Интервал времени",
+                "pt": "Intervalo de tempo",
+                "nl": "Tijdsinterval",
+                "fr": "Intervalle de temps",
+                "it": "Intervallo di tempo",
+                "es": "Intervalo de tiempo",
+                "pl": "Przedział czasowy",
+                "zh-cn": "时间间隔"
+            },
+            "withxaxix": {
+                "en": "show X axis",
+                "de": "X-Achse anzeigen",
+                "ru": "показать ось X",
+                "pt": "mostre o eixo X",
+                "nl": "X-as weergeven",
+                "fr": "afficher l'axe X",
+                "it": "mostra l'asse X.",
+                "es": "mostrar eje X",
+                "pl": "pokaż oś X.",
+            },
+
+            "sel_today": {
+                "en": "today",
+                "de": "heute",
+                "ru": "Cегодня",
+                "pt": "hoje",
+                "nl": "vandaag",
+                "fr": "aujourd'hui",
+                "it": "oggi",
+                "es": "hoy",
+                "pl": "dzisiaj",
+                "zh-cn": "今天"
+            },
+            "sel_last30days": {
+                "en": "last 30 days",
+                "de": "letzte 30 Tage",
+                "ru": "последние 30 дней",
+                "pt": "últimos 30 dias",
+                "nl": "laatste 30 dagen",
+                "fr": "les 30 derniers jours",
+                "it": "ultimi 30 giorni",
+                "es": "últimos 30 días",
+                "pl": "ostatnie 30 dni",
+                "zh-cn": "最近30天"
+            },
+            "sel_last12months": {
+                "en": "last 12 months",
+                "de": "letzten 12 Monate",
+                "ru": "последние 12 месяцев",
+                "pt": "últimos 12 meses",
+                "nl": "laatste 12 maanden",
+                "fr": "12 derniers mois",
+                "it": "ultimi 12 mesi",
+                "es": "últimos 12 meses",
+                "pl": "ostatnie 12 miesięcy",
+                "zh-cn": "最近12个月"
+            },
+            "sel_years": {
+                "en": "years",
+                "de": "Jahre",
+                "ru": "лет",
+                "pt": "anos",
+                "nl": "jaar",
+                "fr": "ans",
+                "it": "anni",
+                "es": "años",
+                "pl": "lat",
+                "zh-cn": "年份"
+            },
+            "serial": {
+                "en": "inverter serial No.",
+                "de": "Seriennummer des Wechselrichters",
+                "ru": "серийный номер инвертора",
+                "pt": "número de série do inversor",
+                "nl": "serienummer van de omvormer",
+                "fr": "n ° de série de l'onduleur",
+                "it": "numero di serie dell'inverter",
+                "es": "número de serie del inversor",
+                "pl": "numer seryjny falownika",
+                "zh-cn": "变频器序列号"
+            },
+            "valueselect": {
+                "en": "select",
+                "de": "wählen",
+                "ru": "Выбрать",
+                "pt": "selecionar",
+                "nl": "kiezen",
+                "fr": "sélectionner",
+                "it": "selezionare",
+                "es": "seleccionar",
+                "pl": "Wybierz",
+                "zh-cn": "选择"
+            },
+
+
+            "axislabelcolor": {
+                "en": "color of axis label",
+                "de": "Farbe der Achsenbeschriftung",
+                "ru": "цвет метки оси",
+                "pt": "cor do rótulo do eixo",
+                "nl": "kleur van aslabel",
+                "fr": "couleur de l'étiquette de l'axe",
+                "it": "colore dell'etichetta dell'asse",
+                "es": "color de la etiqueta del eje",
+                "pl": "kolor etykiety osi",
+                "zh-cn": "轴标颜色"
+            },
+            "tickscolor": {
+                "en": "color of axis ticks",
+                "de": "Farbe der Achsenstriche",
+                "ru": "цвет отметок оси",
+                "pt": "cor dos tiques do eixo",
+                "nl": "kleur van as tikken",
+                "fr": "couleur des tiques des axes",
+                "it": "colore delle zecche degli assi",
+                "es": "color de las garrapatas del eje",
+                "pl": "kolor znaczników osi",
+                "zh-cn": "轴刻度的颜色"
+            },
+            "graphcolor": {
+                "en": "color",
+                "de": "Farbe",
+                "ru": "цвет",
+                "pt": "cor",
+                "nl": "kleur",
+                "fr": "Couleur",
+                "it": "colore",
+                "es": "color",
+                "pl": "kolor",
+                "zh-cn": "颜色"
+            },
+            "nobgcolor": {
+                "en": "no background color on grid",
+                "de": "Keine Hintergrundfarbe im Raster",
+                "ru": "нет цвета фона на сетке",
+                "pt": "sem cor de fundo na grade",
+                "nl": "geen achtergrondkleur op het raster",
+                "fr": "pas de couleur d'arrière-plan sur la grille",
+                "it": "nessun colore di sfondo sulla griglia",
+                "es": "sin color de fondo en la cuadrícula",
+                "pl": "brak koloru tła na siatce",
+                "zh-cn": "网格上没有背景色"
+            },
+
+            "bgcolor": {
+                "en": "background color on grid",
+                "de": "Hintergrundfarbe auf Raster",
+                "ru": "цвет фона на сетке",
+                "pt": "cor de fundo na grade",
+                "nl": "achtergrondkleur op het raster",
+                "fr": "couleur de fond sur la grille",
+                "it": "colore di sfondo sulla griglia",
+                "es": "color de fondo en la cuadrícula",
+                "pl": "kolor tła na siatce",
+                "zh-cn": "网格上的背景色"
+            },
+
+            "bordercolor": {
+                "en": "color of grid border",
+                "de": "Farbe des Gitterrandes",
+                "ru": "цвет границы сетки",
+                "pt": "cor da borda da grade",
+                "nl": "kleur van de rasterrand",
+                "fr": "couleur de la bordure de la grille",
+                "it": "colore del bordo della griglia",
+                "es": "color del borde de la cuadrícula",
+                "pl": "kolor obramowania siatki",
+                "zh-cn": "网格边框的颜色"
+            },
+            "borderWidth": {
+                "en": "width of grid border",
+                "de": "Breite des Gitterrandes",
+                "ru": "ширина границы сетки",
+                "pt": "largura da borda da grade",
+                "nl": "breedte van de rasterrand",
+                "fr": "largeur de la bordure de la grille",
+                "it": "larghezza del bordo della griglia",
+                "es": "ancho del borde de la cuadrícula",
+                "pl": "szerokość granicy siatki",
+                "zh-cn": "网格边框的宽度"
+            },
+
+            "withyaxix": {
+                "en": "show y axis",
+                "de": "y-Achse anzeigen",
+                "ru": "показать ось у",
+                "pt": "mostre o eixo y",
+                "nl": "y-as weergeven",
+                "fr": "afficher l'axe y",
+                "it": "mostra l'asse y",
+                "es": "mostrar eje y",
+                "pl": "pokaż oś y",
+                "zh-cn": "显示y轴"
+            },
+            "graphDateFormat": {
+                "en": "Date Format for X axis",
+                "de": "Datumsformat für die X-Achse",
+                "ru": "Формат даты для оси X",
+                "pt": "Formato de data para o eixo X",
+                "nl": "Datumnotatie voor X-as",
+                "fr": "Format de date pour l'axe X",
+                "it": "Formato data per asse X.",
+                "es": "Formato de fecha para el eje X",
+                "pl": "Format daty dla osi X.",
+                "zh-cn": "X轴的日期格式"
+            },
+            "group_graph": {
+                "en": "graph",
+                "de": "Graph",
+                "ru": "график",
+                "pt": "gráfico",
+                "nl": "diagram",
+                "fr": "graphique",
+                "it": "grafico",
+                "es": "grafico",
+                "pl": "wykres",
+                "zh-cn": "图形"
+            },
+            "group_oids": {
+                "en": "OID's",
+                "de": "OID's",
+                "ru": "OID-х",
+                "pt": "OID's",
+                "nl": "OID's",
+                "fr": "OID",
+                "it": "di OID",
+                "es": "OID",
+                "pl": "OID",
+                "zh-cn": "OID的"
+            },
+            "oid_value": {
+                "en": "OID values",
+                "de": "OID-Werte",
+                "ru": "Значения OID",
+                "pt": "Valores OID",
+                "nl": "OID-waarden",
+                "fr": "Valeurs OID",
+                "it": "Valori OID",
+                "es": "Valores OID",
+                "pl": "Wartości OID",
+                "zh-cn": "OID值"
+            },
+
+
+            "markingcolor": {
+                "en": "color of marking",
+                "de": "Farbe der Markierung",
+                "ru": "цвет маркировки",
+                "pt": "cor da marcação",
+                "nl": "kleur van markering",
+                "fr": "couleur de marquage",
+                "it": "colore della marcatura",
+                "es": "color de marcado",
+                "pl": "kolor oznakowania",
+                "zh-cn": "标记颜色"
+            },
+            "withmarking": {
+                "en": "with marking",
+                "de": "mit Markierung",
+                "ru": "с маркировкой",
+                "pt": "com marcação",
+                "nl": "met markering",
+                "fr": "avec marquage",
+                "it": "con marcatura",
+                "es": "con marcado",
+                "pl": "z oznaczeniem",
+                "zh-cn": "带标记"
+            },
+
+            "graphName": {
+                "en": "name on legend",
+                "de": "Name auf Legende",
+                "ru": "имя по легенде",
+                "pt": "nome na legenda",
+                "nl": "naam op legende",
+                "fr": "nom sur la légende",
+                "it": "nome sulla leggenda",
+                "es": "nombre en la leyenda",
+                "pl": "imię na legendzie",
+                "zh-cn": "传说中的名字"
+            },
+
+
+            "LabelFontSize": {
+                "en": "size of Label Font",
+                "de": "Größe der Beschriftungsschrift",
+                "ru": "размер шрифта метки",
+                "pt": "tamanho da fonte da etiqueta",
+                "nl": "grootte van het lettertype",
+                "fr": "taille de la police d'étiquette",
+                "it": "dimensione del carattere dell'etichetta",
+                "es": "tamaño de la fuente de la etiqueta",
+                "pl": "rozmiar czcionki etykiety",
+                "zh-cn": "标签字体的大小"
+            },
+            "LabelFontFamily": {
+                "en": "family of label font",
+                "de": "Schriftfamilie",
+                "ru": "семейство меток шрифта",
+                "pt": "família de fontes de rótulo",
+                "nl": "familie van lettertype",
+                "fr": "famille de polices d'étiquettes",
+                "it": "famiglia di caratteri etichetta",
+                "es": "familia de fuente de etiquetas",
+                "pl": "rodzina czcionek etykiet",
+                "zh-cn": "标签字体家族"
+            },
+            "tickLength": {
+                "en": "length of tick",
+                "de": "Länge des Ticks",
+                "ru": "длина тика",
+                "pt": "comprimento do carrapato",
+                "nl": "lengte van de teek",
+                "fr": "longueur de tique",
+                "it": "lunghezza del segno di spunta",
+                "es": "longitud de la garrapata",
+                "pl": "długość kleszcza",
+                "zh-cn": "tick的长度"
+            },
+            "showMinorTicks": {
+                "en": "show minor tick",
+                "de": "zeige kleine Ticks",
+                "ru": "показать небольшую галочку",
+                "pt": "mostre carrapato menor",
+                "nl": "toon kleine vinkjes",
+                "fr": "montrer une tique mineure",
+                "it": "mostra segno di spunta minore",
+                "es": "mostrar marca menor",
+                "pl": "pokaż drobne kleszcze",
+                "zh-cn": "显示小勾"
+            },
+            "showTicks": {
+                "en": "show tick",
+                "de": "zeige ticks",
+                "ru": "показать галочку",
+                "pt": "show tick",
+                "nl": "vinkje tonen",
+                "fr": "montrer tique",
+                "it": "mostra tick",
+                "es": "mostrar marca",
+                "pl": "pokaż tik",
+                "zh-cn": "显示刻度"
+            },
+            "tickDecimals": {
+                "en": "decimals",
+                "de": "Dezimalstellen",
+                "ru": "десятичные",
+                "pt": "decimais",
+                "nl": "decimalen",
+                "fr": "décimales",
+                "it": "decimali",
+                "es": "decimales",
+                "pl": "miejsca po przecinku",
+                "zh-cn": "小数点"
+            },
+            "tickSize": {
+                "en": "tick size",
+                "de": "Tick-Größe",
+                "ru": "размер галочки",
+                "pt": "tamanho do carrapato",
+                "nl": "teken grootte",
+                "fr": "taille de la tique",
+                "it": "dimensione tick",
+                "es": "tamaño de la garrapata",
+                "pl": "rozmiar kleszcza",
+                "zh-cn": "刻度大小"
+            },
+            "minTickSize": {
+                "en": "min. tick size",
+                "de": "Mindest. Tick-Größe",
+                "ru": "минимум размер галочки",
+                "pt": "min. tamanho do carrapato",
+                "nl": "min. teken grootte",
+                "fr": "min. taille de la tique",
+                "it": "min. dimensione tick",
+                "es": "min. tamaño de la garrapata",
+                "pl": "min. rozmiar kleszcza",
+                "zh-cn": "分钟刻度大小"
+            },
+             "labelwidth": {
+                "en": "label width",
+                "de": "Labelbreite",
+                "ru": "ширина этикетки",
+                "pt": "largura da etiqueta",
+                "nl": "labelbreedte",
+                "fr": "largeur d'étiquette",
+                "it": "larghezza dell'etichetta",
+                "es": "ancho de etiqueta",
+                "pl": "szerokość etykiety",
+                "zh-cn": "标签宽度"
+            },
+             
+            "coloraxis": {
+                "en": "color of axis",
+                "de": "Farbe der Achse",
+                "ru": "цвет оси",
+                "pt": "cor do eixo",
+                "nl": "kleur van de as",
+                "fr": "couleur de l'axe",
+                "it": "colore dell'asse",
+                "es": "color del eje",
+                "pl": "kolor osi",
+                "zh-cn": "轴的颜色"
+            },
+            "colorticklabel": {
+                "en": "color tick label",
+                "de": "Farbe Tick Label",
+                "ru": "цветная метка",
+                "pt": "etiqueta de escala de cores",
+                "nl": "kleur maatlabel",
+                "fr": "étiquette de couleur tique",
+                "it": "etichetta con segno di spunta di colore",
+                "es": "etiqueta de marca de color",
+                "pl": "kolorowa etykieta kleszczowa",
+                "zh-cn": "彩色刻度标签"
+            },
+            "withlegend": {
+                "en": "show legend",
+                "de": "Legende anzeigen",
+                "ru": "показать легенду",
+                "pt": "mostrar legenda",
+                "nl": "toon legende",
+                "fr": "montrer la légende",
+                "it": "mostra legenda",
+                "es": "Mostrar leyenda",
+                "pl": "pokaż legendę",
+                "zh-cn": "显示传奇"
+            },
+            "legendposition": {
+                "en": "legend position",
+                "de": "Legendenposition",
+                "ru": "положение легенды",
+                "pt": "posição da legenda",
+                "nl": "legende positie",
+                "fr": "position de la légende",
+                "it": "posizione della legenda",
+                "es": "posición de leyenda",
+                "pl": "pozycja legendy",
+                "zh-cn": "图例位置"
+            }
         });
     }
 
-    function SetMarkingColor(color) {
-        MarkingColor = color;
-    }
-
-    function xwhFormatter(val, axis) {
-        if (val > 1000000)
-            return (val / 1000000).toFixed(axis.tickDecimals) + " MWh";
-        else if (val > 1000)
-            return (val / 1000).toFixed(axis.tickDecimals) + " kWh";
-        else
-            return val.toFixed(axis.tickDecimals) + " Wh";
-    }
-
-    function legendformater(label, series) {
-
-        //wenn keine Daten, dann ausblenden ->  (return null)
-        if (series.data == null || typeof series.data == "undefined" || typeof series.data[0] == "undefined") {
-
-            console.log('legendformater no label ');
-            return null;
-        }
-        else {
-            console.log('legendformater label ' + label);
-            return label;
-        }
-    }
-
-    function GridMarkings(axes) {
-
-        var markings = [];
-        var minDate = new Date(axes.xaxis.min);
-
-        const dayDiff = (axes.xaxis.max - axes.xaxis.min) / 1000 / 60 / 60 / 24;
-        console.log('GridMarkings: DayDiff ' + dayDiff+ ' (' + axes.xaxis.max + ' ' + axes.xaxis.min + ')');
-
-        var i = minDate.getTime();
-
-        //if we only few hours then we need markings per hour otherwise per day
-        if (dayDiff > 2) {
-            do {
-                markings.push({ xaxis: { from: i, to: i + 24 * 60 * 60 * 1000 }, color: MarkingColor });
-                i += 2 * 24 * 60 * 60 * 1000;
-            } while (i < axes.xaxis.max);
-
-        }
-        else {
-            do {
-                markings.push({ xaxis: { from: i, to: i + 60 * 60 * 1000 }, color: MarkingColor });
-                i += 2 * 60 * 60 * 1000;
-            } while (i < axes.xaxis.max);
-        }
-        return markings;
-
-    }
-
-    function CalcTicks4X(axis) {
-        xxx
-        var ticks = [];
-
-        var minDate = new Date(axis.min);
-
-        const dayDiff = (axis.max - axis.min) / 1000 / 60 / 60 / 24;
-
-        console.log('CalcTicks4X: DayDiff ' + dayDiff + ' (' + axis.max + ' ' + axis.min + ')');
-
-
-        // to do 
-        /*
-        if (dayDiff > 400) { //in years
-            minDate.setUTCHours(12);
-            minDate.setUTCMinutes(0);
-            var i = minDate.getTime();
-            do {
-                ticks.push([i]);
-                i += 24 * 60 * 60 * 1000;
-            } while (i < axis.max);
-        }
-
-        else if (dayDiff > 25) { // in months
-            minDate.setUTCHours(12);
-            minDate.setUTCMinutes(0);
-            var i = minDate.getTime();
-            do {
-                ticks.push([i]);
-                i += 24 * 60 * 60 * 1000;
-            } while (i < axis.max);
-        }
-        
-        
-        else if (dayDiff > 2) {*/
-        if (dayDiff > 2) {
-            minDate.setUTCHours(12);
-            minDate.setUTCMinutes(0);
-            var i = minDate.getTime();
-            do {
-                ticks.push([i]);
-                i += 24 * 60 * 60 * 1000;
-            } while (i < axis.max);
-        }
-        else {
-            minDate.setUTCHours(0);
-            minDate.setUTCMinutes(0);
-            var i = minDate.getTime();
-            do {
-                ticks.push([i]);
-                i += 6 * 60 * 60 * 1000;
-            } while (i < axis.max);
-        }
-        return ticks;
-    }
+ 
 
 
     vis.binds.sbfspot = {
-        version: "2.3.4",
+        version: "2.4.0",
         showVersion: function () {
             if (vis.binds.sbfspot.version) {
                 console.log('Version vis-sbfspot: ' + vis.binds.sbfspot.version);
@@ -250,6 +736,220 @@
 
                 }
 
+                   function SetMarkingColor(color) {
+        MarkingColor = color;
+    }
+
+    function xwhFormatter(val, axis) {
+        if (val > 1000000)
+            return (val / 1000000).toFixed(axis.tickDecimals) + " MWh";
+        else if (val > 1000)
+            return (val / 1000).toFixed(axis.tickDecimals) + " kWh";
+        else
+            return val.toFixed(axis.tickDecimals) + " Wh";
+    }
+
+    function legendformater(label, series) {
+
+        //wenn keine Daten, dann ausblenden ->  (return null)
+        if (series.data == null || typeof series.data == "undefined" || typeof series.data[0] == "undefined") {
+
+            console.log('legendformater no label because no data ');
+            return null;
+        }
+        else {
+            console.log('legendformater label ' + label);
+            return label;
+        }
+    }
+
+
+
+    //===============================================================
+    //Attention: this is different to sbfspot and vis-weather!!! we have much longer time periods here
+    function GridMarkings(axes) {
+
+        var markings = [];
+        var minDate = new Date(axes.xaxis.min);
+
+        const dayDiff = (axes.xaxis.max - axes.xaxis.min) / 1000 / 60 / 60 / 24;
+        console.log('GridMarkings: DayDiff ' + dayDiff + ' (' + axes.xaxis.max + ' ' + axes.xaxis.min + ')');
+
+        var i = minDate.getTime();
+
+        if (dayDiff > 400) { //in years
+            minDate.setHours(0);
+            minDate.setMinutes(0);
+            minDate.setDate(1);
+            minDate.setMonth(0);
+            var i = minDate.getTime();
+            var curDate;
+            do {
+                markings.push({ xaxis: { from: i, to: i + 12 * 30 * 24 * 60 * 60 * 1000 }, color: MarkingColor });
+
+                i += 2 * 12 * 31 * 24 * 60 * 60 * 1000; //plus two year
+
+                curDate = new Date(i);
+                minDate = curDate;
+                minDate.setHours(0);
+                minDate.setMinutes(0);
+                minDate.setDate(1);
+                minDate.setMonth(0);
+
+                console.log('GridMarkings (1): ' + minDate.toLocaleString());
+
+                i = minDate.getTime();
+
+            } while (i < axes.xaxis.max);
+        }
+
+        else if (dayDiff > 30) { // in months
+            minDate.setHours(0);
+            minDate.setMinutes(0);
+            minDate.setDate(1);
+            var i = minDate.getTime();
+            var curDate;
+            do {
+                markings.push({ xaxis: { from: i, to: i + 30 * 24 * 60 * 60 * 1000 }, color: MarkingColor });
+
+                i += 2 * 31 * 24 * 60 * 60 * 1000; //plus one month
+
+                curDate = new Date(i);
+                minDate = curDate;
+                minDate.setHours(0);
+                minDate.setMinutes(0);
+                minDate.setDate(1);
+
+                console.log('GridMarkings  (2): ' + minDate.toLocaleString());
+
+                i = minDate.getTime();
+            } while (i < axes.xaxis.max);
+        }
+        else if (dayDiff > 10) {
+            //if (dayDiff > 2) {
+            minDate.setHours(12);
+            minDate.setMinutes(0);
+            var i = minDate.getTime();
+            do {
+                markings.push({ xaxis: { from: i, to: i + 5 * 24 * 60 * 60 * 1000 }, color: MarkingColor });
+                i += 2 * 5 * 24 * 60 * 60 * 1000; //plus 5 days
+            } while (i < axes.xaxis.max);
+        }
+
+        //if we only few hours then we need markings per hour otherwise per day
+        else if (dayDiff > 2) {
+            do {
+                markings.push({ xaxis: { from: i, to: i + 24 * 60 * 60 * 1000 }, color: MarkingColor });
+                i += 2 * 24 * 60 * 60 * 1000;
+            } while (i < axes.xaxis.max);
+
+        }
+        else {
+            do {
+                markings.push({ xaxis: { from: i, to: i + 60 * 60 * 1000 }, color: MarkingColor });
+                i += 2 * 60 * 60 * 1000;
+            } while (i < axes.xaxis.max);
+        }
+        return markings;
+
+    }
+
+
+
+    //===============================================================
+    //Attention: this is different to sbfspot and vis-weather!!! we have much longer time periods here
+    function CalcTicks4X(axis) {
+
+        var ticks = [];
+
+        var minDate = new Date(axis.min);
+
+        const dayDiff = (axis.max - axis.min) / 1000 / 60 / 60 / 24;
+
+        console.log('CalcTicks4X: DayDiff ' + dayDiff + ' (' + axis.max + ' ' + axis.min + ')');
+        
+        if (dayDiff > 400) { //in years
+            minDate.setHours(12);
+            minDate.setMinutes(0);
+            minDate.setDate(15);
+            minDate.setMonth(5);
+            var i = minDate.getTime();
+            var curDate;
+            do {
+                ticks.push([i]);
+
+                i += 12 * 30 * 24 * 60 * 60 * 1000; //plus one year
+
+                curDate = new Date(i);
+                minDate = curDate;
+                minDate.setHours(12);
+                minDate.setMinutes(0);
+                minDate.setDate(15);
+                minDate.setMonth(5);
+
+                console.log('CalcTicks4X (1): ' + minDate.toLocaleString()); 
+
+                i = minDate.getTime();
+
+            } while (i < axis.max);
+        }
+
+        else if (dayDiff > 30) { // in months
+            minDate.setHours(12);
+            minDate.setMinutes(0);
+            minDate.setDate(15);
+            var i = minDate.getTime();
+            var curDate;
+            do {
+                ticks.push([i]);
+                i += 30 * 24 * 60 * 60 * 1000; //plus one month
+
+                curDate = new Date(i);
+                minDate = curDate;
+                minDate.setHours(12);
+                minDate.setMinutes(0);
+                minDate.setDate(15);
+
+                console.log('CalcTicks4X  (2): ' + minDate.toLocaleString());
+
+                i = minDate.getTime();
+            } while (i < axis.max);
+        }
+        else if (dayDiff > 10) {
+            //if (dayDiff > 2) {
+            minDate.setHours(12);
+            minDate.setMinutes(0);
+            var i = minDate.getTime();
+            do {
+                ticks.push([i]);
+                i += 5 * 24 * 60 * 60 * 1000; //plus 5 days
+            } while (i < axis.max);
+        }
+
+        else if (dayDiff > 2) {
+        //if (dayDiff > 2) {
+            minDate.setHours(12);
+            minDate.setMinutes(0);
+            var i = minDate.getTime();
+            do {
+                ticks.push([i]);
+                i += 24 * 60 * 60 * 1000; //plus a day
+            } while (i < axis.max);
+        }
+        else {
+            minDate.setHours(0);
+            minDate.setMinutes(0);
+            var i = minDate.getTime();
+            do {
+                ticks.push([i]);
+                i += 6 * 60 * 60 * 1000; //plus 6 hours
+            } while (i < axis.max);
+        }
+        return ticks;
+    }
+
+
+
                 function update() {
 
                     console.log("ShowChart sbfspot  (" + widgetID + ")");
@@ -268,6 +968,11 @@
                     if (!data || !data.sbfspotinstance) {
                         console.log("keine instanz  (" + widgetID + ")");
                         $div.html("<br> <center> <font color='red'> no instance for sbfspot specified </font> </center></br>");
+                    }
+                    
+                    else if (!data.serial) {
+                        console.log("keine seriennummer  (" + widgetID + ")");
+                        $div.html("<br> <center> <font color='red'> no inverter serial number for sbfspot specified </font> </center></br>");
                     }
 
                     else {
@@ -465,13 +1170,14 @@
                         console.log("barwidth = " + barwidth); // in ms
                         //sbfspot.0.2000562095.history.last30Days
 
+                        /*
                         var ticksX = data.ticksonxaxix > 0 ? parseInt(data.ticksonxaxix, 10) : 5;
 
                         if (ticksX > values.length) {
                             ticksX = values.length;
                             console.log('reduce ticks on X to ' + ticksX);
                         }
-
+                        */
                         $.plot($div,
                             [{
                                 data: values,
@@ -495,20 +1201,33 @@
 
                                 xaxes:
                                     [{
+                                        axisLabelUseCanvas: true,
+                                        axisLabelColour: 'orange',
+
                                         show: data.withxaxix,
                                         mode: "time",
                                         timeBase: "milliseconds",
                                         tickLength: 5,
+
                                         min: dateMin,
                                         max: dateMax,
                                         //ticks: data.ticksonxaxix > 0 ? parseInt(data.ticksonxaxix, 10) : 5,
-                                        ticks: ticksX > -1 ? ticksX : CalcTicks4X,
+                                        ticks: CalcTicks4X,
+
                                         autoScale: "none",
                                         timeformat: data.graphDateFormat,
                                         monthNames: ["Jan", "Feb", "Mar", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"],
                                         color: data.tickscolor,
+                                        tickColor: data.tickscolor,
                                         font: {
-                                            color: data.axislabelcolor
+
+                                            size: data.LabelFontSize,
+                                            lineHeight: 13,
+                                            style: "normal", //"italic",
+                                            weight: "bold",
+                                            family: data.LabelFontFamily,
+                                            variant: "small-caps",
+                                            color: data.axislabelcolor,
                                         },
                                         timezone: "browser"
                                     },
@@ -516,15 +1235,38 @@
                                     ],
                                 yaxes:
                                     [{
+                                        axisLabelUseCanvas: true,
+                                        axisLabelColour: 'orange',
+
                                         show: data.withyaxix,
                                         max: maxY,
                                         min: minY,
-                                        //alignTicksWithAxis: 1,
+                                        autoScale: "none", // Available modes: "none", "loose", "exact"
+                                        showTickLabels: "major",
+                                        alignTicksWithAxis: 1,
                                         position: 'left',
-                                        ticks: 3,
-                                        color: data.tickscolor,
+                                        //ticks: 3,
+
+                                        tickLength: parseFloat(data.tickLength),            //20, // size in pixels of major tick marks
+                                        showMinorTicks: data.showMinorTicks,    //false, // true = show minor tick marks, false = hide minor tick marks
+                                        showTicks: data.showTicks,              //true, // true = show tick marks, false = hide all tick marks
+                                        tickDecimals: data.tickDecimals,        //1, // no. of decimals, null means auto
+                                        tickSize: data.tickSize,                //3, // number or [number, "unit"]
+                                        minTickSize: data.minTickSize,          //1, // number or [number, "unit"]
+
+                                        color: data.coloraxis,
+                                        tickColor: data.coloraxis,
+
+                                        labelWidth: parseFloat(data.labelwidth),
                                         font: {
-                                            color: data.graphcolor
+                                            size: data.LabelFontSize,
+                                            lineHeight: 13,
+                                            style: "normal", //"italic",
+                                            weight: "bold",
+                                            family: data.LabelFontFamily,
+                                            variant: "small-caps",
+                                            color: data.colorticklabel,
+
                                         },
                                         tickFormatter: xwhFormatter
                                     },
@@ -534,13 +1276,18 @@
                                 {
                                     markings: data.withmarking ? GridMarkings : null,
 
-                                    backgroundColor: data.nobgcolor ? null : { colors: ["#fff", "#eee"] },
+                                    // backgroundColor: data.nobgcolor ? null : { colors: ["#fff", "#eee"] },
+                                    backgroundColor: data.nobgcolor ? null : data.bgcolor,
+                                    borderWidth:  parseFloat(data.borderWidth), //data.withborder,
+                                    borderColor: data.bordercolor,
+                                    margin: 1,
+                                    /*
                                     borderWidth: {
                                         top: data.withborder ? 1 : 0,
                                         right: data.withborder ? 1 : 0,
                                         bottom: data.withborder ? 2 : 0,
                                         left: data.withborder ? 2 : 0
-                                    },
+                                    },*/
 
                                 },
                                 legend: {
@@ -672,10 +1419,12 @@
         data-vis-type="sbfspot"
         data-vis-update-style="true"
         data-vis-prev='<img src="widgets/sbfspot/img/Prev_tplSbfspot.png"></img>'
-        data-vis-attrs="sbfspotinstance/sbfspot/onInstanceChanged; serial//onInstanceChanged;valueselect[sel_today]/select,sel_today,sel_last30days,sel_last12months,sel_years/onInstanceChanged;"
-        data-vis-attrs0="time_interval[30 minutes]/select,1 second,10 seconds,30 seconds,1 minute,2 minutes,5 minutes,10 minutes,30 minutes,1 hour,2 hours,4 hours,8 hours,12 hours,24 hours;withxaxix[true]/checkbox;ticksonxaxix[5];withmarking[true]/checkbox;markingcolor[#eaebe5]/color;;axislabelcolor[#ffffff]/color;tickscolor[#ffffff]/color;"
-        data-vis-attrs1="graphName;graphcolor[#f1f113]/color;nobgcolor[true]/checkbox;withyaxix[true]/checkbox;graphDateFormat[%H:%M];withborder[true]/checkbox;withlegend[false]/checkbox;legendposition[ne]/select,ne,nw,se,sw;"
-        data-vis-attrs2="group.oids;oid_value/id;">
+        data-vis-attrs="sbfspotinstance/sbfspot/onInstanceChanged;time_interval[30 minutes]/select,1 second,10 seconds,30 seconds,1 minute,2 minutes,5 minutes,10 minutes,30 minutes,1 hour,2 hours,4 hours,8 hours,12 hours,24 hours;serial//onInstanceChanged;valueselect[sel_today]/select,sel_today,sel_last30days,sel_last12months,sel_years/onInstanceChanged;"
+       
+        data-vis-attrs0="withxaxix[true]/checkbox;axislabelcolor[#ffffff]/color;tickscolor[#ffffff]/color;LabelFontSize[8];LabelFontFamily[Arial]/fontname;withmarking[true]/checkbox;markingcolor[#eaebe5]/color;"
+        data-vis-attrs1="borderWidth[1];bordercolor[#000000]/color;nobgcolor[true]/checkbox;bgcolor[#FFFFFF]/color;withlegend[false]/checkbox;legendposition[ne]/select,ne,nw,se,sw;"
+        data-vis-attrs2="group.graph;graphName;graphcolor[#f1f113]/color;coloraxis[#f1f113]/color;colorticklabel[#f1f113]/color;withyaxix[true]/checkbox;graphDateFormat[%H:%M];tickLength[5];showMinorTicks[true]/checkbox;showTicks[true]/checkbox;tickDecimals[1];tickSize[3];minTickSize[2];labelwidth[30];"
+        data-vis-attrs3="group.oids;oid_value/id;">
 
     <div class="vis-widget <%== this.data.attr('class') %>" style="overflow: hidden;" id="<%= this.data.attr('wid') %>">
         <div class="vis-sbfspot-widget-body"
