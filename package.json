@@ -1,6 +1,6 @@
 {
   "name": "iobroker.sbfspot",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "sbfspot (SMA inverter) Adapter",
   "author": {
     "name": "René G.",
@@ -21,7 +21,6 @@
     "sqlite3": "^4.1.1"
   },
   "dependencies": {
-   
     "mysql": "^2.17.1",
     "@iobroker/adapter-core": "^2.0.0"
   },

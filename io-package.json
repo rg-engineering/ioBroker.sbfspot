@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "2.4.0",
+    "version": "2.4.1",
     "news": {
+      "2.4.1": {
+        "en": "bugfix widget",
+        "de": "Bugfix Widget",
+        "ru": "виджет исправления",
+        "pt": "widget de correção de bug",
+        "nl": "widget bugfix",
+        "fr": "widget bugfix",
+        "it": "widget bugfix",
+        "es": "widget de corrección de errores",
+        "pl": "widżet naprawiający błędy",
+        "zh-cn": "错误修正小部件"
+      },
       "2.4.0": {
         "en": "update flot to version 3.0",
         "de": "update flot auf version 3.0",
