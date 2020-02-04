@@ -163,8 +163,8 @@ function startAdapter(options) {
         adapter.setObjectNotExists(serial, {
             type: 'channel',
             role: 'inverter',
-            common: {name: serial},
-            native: {location: adapter.config.location}
+            common: { name: serial },
+            native: { location: adapter.config.location }
         });
 
         adapter.setObjectNotExists(serial + '.Type', {
@@ -177,7 +177,7 @@ function startAdapter(options) {
                 read: true,
                 write: false
             },
-            native: {location: serial + '.SerialNo'}
+            native: { location: serial + '.SerialNo' }
         });
 
         adapter.setObjectNotExists(serial + '.ETotal', {
@@ -190,7 +190,7 @@ function startAdapter(options) {
                 read: true,
                 write: false
             },
-            native: {location: serial + '.ETotal'}
+            native: { location: serial + '.ETotal' }
         });
 
         adapter.setObjectNotExists(serial + '.EToday', {
@@ -203,7 +203,7 @@ function startAdapter(options) {
                 read: true,
                 write: false
             },
-            native: {location: serial + '.EToday'}
+            native: { location: serial + '.EToday' }
         });
 
         adapter.setObjectNotExists(serial + '.SW_Version', {
@@ -216,7 +216,7 @@ function startAdapter(options) {
                 read: true,
                 write: false
             },
-            native: {location: serial + '.SW_Version'}
+            native: { location: serial + '.SW_Version' }
         });
 
         adapter.setObjectNotExists(serial + '.TotalPac', {
@@ -229,7 +229,7 @@ function startAdapter(options) {
                 read: true,
                 write: false
             },
-            native: {location: serial + '.TotalPac'}
+            native: { location: serial + '.TotalPac' }
         });
 
         adapter.setObjectNotExists(serial + '.OperatingTime', {
@@ -242,7 +242,7 @@ function startAdapter(options) {
                 read: true,
                 write: false
             },
-            native: {location: serial + '.OperatingTime'}
+            native: { location: serial + '.OperatingTime' }
         });
 
         adapter.setObjectNotExists(serial + '.FeedInTime', {
@@ -255,25 +255,25 @@ function startAdapter(options) {
                 read: true,
                 write: false
             },
-            native: {location: serial + '.FeedInTime'}
+            native: { location: serial + '.FeedInTime' }
         });
 
         adapter.setObjectNotExists(serial + '.Status', {
             type: 'state',
-            common: {name: 'SMA inverter Status', type: 'string', role: 'ertrag', unit: '', read: true, write: false},
-            native: {location: serial + '.FeedInTime'}
+            common: { name: 'SMA inverter Status', type: 'string', role: 'ertrag', unit: '', read: true, write: false },
+            native: { location: serial + '.FeedInTime' }
         });
 
         adapter.setObjectNotExists(serial + '.GridRelay', {
             type: 'state',
-            common: {name: 'SMA inverter Status', type: 'string', role: 'ertrag', unit: '', read: true, write: false},
-            native: {location: serial + '.GridRelay'}
+            common: { name: 'SMA inverter Status', type: 'string', role: 'ertrag', unit: '', read: true, write: false },
+            native: { location: serial + '.GridRelay' }
         });
 
         adapter.setObjectNotExists(serial + '.Temperature', {
             type: 'state',
-            common: {name: 'SMA inverter Status', type: 'number', role: 'ertrag', unit: '°C', read: true, write: false},
-            native: {location: serial + '.Temperature'}
+            common: { name: 'SMA inverter Status', type: 'number', role: 'ertrag', unit: '°C', read: true, write: false },
+            native: { location: serial + '.Temperature' }
         });
 
         adapter.setObjectNotExists(serial + '.Pdc1', {
@@ -286,7 +286,7 @@ function startAdapter(options) {
                 read: true,
                 write: false
             },
-            native: {location: serial + '.Pdc1'}
+            native: { location: serial + '.Pdc1' }
         });
         adapter.setObjectNotExists(serial + '.Pdc2', {
             type: 'state',
@@ -298,7 +298,7 @@ function startAdapter(options) {
                 read: true,
                 write: false
             },
-            native: {location: serial + '.Pdc2'}
+            native: { location: serial + '.Pdc2' }
         });
         adapter.setObjectNotExists(serial + '.Idc1', {
             type: 'state',
@@ -310,7 +310,7 @@ function startAdapter(options) {
                 read: true,
                 write: false
             },
-            native: {location: serial + '.Idc1'}
+            native: { location: serial + '.Idc1' }
         });
         adapter.setObjectNotExists(serial + '.Idc2', {
             type: 'state',
@@ -322,7 +322,7 @@ function startAdapter(options) {
                 read: true,
                 write: false
             },
-            native: {location: serial + '.Idc2'}
+            native: { location: serial + '.Idc2' }
         });
         adapter.setObjectNotExists(serial + '.Udc1', {
             type: 'state',
@@ -334,7 +334,7 @@ function startAdapter(options) {
                 read: true,
                 write: false
             },
-            native: {location: serial + '.Udc1'}
+            native: { location: serial + '.Udc1' }
         });
         adapter.setObjectNotExists(serial + '.Udc2', {
             type: 'state',
@@ -346,7 +346,7 @@ function startAdapter(options) {
                 read: true,
                 write: false
             },
-            native: {location: serial + '.Udc2'}
+            native: { location: serial + '.Udc2' }
         });
 
         adapter.setObjectNotExists(serial + '.Pac1', {
@@ -359,7 +359,7 @@ function startAdapter(options) {
                 read: true,
                 write: false
             },
-            native: {location: serial + '.Pac1'}
+            native: { location: serial + '.Pac1' }
         });
         adapter.setObjectNotExists(serial + '.Pac2', {
             type: 'state',
@@ -371,7 +371,7 @@ function startAdapter(options) {
                 read: true,
                 write: false
             },
-            native: {location: serial + '.Pac2'}
+            native: { location: serial + '.Pac2' }
         });
         adapter.setObjectNotExists(serial + '.Pac3', {
             type: 'state',
@@ -383,7 +383,7 @@ function startAdapter(options) {
                 read: true,
                 write: false
             },
-            native: {location: serial + '.Pac3'}
+            native: { location: serial + '.Pac3' }
         });
         adapter.setObjectNotExists(serial + '.Iac1', {
             type: 'state',
@@ -395,7 +395,7 @@ function startAdapter(options) {
                 read: true,
                 write: false
             },
-            native: {location: serial + '.Iac1'}
+            native: { location: serial + '.Iac1' }
         });
         adapter.setObjectNotExists(serial + '.Iac2', {
             type: 'state',
@@ -407,7 +407,7 @@ function startAdapter(options) {
                 read: true,
                 write: false
             },
-            native: {location: serial + '.Iac2'}
+            native: { location: serial + '.Iac2' }
         });
         adapter.setObjectNotExists(serial + '.Iac3', {
             type: 'state',
@@ -419,7 +419,7 @@ function startAdapter(options) {
                 read: true,
                 write: false
             },
-            native: {location: serial + '.Iac3'}
+            native: { location: serial + '.Iac3' }
         });
         adapter.setObjectNotExists(serial + '.Uac1', {
             type: 'state',
@@ -431,7 +431,7 @@ function startAdapter(options) {
                 read: true,
                 write: false
             },
-            native: {location: serial + '.Uac1'}
+            native: { location: serial + '.Uac1' }
         });
         adapter.setObjectNotExists(serial + '.Uac2', {
             type: 'state',
@@ -443,7 +443,7 @@ function startAdapter(options) {
                 read: true,
                 write: false
             },
-            native: {location: serial + '.Uac2'}
+            native: { location: serial + '.Uac2' }
         });
         adapter.setObjectNotExists(serial + '.Uac3', {
             type: 'state',
@@ -455,7 +455,7 @@ function startAdapter(options) {
                 read: true,
                 write: false
             },
-            native: {location: serial + '.Uac3'}
+            native: { location: serial + '.Uac3' }
         });
 
         adapter.setObjectNotExists(serial + '.Frequency', {
@@ -468,7 +468,7 @@ function startAdapter(options) {
                 read: true,
                 write: false
             },
-            native: {location: serial + '.Frequency'}
+            native: { location: serial + '.Frequency' }
         });
         adapter.setObjectNotExists(serial + '.BT_Signal', {
             type: 'state',
@@ -480,7 +480,7 @@ function startAdapter(options) {
                 read: true,
                 write: false
             },
-            native: {location: serial + '.BT_Signal'}
+            native: { location: serial + '.BT_Signal' }
         });
 
         adapter.setObjectNotExists(serial + '.timestamp', {
@@ -493,18 +493,18 @@ function startAdapter(options) {
                 read: true,
                 write: false
             },
-            native: {location: serial + '.timestamp'}
+            native: { location: serial + '.timestamp' }
         });
 
         adapter.setObjectNotExists(serial + '.lastup', {
             type: 'state',
-            common: {name: 'SMA inverter lastup', type: 'string', role: 'ertrag', unit: '', read: true, write: false},
-            native: {location: serial + '.lastup'}
+            common: { name: 'SMA inverter lastup', type: 'string', role: 'ertrag', unit: '', read: true, write: false },
+            native: { location: serial + '.lastup' }
         });
         adapter.setObjectNotExists(serial + '.error', {
             type: 'state',
-            common: {name: 'SMA inverter error', type: 'string', role: 'ertrag', unit: '', read: true, write: false},
-            native: {location: serial + '.error'}
+            common: { name: 'SMA inverter error', type: 'string', role: 'ertrag', unit: '', read: true, write: false },
+            native: { location: serial + '.error' }
         });
 
 
@@ -518,7 +518,7 @@ function startAdapter(options) {
                 read: true,
                 write: false
             },
-            native: {location: serial + '.history.today'}
+            native: { location: serial + '.history.today' }
         });
 
         adapter.setObjectNotExists(serial + '.history.last30Days', {
@@ -531,7 +531,7 @@ function startAdapter(options) {
                 read: true,
                 write: false
             },
-            native: {location: serial + '.history.last30Days'}
+            native: { location: serial + '.history.last30Days' }
         });
 
         adapter.setObjectNotExists(serial + '.history.last12Months', {
@@ -544,7 +544,7 @@ function startAdapter(options) {
                 read: true,
                 write: false
             },
-            native: {location: serial + '.history.last12Months'}
+            native: { location: serial + '.history.last12Months' }
         });
 
         adapter.setObjectNotExists(serial + '.history.years', {
@@ -557,7 +557,7 @@ function startAdapter(options) {
                 read: true,
                 write: false
             },
-            native: {location: serial + '.history.years'}
+            native: { location: serial + '.history.years' }
         });
     }
 
@@ -721,17 +721,17 @@ function startAdapter(options) {
 
                     AddInverterVariables(rows[i].Serial);
 
-                    adapter.setState(rows[i].Serial + ".Type", {ack: true, val: rows[i].Type});
+                    adapter.setState(rows[i].Serial + ".Type", { ack: true, val: rows[i].Type });
                     //adapter.setState( rows[i].Serial + ".EToday", { ack: true, val: rows[i].EToday }); this is kW
                     //adapter.setState(rows[i].Serial + ".ETotal", { ack: true, val: rows[i].ETotal }); this is kW
-                    adapter.setState(rows[i].Serial + ".SW_Version", {ack: true, val: rows[i].SW_Version});
-                    adapter.setState(rows[i].Serial + ".TotalPac", {ack: true, val: rows[i].TotalPac});
-                    adapter.setState(rows[i].Serial + ".OperatingTime", {ack: true, val: rows[i].OperatingTime});
-                    adapter.setState(rows[i].Serial + ".FeedInTime", {ack: true, val: rows[i].FeedInTime});
-                    adapter.setState(rows[i].Serial + ".Status", {ack: true, val: rows[i].Status});
-                    adapter.setState(rows[i].Serial + ".GridRelay", {ack: true, val: rows[i].GridRelay});
-                    adapter.setState(rows[i].Serial + ".Temperature", {ack: true, val: rows[i].Temperature});
-                    adapter.setState(rows[i].Serial + ".timestamp", {ack: true, val: rows[i].TimeStamp});
+                    adapter.setState(rows[i].Serial + ".SW_Version", { ack: true, val: rows[i].SW_Version });
+                    adapter.setState(rows[i].Serial + ".TotalPac", { ack: true, val: rows[i].TotalPac });
+                    adapter.setState(rows[i].Serial + ".OperatingTime", { ack: true, val: rows[i].OperatingTime });
+                    adapter.setState(rows[i].Serial + ".FeedInTime", { ack: true, val: rows[i].FeedInTime });
+                    adapter.setState(rows[i].Serial + ".Status", { ack: true, val: rows[i].Status });
+                    adapter.setState(rows[i].Serial + ".GridRelay", { ack: true, val: rows[i].GridRelay });
+                    adapter.setState(rows[i].Serial + ".Temperature", { ack: true, val: rows[i].Temperature });
+                    adapter.setState(rows[i].Serial + ".timestamp", { ack: true, val: rows[i].TimeStamp });
 
 
                     var oDate = new Date(rows[i].TimeStamp * 1000);
@@ -743,7 +743,7 @@ function startAdapter(options) {
                     var nSeconds = oDate.getSeconds();
                     var sLastup = nDate + "." + nMonth + "." + nYear + " " + nHours + ":" + nMinutes + ":" + nSeconds
 
-                    adapter.setState(rows[i].Serial + ".lastup", {ack: true, val: sLastup});
+                    adapter.setState(rows[i].Serial + ".lastup", { ack: true, val: sLastup });
 
                     var oToday = new Date();
                     var sError = "none";
@@ -753,7 +753,7 @@ function startAdapter(options) {
 
                         adapter.log.debug(sError);
                     }
-                    adapter.setState(rows[i].Serial + ".error", {ack: true, val: sError});
+                    adapter.setState(rows[i].Serial + ".error", { ack: true, val: sError });
 
                     numOfInverters++;
                     DB_GetInvertersData(rows[i].Serial);
@@ -811,34 +811,34 @@ function startAdapter(options) {
                 var nYearToday = oDateToday.getFullYear();
 
 
-                adapter.setState(rows[i].Serial + ".Pdc1", {ack: true, val: rows[i].Pdc1});
-                adapter.setState(rows[i].Serial + ".Pdc2", {ack: true, val: rows[i].Pdc2});
-                adapter.setState(rows[i].Serial + ".Idc1", {ack: true, val: rows[i].Idc1});
-                adapter.setState(rows[i].Serial + ".Idc2", {ack: true, val: rows[i].Idc2});
-                adapter.setState(rows[i].Serial + ".Udc1", {ack: true, val: rows[i].Udc1});
-                adapter.setState(rows[i].Serial + ".Udc2", {ack: true, val: rows[i].Udc2});
+                adapter.setState(rows[i].Serial + ".Pdc1", { ack: true, val: rows[i].Pdc1 });
+                adapter.setState(rows[i].Serial + ".Pdc2", { ack: true, val: rows[i].Pdc2 });
+                adapter.setState(rows[i].Serial + ".Idc1", { ack: true, val: rows[i].Idc1 });
+                adapter.setState(rows[i].Serial + ".Idc2", { ack: true, val: rows[i].Idc2 });
+                adapter.setState(rows[i].Serial + ".Udc1", { ack: true, val: rows[i].Udc1 });
+                adapter.setState(rows[i].Serial + ".Udc2", { ack: true, val: rows[i].Udc2 });
 
-                adapter.setState(rows[i].Serial + ".Pac1", {ack: true, val: rows[i].Pac1});
-                adapter.setState(rows[i].Serial + ".Pac2", {ack: true, val: rows[i].Pac2});
-                adapter.setState(rows[i].Serial + ".Pac3", {ack: true, val: rows[i].Pac3});
-                adapter.setState(rows[i].Serial + ".Iac1", {ack: true, val: rows[i].Iac1});
-                adapter.setState(rows[i].Serial + ".Iac2", {ack: true, val: rows[i].Iac2});
-                adapter.setState(rows[i].Serial + ".Iac3", {ack: true, val: rows[i].Iac3});
-                adapter.setState(rows[i].Serial + ".Uac1", {ack: true, val: rows[i].Uac1});
-                adapter.setState(rows[i].Serial + ".Uac2", {ack: true, val: rows[i].Uac2});
-                adapter.setState(rows[i].Serial + ".Uac3", {ack: true, val: rows[i].Uac3});
+                adapter.setState(rows[i].Serial + ".Pac1", { ack: true, val: rows[i].Pac1 });
+                adapter.setState(rows[i].Serial + ".Pac2", { ack: true, val: rows[i].Pac2 });
+                adapter.setState(rows[i].Serial + ".Pac3", { ack: true, val: rows[i].Pac3 });
+                adapter.setState(rows[i].Serial + ".Iac1", { ack: true, val: rows[i].Iac1 });
+                adapter.setState(rows[i].Serial + ".Iac2", { ack: true, val: rows[i].Iac2 });
+                adapter.setState(rows[i].Serial + ".Iac3", { ack: true, val: rows[i].Iac3 });
+                adapter.setState(rows[i].Serial + ".Uac1", { ack: true, val: rows[i].Uac1 });
+                adapter.setState(rows[i].Serial + ".Uac2", { ack: true, val: rows[i].Uac2 });
+                adapter.setState(rows[i].Serial + ".Uac3", { ack: true, val: rows[i].Uac3 });
 
 
                 adapter.log.debug("### " + nDay + "." + nMonth + "." + nYear + " = " + nDayToday + "." + nMonthToday + "." + nYearToday);
 
                 if (nDay == nDayToday && nMonth == nMonthToday && nYear == nYearToday) {
-                    adapter.setState(rows[i].Serial + ".EToday", {ack: true, val: rows[i].EToday});
+                    adapter.setState(rows[i].Serial + ".EToday", { ack: true, val: rows[i].EToday });
                 } else {
-                    adapter.setState(rows[i].Serial + ".EToday", {ack: true, val: 0});
+                    adapter.setState(rows[i].Serial + ".EToday", { ack: true, val: 0 });
                 }
-                adapter.setState(rows[i].Serial + ".ETotal", {ack: true, val: rows[i].ETotal});
-                adapter.setState(rows[i].Serial + ".Frequency", {ack: true, val: rows[i].Frequency});
-                adapter.setState(rows[i].Serial + ".BT_Signal", {ack: true, val: rows[i].BT_Signal});
+                adapter.setState(rows[i].Serial + ".ETotal", { ack: true, val: rows[i].ETotal });
+                adapter.setState(rows[i].Serial + ".Frequency", { ack: true, val: rows[i].Frequency });
+                adapter.setState(rows[i].Serial + ".BT_Signal", { ack: true, val: rows[i].BT_Signal });
             }
 
             //to do
@@ -911,7 +911,7 @@ function startAdapter(options) {
 
             }
 
-            adapter.setState(serial + '.history.last30Days', {ack: true, val: JSON.stringify(oLastDays)});
+            adapter.setState(serial + '.history.last30Days', { ack: true, val: JSON.stringify(oLastDays) });
 
             DB_CalcHistory_Prepare(serial);
         } else {
@@ -1013,7 +1013,7 @@ function startAdapter(options) {
                 //adapter.log.debug(JSON.stringify(oLastDays));
             }
 
-            adapter.setState(serial + '.history.today', {ack: true, val: JSON.stringify(oLastDays)});
+            adapter.setState(serial + '.history.today', { ack: true, val: JSON.stringify(oLastDays) });
 
             DB_CalcHistory_Years(serial);
         } else {
@@ -1025,14 +1025,14 @@ function startAdapter(options) {
     function DB_CalcHistory_Years(serial) {
         //SELECT from_unixtime(TimeStamp, '%Y') as date, Max(`ETotal`) as ertrag FROM `SpotData` WHERE `Serial` = '2000562095'  Group By from_unixtime(TimeStamp, '%Y')
 
-        var query = "";
-        if (adapter.config.databasetype == 'mySQL' || adapter.config.databasetype == 'MariaDB') {
+        let query = "";
+        if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
             query = "SELECT from_unixtime(TimeStamp, '%Y') as date, Max(`ETotal`) as ertrag, Min(`ETotal`) as startertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' Group By from_unixtime(TimeStamp, '%Y')";
         } else {
             query = "SELECT strftime('%Y', datetime(TimeStamp, 'unixepoch')) as date, Max(`ETotal`) as ertrag, Min(`ETotal`) as startertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' Group By strftime('%Y', datetime(TimeStamp, 'unixepoch'))";
         }
         adapter.log.debug(query);
-        if (adapter.config.databasetype == 'mySQL' || adapter.config.databasetype == 'MariaDB') {
+        if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
             mysql_connection.query(query, function (err, rows, fields) {
                 CalcHistory_Years(err, rows, serial);
             });
@@ -1047,52 +1047,57 @@ function startAdapter(options) {
 
     function CalcHistory_Years(err, rows, serial) {
         if (!err) {
-            adapter.log.debug('rows ' + JSON.stringify(rows));
+            adapter.log.debug("rows " + JSON.stringify(rows));
 
-            var oLastYears = [];
+            const oLastYears = [];
             //var yeardata = {};
 
-            var installdate = new Date(adapter.config.install_date);
-            var firstvaluedate = new Date(FirstDate4History);
+            const installdate = new Date(adapter.config.install_date);
+            const firstvaluedate = new Date(FirstDate4History);
 
             //adapter.log.debug("------ " + installdate.toDateString() + " " + firstvaluedate.toDateString());
             //adapter.log.debug("------ " + installdate.getUTCFullYear() + " < " + firstvaluedate.getUTCFullYear());
 
-            var installyear = installdate.getUTCFullYear();
-            var firstyear = true;
-            var yearvalue = 0;
-            for (var i in rows) {
+            const installyear = installdate.getUTCFullYear();
+            let firstyear = true;
+            let yearvalue = 0;
+            for (const i in rows) {
 
-                var data = rows[i];
+                const data = rows[i];
 
                 if (installdate.getUTCFullYear() < firstvaluedate.getUTCFullYear() && firstyear == true) {
 
-                    var diffyears = firstvaluedate.getUTCFullYear() - installdate.getUTCFullYear();
+                    const diffyears = firstvaluedate.getUTCFullYear() - installdate.getUTCFullYear();
 
-                    var monthoffirstyear = 12 - installdate.getUTCMonth();
-                    var monthoflastyear = firstvaluedate.getUTCMonth();
-                    var months = monthoffirstyear + monthoflastyear + (diffyears - 1) * 12;
+                    const monthoffirstyear = 12 - installdate.getUTCMonth();
+                    const monthoflastyear = firstvaluedate.getUTCMonth();
+                    const months = monthoffirstyear + monthoflastyear + (diffyears - 1) * 12;
 
                     //adapter.log.debug("---- " + monthoffirstyear + " " + monthoflastyear);
-                    var valuepermonth = FirstValue4History / months;
+                    const valuepermonth = FirstValue4History / months;
 
                     //adapter.log.debug("++++ yeardiff " + diffyears + " monthdiff " + months + " value per month " + valuepermonth);
 
 
-                    for (var n = 0; n <= diffyears; n++) {
+                    for (let n = 0; n <= diffyears; n++) {
 
                         if (n == 0) {
                             yearvalue += monthoffirstyear * valuepermonth;
                         } else if (n == (diffyears)) {
-                            yearvalue += monthoflastyear * valuepermonth + data["ertrag"] - data["startertrag"];
+                            //yearvalue += monthoflastyear * valuepermonth + data["ertrag"] - data["startertrag"];
+                            //yearvalue += monthoflastyear * valuepermonth; 
 
-                            //adapter.log.debug("???? " + monthoflastyear + " " + data["ertrag"] + " " + data["startertrag"]);
+                            yearvalue = FirstValue4History;
+                            
+
+                            //????                      4                       504880.3333333333      44558440                   0
+                            //adapter.log.debug("???? " + monthoflastyear + " " + valuepermonth + " " + data["ertrag"] + " " + data["startertrag"]);
 
                         } else {
                             yearvalue += 12 * valuepermonth;
                         }
 
-                        adapter.log.debug((installyear + n) + " " + yearvalue);
+                        adapter.log.debug("fillup " + (installyear + n) + " " + yearvalue);
 
                         oLastYears.push({
                             "year": installyear + n,
@@ -1107,7 +1112,12 @@ function startAdapter(options) {
                     });
                     */
                 } else {
+
+                    
                     yearvalue = data["ertrag"];
+
+                    adapter.log.debug(data["date"] + " " + yearvalue);
+
                     oLastYears.push({
                         "year": data["date"],
                         "value": yearvalue
@@ -1117,19 +1127,19 @@ function startAdapter(options) {
 
             }
             adapter.log.debug(JSON.stringify(oLastYears));
-            adapter.setState(serial + '.history.years', {ack: true, val: JSON.stringify(oLastYears)});
+            adapter.setState(serial + ".history.years", { ack: true, val: JSON.stringify(oLastYears) });
 
             DB_CalcHistory_Months(serial);
         } else {
-            adapter.log.error('Error while performing Query in CalcHistory_Years. ' + err);
+            adapter.log.error("Error while performing Query in CalcHistory_Years. " + err);
         }
     }
 
     function DB_CalcHistory_Months(serial) {
 
-        var dateto = new Date(); //today
+        const dateto = new Date(); //today
 
-        var datefrom = new Date();
+        const datefrom = new Date();
         datefrom.setHours(0);
         datefrom.setMinutes(0);
 
@@ -1140,14 +1150,14 @@ function startAdapter(options) {
 
         //SELECT from_unixtime(TimeStamp, '%Y-%m') as date, Max(`ETotal`) as ertrag FROM `SpotData` WHERE `Serial` = '2000562095'  Group By from_unixtime(TimeStamp, '%Y-%m')
 
-        var query = "";
-        if (adapter.config.databasetype == 'mySQL' || adapter.config.databasetype == 'MariaDB') {
+        let query = "";
+        if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
             query = "SELECT from_unixtime(TimeStamp, '%Y-%m') as date, Max(`ETotal`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By from_unixtime(TimeStamp, '%Y-%m')";
         } else {
             query = "SELECT strftime('%Y-%m', datetime(TimeStamp, 'unixepoch')) as date, Max(`ETotal`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By strftime('%Y-%m', datetime(TimeStamp, 'unixepoch'))";
         }
         adapter.log.debug(query);
-        if (adapter.config.databasetype == 'mySQL' || adapter.config.databasetype == 'MariaDB') {
+        if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
             mysql_connection.query(query, function (err, rows, fields) {
                 CalcHistory_Months(err, rows, serial);
             });
@@ -1161,14 +1171,14 @@ function startAdapter(options) {
 
     function CalcHistory_Months(err, rows, serial) {
         if (!err) {
-            adapter.log.debug('rows ' + JSON.stringify(rows));
+            adapter.log.debug("rows " + JSON.stringify(rows));
 
-            var oLastMonth = [];
+            const oLastMonth = [];
             //var monthdata = {};
 
-            for (var i in rows) {
+            for (const i in rows) {
 
-                var data = rows[i];
+                const data = rows[i];
 
                 oLastMonth.push({
                     "month": data["date"],
@@ -1177,11 +1187,11 @@ function startAdapter(options) {
                 //adapter.log.debug(JSON.stringify(oLastDays));
             }
 
-            adapter.setState(serial + '.history.last12Months', {ack: true, val: JSON.stringify(oLastMonth)});
+            adapter.setState(serial + ".history.last12Months", { ack: true, val: JSON.stringify(oLastMonth) });
 
             DB_Disconnect();
         } else {
-            adapter.log.error('Error while performing Query in CalcHistory_Months. ' + err);
+            adapter.log.error("Error while performing Query in CalcHistory_Months. " + err);
         }
     }
 
@@ -1189,7 +1199,7 @@ function startAdapter(options) {
         adapter.log.debug("add dummy data");
 
         //INSERT INTO`Inverters`(`Serial`, `Name`, `Type`, `SW_Version`, `TimeStamp`, `TotalPac`, `EToday`, `ETotal`, `OperatingTime`, `FeedInTime`, `Status`, `GridRelay`, `Temperature`) VALUES([value - 1], [value - 2], [value - 3], [value - 4], [value - 5], [value - 6], [value - 7], [value - 8], [value - 9], [value - 10], [value - 11], [value - 12], [value - 13])
-        var query = "";
+        let query = "";
         query = "INSERT INTO`Inverters`(`Serial`, `Name`, `Type`, `SW_Version`, `TimeStamp`, `TotalPac`,"
         query += " `EToday`, `ETotal`, `OperatingTime`, `FeedInTime`, `Status`, `GridRelay`, `Temperature`) VALUES(";
         query += " 12345678, `SN: 1234567`, `SB Dummy`, `0.0` , 1548776704 , 0 ,";
@@ -1197,11 +1207,11 @@ function startAdapter(options) {
         query += ")";
 
         adapter.log.debug(query);
-        if (adapter.config.databasetype == 'mySQL' || adapter.config.databasetype == 'MariaDB') {
+        if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
             mysql_connection.query(query, function (err, result) {
 
                 if (err) {
-
+                    adapter.log.error("error " + err);
                 }
 
                 adapter.terminate ? adapter.terminate(11) : process.exit(11);
@@ -1210,7 +1220,7 @@ function startAdapter(options) {
             sqlite_db.all(query, function (err, rows) {
 
                 if (err) {
-
+                    adapter.log.error("error " + err);
                 }
 
                 adapter.terminate ? adapter.terminate(11) : process.exit(11);
@@ -1228,7 +1238,7 @@ function startAdapter(options) {
 
         if (numOfInverters == 0) {
             adapter.log.debug("disconnect database");
-            if (adapter.config.databasetype == 'mySQL' || adapter.config.databasetype == 'MariaDB') {
+            if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
                 mysql_connection.end();
             } else {
                 sqlite_db.close();
@@ -1244,7 +1254,7 @@ function startAdapter(options) {
     }
 
     return adapter;
-};
+}
 
 // If started as allInOne/compact mode => return function to create instance
 if (module && module.parent) {
