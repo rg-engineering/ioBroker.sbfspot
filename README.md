@@ -45,7 +45,7 @@ sometimes npm intall must be called more then one time to successfully install a
 
 ## Changelog
 
-## 2.4.1 (2020-02-01)
+## 2.4.2 (2020-02-01)
 * (René) bugfix widget
 
 ## 2.4.0 (2019-12-28)
