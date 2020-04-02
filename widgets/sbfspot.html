@@ -690,7 +690,7 @@
 
 
     vis.binds.sbfspot = {
-        version: "2.4.0",
+        version: "2.4.3",
         showVersion: function () {
             if (vis.binds.sbfspot.version) {
                 console.log('Version vis-sbfspot: ' + vis.binds.sbfspot.version);
@@ -741,6 +741,9 @@
     }
 
     function xwhFormatter(val, axis) {
+
+        console.log('xwhFormatter for ' + val);
+
         if (val > 1000000)
             return (val / 1000000).toFixed(axis.tickDecimals) + " MWh";
         else if (val > 1000)
@@ -778,6 +781,9 @@
         var i = minDate.getTime();
 
         if (dayDiff > 400) { //in years
+
+            console.log('for year');
+
             minDate.setHours(0);
             minDate.setMinutes(0);
             minDate.setDate(1);
@@ -804,6 +810,9 @@
         }
 
         else if (dayDiff > 30) { // in months
+
+            console.log('for months');
+
             minDate.setHours(0);
             minDate.setMinutes(0);
             minDate.setDate(1);
@@ -826,6 +835,9 @@
             } while (i < axes.xaxis.max);
         }
         else if (dayDiff > 10) {
+
+            console.log('for more than days');
+
             //if (dayDiff > 2) {
             minDate.setHours(12);
             minDate.setMinutes(0);
@@ -838,6 +850,8 @@
 
         //if we only few hours then we need markings per hour otherwise per day
         else if (dayDiff > 2) {
+            console.log('for more than 2 days');
+
             do {
                 markings.push({ xaxis: { from: i, to: i + 24 * 60 * 60 * 1000 }, color: MarkingColor });
                 i += 2 * 24 * 60 * 60 * 1000;
@@ -845,6 +859,8 @@
 
         }
         else {
+
+            console.log('for hours');
             do {
                 markings.push({ xaxis: { from: i, to: i + 60 * 60 * 1000 }, color: MarkingColor });
                 i += 2 * 60 * 60 * 1000;

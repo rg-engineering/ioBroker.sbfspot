@@ -968,19 +968,19 @@ function startAdapter(options) {
 
     function DB_CalcHistory_Today(serial) {
 
-        var dateto = new Date(); //today
+        const dateto = new Date(); //today
 
-        var datefrom = new Date();
+        const datefrom = new Date();
         datefrom.setHours(0);
         datefrom.setMinutes(0);
         //adapter.log.debug('from ' + datefrom.toDateString() + " to " + dateto.toDateString());
         //gettime gives milliseconds!!
 
-        var query = "";
+        let query = "";
         if (adapter.config.databasetype == 'mySQL' || adapter.config.databasetype == 'MariaDB') {
             query = "SELECT from_unixtime(TimeStamp, '%H:%i') as time, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By from_unixtime(TimeStamp, '%H:%i')";
         } else {
-            query = "SELECT strftime('%H:%m', datetime(TimeStamp, 'unixepoch')) as time, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By strftime('%H-%i', datetime(TimeStamp, 'unixepoch'))";
+            query = "SELECT strftime('%H:%m', datetime(TimeStamp, 'unixepoch')) as time, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By strftime('%H-%m', datetime(TimeStamp, 'unixepoch'))";
         }
         adapter.log.debug(query);
         if (adapter.config.databasetype == 'mySQL' || adapter.config.databasetype == 'MariaDB') {

@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "2.4.2",
+    "version": "2.4.3",
     "news": {
+      "2.4.3": {
+        "en": "bugfix in creating history today for widget",
+        "de": "Bugfix beim Erstellen des Verlaufs heute für Widget",
+        "ru": "Исправлена ошибка в создании истории сегодня для виджета",
+        "pt": "correção na criação de histórico hoje para o widget",
+        "nl": "bugfix bij het maken van geschiedenis vandaag voor widget",
+        "fr": "correction de bogue dans la création de l'historique du widget",
+        "it": "bugfix nella creazione della cronologia oggi per il widget",
+        "es": "corrección de errores en la creación de historial hoy para widget",
+        "pl": "naprawiono błąd w tworzeniu historii dla widgetu",
+        "zh-cn": "今天为小部件创建历史的错误修正"
+      },
       "2.4.2": {
         "en": "bugfix widget",
         "de": "Bugfix Widget",

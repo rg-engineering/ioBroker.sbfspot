@@ -45,6 +45,9 @@ sometimes npm intall must be called more then one time to successfully install a
 
 ## Changelog
 
+## 2.4.3 (2020-04-02)
+* (René) bugfix in DB_CalcHistory_Today used for widget
+
 ## 2.4.2 (2020-02-01)
 * (René) bugfix widget
 
