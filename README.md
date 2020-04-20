@@ -8,7 +8,7 @@
 
 [![NPM](https://nodei.co/npm/iobroker.sbfspot.png?downloads=true)](https://nodei.co/npm/iobroker.sbfspot/)
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/rg-engineering/ioBroker.sbfspot.svg)](https://greenkeeper.io/)
+
 
 **If you like it, please consider a donation:**
                                                                           
