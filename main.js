@@ -4,7 +4,7 @@
  * Created: 15.09.2016 21:31:28
  *  Author: Rene
 
-Copyright(C)[2016, 2017][René Glaß]
+Copyright(C)[2016-2020][René Glaß]
 
 
 
@@ -16,7 +16,7 @@ Copyright(C)[2016, 2017][René Glaß]
 
 // you have to require the utils module and call adapter function
 //var utils =    require(__dirname + '/lib/utils'); // Get common adapter utils
-const utils = require('@iobroker/adapter-core');
+const utils = require("@iobroker/adapter-core");
 
 // you have to call the adapter function and pass a options object
 // name has to be set and has to be equal to adapters folder name and main file name excluding extension
@@ -30,29 +30,29 @@ let adapter;
 function startAdapter(options) {
     options = options || {};
     Object.assign(options, {
-        name: 'sbfspot',
+        name: "sbfspot",
         ready: function () {
             try {
                 //adapter.log.debug('start');
                 main();
             } catch (e) {
-                adapter.log.error('exception catch after ready [' + e + ']');
+                adapter.log.error("exception catch after ready [" + e + "]");
             }
         }
     });
     adapter = new utils.Adapter(options);
 
 
-    var FirstValue4History;
-    var FirstDate4History;
-    var numOfInverters;
+    let FirstValue4History;
+    let FirstDate4History;
+    let numOfInverters;
 
     //---------- sqlite
     // https://github.com/mapbox/node-sqlite3
     let sqlite_db;
 
     //---------- mySQL
-    var mysql_connection;
+    let mysql_connection;
 
     //Some message was sent to adapter instance over message box. Used by email, pushover, text2speech, ...
     /*adapter.on('message', function (obj) {
@@ -126,7 +126,7 @@ function startAdapter(options) {
 
     function main() {
 
-        if (typeof adapter.config.databasetype == 'undefined') {
+        if (typeof adapter.config.databasetype == "undefined") {
             adapter.log.error("databasetype not defined. check and update settings and save");
             adapter.terminate ? adapter.terminate(11) : process.exit(11);
         }
@@ -137,7 +137,7 @@ function startAdapter(options) {
         // force terminate after 1min
         // don't know why it does not terminate by itself...
         setTimeout(function () {
-            adapter.log.warn('force terminate');
+            adapter.log.warn("force terminate");
             //process.exit(0);
             adapter.terminate ? adapter.terminate(11) : process.exit(11);
         }, 60000);
@@ -151,7 +151,7 @@ function startAdapter(options) {
             DB_Connect(function () {
                 setTimeout(function () {
                     //adapter.stop();
-                    adapter.log.error('force terminate in connect');
+                    adapter.log.error("force terminate in connect");
                     adapter.terminate ? adapter.terminate(11) : process.exit(11);
                 }, 6000);
             });
@@ -161,8 +161,8 @@ function startAdapter(options) {
     function AddInverterVariables(serial) {
 
         adapter.setObjectNotExists(serial, {
-            type: 'channel',
-            role: 'inverter',
+            type: "channel",
+            role: "inverter",
             common: { name: serial },
             native: { location: adapter.config.location }
         });
@@ -627,7 +627,7 @@ function startAdapter(options) {
         if (adapter.config.databasetype == 'mySQL' || adapter.config.databasetype == 'MariaDB') {
 
             //var express = require("express");
-            var mysql = require('mysql');
+            const mysql = require('mysql');
 
             if (adapter.config.databasetype == 'MariaDB') {
                 adapter.log.info("start with MariaDB");
@@ -664,12 +664,14 @@ function startAdapter(options) {
                 }
             });
         } else {
-            var sqlite3 = require('sqlite3').verbose();
+            const sqlite3 = require("sqlite3").verbose();
             adapter.log.info("start with sqlite");
             //adapter.log.debug("--- connecting to " + adapter.config.sqlite_path);
 
-            const path = require('path')
-            const dbPath = path.resolve(__dirname, adapter.config.sqlite_path)
+            const path = require("path");
+
+            const file_path = adapter.config.sqlite_path;
+            const dbPath = path.resolve(__dirname, file_path.trim());
 
             adapter.log.debug("--- connecting to " + dbPath);
 
@@ -692,7 +694,7 @@ function startAdapter(options) {
     }
 
     function DB_GetInverters() {
-        var query = 'SELECT * from Inverters';
+        const query = 'SELECT * from Inverters';
         numOfInverters = 0;
         adapter.log.debug(query);
         if (adapter.config.databasetype == 'mySQL' || adapter.config.databasetype == 'MariaDB') {
@@ -714,7 +716,7 @@ function startAdapter(options) {
 
             if (rows.length > 0) {
 
-                for (var i in rows) {
+                for (const i in rows) {
 
 
                     adapter.log.info("got data from " + rows[i].Type + " with ID " + rows[i].Serial);
@@ -734,19 +736,19 @@ function startAdapter(options) {
                     adapter.setState(rows[i].Serial + ".timestamp", { ack: true, val: rows[i].TimeStamp });
 
 
-                    var oDate = new Date(rows[i].TimeStamp * 1000);
-                    var nDate = oDate.getDate();
-                    var nMonth = oDate.getMonth() + 1;
-                    var nYear = oDate.getFullYear();
-                    var nHours = oDate.getHours();
-                    var nMinutes = oDate.getMinutes();
-                    var nSeconds = oDate.getSeconds();
-                    var sLastup = nDate + "." + nMonth + "." + nYear + " " + nHours + ":" + nMinutes + ":" + nSeconds
+                    const oDate = new Date(rows[i].TimeStamp * 1000);
+                    const nDate = oDate.getDate();
+                    const nMonth = oDate.getMonth() + 1;
+                    const nYear = oDate.getFullYear();
+                    const nHours = oDate.getHours();
+                    const nMinutes = oDate.getMinutes();
+                    const nSeconds = oDate.getSeconds();
+                    const sLastup = nDate + "." + nMonth + "." + nYear + " " + nHours + ":" + nMinutes + ":" + nSeconds;
 
                     adapter.setState(rows[i].Serial + ".lastup", { ack: true, val: sLastup });
 
-                    var oToday = new Date();
-                    var sError = "none";
+                    const oToday = new Date();
+                    let sError = "none";
                     if (Math.abs(oDate.getTime() - oToday.getTime()) > (24 * 60 * 60 * 1000)) {
 
                         sError = "sbfspot no update since " + sLastup + " ";
@@ -778,7 +780,7 @@ function startAdapter(options) {
     function DB_GetInvertersData(serial) {
 
         //SELECT * from SpotData  where Serial ='2000562095' ORDER BY TimeStamp DESC LIMIT 1
-        var query = 'SELECT * from SpotData  where Serial =' + serial + ' ORDER BY TimeStamp DESC LIMIT 1';
+        const query = "SELECT * from SpotData  where Serial =" + serial + " ORDER BY TimeStamp DESC LIMIT 1";
         adapter.log.debug(query);
         if (adapter.config.databasetype == 'mySQL' || adapter.config.databasetype == 'MariaDB') {
             //we only get one row = last one
@@ -796,19 +798,19 @@ function startAdapter(options) {
         if (!err) {
             adapter.log.debug('rows ' + JSON.stringify(rows));
 
-            for (var i in rows) {
+            for (const i in rows) {
                 //must only be one row...
 
                 // check if it is really today, otherwise set to zero
-                var oDate = new Date(rows[i].TimeStamp * 1000);
-                var nDay = oDate.getDate();
-                var nMonth = oDate.getMonth() + 1;
-                var nYear = oDate.getFullYear();
+                const oDate = new Date(rows[i].TimeStamp * 1000);
+                const nDay = oDate.getDate();
+                const nMonth = oDate.getMonth() + 1;
+                const nYear = oDate.getFullYear();
 
-                var oDateToday = new Date();
-                var nDayToday = oDateToday.getDate();
-                var nMonthToday = oDateToday.getMonth() + 1;
-                var nYearToday = oDateToday.getFullYear();
+                const oDateToday = new Date();
+                const nDayToday = oDateToday.getDate();
+                const nMonthToday = oDateToday.getMonth() + 1;
+                const nYearToday = oDateToday.getFullYear();
 
 
                 adapter.setState(rows[i].Serial + ".Pdc1", { ack: true, val: rows[i].Pdc1 });
@@ -842,7 +844,7 @@ function startAdapter(options) {
             }
 
             //to do
-            DB_CalcHistory_LastMonth(serial)
+            DB_CalcHistory_LastMonth(serial);
             //DB_Disconnect();
         } else {
             adapter.log.error('Error while performing Query in GetInverterData. ' + err);
@@ -861,13 +863,13 @@ function startAdapter(options) {
         //für sqlite
         //SELECT  strftime('%Y-%m-%d ', datetime(TimeStamp, 'unixepoch')) as date, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '2000562095' AND TimeStamp>= 1511859131.474 AND TimeStamp<= 1514451131.474 Group By strftime('%Y-%m-%d ', datetime(TimeStamp, 'unixepoch'))
 
-        var dateto = new Date(); //today
-        var datefrom = new Date();
+        const dateto = new Date(); //today
+        const datefrom = new Date();
         datefrom.setDate(datefrom.getDate() - 30);
         //adapter.log.debug('from ' + datefrom.toDateString() + " to " + dateto.toDateString());
         //gettime gives milliseconds!!
 
-        var query = "";
+        let query = "";
         if (adapter.config.databasetype == 'mySQL' || adapter.config.databasetype == 'MariaDB') {
             query = "SELECT from_unixtime(TimeStamp, '%Y-%m-%d') as date, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By from_unixtime(TimeStamp, '%Y-%m-%d')";
         } else {
@@ -885,7 +887,7 @@ function startAdapter(options) {
                 CalcHistory_LastMonth(err, rows, serial);
             });
         }
-        ;
+        
     }
 
     function CalcHistory_LastMonth(err, rows, serial) {
@@ -896,12 +898,12 @@ function startAdapter(options) {
             //rows[{ "date": "2017-07-19", "ertrag": 12259 }, { "date": "2017-07-20", "ertrag": 9905 }, { "date": "2017-07-21", "ertrag": 12991 }, { "date": "2017-07-22", "ertrag": 9292 }, { "date": "2017-07-23", "ertrag": 7730 }, {
 
 
-            var oLastDays = [];
-            var daydata = {};
+            const oLastDays = [];
+            //var daydata = {};
 
-            for (var i in rows) {
+            for (const i in rows) {
 
-                var data = rows[i];
+                const data = rows[i];
 
                 oLastDays.push({
                     "date": data["date"],
@@ -923,10 +925,10 @@ function startAdapter(options) {
 
     function DB_CalcHistory_Prepare(serial) {
 
-        var dateto = new Date(); //today
+        //var dateto = new Date(); //today
 
         //SELECT from_unixtime(TimeStamp, '%Y-%m-%d') as date, ETotal  FROM `SpotData` ORDER by `TimeStamp` ASC LIMIT  1
-        var query = "";
+        let query = "";
         if (adapter.config.databasetype == 'mySQL' || adapter.config.databasetype == 'MariaDB') {
             query = "SELECT from_unixtime(TimeStamp, '%Y-%m-%d') as date, ETotal  FROM `SpotData` WHERE `Serial` = '" + serial + "' ORDER by `TimeStamp` ASC LIMIT  1";
         } else {
@@ -949,9 +951,9 @@ function startAdapter(options) {
         if (!err) {
             adapter.log.debug('prepare: rows ' + JSON.stringify(rows));
 
-            for (var i in rows) {
+            for (const i in rows) {
 
-                var data = rows[i];
+                const data = rows[i];
 
                 FirstValue4History = data["ETotal"];
                 FirstDate4History = data["date"];
@@ -999,12 +1001,12 @@ function startAdapter(options) {
         if (!err) {
             adapter.log.debug('rows ' + JSON.stringify(rows));
 
-            var oLastDays = [];
+            const oLastDays = [];
             //var daydata = {};
 
-            for (var i in rows) {
+            for (const i in rows) {
 
-                var data = rows[i];
+                const data = rows[i];
 
                 oLastDays.push({
                     "time": data["time"],
@@ -1200,7 +1202,7 @@ function startAdapter(options) {
 
         //INSERT INTO`Inverters`(`Serial`, `Name`, `Type`, `SW_Version`, `TimeStamp`, `TotalPac`, `EToday`, `ETotal`, `OperatingTime`, `FeedInTime`, `Status`, `GridRelay`, `Temperature`) VALUES([value - 1], [value - 2], [value - 3], [value - 4], [value - 5], [value - 6], [value - 7], [value - 8], [value - 9], [value - 10], [value - 11], [value - 12], [value - 13])
         let query = "";
-        query = "INSERT INTO`Inverters`(`Serial`, `Name`, `Type`, `SW_Version`, `TimeStamp`, `TotalPac`,"
+        query = "INSERT INTO`Inverters`(`Serial`, `Name`, `Type`, `SW_Version`, `TimeStamp`, `TotalPac`,";
         query += " `EToday`, `ETotal`, `OperatingTime`, `FeedInTime`, `Status`, `GridRelay`, `Temperature`) VALUES(";
         query += " 12345678, `SN: 1234567`, `SB Dummy`, `0.0` , 1548776704 , 0 ,";
         query += " 3, 3512, 50, 45, `okay`,  `?`, 37 ";
