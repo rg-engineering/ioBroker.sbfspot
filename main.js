@@ -15,6 +15,7 @@ Copyright(C)[2016-2020][René Glaß]
 "use strict";
 
 const utils = require("@iobroker/adapter-core");
+const SunCalc = require("suncalc2");
 
 let adapter;
 function startAdapter(options) {
@@ -37,6 +38,9 @@ function startAdapter(options) {
 let FirstValue4History;
 let FirstDate4History;
 let numOfInverters;
+let longitude;
+let latitude;
+
 
 //---------- sqlite
 //https://www.npmjs.com/package/better-sqlite3
@@ -45,7 +49,7 @@ let sqlite_db;
 let mysql_connection;
 
 
-function main() {
+async function main() {
 
     if (typeof adapter.config.databasetype == "undefined") {
         adapter.log.error("databasetype not defined. check and update settings and save");
@@ -60,7 +64,51 @@ function main() {
         adapter.terminate ? adapter.terminate(11) : process.exit(11);
     }, 6000);
 
-    DB_Connect();
+
+    let daylight = false;
+
+    if (adapter.config.GetDataOnlyWhenDaylight) {
+
+        await GetSystemDateformat();
+
+        const times = SunCalc.getTimes(new Date(), latitude, longitude);
+
+        // format sunset/sunrise time from the Date object
+        const sunsetStr = ("0" + times.sunset.getHours()).slice(-2) + ":" + ("0" + times.sunset.getMinutes()).slice(-2);
+        const sunriseStr = ("0" + times.sunrise.getHours()).slice(-2) + ":" + ("0" + times.sunrise.getMinutes()).slice(-2);
+
+        adapter.log.debug("sunrise " + sunriseStr + " sunset " + sunsetStr + " " + adapter.config.GetDataOnlyWhenDaylight);
+
+        const now = new Date();
+
+        if ((now.getHours() > times.sunrise.getHours() || (now.getHours() == times.sunrise.getHours() && now.getMinutes() > times.sunrise.getMinutes()))
+            && (now.getHours() < times.sunset.getHours() || (now.getHours() == times.sunset.getHours() && now.getMinutes() < times.sunset.getMinutes()))) {
+            daylight = true;
+        }
+    }
+    else {
+        //always
+        daylight = true;
+    }
+
+    if (daylight) {
+
+        DB_Connect();
+    }
+    else {
+        adapter.log.info("nothing to do, because no daylight ... ");
+
+        adapter.terminate ? adapter.terminate(11) : process.exit(11);
+    }
+}
+
+async function GetSystemDateformat() {
+    const ret = await adapter.getForeignObjectAsync("system.config");
+
+    //dateformat = ret.common.dateFormat;
+    longitude = ret.common.longitude;
+    latitude = ret.common.latitude;
+    adapter.log.debug("system  longitude " + longitude + " latitude " + latitude);
 }
 
 function AddInverterVariables(serial) {

@@ -170,4 +170,16 @@ systemDictionary = {
         "es": "tipo de base de datos",
         "pl": "typ bazy danych"
     },
+    "GetDataOnlyWhenDaylight": {
+        "en": "get data only when daylight",
+        "de": "Daten nur bei Tageslicht abrufen",
+        "ru": "получать данные только при дневном свете",
+        "pt": "obtenha dados somente quando a luz do dia",
+        "nl": "krijg alleen gegevens bij daglicht",
+        "fr": "obtenir des données uniquement lorsque la lumière du jour",
+        "it": "ottenere i dati solo alla luce del giorno",
+        "es": "obtener datos solo cuando la luz del día",
+        "pl": "odbieraj dane tylko przy świetle dziennym",
+        "zh-cn": "仅在白天时获取数据"
+    }
 };

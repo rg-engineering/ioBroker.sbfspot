@@ -69,7 +69,8 @@
     "sbfspotDatabasename": "SBFspot",
     "databasetype": "mySQL",
     "sqlite_path": "",
-    "install_date": "2001-08-25"
+    "install_date": "2001-08-25",
+    "GetDataOnlyWhenDaylight":  true
   }
 }
 
