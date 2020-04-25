@@ -109,12 +109,19 @@
         // ... and the function save has to exist.
         // you have to make sure the callback is called with the settings object as first param!
         function save(callback) {
-            // example: select elements with class=value and build settings object
             var obj = {};
             $('.value').each(function () {
                 var $this = $(this);
-                obj[$this.attr('id')] = $this.val();
+
+                var id = $this.attr('id');
+
+                if ($this.attr('type') === 'checkbox') {
+                    obj[$this.attr('id')] = $this.prop('checked');
+                } else {
+                    obj[$this.attr('id')] = $this.val();
+                }
             });
+
             callback(obj);
         }
 
@@ -181,6 +188,14 @@
                         <label for="databasetype" class="translate">type_of_DB</label>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input type="checkbox" id="GetDataOnlyWhenDaylight" class="value" />
+                        <label for="GetDataOnlyWhenDaylight" class="translate">GetDataOnlyWhenDaylight</label>
+                    </div>
+                </div>
+
             </div>
 
             <!--  settings for mySQL / MariaDB -->

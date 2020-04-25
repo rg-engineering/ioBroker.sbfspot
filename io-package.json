@@ -1,133 +1,19 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "2.4.3",
+    "version": "3.0.0",
     "news": {
-      "2.4.3": {
-        "en": "bugfix in creating history today for widget",
-        "de": "Bugfix beim Erstellen des Verlaufs heute für Widget",
-        "ru": "Исправлена ошибка в создании истории сегодня для виджета",
-        "pt": "correção na criação de histórico hoje para o widget",
-        "nl": "bugfix bij het maken van geschiedenis vandaag voor widget",
-        "fr": "correction de bogue dans la création de l'historique du widget",
-        "it": "bugfix nella creazione della cronologia oggi per il widget",
-        "es": "corrección de errores en la creación de historial hoy para widget",
-        "pl": "naprawiono błąd w tworzeniu historii dla widgetu",
-        "zh-cn": "今天为小部件创建历史的错误修正"
-      },
-      "2.4.2": {
-        "en": "bugfix widget",
-        "de": "Bugfix Widget",
-        "ru": "виджет исправления",
-        "pt": "widget de correção de bug",
-        "nl": "widget bugfix",
-        "fr": "widget bugfix",
-        "it": "widget bugfix",
-        "es": "widget de corrección de errores",
-        "pl": "widżet naprawiający błędy",
-        "zh-cn": "错误修正小部件"
-      },
-      "2.4.0": {
-        "en": "update flot to version 3.0",
-        "de": "update flot auf version 3.0",
-        "ru": "обновление flot до версии 3.0",
-        "pt": "atualização flot para a versão 3.0",
-        "nl": "update flot naar versie 3.0",
-        "fr": "mettre à jour flot à la version 3.0",
-        "it": "aggiorna il flot alla versione 3.0",
-        "es": "actualizar flot a la versión 3.0",
-        "pl": "zaktualizuj flota do wersji 3.0",
-        "zh-cn": "将flot更新到版本3.0"
-      },
-      "2.3.2": {
-        "en": "downgrade sqlite3 package",
-        "de": "sqlite3-Paket herunterstufen",
-        "ru": "понизить пакет sqlite3",
-        "pt": "pacote sqlite3 de downgrade",
-        "nl": "downlare sqlite3-pakket",
-        "fr": "rétrograder le paquet sqlite3",
-        "it": "downgrade del pacchetto sqlite3",
-        "es": "bajar el paquete sqlite3",
-        "pl": "downgrade pakiet sqlite3",
-        "zh-cn": "降级sqlite3包"
-      },
-      "2.3.1": {
-        "en": "bug fix: with sqlite \"today\" data were not shown",
-        "de": "Fehlerbehebung: Mit sqlite \"Today\" wurden keine Daten angezeigt",
-        "ru": "исправление ошибки: с sqlite \"сегодня\" данные не отображались",
-        "pt": "correção de bug: com dados \"hoje\" do sqlite não foram mostrados",
-        "nl": "fout opgelost: met sqlite \"vandaag\" werden gegevens niet getoond",
-        "fr": "correction de bug: avec sqlite \"aujourd'hui\" les données n'étaient pas affichées",
-        "it": "correzione bug: con sqlite i dati \"oggi\" non venivano mostrati",
-        "es": "corrección de errores: con sqlite \"hoy\" los datos no se mostraron",
-        "pl": "naprawienie błędu: dane sqlite \"today\" nie zostały wyświetlone",
-        "zh-cn": "错误修复：使用sqlite“今天”数据未显示"
-      },
-      "2.3.0": {
-        "en": "support of compact adapter",
-        "de": "Unterstützung des Kompaktadapters",
-        "ru": "поддержка компактного адаптера",
-        "pt": "suporte de adaptador compacto",
-        "nl": "ondersteuning voor compacte adapter",
-        "fr": "support de l'adaptateur compact",
-        "it": "supporto di adattatore compatto",
-        "es": "soporte de adaptador compacto",
-        "pl": "obsługa adaptera kompaktowego"
-      },
-      "2.2.5": {
-        "en": "reset yield if no new value from today",
-        "de": "Ertrag zurücksetzen, wenn kein neuer Wert von heute",
-        "ru": "сбросить доход, если не будет нового значения с сегодняшнего дня",
-        "pt": "redefinir o rendimento se não houver um novo valor a partir de hoje",
-        "nl": "reset opbrengst als er geen nieuwe waarde vanaf vandaag is",
-        "fr": "réinitialiser le rendement si aucune nouvelle valeur à partir d'aujourd'hui",
-        "it": "resettare il rendimento se non ci sono nuovi valori da oggi",
-        "es": "restablecer el rendimiento si no hay un nuevo valor a partir de hoy",
-        "pl": "zresetować plon, jeśli nie pojawi się nowa wartość od dzisiaj"
-      },
-      "2.2.4": {
-        "en": "bugfix for ticks on X",
-        "de": "Bugfix für Ticks auf X",
-        "ru": "исправление для тиков на X",
-        "pt": "bugfix para carrapatos no X",
-        "nl": "bugfix voor ticks op X",
-        "fr": "correction de bugs pour les tiques sur X",
-        "it": "bugfix per tick su X",
-        "es": "corrección de errores para tics en X",
-        "pl": "łatka dla ticków na X"
-      },
-      "2.2.2": {
-        "en": "add timestamp of last update",
-        "de": "Zeitstempel des letzten Updates hinzufügen",
-        "ru": "добавить отметку времени последнего обновления",
-        "pt": "adicionar timestamp da última atualização",
-        "nl": "voeg een tijdstempel toe van de laatste update",
-        "fr": "ajouter l'horodatage de la dernière mise à jour",
-        "it": "aggiungi timestamp dell'ultimo aggiornamento",
-        "es": "agregar marca de tiempo de la última actualización",
-        "pl": "dodaj znacznik czasu ostatniej aktualizacji"
-      },
-      "2.2.1": {
-        "en": "close of database connection after last query result is available",
-        "de": "Abschluss der Datenbankverbindung, nachdem das letzte Abfrageergebnis verfügbar ist",
-        "ru": "закрытие соединения с базой данных после получения последнего результата запроса",
-        "pt": "O fim da conexão do banco de dados após o último resultado da consulta está disponível",
-        "nl": "Sluit de databaseverbinding nadat het laatste queryresultaat beschikbaar is",
-        "fr": "fermeture de la connexion à la base de données après la dernière requête est disponible",
-        "it": "la chiusura della connessione al database dopo l'ultimo risultato della query è disponibile",
-        "es": "cierre de la conexión de la base de datos después de que esté disponible el último resultado de la consulta",
-        "pl": "zamknięcie połączenia z bazą danych po uzyskaniu ostatniego wyniku zapytania"
-      },
-      "2.2.0": {
-        "en": "background color and border and bugfix for admin3",
-        "de": "Hintergrundfarbe und Rahmen und Bugfix für admin3",
-        "ru": "цвет фона и граница и исправление для admin3",
-        "pt": "cor de fundo e borda e bugfix para admin3",
-        "nl": "achtergrondkleur en rand en bugfix voor admin3",
-        "fr": "couleur de fond et bordure et correction de bugs pour admin3",
-        "it": "colore di sfondo e bordo e bugfix per admin3",
-        "es": "color de fondo y borde y corrección de errores para admin3",
-        "pl": "kolor tła i obramowanie oraz poprawka dla administratora3"
+      "3.0.0": {
+        "en": "package sqlite3 replaced",
+        "de": "Paket sqlite3 ersetzt",
+        "ru": "пакет sqlite3 заменен",
+        "pt": "pacote sqlite3 substituído",
+        "nl": "pakket sqlite3 vervangen",
+        "fr": "paquet sqlite3 remplacé",
+        "it": "pacchetto sqlite3 sostituito",
+        "es": "paquete sqlite3 reemplazado",
+        "pl": "pakiet sqlite3 zastąpiony",
+        "zh-cn": "软件包sqlite3替换为"
       }
     },
     "title": "SMA inverter (sbfspot)",
@@ -162,7 +48,7 @@
     "extIcon": "https://raw.githubusercontent.com/rg-engineering/ioBroker.sbfspot/master/admin/sbfspot.png",
     "keywords": [ "sbfspot" ],
     "readme": "https://github.com/rg-engineering/ioBroker.sbfspot/blob/master/README.md",
-    "loglevel": "debug",
+    "loglevel": "info",
     "stopBeforeUpdate": true,
     "type": "hardware",
     "license": "MIT",
@@ -181,10 +67,10 @@
     "sbfspotUser": "SBFspotUser",
     "sbfspotPassword": "",
     "sbfspotDatabasename": "SBFspot",
-    "useBluetooth": false,
     "databasetype": "mySQL",
     "sqlite_path": "",
-    "install_date": "2001-08-25"
+    "install_date": "2001-08-25",
+    "GetDataOnlyWhenDaylight":  true
   }
 }
 
