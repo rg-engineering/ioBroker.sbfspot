@@ -48,80 +48,11 @@ function startAdapter(options) {
     let numOfInverters;
 
     //---------- sqlite
-    // https://github.com/mapbox/node-sqlite3
+    //https://www.npmjs.com/package/better-sqlite3
     let sqlite_db;
 
     //---------- mySQL
     let mysql_connection;
-
-    //Some message was sent to adapter instance over message box. Used by email, pushover, text2speech, ...
-    /*adapter.on('message', function (obj) {
-        if (obj) {
-            switch (obj.command) {
-                case 'send':
-                    // e.g. send email or pushover or whatever
-                    console.log('send command');
-
-                    // Send response in callback if required
-                    if (obj.callback) adapter.sendTo(obj.from, obj.command, 'Message received', obj.callback);
-                    break;
-
-            }
-        }
-    });
-    */
-
-    // is called when adapter shuts down - callback has to be called under any circumstances!
-    /*
-    adapter.on('unload', function (callback) {
-        try {
-            adapter.log.debug('cleaned everything up...');
-            callback();
-        }
-        catch (e) {
-            callback();
-        }
-    });
-    */
-
-    // is called if a subscribed object changes
-    /*
-        adapter.on('objectChange', function (id, obj) {
-        // Warning, obj can be null if it was deleted
-        adapter.log.debug('objectChange ' + id + ' ' + JSON.stringify(obj));
-
-        //feuert auch, wenn adapter im admin anghalten oder gestartet wird...
-
-        if (obj == null && myPort != null) {
-            myPort.close();
-        }
-
-    });
-    */
-    // is called if a subscribed state changes
-    /*adapter.on('stateChange', function (id, state) {
-        // Warning, state can be null if it was deleted
-        adapter.log.debug('stateChange ' + id + ' ' + JSON.stringify(state));
-
-        // you can use the ack flag to detect if it is status (true) or command (false)
-        if (state && !state.ack) {
-            adapter.log.info('ack is not set!');
-        }
-    });
-    */
-
-
-    // is called when databases are connected and adapter received configuration.
-    // start here!
-    /*adapter.on('ready', function () {
-        try {
-            main();
-        }
-        catch (e) {
-            adapter.log.error('exception catch after ready [' + e + ']');
-        }
-    });
-    */
 
 
     function main() {
@@ -142,20 +73,14 @@ function startAdapter(options) {
             adapter.terminate ? adapter.terminate(11) : process.exit(11);
         }, 60000);
 
-        if (adapter.config.useBluetooth) {
-            //here we use bluetooth or speedwire
-            adapter.log.info("direct bluetooth connection not implemented yet");
-        } else {
+        DB_Connect(function () {
+            setTimeout(function () {
+                //adapter.stop();
+                adapter.log.error("force terminate in connect");
+                adapter.terminate ? adapter.terminate(11) : process.exit(11);
+            }, 6000);
+        });
 
-
-            DB_Connect(function () {
-                setTimeout(function () {
-                    //adapter.stop();
-                    adapter.log.error("force terminate in connect");
-                    adapter.terminate ? adapter.terminate(11) : process.exit(11);
-                }, 6000);
-            });
-        }
     }
 
     function AddInverterVariables(serial) {
@@ -624,95 +549,107 @@ function startAdapter(options) {
 
     function DB_Connect(cb) {
 
-        if (adapter.config.databasetype == 'mySQL' || adapter.config.databasetype == 'MariaDB') {
+        try {
+            if (adapter.config.databasetype == 'mySQL' || adapter.config.databasetype == 'MariaDB') {
 
-            //var express = require("express");
-            const mysql = require('mysql');
+                //var express = require("express");
+                const mysql = require('mysql');
 
-            if (adapter.config.databasetype == 'MariaDB') {
-                adapter.log.info("start with MariaDB");
-                adapter.log.debug("--- connecting to " + adapter.config.sbfspotIP + " " + adapter.config.sbfspotPort + " " + adapter.config.sbfspotDatabasename);
+                if (adapter.config.databasetype == 'MariaDB') {
+                    adapter.log.info("start with MariaDB");
+                    adapter.log.debug("--- connecting to " + adapter.config.sbfspotIP + " " + adapter.config.sbfspotPort + " " + adapter.config.sbfspotDatabasename);
 
-                mysql_connection = mysql.createConnection({
-                    host: adapter.config.sbfspotIP,
-                    user: adapter.config.sbfspotUser,
-                    port: adapter.config.sbfspotPort,
-                    password: adapter.config.sbfspotPassword,
-                    database: adapter.config.sbfspotDatabasename
-                });
+                    mysql_connection = mysql.createConnection({
+                        host: adapter.config.sbfspotIP,
+                        user: adapter.config.sbfspotUser,
+                        port: adapter.config.sbfspotPort,
+                        password: adapter.config.sbfspotPassword,
+                        database: adapter.config.sbfspotDatabasename
+                    });
 
-            } else {
-                adapter.log.info("start with mySQL");
-                adapter.log.debug("--- connecting to " + adapter.config.sbfspotIP + " " + adapter.config.sbfspotDatabasename);
-
-                mysql_connection = mysql.createConnection({
-                    host: adapter.config.sbfspotIP,
-                    user: adapter.config.sbfspotUser,
-                    password: adapter.config.sbfspotPassword,
-                    database: adapter.config.sbfspotDatabasename
-                });
-            }
-
-            mysql_connection.connect(function (err) {
-                if (!err) {
-                    adapter.log.debug("mySql Database is connected ... ");
-                    DB_GetInverters();
                 } else {
-                    adapter.log.error("Error connecting mySql database ... " + err);
+                    adapter.log.info("start with mySQL");
+                    adapter.log.debug("--- connecting to " + adapter.config.sbfspotIP + " " + adapter.config.sbfspotDatabasename);
 
-                    adapter.terminate ? adapter.terminate(11) : process.exit(11);
+                    mysql_connection = mysql.createConnection({
+                        host: adapter.config.sbfspotIP,
+                        user: adapter.config.sbfspotUser,
+                        password: adapter.config.sbfspotPassword,
+                        database: adapter.config.sbfspotDatabasename
+                    });
                 }
-            });
-        } else {
-            const sqlite3 = require("sqlite3").verbose();
-            adapter.log.info("start with sqlite");
-            //adapter.log.debug("--- connecting to " + adapter.config.sqlite_path);
 
-            const path = require("path");
-
-            const file_path = adapter.config.sqlite_path;
-            const dbPath = path.resolve(__dirname, file_path.trim());
-
-            adapter.log.debug("--- connecting to " + dbPath);
-
-            sqlite_db = new sqlite3.Database(dbPath, sqlite3.OPEN_READWRITE,
-                function (err) {
-                    // error handling;
+                mysql_connection.connect(function (err) {
                     if (!err) {
-                        adapter.log.debug("sqlite Database is connected ...");
+                        adapter.log.debug("mySql Database is connected ... ");
                         DB_GetInverters();
                     } else {
-                        adapter.log.error("Error while performing Query / connection ... " + err);
+                        adapter.log.error("Error connecting mySql database ... " + err);
 
-                        //adapter.terminate ? adapter.terminate() : process.exit(0);
+                        adapter.terminate ? adapter.terminate(11) : process.exit(11);
                     }
                 });
+            } else {
+                adapter.log.info("start with sqlite");
 
+                const path = require("path");
+
+                const file_path = adapter.config.sqlite_path;
+                const dbPath = path.resolve(__dirname, file_path.trim());
+
+                adapter.log.debug("--- connecting to " + dbPath);
+
+                const sqlite3 = require("better-sqlite3");
+
+                sqlite_db = new sqlite3(dbPath, { fileMustExist: true });
+                adapter.log.debug("sqlite Database is connected ...");
+                DB_GetInverters();
+                
+            }
 
         }
+        catch (e) {
+            adapter.log.error("exception in DB_Connect [" + e + "]");
+        }
+
         if (cb) cb();
     }
 
     function DB_GetInverters() {
-        const query = 'SELECT * from Inverters';
-        numOfInverters = 0;
-        adapter.log.debug(query);
-        if (adapter.config.databasetype == 'mySQL' || adapter.config.databasetype == 'MariaDB') {
-            mysql_connection.query(query, function (err, rows, fields) {
-                GetInverter(err, rows);
-            });
-        } else {
-            sqlite_db.all(query, function (err, rows) {
 
-                GetInverter(err, rows);
-            });
+        try {
+            const query = "SELECT * from Inverters";
+            numOfInverters = 0;
+            adapter.log.debug(query);
+            if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
+                mysql_connection.query(query, function (err, rows, fields) {
+                    GetInverter(err, rows);
+                });
+            } else {
+
+                const stmt = sqlite_db.prepare(query);
+
+                const rows = stmt.all();
+
+                GetInverter(0, rows);
+
+                /*
+                sqlite_db.all(query, function (err, rows) {
+    
+                    GetInverter(err, rows);
+                });
+                */
+            }
+        }
+        catch (e) {
+            adapter.log.error("exception in DB_GetInverters [" + e + "]");
         }
     }
 
     function GetInverter(err, rows) {
         if (!err) {
 
-            adapter.log.debug('rows ' + JSON.stringify(rows));
+            adapter.log.debug("rows " + JSON.stringify(rows));
 
             if (rows.length > 0) {
 
@@ -768,7 +705,7 @@ function startAdapter(options) {
             }
 
         } else {
-            adapter.log.error('Error while performing Query in GetInverter. ' + err);
+            adapter.log.error("Error while performing Query in GetInverter. " + err);
 
             //Schreibrechte auf den DB-Ordner???
 
@@ -778,25 +715,38 @@ function startAdapter(options) {
 
 
     function DB_GetInvertersData(serial) {
+        try {
+            //SELECT * from SpotData  where Serial ='2000562095' ORDER BY TimeStamp DESC LIMIT 1
+            const query = "SELECT * from SpotData  where Serial =" + serial + " ORDER BY TimeStamp DESC LIMIT 1";
+            adapter.log.debug(query);
+            if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
+                //we only get one row = last one
+                mysql_connection.query(query, function (err, rows, fields) {
+                    GetInverterData(err, rows, serial);
+                });
+            } else {
 
-        //SELECT * from SpotData  where Serial ='2000562095' ORDER BY TimeStamp DESC LIMIT 1
-        const query = "SELECT * from SpotData  where Serial =" + serial + " ORDER BY TimeStamp DESC LIMIT 1";
-        adapter.log.debug(query);
-        if (adapter.config.databasetype == 'mySQL' || adapter.config.databasetype == 'MariaDB') {
-            //we only get one row = last one
-            mysql_connection.query(query, function (err, rows, fields) {
-                GetInverterData(err, rows, serial);
-            });
-        } else {
-            sqlite_db.all(query, function (err, rows) {
-                GetInverterData(err, rows, serial);
-            });
+                const stmt = sqlite_db.prepare(query);
+
+                const rows = stmt.all();
+
+                GetInverterData(0, rows, serial);
+
+                /*
+                sqlite_db.all(query, function (err, rows) {
+                    GetInverterData(err, rows, serial);
+                });
+                */
+            }
+        }
+        catch (e) {
+            adapter.log.error("exception in DB_GetInvertersData [" + e + "]");
         }
     }
 
     function GetInverterData(err, rows, serial) {
         if (!err) {
-            adapter.log.debug('rows ' + JSON.stringify(rows));
+            adapter.log.debug("rows " + JSON.stringify(rows));
 
             for (const i in rows) {
                 //must only be one row...
@@ -847,53 +797,66 @@ function startAdapter(options) {
             DB_CalcHistory_LastMonth(serial);
             //DB_Disconnect();
         } else {
-            adapter.log.error('Error while performing Query in GetInverterData. ' + err);
+            adapter.log.error("Error while performing Query in GetInverterData. " + err);
         }
     }
 
 
     function DB_CalcHistory_LastMonth(serial) {
 
-        //täglich im aktuellen Monat
-        //SELECT from_unixtime(TimeStamp, '%Y-%m-%d') as date, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '2000562095' AND TimeStamp>= 1501542000 AND TimeStamp<= 1504133999 Group By from_unixtime(TimeStamp, '%Y-%m-%d')
-        //SELECT from_unixtime(TimeStamp, '%Y-%m-%d') as date, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '2000562095' AND TimeStamp>= 1500406746112 AND TimeStamp<= 1502998746112 Group By from_unixtime(TimeStamp, '%Y-%m-%d')
+        try {
+            //täglich im aktuellen Monat
+            //SELECT from_unixtime(TimeStamp, '%Y-%m-%d') as date, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '2000562095' AND TimeStamp>= 1501542000 AND TimeStamp<= 1504133999 Group By from_unixtime(TimeStamp, '%Y-%m-%d')
+            //SELECT from_unixtime(TimeStamp, '%Y-%m-%d') as date, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '2000562095' AND TimeStamp>= 1500406746112 AND TimeStamp<= 1502998746112 Group By from_unixtime(TimeStamp, '%Y-%m-%d')
 
-        //füy mySQL:
-        //SELECT from_unixtime(TimeStamp, '%Y') as date, Max(`ETotal`) as ertrag FROM `SpotData` WHERE `Serial` = '2000562095'  Group By from_unixtime(TimeStamp, '%Y')
-        //für sqlite
-        //SELECT  strftime('%Y-%m-%d ', datetime(TimeStamp, 'unixepoch')) as date, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '2000562095' AND TimeStamp>= 1511859131.474 AND TimeStamp<= 1514451131.474 Group By strftime('%Y-%m-%d ', datetime(TimeStamp, 'unixepoch'))
+            //füy mySQL:
+            //SELECT from_unixtime(TimeStamp, '%Y') as date, Max(`ETotal`) as ertrag FROM `SpotData` WHERE `Serial` = '2000562095'  Group By from_unixtime(TimeStamp, '%Y')
+            //für sqlite
+            //SELECT  strftime('%Y-%m-%d ', datetime(TimeStamp, 'unixepoch')) as date, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '2000562095' AND TimeStamp>= 1511859131.474 AND TimeStamp<= 1514451131.474 Group By strftime('%Y-%m-%d ', datetime(TimeStamp, 'unixepoch'))
 
-        const dateto = new Date(); //today
-        const datefrom = new Date();
-        datefrom.setDate(datefrom.getDate() - 30);
-        //adapter.log.debug('from ' + datefrom.toDateString() + " to " + dateto.toDateString());
-        //gettime gives milliseconds!!
+            const dateto = new Date(); //today
+            const datefrom = new Date();
+            datefrom.setDate(datefrom.getDate() - 30);
+            //adapter.log.debug('from ' + datefrom.toDateString() + " to " + dateto.toDateString());
+            //gettime gives milliseconds!!
 
-        let query = "";
-        if (adapter.config.databasetype == 'mySQL' || adapter.config.databasetype == 'MariaDB') {
-            query = "SELECT from_unixtime(TimeStamp, '%Y-%m-%d') as date, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By from_unixtime(TimeStamp, '%Y-%m-%d')";
-        } else {
-            query = "SELECT strftime('%Y-%m-%d', datetime(TimeStamp, 'unixepoch')) as date, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By strftime('%Y-%m-%d', datetime(TimeStamp, 'unixepoch'))";
+            let query = "";
+            if (adapter.config.databasetype == 'mySQL' || adapter.config.databasetype == 'MariaDB') {
+                query = "SELECT from_unixtime(TimeStamp, '%Y-%m-%d') as date, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By from_unixtime(TimeStamp, '%Y-%m-%d')";
+            } else {
+                query = "SELECT strftime('%Y-%m-%d', datetime(TimeStamp, 'unixepoch')) as date, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By strftime('%Y-%m-%d', datetime(TimeStamp, 'unixepoch'))";
+            }
+            adapter.log.debug(query);
+            if (adapter.config.databasetype == 'mySQL' || adapter.config.databasetype == 'MariaDB') {
+                mysql_connection.query(query, function (err, rows, fields) {
+
+                    CalcHistory_LastMonth(err, rows, serial);
+                });
+            } else {
+
+                const stmt = sqlite_db.prepare(query);
+
+                const rows = stmt.all();
+
+                CalcHistory_LastMonth(0, rows, serial);
+
+                /*
+                sqlite_db.all(query, function (err, rows) {
+
+                    CalcHistory_LastMonth(err, rows, serial);
+                });
+                */
+            }
         }
-        adapter.log.debug(query);
-        if (adapter.config.databasetype == 'mySQL' || adapter.config.databasetype == 'MariaDB') {
-            mysql_connection.query(query, function (err, rows, fields) {
-
-                CalcHistory_LastMonth(err, rows, serial);
-            });
-        } else {
-            sqlite_db.all(query, function (err, rows) {
-
-                CalcHistory_LastMonth(err, rows, serial);
-            });
+        catch (e) {
+            adapter.log.error("exception in DB_CalcHistory_LastMonth [" + e + "]");
         }
-        
     }
 
     function CalcHistory_LastMonth(err, rows, serial) {
 
         if (!err) {
-            adapter.log.debug('rows ' + JSON.stringify(rows));
+            adapter.log.debug("rows " + JSON.stringify(rows));
 
             //rows[{ "date": "2017-07-19", "ertrag": 12259 }, { "date": "2017-07-20", "ertrag": 9905 }, { "date": "2017-07-21", "ertrag": 12991 }, { "date": "2017-07-22", "ertrag": 9292 }, { "date": "2017-07-23", "ertrag": 7730 }, {
 
@@ -913,11 +876,11 @@ function startAdapter(options) {
 
             }
 
-            adapter.setState(serial + '.history.last30Days', { ack: true, val: JSON.stringify(oLastDays) });
+            adapter.setState(serial + ".history.last30Days", { ack: true, val: JSON.stringify(oLastDays) });
 
             DB_CalcHistory_Prepare(serial);
         } else {
-            adapter.log.error('Error while performing Query in CalcHistory_LastMonth. ' + err);
+            adapter.log.error("Error while performing Query in CalcHistory_LastMonth. " + err);
         }
 
     }
@@ -925,31 +888,47 @@ function startAdapter(options) {
 
     function DB_CalcHistory_Prepare(serial) {
 
-        //var dateto = new Date(); //today
+        try {
+            //var dateto = new Date(); //today
 
-        //SELECT from_unixtime(TimeStamp, '%Y-%m-%d') as date, ETotal  FROM `SpotData` ORDER by `TimeStamp` ASC LIMIT  1
-        let query = "";
-        if (adapter.config.databasetype == 'mySQL' || adapter.config.databasetype == 'MariaDB') {
-            query = "SELECT from_unixtime(TimeStamp, '%Y-%m-%d') as date, ETotal  FROM `SpotData` WHERE `Serial` = '" + serial + "' ORDER by `TimeStamp` ASC LIMIT  1";
-        } else {
-            query = "SELECT strftime('%Y-%m-%d', datetime(TimeStamp, 'unixepoch')) as date, ETotal  FROM `SpotData` WHERE `Serial` = '" + serial + "' ORDER by `TimeStamp` ASC LIMIT  1";
+            //SELECT from_unixtime(TimeStamp, '%Y-%m-%d') as date, ETotal  FROM `SpotData` ORDER by `TimeStamp` ASC LIMIT  1
+            let query = "";
+            if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
+                query = "SELECT from_unixtime(TimeStamp, '%Y-%m-%d') as date, ETotal  FROM `SpotData` WHERE `Serial` = '" + serial + "' ORDER by `TimeStamp` ASC LIMIT  1";
+            } else {
+                query = "SELECT strftime('%Y-%m-%d', datetime(TimeStamp, 'unixepoch')) as date, ETotal  FROM `SpotData` WHERE `Serial` = '" + serial + "' ORDER by `TimeStamp` ASC LIMIT  1";
+            }
+            adapter.log.debug(query);
+
+            if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
+                mysql_connection.query(query, function (err, rows, fields) {
+                    CalcHistory_Prepare(err, rows, serial);
+                });
+            } else {
+
+
+                const stmt = sqlite_db.prepare(query);
+
+                const rows = stmt.all();
+
+                CalcHistory_Prepare(0, rows, serial);
+
+                /*
+
+                sqlite_db.all(query, function (err, rows) {
+                    CalcHistory_Prepare(err, rows, serial);
+                });
+                */
+            }
         }
-        adapter.log.debug(query);
-
-        if (adapter.config.databasetype == 'mySQL' || adapter.config.databasetype == 'MariaDB') {
-            mysql_connection.query(query, function (err, rows, fields) {
-                CalcHistory_Prepare(err, rows, serial);
-            });
-        } else {
-            sqlite_db.all(query, function (err, rows) {
-                CalcHistory_Prepare(err, rows, serial);
-            });
+        catch (e) {
+            adapter.log.error("exception in DB_CalcHistory_Prepare [" + e + "]");
         }
     }
 
     function CalcHistory_Prepare(err, rows, serial) {
         if (!err) {
-            adapter.log.debug('prepare: rows ' + JSON.stringify(rows));
+            adapter.log.debug("prepare: rows " + JSON.stringify(rows));
 
             for (const i in rows) {
 
@@ -970,36 +949,50 @@ function startAdapter(options) {
 
     function DB_CalcHistory_Today(serial) {
 
-        const dateto = new Date(); //today
+        try {
+            const dateto = new Date(); //today
 
-        const datefrom = new Date();
-        datefrom.setHours(0);
-        datefrom.setMinutes(0);
-        //adapter.log.debug('from ' + datefrom.toDateString() + " to " + dateto.toDateString());
-        //gettime gives milliseconds!!
+            const datefrom = new Date();
+            datefrom.setHours(0);
+            datefrom.setMinutes(0);
+            //adapter.log.debug('from ' + datefrom.toDateString() + " to " + dateto.toDateString());
+            //gettime gives milliseconds!!
 
-        let query = "";
-        if (adapter.config.databasetype == 'mySQL' || adapter.config.databasetype == 'MariaDB') {
-            query = "SELECT from_unixtime(TimeStamp, '%H:%i') as time, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By from_unixtime(TimeStamp, '%H:%i')";
-        } else {
-            query = "SELECT strftime('%H:%m', datetime(TimeStamp, 'unixepoch')) as time, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By strftime('%H-%m', datetime(TimeStamp, 'unixepoch'))";
+            let query = "";
+            if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
+                query = "SELECT from_unixtime(TimeStamp, '%H:%i') as time, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By from_unixtime(TimeStamp, '%H:%i')";
+            } else {
+                query = "SELECT strftime('%H:%m', datetime(TimeStamp, 'unixepoch')) as time, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By strftime('%H-%m', datetime(TimeStamp, 'unixepoch'))";
+            }
+            adapter.log.debug(query);
+            if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
+                mysql_connection.query(query, function (err, rows, fields) {
+                    CalcHistory_Today(err, rows, serial);
+                });
+            } else {
+
+                const stmt = sqlite_db.prepare(query);
+
+                const rows = stmt.all();
+
+                CalcHistory_Today(0, rows, serial);
+
+                /*
+
+                sqlite_db.all(query, function (err, rows) {
+                    CalcHistory_Today(err, rows, serial);
+                });
+                */
+            }
         }
-        adapter.log.debug(query);
-        if (adapter.config.databasetype == 'mySQL' || adapter.config.databasetype == 'MariaDB') {
-            mysql_connection.query(query, function (err, rows, fields) {
-                CalcHistory_Today(err, rows, serial);
-            });
-        } else {
-            sqlite_db.all(query, function (err, rows) {
-                CalcHistory_Today(err, rows, serial);
-            });
-
+        catch (e) {
+            adapter.log.error("exception in DB_CalcHistory_Today [" + e + "]");
         }
     }
 
     function CalcHistory_Today(err, rows, serial) {
         if (!err) {
-            adapter.log.debug('rows ' + JSON.stringify(rows));
+            adapter.log.debug("rows " + JSON.stringify(rows));
 
             const oLastDays = [];
             //var daydata = {};
@@ -1015,34 +1008,49 @@ function startAdapter(options) {
                 //adapter.log.debug(JSON.stringify(oLastDays));
             }
 
-            adapter.setState(serial + '.history.today', { ack: true, val: JSON.stringify(oLastDays) });
+            adapter.setState(serial + ".history.today", { ack: true, val: JSON.stringify(oLastDays) });
 
             DB_CalcHistory_Years(serial);
         } else {
-            adapter.log.error('Error while performing Query in CalcHistory_Today. ' + err);
+            adapter.log.error("Error while performing Query in CalcHistory_Today. " + err);
         }
     }
 
 
     function DB_CalcHistory_Years(serial) {
-        //SELECT from_unixtime(TimeStamp, '%Y') as date, Max(`ETotal`) as ertrag FROM `SpotData` WHERE `Serial` = '2000562095'  Group By from_unixtime(TimeStamp, '%Y')
 
-        let query = "";
-        if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
-            query = "SELECT from_unixtime(TimeStamp, '%Y') as date, Max(`ETotal`) as ertrag, Min(`ETotal`) as startertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' Group By from_unixtime(TimeStamp, '%Y')";
-        } else {
-            query = "SELECT strftime('%Y', datetime(TimeStamp, 'unixepoch')) as date, Max(`ETotal`) as ertrag, Min(`ETotal`) as startertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' Group By strftime('%Y', datetime(TimeStamp, 'unixepoch'))";
+        try {
+            //SELECT from_unixtime(TimeStamp, '%Y') as date, Max(`ETotal`) as ertrag FROM `SpotData` WHERE `Serial` = '2000562095'  Group By from_unixtime(TimeStamp, '%Y')
+
+            let query = "";
+            if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
+                query = "SELECT from_unixtime(TimeStamp, '%Y') as date, Max(`ETotal`) as ertrag, Min(`ETotal`) as startertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' Group By from_unixtime(TimeStamp, '%Y')";
+            } else {
+                query = "SELECT strftime('%Y', datetime(TimeStamp, 'unixepoch')) as date, Max(`ETotal`) as ertrag, Min(`ETotal`) as startertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' Group By strftime('%Y', datetime(TimeStamp, 'unixepoch'))";
+            }
+            adapter.log.debug(query);
+            if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
+                mysql_connection.query(query, function (err, rows, fields) {
+                    CalcHistory_Years(err, rows, serial);
+                });
+            } else {
+
+                const stmt = sqlite_db.prepare(query);
+
+                const rows = stmt.all();
+
+                CalcHistory_Years(0, rows, serial);
+
+                /*
+                sqlite_db.all(query, function (err, rows) {
+                    CalcHistory_Years(err, rows, serial);
+                });
+                */
+
+            }
         }
-        adapter.log.debug(query);
-        if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
-            mysql_connection.query(query, function (err, rows, fields) {
-                CalcHistory_Years(err, rows, serial);
-            });
-        } else {
-            sqlite_db.all(query, function (err, rows) {
-                CalcHistory_Years(err, rows, serial);
-            });
-
+        catch (e) {
+            adapter.log.error("exception in DB_CalcHistory_Years [" + e + "]");
         }
     }
 
@@ -1139,35 +1147,51 @@ function startAdapter(options) {
 
     function DB_CalcHistory_Months(serial) {
 
-        const dateto = new Date(); //today
+        try {
+            const dateto = new Date(); //today
 
-        const datefrom = new Date();
-        datefrom.setHours(0);
-        datefrom.setMinutes(0);
+            const datefrom = new Date();
+            datefrom.setHours(0);
+            datefrom.setMinutes(0);
 
-        datefrom.setFullYear(dateto.getFullYear() - 1);
-        datefrom.setDate(1);
+            datefrom.setFullYear(dateto.getFullYear() - 1);
+            datefrom.setDate(1);
 
-        //adapter.log.debug('DB_CalcHistory_Months: from ' + datefrom.toDateString() + " to " + dateto.toDateString());
+            //adapter.log.debug('DB_CalcHistory_Months: from ' + datefrom.toDateString() + " to " + dateto.toDateString());
 
-        //SELECT from_unixtime(TimeStamp, '%Y-%m') as date, Max(`ETotal`) as ertrag FROM `SpotData` WHERE `Serial` = '2000562095'  Group By from_unixtime(TimeStamp, '%Y-%m')
+            //SELECT from_unixtime(TimeStamp, '%Y-%m') as date, Max(`ETotal`) as ertrag FROM `SpotData` WHERE `Serial` = '2000562095'  Group By from_unixtime(TimeStamp, '%Y-%m')
 
-        let query = "";
-        if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
-            query = "SELECT from_unixtime(TimeStamp, '%Y-%m') as date, Max(`ETotal`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By from_unixtime(TimeStamp, '%Y-%m')";
-        } else {
-            query = "SELECT strftime('%Y-%m', datetime(TimeStamp, 'unixepoch')) as date, Max(`ETotal`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By strftime('%Y-%m', datetime(TimeStamp, 'unixepoch'))";
+            let query = "";
+            if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
+                query = "SELECT from_unixtime(TimeStamp, '%Y-%m') as date, Max(`ETotal`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By from_unixtime(TimeStamp, '%Y-%m')";
+            } else {
+                query = "SELECT strftime('%Y-%m', datetime(TimeStamp, 'unixepoch')) as date, Max(`ETotal`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By strftime('%Y-%m', datetime(TimeStamp, 'unixepoch'))";
+            }
+            adapter.log.debug(query);
+            if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
+                mysql_connection.query(query, function (err, rows, fields) {
+                    CalcHistory_Months(err, rows, serial);
+                });
+            } else {
+
+                const stmt = sqlite_db.prepare(query);
+
+                const rows = stmt.all();
+
+                CalcHistory_Months(0, rows, serial);
+
+                /*
+
+                sqlite_db.all(query, function (err, rows) {
+                    CalcHistory_Months(err, rows, serial);
+                });
+
+*/
+
+            }
         }
-        adapter.log.debug(query);
-        if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
-            mysql_connection.query(query, function (err, rows, fields) {
-                CalcHistory_Months(err, rows, serial);
-            });
-        } else {
-            sqlite_db.all(query, function (err, rows) {
-                CalcHistory_Months(err, rows, serial);
-            });
-
+        catch (e) {
+            adapter.log.error("exception in DB_CalcHistory_Months [" + e + "]");
         }
     }
 
@@ -1198,40 +1222,54 @@ function startAdapter(options) {
     }
 
     function DB_AddDummyData() {
-        adapter.log.debug("add dummy data");
 
-        //INSERT INTO`Inverters`(`Serial`, `Name`, `Type`, `SW_Version`, `TimeStamp`, `TotalPac`, `EToday`, `ETotal`, `OperatingTime`, `FeedInTime`, `Status`, `GridRelay`, `Temperature`) VALUES([value - 1], [value - 2], [value - 3], [value - 4], [value - 5], [value - 6], [value - 7], [value - 8], [value - 9], [value - 10], [value - 11], [value - 12], [value - 13])
-        let query = "";
-        query = "INSERT INTO`Inverters`(`Serial`, `Name`, `Type`, `SW_Version`, `TimeStamp`, `TotalPac`,";
-        query += " `EToday`, `ETotal`, `OperatingTime`, `FeedInTime`, `Status`, `GridRelay`, `Temperature`) VALUES(";
-        query += " 12345678, `SN: 1234567`, `SB Dummy`, `0.0` , 1548776704 , 0 ,";
-        query += " 3, 3512, 50, 45, `okay`,  `?`, 37 ";
-        query += ")";
+        try {
+            adapter.log.debug("add dummy data");
 
-        adapter.log.debug(query);
-        if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
-            mysql_connection.query(query, function (err, result) {
+            //INSERT INTO`Inverters`(`Serial`, `Name`, `Type`, `SW_Version`, `TimeStamp`, `TotalPac`, `EToday`, `ETotal`, `OperatingTime`, `FeedInTime`, `Status`, `GridRelay`, `Temperature`) VALUES([value - 1], [value - 2], [value - 3], [value - 4], [value - 5], [value - 6], [value - 7], [value - 8], [value - 9], [value - 10], [value - 11], [value - 12], [value - 13])
+            let query = "";
+            query = "INSERT INTO`Inverters`(`Serial`, `Name`, `Type`, `SW_Version`, `TimeStamp`, `TotalPac`,";
+            query += " `EToday`, `ETotal`, `OperatingTime`, `FeedInTime`, `Status`, `GridRelay`, `Temperature`) VALUES(";
+            query += " 12345678, `SN: 1234567`, `SB Dummy`, `0.0` , 1548776704 , 0 ,";
+            query += " 3, 3512, 50, 45, `okay`,  `?`, 37 ";
+            query += ")";
 
-                if (err) {
-                    adapter.log.error("error " + err);
-                }
+            adapter.log.debug(query);
+            if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
+                mysql_connection.query(query, function (err, result) {
 
-                adapter.terminate ? adapter.terminate(11) : process.exit(11);
-            });
-        } else {
-            sqlite_db.all(query, function (err, rows) {
+                    if (err) {
+                        adapter.log.error("error " + err);
+                    }
 
-                if (err) {
-                    adapter.log.error("error " + err);
-                }
+                    adapter.terminate ? adapter.terminate(11) : process.exit(11);
+                });
+            } else {
 
-                adapter.terminate ? adapter.terminate(11) : process.exit(11);
-            });
+                const stmt = sqlite_db.prepare(query);
 
+                stmt.all();
+
+
+                /*
+                sqlite_db.all(query, function (err, rows) {
+
+                    if (err) {
+                        adapter.log.error("error " + err);
+                    }
+
+                    adapter.terminate ? adapter.terminate(11) : process.exit(11);
+                });
+                */
+
+            }
+        }
+        catch (e) {
+            adapter.log.error("exception in DB_AddDummyData [" + e + "]");
         }
 
-
     }
+        
 
     function DB_Disconnect() {
 
