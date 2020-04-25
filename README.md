@@ -48,6 +48,9 @@ sometimes npm intall must be called more then one time to successfully install a
 ## 3.0.0 (2020-04-25)
 * (René) sqlite3 package replaced by better-sqlite3
 * (René) roles of DP overworked
+* (René) see issue #19: get data only when daylight added as an option
+* (René) see issue #29: default color for widget axis label changed
+* (René) widget: log if widget is too small added
 
 ## 2.4.3 (2020-04-02)
 * (René) bugfix in DB_CalcHistory_Today used for widget
