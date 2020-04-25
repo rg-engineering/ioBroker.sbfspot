@@ -48,7 +48,7 @@
     "extIcon": "https://raw.githubusercontent.com/rg-engineering/ioBroker.sbfspot/master/admin/sbfspot.png",
     "keywords": [ "sbfspot" ],
     "readme": "https://github.com/rg-engineering/ioBroker.sbfspot/blob/master/README.md",
-    "loglevel": "debug",
+    "loglevel": "info",
     "stopBeforeUpdate": true,
     "type": "hardware",
     "license": "MIT",
