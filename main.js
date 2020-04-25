@@ -92,398 +92,664 @@ function startAdapter(options) {
             native: { location: adapter.config.location }
         });
 
-        adapter.setObjectNotExists(serial + '.Type', {
-            type: 'state',
+        adapter.setObjectNotExists(serial + ".Type", {
+            type: "state",
             common: {
-                name: 'SMA inverter Serialnumber',
-                type: 'string',
-                role: 'serial',
-                unit: '',
+                name: "SMA inverter Serialnumber",
+                type: "string",
+                role: "value",
+                unit: "",
                 read: true,
                 write: false
             },
-            native: { location: serial + '.SerialNo' }
+            native: { location: serial + ".SerialNo" }
         });
 
-        adapter.setObjectNotExists(serial + '.ETotal', {
-            type: 'state',
+        adapter.extendObject(serial + ".Type", {
             common: {
-                name: 'SMA inverter Ertrag Total',
-                type: 'number',
-                role: 'ertrag',
-                unit: 'Wh',
-                read: true,
-                write: false
-            },
-            native: { location: serial + '.ETotal' }
-        });
-
-        adapter.setObjectNotExists(serial + '.EToday', {
-            type: 'state',
-            common: {
-                name: 'SMA inverter Ertrag Today',
-                type: 'number',
-                role: 'ertrag',
-                unit: 'Wh',
-                read: true,
-                write: false
-            },
-            native: { location: serial + '.EToday' }
-        });
-
-        adapter.setObjectNotExists(serial + '.SW_Version', {
-            type: 'state',
-            common: {
-                name: 'SMA inverter SW Version',
-                type: 'string',
-                role: 'version',
-                unit: '',
-                read: true,
-                write: false
-            },
-            native: { location: serial + '.SW_Version' }
-        });
-
-        adapter.setObjectNotExists(serial + '.TotalPac', {
-            type: 'state',
-            common: {
-                name: 'SMA inverter Total P ac',
-                type: 'number',
-                role: 'ertrag',
-                unit: '',
-                read: true,
-                write: false
-            },
-            native: { location: serial + '.TotalPac' }
-        });
-
-        adapter.setObjectNotExists(serial + '.OperatingTime', {
-            type: 'state',
-            common: {
-                name: 'SMA inverter Operating Time',
-                type: 'number',
-                role: 'ertrag',
-                unit: 'h',
-                read: true,
-                write: false
-            },
-            native: { location: serial + '.OperatingTime' }
-        });
-
-        adapter.setObjectNotExists(serial + '.FeedInTime', {
-            type: 'state',
-            common: {
-                name: 'SMA inverter Feed In Time',
-                type: 'number',
-                role: 'ertrag',
-                unit: 'h',
-                read: true,
-                write: false
-            },
-            native: { location: serial + '.FeedInTime' }
-        });
-
-        adapter.setObjectNotExists(serial + '.Status', {
-            type: 'state',
-            common: { name: 'SMA inverter Status', type: 'string', role: 'ertrag', unit: '', read: true, write: false },
-            native: { location: serial + '.FeedInTime' }
-        });
-
-        adapter.setObjectNotExists(serial + '.GridRelay', {
-            type: 'state',
-            common: { name: 'SMA inverter Status', type: 'string', role: 'ertrag', unit: '', read: true, write: false },
-            native: { location: serial + '.GridRelay' }
-        });
-
-        adapter.setObjectNotExists(serial + '.Temperature', {
-            type: 'state',
-            common: { name: 'SMA inverter Status', type: 'number', role: 'ertrag', unit: '°C', read: true, write: false },
-            native: { location: serial + '.Temperature' }
-        });
-
-        adapter.setObjectNotExists(serial + '.Pdc1', {
-            type: 'state',
-            common: {
-                name: 'SMA inverter Power DC 1',
-                type: 'number',
-                role: 'ertrag',
-                unit: 'W',
-                read: true,
-                write: false
-            },
-            native: { location: serial + '.Pdc1' }
-        });
-        adapter.setObjectNotExists(serial + '.Pdc2', {
-            type: 'state',
-            common: {
-                name: 'SMA inverter Power DC 2',
-                type: 'number',
-                role: 'ertrag',
-                unit: 'W',
-                read: true,
-                write: false
-            },
-            native: { location: serial + '.Pdc2' }
-        });
-        adapter.setObjectNotExists(serial + '.Idc1', {
-            type: 'state',
-            common: {
-                name: 'SMA inverter Current DC 1',
-                type: 'number',
-                role: 'ertrag',
-                unit: 'A',
-                read: true,
-                write: false
-            },
-            native: { location: serial + '.Idc1' }
-        });
-        adapter.setObjectNotExists(serial + '.Idc2', {
-            type: 'state',
-            common: {
-                name: 'SMA inverter Current DC 2',
-                type: 'number',
-                role: 'ertrag',
-                unit: 'A',
-                read: true,
-                write: false
-            },
-            native: { location: serial + '.Idc2' }
-        });
-        adapter.setObjectNotExists(serial + '.Udc1', {
-            type: 'state',
-            common: {
-                name: 'SMA inverter Voltage DC 1',
-                type: 'number',
-                role: 'ertrag',
-                unit: 'V',
-                read: true,
-                write: false
-            },
-            native: { location: serial + '.Udc1' }
-        });
-        adapter.setObjectNotExists(serial + '.Udc2', {
-            type: 'state',
-            common: {
-                name: 'SMA inverter Voltage DC 2',
-                type: 'number',
-                role: 'ertrag',
-                unit: 'V',
-                read: true,
-                write: false
-            },
-            native: { location: serial + '.Udc2' }
-        });
-
-        adapter.setObjectNotExists(serial + '.Pac1', {
-            type: 'state',
-            common: {
-                name: 'SMA inverter Power AC 1',
-                type: 'number',
-                role: 'ertrag',
-                unit: 'W',
-                read: true,
-                write: false
-            },
-            native: { location: serial + '.Pac1' }
-        });
-        adapter.setObjectNotExists(serial + '.Pac2', {
-            type: 'state',
-            common: {
-                name: 'SMA inverter Power AC 2',
-                type: 'number',
-                role: 'ertrag',
-                unit: 'W',
-                read: true,
-                write: false
-            },
-            native: { location: serial + '.Pac2' }
-        });
-        adapter.setObjectNotExists(serial + '.Pac3', {
-            type: 'state',
-            common: {
-                name: 'SMA inverter Power AC 3',
-                type: 'number',
-                role: 'ertrag',
-                unit: 'W',
-                read: true,
-                write: false
-            },
-            native: { location: serial + '.Pac3' }
-        });
-        adapter.setObjectNotExists(serial + '.Iac1', {
-            type: 'state',
-            common: {
-                name: 'SMA inverter Current AC 1',
-                type: 'number',
-                role: 'ertrag',
-                unit: 'A',
-                read: true,
-                write: false
-            },
-            native: { location: serial + '.Iac1' }
-        });
-        adapter.setObjectNotExists(serial + '.Iac2', {
-            type: 'state',
-            common: {
-                name: 'SMA inverter Current AC 2',
-                type: 'number',
-                role: 'ertrag',
-                unit: 'A',
-                read: true,
-                write: false
-            },
-            native: { location: serial + '.Iac2' }
-        });
-        adapter.setObjectNotExists(serial + '.Iac3', {
-            type: 'state',
-            common: {
-                name: 'SMA inverter Current AC 3',
-                type: 'number',
-                role: 'ertrag',
-                unit: 'A',
-                read: true,
-                write: false
-            },
-            native: { location: serial + '.Iac3' }
-        });
-        adapter.setObjectNotExists(serial + '.Uac1', {
-            type: 'state',
-            common: {
-                name: 'SMA inverter Voltage AC 1',
-                type: 'number',
-                role: 'ertrag',
-                unit: 'V',
-                read: true,
-                write: false
-            },
-            native: { location: serial + '.Uac1' }
-        });
-        adapter.setObjectNotExists(serial + '.Uac2', {
-            type: 'state',
-            common: {
-                name: 'SMA inverter Voltage AC 2',
-                type: 'number',
-                role: 'ertrag',
-                unit: 'V',
-                read: true,
-                write: false
-            },
-            native: { location: serial + '.Uac2' }
-        });
-        adapter.setObjectNotExists(serial + '.Uac3', {
-            type: 'state',
-            common: {
-                name: 'SMA inverter Voltage AC 3',
-                type: 'number',
-                role: 'ertrag',
-                unit: 'V',
-                read: true,
-                write: false
-            },
-            native: { location: serial + '.Uac3' }
-        });
-
-        adapter.setObjectNotExists(serial + '.Frequency', {
-            type: 'state',
-            common: {
-                name: 'SMA inverter Frequency',
-                type: 'number',
-                role: 'ertrag',
-                unit: 'Hz',
-                read: true,
-                write: false
-            },
-            native: { location: serial + '.Frequency' }
-        });
-        adapter.setObjectNotExists(serial + '.BT_Signal', {
-            type: 'state',
-            common: {
-                name: 'SMA inverter BT_Signal',
-                type: 'number',
-                role: 'ertrag',
-                unit: '%',
-                read: true,
-                write: false
-            },
-            native: { location: serial + '.BT_Signal' }
-        });
-
-        adapter.setObjectNotExists(serial + '.timestamp', {
-            type: 'state',
-            common: {
-                name: 'SMA inverter timestamp',
-                type: 'number',
-                role: 'ertrag',
-                unit: '',
-                read: true,
-                write: false
-            },
-            native: { location: serial + '.timestamp' }
-        });
-
-        adapter.setObjectNotExists(serial + '.lastup', {
-            type: 'state',
-            common: { name: 'SMA inverter lastup', type: 'string', role: 'ertrag', unit: '', read: true, write: false },
-            native: { location: serial + '.lastup' }
-        });
-        adapter.setObjectNotExists(serial + '.error', {
-            type: 'state',
-            common: { name: 'SMA inverter error', type: 'string', role: 'ertrag', unit: '', read: true, write: false },
-            native: { location: serial + '.error' }
+                role: "value",
+            }
         });
 
 
-        adapter.setObjectNotExists(serial + '.history.today', {
-            type: 'state',
+        adapter.setObjectNotExists(serial + ".ETotal", {
+            type: "state",
             common: {
-                name: 'SMA inverter history today (JSON)',
-                type: 'number',
-                role: 'ertrag',
-                unit: '',
+                name: "SMA inverter Ertrag Total",
+                type: "number",
+                role: "value",
+                unit: "Wh",
                 read: true,
                 write: false
             },
-            native: { location: serial + '.history.today' }
+            native: { location: serial + ".ETotal" }
         });
 
-        adapter.setObjectNotExists(serial + '.history.last30Days', {
-            type: 'state',
+        adapter.extendObject(serial + ".ETotal", {
             common: {
-                name: 'SMA inverter history last 30 days (JSON)',
-                type: 'number',
-                role: 'ertrag',
-                unit: '',
-                read: true,
-                write: false
-            },
-            native: { location: serial + '.history.last30Days' }
+                role: "value",
+            }
         });
 
-        adapter.setObjectNotExists(serial + '.history.last12Months', {
-            type: 'state',
+        adapter.setObjectNotExists(serial + ".EToday", {
+            type: "state",
             common: {
-                name: 'SMA inverter history last 12 Months (JSON)',
-                type: 'number',
-                role: 'ertrag',
-                unit: '',
+                name: "SMA inverter Ertrag Today",
+                type: "number",
+                role: "value",
+                unit: "Wh",
                 read: true,
                 write: false
             },
-            native: { location: serial + '.history.last12Months' }
+            native: { location: serial + ".EToday" }
         });
 
-        adapter.setObjectNotExists(serial + '.history.years', {
-            type: 'state',
+        adapter.extendObject(serial + ".EToday", {
             common: {
-                name: 'SMA inverter history years (JSON)',
-                type: 'number',
-                role: 'ertrag',
-                unit: '',
+                role: "value",
+            }
+        });
+
+
+        adapter.setObjectNotExists(serial + ".SW_Version", {
+            type: "state",
+            common: {
+                name: "SMA inverter SW Version",
+                type: "string",
+                role: "value",
+                unit: "",
                 read: true,
                 write: false
             },
-            native: { location: serial + '.history.years' }
+            native: { location: serial + ".SW_Version" }
         });
+
+        adapter.extendObject(serial + ".SW_Version", {
+            common: {
+                role: "value",
+            }
+        });
+
+        adapter.setObjectNotExists(serial + ".TotalPac", {
+            type: "state",
+            common: {
+                name: "SMA inverter Total P AC",
+                type: "number",
+                role: "value",
+                unit: "",
+                read: true,
+                write: false
+            },
+            native: { location: serial + ".TotalPac" }
+        });
+
+        adapter.extendObject(serial + ".TotalPac", {
+            common: {
+                name: "SMA inverter Total P AC",
+                role: "value",
+            }
+        });
+
+        adapter.setObjectNotExists(serial + ".OperatingTime", {
+            type: "state",
+            common: {
+                name: "SMA inverter Operating Time",
+                type: "number",
+                role: "value",
+                unit: "h",
+                read: true,
+                write: false
+            },
+            native: { location: serial + ".OperatingTime" }
+        });
+
+        adapter.extendObject(serial + ".OperatingTime", {
+            common: {
+                role: "value",
+            }
+        });
+
+        adapter.setObjectNotExists(serial + ".FeedInTime", {
+            type: "state",
+            common: {
+                name: "SMA inverter Feed In Time",
+                type: "number",
+                role: "value",
+                unit: "h",
+                read: true,
+                write: false
+            },
+            native: { location: serial + ".FeedInTime" }
+        });
+
+        adapter.extendObject(serial + ".FeedInTime", {
+            common: {
+                role: "value",
+            }
+        });
+
+
+        adapter.setObjectNotExists(serial + ".Status", {
+            type: "state",
+            common: {
+                name: "SMA inverter Status",
+                type: "string",
+                role: "value",
+                unit: "",
+                read: true,
+                write: false
+            },
+            native: {
+                location: serial + ".Status"
+            }
+        });
+
+        adapter.extendObject(serial + ".Status", {
+            common: {
+                role: "value",
+            }
+        });
+
+        adapter.setObjectNotExists(serial + ".GridRelay", {
+            type: "state",
+            common: {
+                name: "SMA inverter Status",
+                type: "string",
+                role: "value",
+                unit: "",
+                read: true,
+                write: false
+            },
+            native: {
+                location: serial + ".GridRelay"
+            }
+        });
+
+        adapter.extendObject(serial + ".GridRelay", {
+            common: {
+                role: "value",
+            }
+        });
+
+        adapter.setObjectNotExists(serial + ".Temperature", {
+            type: "state",
+            common: {
+                name: "SMA inverter Status",
+                type: "number",
+                role: "value.temperature",
+                unit: "°C",
+                read: true,
+                write: false
+            },
+            native: {
+                location: serial + ".Temperature"
+            }
+        });
+
+        adapter.extendObject(serial + ".Temperature", {
+            common: {
+                role: "value.temperature",
+            }
+        });
+
+
+        adapter.setObjectNotExists(serial + ".Pdc1", {
+            type: "state",
+            common: {
+                name: "SMA inverter Power DC 1",
+                type: "number",
+                role: "value",
+                unit: "W",
+                read: true,
+                write: false
+            },
+            native: {
+                location: serial + ".Pdc1"
+            }
+        });
+        adapter.extendObject(serial + ".Pdc1", {
+            common: {
+                role: "value",
+            }
+        });
+
+        adapter.setObjectNotExists(serial + ".Pdc2", {
+            type: "state",
+            common: {
+                name: "SMA inverter Power DC 2",
+                type: "number",
+                role: "value",
+                unit: "W",
+                read: true,
+                write: false
+            },
+            native: {
+                location: serial + ".Pdc2"
+            }
+        });
+        adapter.extendObject(serial + ".Pdc2", {
+            common: {
+                role: "value",
+            }
+        });
+
+
+        adapter.setObjectNotExists(serial + ".Idc1", {
+            type: "state",
+            common: {
+                name: "SMA inverter Current DC 1",
+                type: "number",
+                role: "value.current",
+                unit: "A",
+                read: true,
+                write: false
+            },
+            native: { location: serial + ".Idc1" }
+        });
+        adapter.extendObject(serial + ".Idc1", {
+            common: {
+                role: "value.current",
+            }
+        });
+
+        adapter.setObjectNotExists(serial + ".Idc2", {
+            type: "state",
+            common: {
+                name: "SMA inverter Current DC 2",
+                type: "number",
+                role: "value.current",
+                unit: "A",
+                read: true,
+                write: false
+            },
+            native: { location: serial + ".Idc2" }
+        });
+        adapter.extendObject(serial + ".Idc2", {
+            common: {
+                role: "value.current",
+            }
+        });
+
+        adapter.setObjectNotExists(serial + ".Udc1", {
+            type: "state",
+            common: {
+                name: "SMA inverter Voltage DC 1",
+                type: "number",
+                role: "value.voltage",
+                unit: "V",
+                read: true,
+                write: false
+            },
+            native: { location: serial + ".Udc1" }
+        });
+        adapter.extendObject(serial + ".Udc1", {
+            common: {
+                role: "value.voltage",
+            }
+        });
+
+
+        adapter.setObjectNotExists(serial + ".Udc2", {
+            type: "state",
+            common: {
+                name: "SMA inverter Voltage DC 2",
+                type: "number",
+                role: "value.voltage",
+                unit: "V",
+                read: true,
+                write: false
+            },
+            native: { location: serial + ".Udc2" }
+        });
+        adapter.extendObject(serial + ".Udc2", {
+            common: {
+                role: "value.voltage",
+            }
+        });
+
+        adapter.setObjectNotExists(serial + ".Pac1", {
+            type: "state",
+            common: {
+                name: "SMA inverter Power AC 1",
+                type: "number",
+                role: "value",
+                unit: "W",
+                read: true,
+                write: false
+            },
+            native: { location: serial + ".Pac1" }
+        });
+        adapter.extendObject(serial + ".Pac1", {
+            common: {
+                role: "value",
+            }
+        });
+
+
+        adapter.setObjectNotExists(serial + ".Pac2", {
+            type: "state",
+            common: {
+                name: "SMA inverter Power AC 2",
+                type: "number",
+                role: "value",
+                unit: "W",
+                read: true,
+                write: false
+            },
+            native: { location: serial + ".Pac2" }
+        });
+        adapter.extendObject(serial + ".Pac2", {
+            common: {
+                role: "value",
+            }
+        });
+
+
+        adapter.setObjectNotExists(serial + ".Pac3", {
+            type: "state",
+            common: {
+                name: "SMA inverter Power AC 3",
+                type: "number",
+                role: "value",
+                unit: "W",
+                read: true,
+                write: false
+            },
+            native: { location: serial + ".Pac3" }
+        });
+        adapter.extendObject(serial + ".Pac3", {
+            common: {
+                role: "value",
+            }
+        });
+
+
+
+        adapter.setObjectNotExists(serial + ".Iac1", {
+            type: "state",
+            common: {
+                name: "SMA inverter Current AC 1",
+                type: "number",
+                role: "value.current",
+                unit: "A",
+                read: true,
+                write: false
+            },
+            native: { location: serial + ".Iac1" }
+        });
+        adapter.extendObject(serial + ".Iac1", {
+            common: {
+                role: "value.current",
+            }
+        });
+
+
+
+        adapter.setObjectNotExists(serial + ".Iac2", {
+            type: "state",
+            common: {
+                name: "SMA inverter Current AC 2",
+                type: "number",
+                role: "value.current",
+                unit: "A",
+                read: true,
+                write: false
+            },
+            native: { location: serial + ".Iac2" }
+        });
+        adapter.extendObject(serial + ".Iac2", {
+            common: {
+                role: "value.current",
+            }
+        });
+
+
+        adapter.setObjectNotExists(serial + ".Iac3", {
+            type: "state",
+            common: {
+                name: "SMA inverter Current AC 3",
+                type: "number",
+                role: "value.current",
+                unit: "A",
+                read: true,
+                write: false
+            },
+            native: { location: serial + ".Iac3" }
+        });
+        adapter.extendObject(serial + ".Iac3", {
+            common: {
+                role: "value.current",
+            }
+        });
+
+
+        adapter.setObjectNotExists(serial + ".Uac1", {
+            type: "state",
+            common: {
+                name: "SMA inverter Voltage AC 1",
+                type: "number",
+                role: "value.voltage",
+                unit: "V",
+                read: true,
+                write: false
+            },
+            native: { location: serial + ".Uac1" }
+        });
+        adapter.extendObject(serial + ".Uac1", {
+            common: {
+                role: "value.voltage",
+            }
+        });
+
+        adapter.setObjectNotExists(serial + ".Uac2", {
+            type: "state",
+            common: {
+                name: "SMA inverter Voltage AC 2",
+                type: "number",
+                role: "value.voltage",
+                unit: "V",
+                read: true,
+                write: false
+            },
+            native: { location: serial + ".Uac2" }
+        });
+        adapter.extendObject(serial + ".Uac2", {
+            common: {
+                role: "value.voltage",
+            }
+        });
+
+
+        adapter.setObjectNotExists(serial + ".Uac3", {
+            type: "state",
+            common: {
+                name: "SMA inverter Voltage AC 3",
+                type: "number",
+                role: "value.voltage",
+                unit: "V",
+                read: true,
+                write: false
+            },
+            native: { location: serial + ".Uac3" }
+        });
+        adapter.extendObject(serial + ".Uac3", {
+            common: {
+                role: "value.voltage",
+            }
+        });
+
+        adapter.setObjectNotExists(serial + ".Frequency", {
+            type: "state",
+            common: {
+                name: "SMA inverter Frequency",
+                type: "number",
+                role: "value",
+                unit: "Hz",
+                read: true,
+                write: false
+            },
+            native: { location: serial + ".Frequency" }
+        });
+        adapter.extendObject(serial + ".Frequency", {
+            common: {
+                role: "value",
+            }
+        });
+
+        adapter.setObjectNotExists(serial + ".BT_Signal", {
+            type: "state",
+            common: {
+                name: "SMA inverter BT_Signal",
+                type: "number",
+                role: "value",
+                unit: "%",
+                read: true,
+                write: false
+            },
+            native: { location: serial + ".BT_Signal" }
+        });
+        adapter.extendObject(serial + ".BT_Signal", {
+            common: {
+                role: "value",
+            }
+        });
+
+
+        adapter.setObjectNotExists(serial + ".timestamp", {
+            type: "state",
+            common: {
+                name: "SMA inverter timestamp",
+                type: "number",
+                role: "value",
+                unit: "",
+                read: true,
+                write: false
+            },
+            native: { location: serial + ".timestamp" }
+        });
+        adapter.extendObject(serial + ".timestamp", {
+            common: {
+                role: "value",
+            }
+        });
+
+
+        adapter.setObjectNotExists(serial + ".lastup", {
+            type: "state",
+            common: {
+                name: "SMA inverter lastup",
+                type: "string",
+                role: "value",
+                unit: "",
+                read: true,
+                write: false
+            },
+            native: {
+                location: serial + ".lastup"
+            }
+        });
+        adapter.extendObject(serial + ".lastup", {
+            common: {
+                role: "value",
+            }
+        });
+
+        adapter.setObjectNotExists(serial + ".error", {
+            type: "state",
+            common: {
+                name: "SMA inverter error",
+                type: "string",
+                role: "value",
+                unit: "",
+                read: true,
+                write: false
+            },
+            native: {
+                location: serial + ".error"
+            }
+        });
+        adapter.extendObject(serial + ".error", {
+            common: {
+                role: "value",
+            }
+        });
+
+        adapter.setObjectNotExists(serial + ".history.today", {
+            type: "state",
+            common: {
+                name: "SMA inverter history today (JSON)",
+                type: "number",
+                role: "value",
+                unit: "",
+                read: true,
+                write: false
+            },
+            native: {
+                location: serial + ".history.today"
+            }
+        });
+        adapter.extendObject(serial + ".history.today", {
+            common: {
+                role: "value",
+            }
+        });
+
+
+
+        adapter.setObjectNotExists(serial + ".history.last30Days", {
+            type: "state",
+            common: {
+                name: "SMA inverter history last 30 days (JSON)",
+                type: "number",
+                role: "value",
+                unit: "",
+                read: true,
+                write: false
+            },
+            native: { location: serial + ".history.last30Days" }
+        });
+        adapter.extendObject(serial + ".history.last30Days", {
+            common: {
+                role: "value",
+            }
+        });
+
+        adapter.setObjectNotExists(serial + ".history.last12Months", {
+            type: "state",
+            common: {
+                name: "SMA inverter history last 12 Months (JSON)",
+                type: "number",
+                role: "value",
+                unit: "",
+                read: true,
+                write: false
+            },
+            native: { location: serial + ".history.last12Months" }
+        });
+        adapter.extendObject(serial + ".history.last12Months", {
+            common: {
+                role: "value",
+            }
+        });
+
+        adapter.setObjectNotExists(serial + ".history.years", {
+            type: "state",
+            common: {
+                name: "SMA inverter history years (JSON)",
+                type: "number",
+                role: "value",
+                unit: "",
+                read: true,
+                write: false
+            },
+            native: { location: serial + ".history.years" }
+        });
+        adapter.extendObject(serial + ".history.years", {
+            common: {
+                role: "value",
+            }
+        });
+
     }
 
     function CheckInverterVariables() {
@@ -550,12 +816,12 @@ function startAdapter(options) {
     function DB_Connect(cb) {
 
         try {
-            if (adapter.config.databasetype == 'mySQL' || adapter.config.databasetype == 'MariaDB') {
+            if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
 
                 //var express = require("express");
-                const mysql = require('mysql');
+                const mysql = require("mysql");
 
-                if (adapter.config.databasetype == 'MariaDB') {
+                if (adapter.config.databasetype == "MariaDB") {
                     adapter.log.info("start with MariaDB");
                     adapter.log.debug("--- connecting to " + adapter.config.sbfspotIP + " " + adapter.config.sbfspotPort + " " + adapter.config.sbfspotDatabasename);
 
@@ -660,6 +926,8 @@ function startAdapter(options) {
 
                     AddInverterVariables(rows[i].Serial);
 
+                    // The id 1100173807 has an invalid type!: Expected "string" or "object", received "number".
+
                     adapter.setState(rows[i].Serial + ".Type", { ack: true, val: rows[i].Type });
                     //adapter.setState( rows[i].Serial + ".EToday", { ack: true, val: rows[i].EToday }); this is kW
                     //adapter.setState(rows[i].Serial + ".ETotal", { ack: true, val: rows[i].ETotal }); this is kW
@@ -683,7 +951,6 @@ function startAdapter(options) {
                     const sLastup = nDate + "." + nMonth + "." + nYear + " " + nHours + ":" + nMinutes + ":" + nSeconds;
 
                     adapter.setState(rows[i].Serial + ".lastup", { ack: true, val: sLastup });
-
                     const oToday = new Date();
                     let sError = "none";
                     if (Math.abs(oDate.getTime() - oToday.getTime()) > (24 * 60 * 60 * 1000)) {
@@ -691,9 +958,9 @@ function startAdapter(options) {
                         sError = "sbfspot no update since " + sLastup + " ";
 
                         adapter.log.debug(sError);
+
                     }
                     adapter.setState(rows[i].Serial + ".error", { ack: true, val: sError });
-
                     numOfInverters++;
                     DB_GetInvertersData(rows[i].Serial);
                 }
@@ -821,13 +1088,13 @@ function startAdapter(options) {
             //gettime gives milliseconds!!
 
             let query = "";
-            if (adapter.config.databasetype == 'mySQL' || adapter.config.databasetype == 'MariaDB') {
+            if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
                 query = "SELECT from_unixtime(TimeStamp, '%Y-%m-%d') as date, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By from_unixtime(TimeStamp, '%Y-%m-%d')";
             } else {
                 query = "SELECT strftime('%Y-%m-%d', datetime(TimeStamp, 'unixepoch')) as date, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By strftime('%Y-%m-%d', datetime(TimeStamp, 'unixepoch'))";
             }
             adapter.log.debug(query);
-            if (adapter.config.databasetype == 'mySQL' || adapter.config.databasetype == 'MariaDB') {
+            if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
                 mysql_connection.query(query, function (err, rows, fields) {
 
                     CalcHistory_LastMonth(err, rows, serial);
@@ -942,7 +1209,7 @@ function startAdapter(options) {
 
             DB_CalcHistory_Today(serial);
         } else {
-            adapter.log.error('Error while performing Query in CalcHistory_Prepare. ' + err);
+            adapter.log.error("Error while performing Query in CalcHistory_Prepare. " + err);
         }
     }
 
