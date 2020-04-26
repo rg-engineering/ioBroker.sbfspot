@@ -991,9 +991,17 @@
                         $div.html("<br> <center> <font color='red'> no inverter serial number for sbfspot specified </font> </center></br>");
                     }
 
-                    if ($div[0].clientHeight < 20 || $div[0].clientWidth < 20) {
+                    if ($div[0].clientHeight < 50 || $div[0].clientWidth < 50) {
                         console.log("widget too small  (" + widgetID + ")");
                         $div.html("<br> <center> <font color='red'> widget too small, please increase size (heigth or width) </font> </center></br>");
+
+                        if ($div[0].clientHeight < 50) {
+                            $div[0].style.height = "50px";
+                        }
+                        if ($div[0].clientWidth < 50) {
+                            $div[0].style.width = "50px";
+                        }
+
                     }    
 
 
