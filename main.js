@@ -48,6 +48,7 @@ let sqlite_db;
 //---------- mySQL
 let mysql_connection;
 
+let killTimer;
 
 async function main() {
 
@@ -58,7 +59,7 @@ async function main() {
 
     CheckInverterVariables();
 
-    setTimeout(function () {
+    killTimer = setTimeout(function () {
         //adapter.stop();
         adapter.log.error("force terminate in connect");
         adapter.terminate ? adapter.terminate(11) : process.exit(11);
@@ -97,7 +98,10 @@ async function main() {
     }
     else {
         adapter.log.info("nothing to do, because no daylight ... ");
-
+        if (killTimer) {
+            clearTimeout(killTimer);
+            adapter.log.debug("timer killed");
+        }
         adapter.terminate ? adapter.terminate(11) : process.exit(11);
     }
 }
@@ -1456,13 +1460,123 @@ function DB_Disconnect() {
 
         adapter.log.info("all done ... ");
 
+        if (killTimer) {
+            clearTimeout(killTimer);
+            adapter.log.debug("timer killed");
+        }
+
         adapter.terminate ? adapter.terminate(11) : process.exit(11);
 
     } else {
         adapter.log.debug("need to wait for disconnect");
     }
 }
+/**
+ * @param {string} timeVal
+ * @param {string} timeLimit
+ */
+function IsLater(timeVal, timeLimit) {
 
+    let ret = false;
+    try {
+        adapter.log.debug("check IsLater : " + timeVal + " " + timeLimit);
+
+        if (typeof timeVal === "string" && typeof timeLimit === "string") {
+            const valIn = timeVal.split(":");
+            const valLimits = timeLimit.split(":");
+
+            if (valIn.length > 1 && valLimits.length > 1) {
+
+                if (parseInt(valIn[0]) > parseInt(valLimits[0])
+                    || (parseInt(valIn[0]) == parseInt(valLimits[0]) && parseInt(valIn[1]) > parseInt(valLimits[1]))) {
+                    ret = true;
+                    adapter.log.debug("yes, IsLater : " + timeVal + " " + timeLimit);
+                }
+            }
+            else {
+                adapter.log.error("string does not contain : " + timeVal + " " + timeLimit);
+            }
+        }
+        else {
+            adapter.log.error("not a string " + typeof timeVal + " " + typeof timeLimit);
+        }
+    }
+    catch (e) {
+        adapter.log.error("exception in IsLater [" + e + "]");
+    }
+    return ret;
+}
+
+/**
+ * @param {string } timeVal
+ * @param {string } [timeLimit]
+ */
+function IsEarlier(timeVal, timeLimit) {
+
+    let ret = false;
+    try {
+        adapter.log.debug("check IsEarlier : " + timeVal + " " + timeLimit);
+
+        if (typeof timeVal === "string" && typeof timeLimit === "string") {
+            const valIn = timeVal.split(":");
+            const valLimits = timeLimit.split(":");
+
+            if (valIn.length > 1 && valLimits.length > 1) {
+
+                if (parseInt(valIn[0]) < parseInt(valLimits[0])
+                    || (parseInt(valIn[0]) == parseInt(valLimits[0]) && parseInt(valIn[1]) < parseInt(valLimits[1]))) {
+                    ret = true;
+                    adapter.log.debug("yes, IsEarlier : " + timeVal + " " + timeLimit);
+                }
+            }
+            else {
+                adapter.log.error("string does not contain : " + timeVal + " " + timeLimit);
+            }
+        }
+        else {
+            adapter.log.error("not a string " + typeof timeVal + " " + typeof timeLimit);
+        }
+    }
+    catch (e) {
+        adapter.log.error("exception in IsEarlier [" + e + "]");
+    }
+    return ret;
+}
+
+/**
+ * @param {string} timeVal
+ * @param {string} timeLimit
+ */
+function IsEqual(timeVal, timeLimit) {
+
+    let ret = false;
+    try {
+        adapter.log.debug("check IsEqual : " + timeVal + " " + timeLimit);
+
+        if (typeof timeVal === "string" && typeof timeLimit === "string") {
+            const valIn = timeVal.split(":");
+            const valLimits = timeLimit.split(":");
+
+            if (valIn.length > 1 && valLimits.length > 1) {
+
+                if (parseInt(valIn[0]) === parseInt(valLimits[0]) && parseInt(valIn[1]) === parseInt(valLimits[1])) {
+                    ret = true;
+                    adapter.log.debug("yes, IsEqual : " + timeVal + " " + timeLimit);
+                }
+            }
+            else {
+                adapter.log.error("string does not contain : " + timeVal + " " + timeLimit);
+            }
+        }
+        else {
+            adapter.log.error("not a string " + typeof timeVal + " " + typeof timeLimit);
+        }
+    }
+    catch (e) {
+        adapter.log.error("exception in IsEqual [" + e + "]");
+    }
+    return ret;
+}
 
 
 // If started as allInOne/compact mode => return function to create instance
