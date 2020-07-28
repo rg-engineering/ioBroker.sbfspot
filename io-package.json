@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "3.0.0",
+    "version": "4.0.0",
     "news": {
+      "4.0.0": {
+        "en": "rework to \"async/await\"",
+        "de": "Überarbeitung auf \"async / await\"",
+        "ru": "переделать в \"асинхронный / ждать\"",
+        "pt": "retrabalho para \"assíncrono / aguardar\"",
+        "nl": "herwerken naar \"async / await\"",
+        "fr": "retravailler en \"asynchroniser / attendre\"",
+        "it": "rilavorazione per \"asincrona / attendi\"",
+        "es": "retrabajo a \"async / wait\"",
+        "pl": "przerobienie na „async / await”",
+        "zh-cn": "返工为“异步/等待”"
+      },
+
       "3.0.0": {
         "en": "package sqlite3 replaced",
         "de": "Paket sqlite3 ersetzt",

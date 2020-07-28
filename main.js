@@ -37,7 +37,7 @@ function startAdapter(options) {
 
 let FirstValue4History;
 let FirstDate4History;
-let numOfInverters;
+//let numOfInverters;
 let longitude;
 let latitude;
 
@@ -57,7 +57,7 @@ async function main() {
         adapter.terminate ? adapter.terminate(11) : process.exit(11);
     }
 
-    CheckInverterVariables();
+    await CheckInverterVariables();
 
     killTimer = setTimeout(function () {
         //adapter.stop();
@@ -94,16 +94,100 @@ async function main() {
 
     if (daylight) {
 
-        DB_Connect();
+
+        await DB_Connect();
+
+
+        const rows = await DB_GetInverters();
+
+        adapter.log.debug("rows " + JSON.stringify(rows));
+
+        if (rows.length > 0) {
+
+            for (const i in rows) {
+
+                const serial = rows[i].Serial;
+
+                await GetInverter(i, rows);
+
+
+                let rows1 = await DB_GetInvertersData(serial);
+
+                adapter.log.debug("rows " + JSON.stringify(rows1));
+
+
+                if (rows1 != null) {
+
+
+                    await GetInverterData(0, rows1, serial);
+
+                    rows1 = await DB_CalcHistory_LastMonth(serial);
+
+
+                    if (rows1 != null) {
+                        await CalcHistory_LastMonth(0, rows1, serial);
+
+                        
+                        rows1 = await DB_CalcHistory_Prepare(serial);
+                        if (rows1 != null) {
+                            await CalcHistory_Prepare(0, rows1, serial);
+
+                            
+                            rows1 = await DB_CalcHistory_Today(serial);
+                            if (rows1 != null) {
+                                await CalcHistory_Today(0, rows1, serial);
+
+                                
+                                rows1 = await DB_CalcHistory_Years(serial);
+                                if (rows1 != null) {
+                                    await CalcHistory_Years(0, rows1, serial);
+
+                                    rows1 = await DB_CalcHistory_Months(serial);
+                                    if (rows1 != null) {
+                                        await CalcHistory_Months(0, rows1, serial);
+                                    }
+                                }
+                                
+                            }
+                            
+                        }
+                            
+                    }
+
+
+                }
+
+            }
+
+
+
+        } else {
+            //
+            adapter.log.debug("no inverter data found");
+            await DB_AddDummyData();
+
+
+
+        }
+        
+        DB_Disconnect();
+        
+
     }
     else {
         adapter.log.info("nothing to do, because no daylight ... ");
-        if (killTimer) {
-            clearTimeout(killTimer);
-            adapter.log.debug("timer killed");
-        }
-        adapter.terminate ? adapter.terminate(11) : process.exit(11);
+       
     }
+
+
+    if (killTimer) {
+        clearTimeout(killTimer);
+        adapter.log.debug("timer killed");
+    }
+
+    adapter.terminate ? adapter.terminate(11) : process.exit(11);
+
+
 }
 
 async function GetSystemDateformat() {
@@ -115,18 +199,99 @@ async function GetSystemDateformat() {
     adapter.log.debug("system  longitude " + longitude + " latitude " + latitude);
 }
 
-function AddInverterVariables(serial) {
+/*
+
+2020-07-27 19:30:06.897 - info: sbfspot.0 (6113) Terminated (ADAPTER_REQUESTED_TERMINATION): Without reason
+2020-07-27 19:30:07.015 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807 is invalid: obj.common.name has an invalid type! Expected "string" or "object", received "number"
+2020-07-27 19:30:07.018 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
+2020-07-27 19:30:07.063 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.Type is invalid: obj.type has to exist
+2020-07-27 19:30:07.065 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
+2020-07-27 19:30:07.068 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.ETotal is invalid: obj.type has to exist
+2020-07-27 19:30:07.070 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
+2020-07-27 19:30:07.073 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.EToday is invalid: obj.type has to exist
+2020-07-27 19:30:07.076 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
+2020-07-27 19:30:07.078 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.SW_Version is invalid: obj.type has to exist
+2020-07-27 19:30:07.081 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
+2020-07-27 19:30:07.084 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.TotalPac is invalid: obj.type has to exist
+2020-07-27 19:30:07.086 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
+2020-07-27 19:30:07.088 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.OperatingTime is invalid: obj.type has to exist
+2020-07-27 19:30:07.090 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
+2020-07-27 19:30:07.093 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.FeedInTime is invalid: obj.type has to exist
+2020-07-27 19:30:07.095 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
+2020-07-27 19:30:07.098 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.Status is invalid: obj.type has to exist
+2020-07-27 19:30:07.100 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
+2020-07-27 19:30:07.103 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.GridRelay is invalid: obj.type has to exist
+2020-07-27 19:30:07.105 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
+2020-07-27 19:30:07.107 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.Temperature is invalid: obj.type has to exist
+2020-07-27 19:30:07.109 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
+2020-07-27 19:30:07.112 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.Pdc1 is invalid: obj.type has to exist
+2020-07-27 19:30:07.114 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
+2020-07-27 19:30:07.116 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.Pdc2 is invalid: obj.type has to exist
+2020-07-27 19:30:07.118 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
+2020-07-27 19:30:07.121 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.Idc1 is invalid: obj.type has to exist
+2020-07-27 19:30:07.123 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
+2020-07-27 19:30:07.125 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.Idc2 is invalid: obj.type has to exist
+2020-07-27 19:30:07.127 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
+2020-07-27 19:30:07.130 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.Udc1 is invalid: obj.type has to exist
+2020-07-27 19:30:07.132 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
+2020-07-27 19:30:07.134 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.Udc2 is invalid: obj.type has to exist
+2020-07-27 19:30:07.136 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
+2020-07-27 19:30:07.139 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.Pac1 is invalid: obj.type has to exist
+2020-07-27 19:30:07.141 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
+2020-07-27 19:30:07.143 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.Pac2 is invalid: obj.type has to exist
+2020-07-27 19:30:07.145 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
+2020-07-27 19:30:07.148 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.Pac3 is invalid: obj.type has to exist
+2020-07-27 19:30:07.149 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
+2020-07-27 19:30:07.152 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.Iac1 is invalid: obj.type has to exist
+2020-07-27 19:30:07.154 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
+2020-07-27 19:30:07.156 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.Iac2 is invalid: obj.type has to exist
+2020-07-27 19:30:07.158 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
+2020-07-27 19:30:07.161 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.Iac3 is invalid: obj.type has to exist
+2020-07-27 19:30:07.163 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
+2020-07-27 19:30:07.165 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.Uac1 is invalid: obj.type has to exist
+2020-07-27 19:30:07.175 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
+2020-07-27 19:30:07.178 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.Uac2 is invalid: obj.type has to exist
+2020-07-27 19:30:07.180 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
+2020-07-27 19:30:07.183 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.Uac3 is invalid: obj.type has to exist
+2020-07-27 19:30:07.185 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
+2020-07-27 19:30:07.187 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.Frequency is invalid: obj.type has to exist
+2020-07-27 19:30:07.189 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
+2020-07-27 19:30:07.191 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.BT_Signal is invalid: obj.type has to exist
+2020-07-27 19:30:07.193 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
+2020-07-27 19:30:07.196 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.timestamp is invalid: obj.type has to exist
+2020-07-27 19:30:07.198 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
+2020-07-27 19:30:07.200 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.lastup is invalid: obj.type has to exist
+2020-07-27 19:30:07.202 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
+2020-07-27 19:30:07.205 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.error is invalid: obj.type has to exist
+2020-07-27 19:30:07.206 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
+2020-07-27 19:30:07.209 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.history.today is invalid: obj.type has to exist
+2020-07-27 19:30:07.211 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
+2020-07-27 19:30:07.213 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.history.last30Days is invalid: obj.type has to exist
+2020-07-27 19:30:07.215 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
+2020-07-27 19:30:07.218 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.history.last12Months is invalid: obj.type has to exist
+2020-07-27 19:30:07.220 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
+2020-07-27 19:30:07.222 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.history.years is invalid: obj.type has to exist
+2020-07-27 19:30:07.224 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
+2020-07-27 19:30:07.538 - info: host.orangepizero instance system.adapter.sbfspot.0 terminated with code 11 (ADAPTER_REQUESTED_TERMINATION)
+
+*/
+
+
+
+async function AddInverterVariables(serial) {
 
     //This will be refused in future versions.Please report this to the developer.
     //The id 1100173807 has an invalid type!: Expected "string" or "object", received "number".
     //need a string instead of number as id
-    adapter.setObjectNotExists(serial.toString(), {
+    await adapter.setObjectNotExistsAsync(serial.toString(), {
         type: "channel",
-        role: "inverter",
-        common: { name: serial },
-        native: { location: adapter.config.location }
+        common: {
+            name: serial.toString(),
+            type: "string"
+        },
+        native: {location: adapter.config.location}
     });
-    adapter.setObjectNotExists(serial + ".Type", {
+    await adapter.setObjectNotExistsAsync(serial + ".Type", {
         type: "state",
         common: {
             name: "SMA inverter Serialnumber",
@@ -138,12 +303,12 @@ function AddInverterVariables(serial) {
         },
         native: { location: serial + ".SerialNo" }
     });
-    adapter.extendObject(serial + ".Type", {
+    await adapter.extendObject(serial + ".Type", {
         common: {
             role: "value",
         }
     });
-    adapter.setObjectNotExists(serial + ".ETotal", {
+    await adapter.setObjectNotExistsAsync(serial + ".ETotal", {
         type: "state",
         common: {
             name: "SMA inverter Ertrag Total",
@@ -155,12 +320,12 @@ function AddInverterVariables(serial) {
         },
         native: { location: serial + ".ETotal" }
     });
-    adapter.extendObject(serial + ".ETotal", {
+    await adapter.extendObject(serial + ".ETotal", {
         common: {
             role: "value",
         }
     });
-    adapter.setObjectNotExists(serial + ".EToday", {
+    await adapter.setObjectNotExistsAsync(serial + ".EToday", {
         type: "state",
         common: {
             name: "SMA inverter Ertrag Today",
@@ -172,12 +337,12 @@ function AddInverterVariables(serial) {
         },
         native: { location: serial + ".EToday" }
     });
-    adapter.extendObject(serial + ".EToday", {
+    await adapter.extendObject(serial + ".EToday", {
         common: {
             role: "value",
         }
     });
-    adapter.setObjectNotExists(serial + ".SW_Version", {
+    await adapter.setObjectNotExistsAsync(serial + ".SW_Version", {
         type: "state",
         common: {
             name: "SMA inverter SW Version",
@@ -189,12 +354,12 @@ function AddInverterVariables(serial) {
         },
         native: { location: serial + ".SW_Version" }
     });
-    adapter.extendObject(serial + ".SW_Version", {
+    await adapter.extendObject(serial + ".SW_Version", {
         common: {
             role: "value",
         }
     });
-    adapter.setObjectNotExists(serial + ".TotalPac", {
+    await adapter.setObjectNotExistsAsync(serial + ".TotalPac", {
         type: "state",
         common: {
             name: "SMA inverter Total P AC",
@@ -206,13 +371,13 @@ function AddInverterVariables(serial) {
         },
         native: { location: serial + ".TotalPac" }
     });
-    adapter.extendObject(serial + ".TotalPac", {
+    await adapter.extendObject(serial + ".TotalPac", {
         common: {
             name: "SMA inverter Total P AC",
             role: "value",
         }
     });
-    adapter.setObjectNotExists(serial + ".OperatingTime", {
+    await adapter.setObjectNotExistsAsync(serial + ".OperatingTime", {
         type: "state",
         common: {
             name: "SMA inverter Operating Time",
@@ -224,12 +389,12 @@ function AddInverterVariables(serial) {
         },
         native: { location: serial + ".OperatingTime" }
     });
-    adapter.extendObject(serial + ".OperatingTime", {
+    await adapter.extendObject(serial + ".OperatingTime", {
         common: {
             role: "value",
         }
     });
-    adapter.setObjectNotExists(serial + ".FeedInTime", {
+    await adapter.setObjectNotExistsAsync(serial + ".FeedInTime", {
         type: "state",
         common: {
             name: "SMA inverter Feed In Time",
@@ -241,12 +406,12 @@ function AddInverterVariables(serial) {
         },
         native: { location: serial + ".FeedInTime" }
     });
-    adapter.extendObject(serial + ".FeedInTime", {
+    await adapter.extendObject(serial + ".FeedInTime", {
         common: {
             role: "value",
         }
     });
-    adapter.setObjectNotExists(serial + ".Status", {
+    await adapter.setObjectNotExistsAsync(serial + ".Status", {
         type: "state",
         common: {
             name: "SMA inverter Status",
@@ -260,12 +425,12 @@ function AddInverterVariables(serial) {
             location: serial + ".Status"
         }
     });
-    adapter.extendObject(serial + ".Status", {
+    await adapter.extendObject(serial + ".Status", {
         common: {
             role: "value",
         }
     });
-    adapter.setObjectNotExists(serial + ".GridRelay", {
+    await adapter.setObjectNotExistsAsync(serial + ".GridRelay", {
         type: "state",
         common: {
             name: "SMA inverter Status",
@@ -279,12 +444,12 @@ function AddInverterVariables(serial) {
             location: serial + ".GridRelay"
         }
     });
-    adapter.extendObject(serial + ".GridRelay", {
+    await adapter.extendObject(serial + ".GridRelay", {
         common: {
             role: "value",
         }
     });
-    adapter.setObjectNotExists(serial + ".Temperature", {
+    await adapter.setObjectNotExistsAsync(serial + ".Temperature", {
         type: "state",
         common: {
             name: "SMA inverter Status",
@@ -298,12 +463,12 @@ function AddInverterVariables(serial) {
             location: serial + ".Temperature"
         }
     });
-    adapter.extendObject(serial + ".Temperature", {
+    await adapter.extendObject(serial + ".Temperature", {
         common: {
             role: "value.temperature",
         }
     });
-    adapter.setObjectNotExists(serial + ".Pdc1", {
+    await adapter.setObjectNotExistsAsync(serial + ".Pdc1", {
         type: "state",
         common: {
             name: "SMA inverter Power DC 1",
@@ -317,12 +482,12 @@ function AddInverterVariables(serial) {
             location: serial + ".Pdc1"
         }
     });
-    adapter.extendObject(serial + ".Pdc1", {
+    await adapter.extendObject(serial + ".Pdc1", {
         common: {
             role: "value",
         }
     });
-    adapter.setObjectNotExists(serial + ".Pdc2", {
+    await adapter.setObjectNotExistsAsync(serial + ".Pdc2", {
         type: "state",
         common: {
             name: "SMA inverter Power DC 2",
@@ -336,12 +501,12 @@ function AddInverterVariables(serial) {
             location: serial + ".Pdc2"
         }
     });
-    adapter.extendObject(serial + ".Pdc2", {
+    await adapter.extendObject(serial + ".Pdc2", {
         common: {
             role: "value",
         }
     });
-    adapter.setObjectNotExists(serial + ".Idc1", {
+    await adapter.setObjectNotExistsAsync(serial + ".Idc1", {
         type: "state",
         common: {
             name: "SMA inverter Current DC 1",
@@ -353,12 +518,12 @@ function AddInverterVariables(serial) {
         },
         native: { location: serial + ".Idc1" }
     });
-    adapter.extendObject(serial + ".Idc1", {
+    await adapter.extendObject(serial + ".Idc1", {
         common: {
             role: "value.current",
         }
     });
-    adapter.setObjectNotExists(serial + ".Idc2", {
+    await adapter.setObjectNotExistsAsync(serial + ".Idc2", {
         type: "state",
         common: {
             name: "SMA inverter Current DC 2",
@@ -370,12 +535,12 @@ function AddInverterVariables(serial) {
         },
         native: { location: serial + ".Idc2" }
     });
-    adapter.extendObject(serial + ".Idc2", {
+    await adapter.extendObject(serial + ".Idc2", {
         common: {
             role: "value.current",
         }
     });
-    adapter.setObjectNotExists(serial + ".Udc1", {
+    await adapter.setObjectNotExistsAsync(serial + ".Udc1", {
         type: "state",
         common: {
             name: "SMA inverter Voltage DC 1",
@@ -387,12 +552,12 @@ function AddInverterVariables(serial) {
         },
         native: { location: serial + ".Udc1" }
     });
-    adapter.extendObject(serial + ".Udc1", {
+    await adapter.extendObject(serial + ".Udc1", {
         common: {
             role: "value.voltage",
         }
     });
-    adapter.setObjectNotExists(serial + ".Udc2", {
+    await adapter.setObjectNotExistsAsync(serial + ".Udc2", {
         type: "state",
         common: {
             name: "SMA inverter Voltage DC 2",
@@ -404,12 +569,12 @@ function AddInverterVariables(serial) {
         },
         native: { location: serial + ".Udc2" }
     });
-    adapter.extendObject(serial + ".Udc2", {
+    await adapter.extendObject(serial + ".Udc2", {
         common: {
             role: "value.voltage",
         }
     });
-    adapter.setObjectNotExists(serial + ".Pac1", {
+    await adapter.setObjectNotExistsAsync(serial + ".Pac1", {
         type: "state",
         common: {
             name: "SMA inverter Power AC 1",
@@ -421,12 +586,12 @@ function AddInverterVariables(serial) {
         },
         native: { location: serial + ".Pac1" }
     });
-    adapter.extendObject(serial + ".Pac1", {
+    await adapter.extendObject(serial + ".Pac1", {
         common: {
             role: "value",
         }
     });
-    adapter.setObjectNotExists(serial + ".Pac2", {
+    await adapter.setObjectNotExistsAsync(serial + ".Pac2", {
         type: "state",
         common: {
             name: "SMA inverter Power AC 2",
@@ -438,12 +603,12 @@ function AddInverterVariables(serial) {
         },
         native: { location: serial + ".Pac2" }
     });
-    adapter.extendObject(serial + ".Pac2", {
+    await adapter.extendObject(serial + ".Pac2", {
         common: {
             role: "value",
         }
     });
-    adapter.setObjectNotExists(serial + ".Pac3", {
+    await adapter.setObjectNotExistsAsync(serial + ".Pac3", {
         type: "state",
         common: {
             name: "SMA inverter Power AC 3",
@@ -455,12 +620,12 @@ function AddInverterVariables(serial) {
         },
         native: { location: serial + ".Pac3" }
     });
-    adapter.extendObject(serial + ".Pac3", {
+    await adapter.extendObject(serial + ".Pac3", {
         common: {
             role: "value",
         }
     });
-    adapter.setObjectNotExists(serial + ".Iac1", {
+    await adapter.setObjectNotExistsAsync(serial + ".Iac1", {
         type: "state",
         common: {
             name: "SMA inverter Current AC 1",
@@ -472,12 +637,12 @@ function AddInverterVariables(serial) {
         },
         native: { location: serial + ".Iac1" }
     });
-    adapter.extendObject(serial + ".Iac1", {
+    await adapter.extendObject(serial + ".Iac1", {
         common: {
             role: "value.current",
         }
     });
-    adapter.setObjectNotExists(serial + ".Iac2", {
+    await adapter.setObjectNotExistsAsync(serial + ".Iac2", {
         type: "state",
         common: {
             name: "SMA inverter Current AC 2",
@@ -489,12 +654,12 @@ function AddInverterVariables(serial) {
         },
         native: { location: serial + ".Iac2" }
     });
-    adapter.extendObject(serial + ".Iac2", {
+    await adapter.extendObject(serial + ".Iac2", {
         common: {
             role: "value.current",
         }
     });
-    adapter.setObjectNotExists(serial + ".Iac3", {
+    await adapter.setObjectNotExistsAsync(serial + ".Iac3", {
         type: "state",
         common: {
             name: "SMA inverter Current AC 3",
@@ -506,12 +671,12 @@ function AddInverterVariables(serial) {
         },
         native: { location: serial + ".Iac3" }
     });
-    adapter.extendObject(serial + ".Iac3", {
+    await adapter.extendObject(serial + ".Iac3", {
         common: {
             role: "value.current",
         }
     });
-    adapter.setObjectNotExists(serial + ".Uac1", {
+    await adapter.setObjectNotExistsAsync(serial + ".Uac1", {
         type: "state",
         common: {
             name: "SMA inverter Voltage AC 1",
@@ -523,12 +688,12 @@ function AddInverterVariables(serial) {
         },
         native: { location: serial + ".Uac1" }
     });
-    adapter.extendObject(serial + ".Uac1", {
+    await adapter.extendObject(serial + ".Uac1", {
         common: {
             role: "value.voltage",
         }
     });
-    adapter.setObjectNotExists(serial + ".Uac2", {
+    await adapter.setObjectNotExistsAsync(serial + ".Uac2", {
         type: "state",
         common: {
             name: "SMA inverter Voltage AC 2",
@@ -540,12 +705,12 @@ function AddInverterVariables(serial) {
         },
         native: { location: serial + ".Uac2" }
     });
-    adapter.extendObject(serial + ".Uac2", {
+    await adapter.extendObject(serial + ".Uac2", {
         common: {
             role: "value.voltage",
         }
     });
-    adapter.setObjectNotExists(serial + ".Uac3", {
+    await adapter.setObjectNotExistsAsync(serial + ".Uac3", {
         type: "state",
         common: {
             name: "SMA inverter Voltage AC 3",
@@ -557,12 +722,12 @@ function AddInverterVariables(serial) {
         },
         native: { location: serial + ".Uac3" }
     });
-    adapter.extendObject(serial + ".Uac3", {
+    await adapter.extendObject(serial + ".Uac3", {
         common: {
             role: "value.voltage",
         }
     });
-    adapter.setObjectNotExists(serial + ".Frequency", {
+    await adapter.setObjectNotExistsAsync(serial + ".Frequency", {
         type: "state",
         common: {
             name: "SMA inverter Frequency",
@@ -574,12 +739,12 @@ function AddInverterVariables(serial) {
         },
         native: { location: serial + ".Frequency" }
     });
-    adapter.extendObject(serial + ".Frequency", {
+    await adapter.extendObject(serial + ".Frequency", {
         common: {
             role: "value",
         }
     });
-    adapter.setObjectNotExists(serial + ".BT_Signal", {
+    await adapter.setObjectNotExistsAsync(serial + ".BT_Signal", {
         type: "state",
         common: {
             name: "SMA inverter BT_Signal",
@@ -591,12 +756,12 @@ function AddInverterVariables(serial) {
         },
         native: { location: serial + ".BT_Signal" }
     });
-    adapter.extendObject(serial + ".BT_Signal", {
+    await adapter.extendObject(serial + ".BT_Signal", {
         common: {
             role: "value",
         }
     });
-    adapter.setObjectNotExists(serial + ".timestamp", {
+    await adapter.setObjectNotExistsAsync(serial + ".timestamp", {
         type: "state",
         common: {
             name: "SMA inverter timestamp",
@@ -608,12 +773,12 @@ function AddInverterVariables(serial) {
         },
         native: { location: serial + ".timestamp" }
     });
-    adapter.extendObject(serial + ".timestamp", {
+    await adapter.extendObject(serial + ".timestamp", {
         common: {
             role: "value",
         }
     });
-    adapter.setObjectNotExists(serial + ".lastup", {
+    await adapter.setObjectNotExistsAsync(serial + ".lastup", {
         type: "state",
         common: {
             name: "SMA inverter lastup",
@@ -627,12 +792,12 @@ function AddInverterVariables(serial) {
             location: serial + ".lastup"
         }
     });
-    adapter.extendObject(serial + ".lastup", {
+    await adapter.extendObject(serial + ".lastup", {
         common: {
             role: "value",
         }
     });
-    adapter.setObjectNotExists(serial + ".error", {
+    await adapter.setObjectNotExistsAsync(serial + ".error", {
         type: "state",
         common: {
             name: "SMA inverter error",
@@ -646,12 +811,12 @@ function AddInverterVariables(serial) {
             location: serial + ".error"
         }
     });
-    adapter.extendObject(serial + ".error", {
+    await adapter.extendObject(serial + ".error", {
         common: {
             role: "value",
         }
     });
-    adapter.setObjectNotExists(serial + ".history.today", {
+    await adapter.setObjectNotExistsAsync(serial + ".history.today", {
         type: "state",
         common: {
             name: "SMA inverter history today (JSON)",
@@ -665,12 +830,12 @@ function AddInverterVariables(serial) {
             location: serial + ".history.today"
         }
     });
-    adapter.extendObject(serial + ".history.today", {
+    await adapter.extendObject(serial + ".history.today", {
         common: {
             role: "value",
         }
     });
-    adapter.setObjectNotExists(serial + ".history.last30Days", {
+    await adapter.setObjectNotExistsAsync(serial + ".history.last30Days", {
         type: "state",
         common: {
             name: "SMA inverter history last 30 days (JSON)",
@@ -682,12 +847,12 @@ function AddInverterVariables(serial) {
         },
         native: { location: serial + ".history.last30Days" }
     });
-    adapter.extendObject(serial + ".history.last30Days", {
+    await adapter.extendObject(serial + ".history.last30Days", {
         common: {
             role: "value",
         }
     });
-    adapter.setObjectNotExists(serial + ".history.last12Months", {
+    await adapter.setObjectNotExistsAsync(serial + ".history.last12Months", {
         type: "state",
         common: {
             name: "SMA inverter history last 12 Months (JSON)",
@@ -699,12 +864,12 @@ function AddInverterVariables(serial) {
         },
         native: { location: serial + ".history.last12Months" }
     });
-    adapter.extendObject(serial + ".history.last12Months", {
+    await adapter.extendObject(serial + ".history.last12Months", {
         common: {
             role: "value",
         }
     });
-    adapter.setObjectNotExists(serial + ".history.years", {
+    await adapter.setObjectNotExistsAsync(serial + ".history.years", {
         type: "state",
         common: {
             name: "SMA inverter history years (JSON)",
@@ -716,30 +881,34 @@ function AddInverterVariables(serial) {
         },
         native: { location: serial + ".history.years" }
     });
-    adapter.extendObject(serial + ".history.years", {
+    await adapter.extendObject(serial + ".history.years", {
         common: {
             role: "value",
         }
     });
 }
 
-function CheckInverterVariables() {
+
+
+async function CheckInverterVariables() {
 
 }
 
-function DB_Connect() {
+
+
+async function DB_Connect() {
 
     try {
         if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
 
             //var express = require("express");
-            const mysql = require("mysql");
+            const mysql = require("mysql2/promise");
 
             if (adapter.config.databasetype == "MariaDB") {
                 adapter.log.info("start with MariaDB");
                 adapter.log.debug("--- connecting to " + adapter.config.sbfspotIP + " " + adapter.config.sbfspotPort + " " + adapter.config.sbfspotDatabasename);
 
-                mysql_connection = mysql.createConnection({
+                mysql_connection = await mysql.createConnection({
                     host: adapter.config.sbfspotIP,
                     user: adapter.config.sbfspotUser,
                     port: adapter.config.sbfspotPort,
@@ -747,28 +916,30 @@ function DB_Connect() {
                     database: adapter.config.sbfspotDatabasename
                 });
 
+               
+
             } else {
                 adapter.log.info("start with mySQL");
                 adapter.log.debug("--- connecting to " + adapter.config.sbfspotIP + " " + adapter.config.sbfspotDatabasename);
 
-                mysql_connection = mysql.createConnection({
+                mysql_connection = await mysql.createConnection({
                     host: adapter.config.sbfspotIP,
                     user: adapter.config.sbfspotUser,
                     password: adapter.config.sbfspotPassword,
                     database: adapter.config.sbfspotDatabasename
                 });
+
+                
             }
 
-            mysql_connection.connect(function (err) {
-                if (!err) {
-                    adapter.log.debug("mySql Database is connected ... ");
-                    DB_GetInverters();
-                } else {
-                    adapter.log.error("Error connecting mySql database ... " + err);
 
-                    adapter.terminate ? adapter.terminate(11) : process.exit(11);
-                }
+            mysql_connection.on("error", err => {
+                adapter.log.error("Error on connection: " + err.message);
+                // stop doing stuff with conn
+                DB_Disconnect();
             });
+
+            
         } else {
             adapter.log.info("start with sqlite");
 
@@ -783,7 +954,7 @@ function DB_Connect() {
 
             sqlite_db = new sqlite3(dbPath, { fileMustExist: true });
             adapter.log.debug("sqlite Database is connected ...");
-            DB_GetInverters();
+            //DB_GetInverters();
 
         }
 
@@ -793,133 +964,144 @@ function DB_Connect() {
     }
 }
 
-function DB_GetInverters() {
 
+
+
+
+async function DB_GetInverters() {
+
+    let retRows;
     try {
         const query = "SELECT * from Inverters";
-        numOfInverters = 0;
+        //numOfInverters = 0;
         adapter.log.debug(query);
+
+
+
         if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
-            mysql_connection.query(query, function (err, rows, fields) {
-                GetInverter(err, rows);
-            });
+
+            const [rows, fields] = await mysql_connection.execute(query);
+
+            retRows = rows;
+
+            //await GetInverter(0, rows);
+
+           
         } else {
 
             const stmt = sqlite_db.prepare(query);
 
             const rows = stmt.all();
+            retRows = rows;
+            //await GetInverter(0, rows);
 
-            GetInverter(0, rows);
-
-            /*
-            sqlite_db.all(query, function (err, rows) {
- 
-                GetInverter(err, rows);
-            });
-            */
+            
         }
+
+        
+
+
     }
     catch (e) {
         adapter.log.error("exception in DB_GetInverters [" + e + "]");
     }
+
+
+    return retRows;
 }
 
-function GetInverter(err, rows) {
-    if (!err) {
-
-        adapter.log.debug("rows " + JSON.stringify(rows));
-
-        if (rows.length > 0) {
-
-            for (const i in rows) {
 
 
-                adapter.log.info("got data from " + rows[i].Type + " with ID " + rows[i].Serial);
 
-                AddInverterVariables(rows[i].Serial);
+async function GetInverter(i, rows) {
 
-                adapter.setState(rows[i].Serial + ".Type", { ack: true, val: rows[i].Type });
-                adapter.setState(rows[i].Serial + ".SW_Version", { ack: true, val: rows[i].SW_Version });
-                adapter.setState(rows[i].Serial + ".TotalPac", { ack: true, val: rows[i].TotalPac });
-                adapter.setState(rows[i].Serial + ".OperatingTime", { ack: true, val: rows[i].OperatingTime });
-                adapter.setState(rows[i].Serial + ".FeedInTime", { ack: true, val: rows[i].FeedInTime });
-                adapter.setState(rows[i].Serial + ".Status", { ack: true, val: rows[i].Status });
-                adapter.setState(rows[i].Serial + ".GridRelay", { ack: true, val: rows[i].GridRelay });
-                adapter.setState(rows[i].Serial + ".Temperature", { ack: true, val: rows[i].Temperature });
-                adapter.setState(rows[i].Serial + ".timestamp", { ack: true, val: rows[i].TimeStamp });
+    adapter.log.info("got data from " + rows[i].Type + " with ID " + rows[i].Serial);
+
+    await AddInverterVariables(rows[i].Serial);
+
+    await adapter.setStateAsync(rows[i].Serial + ".Type", { ack: true, val: rows[i].Type });
+    await adapter.setStateAsync(rows[i].Serial + ".SW_Version", { ack: true, val: rows[i].SW_Version });
+    await adapter.setStateAsync(rows[i].Serial + ".TotalPac", { ack: true, val: rows[i].TotalPac });
+    await adapter.setStateAsync(rows[i].Serial + ".OperatingTime", { ack: true, val: rows[i].OperatingTime });
+    await adapter.setStateAsync(rows[i].Serial + ".FeedInTime", { ack: true, val: rows[i].FeedInTime });
+    await adapter.setStateAsync(rows[i].Serial + ".Status", { ack: true, val: rows[i].Status });
+    await adapter.setStateAsync(rows[i].Serial + ".GridRelay", { ack: true, val: rows[i].GridRelay });
+    await adapter.setStateAsync(rows[i].Serial + ".Temperature", { ack: true, val: rows[i].Temperature });
+    await adapter.setStateAsync(rows[i].Serial + ".timestamp", { ack: true, val: rows[i].TimeStamp });
 
 
-                const oDate = new Date(rows[i].TimeStamp * 1000);
-                const nDate = oDate.getDate();
-                const nMonth = oDate.getMonth() + 1;
-                const nYear = oDate.getFullYear();
-                const nHours = oDate.getHours();
-                const nMinutes = oDate.getMinutes();
-                const nSeconds = oDate.getSeconds();
-                const sLastup = nDate + "." + nMonth + "." + nYear + " " + nHours + ":" + nMinutes + ":" + nSeconds;
+    const oDate = new Date(rows[i].TimeStamp * 1000);
+    const nDate = oDate.getDate();
+    const nMonth = oDate.getMonth() + 1;
+    const nYear = oDate.getFullYear();
+    const nHours = oDate.getHours();
+    const nMinutes = oDate.getMinutes();
+    const nSeconds = oDate.getSeconds();
+    const sLastup = nDate + "." + nMonth + "." + nYear + " " + nHours + ":" + nMinutes + ":" + nSeconds;
 
-                adapter.setState(rows[i].Serial + ".lastup", { ack: true, val: sLastup });
-                const oToday = new Date();
-                let sError = "none";
-                if (Math.abs(oDate.getTime() - oToday.getTime()) > (24 * 60 * 60 * 1000)) {
+    await adapter.setStateAsync(rows[i].Serial + ".lastup", { ack: true, val: sLastup });
+    const oToday = new Date();
+    let sError = "none";
+    if (Math.abs(oDate.getTime() - oToday.getTime()) > (24 * 60 * 60 * 1000)) {
 
-                    sError = "sbfspot no update since " + sLastup + " ";
+        sError = "sbfspot no update since " + sLastup + " ";
 
-                    adapter.log.debug(sError);
-
-                }
-                adapter.setState(rows[i].Serial + ".error", { ack: true, val: sError });
-                numOfInverters++;
-                DB_GetInvertersData(rows[i].Serial);
-            }
-        } else {
-            //
-            adapter.log.debug("no inverter data found");
-            DB_AddDummyData();
-
-        }
-
-    } else {
-        adapter.log.error("Error while performing Query in GetInverter. " + err);
-
-        //Schreibrechte auf den DB-Ordner???
+        adapter.log.debug(sError);
 
     }
+    await adapter.setStateAsync(rows[i].Serial + ".error", { ack: true, val: sError });
+    //numOfInverters++;
+    // await DB_GetInvertersData(rows[i].Serial);
+
+
+
+
 
 }
 
 
-function DB_GetInvertersData(serial) {
+
+
+async function DB_GetInvertersData(serial) {
+
+    let retRows;
+
     try {
         //SELECT * from SpotData  where Serial ='2000562095' ORDER BY TimeStamp DESC LIMIT 1
         const query = "SELECT * from SpotData  where Serial =" + serial + " ORDER BY TimeStamp DESC LIMIT 1";
         adapter.log.debug(query);
         if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
             //we only get one row = last one
-            mysql_connection.query(query, function (err, rows, fields) {
-                GetInverterData(err, rows, serial);
-            });
+
+            const [rows, fields] = await mysql_connection.execute(query);
+
+            retRows = rows;
+            //await GetInverterData(0, rows, serial);
+
+            
         } else {
 
             const stmt = sqlite_db.prepare(query);
 
             const rows = stmt.all();
 
-            GetInverterData(0, rows, serial);
+            retRows = rows;
 
-            /*
-            sqlite_db.all(query, function (err, rows) {
-                GetInverterData(err, rows, serial);
-            });
-            */
+            //await GetInverterData(0, rows, serial);
+
+            
         }
     }
     catch (e) {
         adapter.log.error("exception in DB_GetInvertersData [" + e + "]");
     }
+
+    return retRows;
 }
 
-function GetInverterData(err, rows, serial) {
+
+
+async function GetInverterData(err, rows, serial) {
     if (!err) {
         adapter.log.debug("rows " + JSON.stringify(rows));
 
@@ -938,37 +1120,37 @@ function GetInverterData(err, rows, serial) {
             const nYearToday = oDateToday.getFullYear();
 
 
-            adapter.setState(rows[i].Serial + ".Pdc1", { ack: true, val: rows[i].Pdc1 });
-            adapter.setState(rows[i].Serial + ".Pdc2", { ack: true, val: rows[i].Pdc2 });
-            adapter.setState(rows[i].Serial + ".Idc1", { ack: true, val: rows[i].Idc1 });
-            adapter.setState(rows[i].Serial + ".Idc2", { ack: true, val: rows[i].Idc2 });
-            adapter.setState(rows[i].Serial + ".Udc1", { ack: true, val: rows[i].Udc1 });
-            adapter.setState(rows[i].Serial + ".Udc2", { ack: true, val: rows[i].Udc2 });
+            await adapter.setStateAsync(rows[i].Serial + ".Pdc1", { ack: true, val: rows[i].Pdc1 });
+            await adapter.setStateAsync(rows[i].Serial + ".Pdc2", { ack: true, val: rows[i].Pdc2 });
+            await adapter.setStateAsync(rows[i].Serial + ".Idc1", { ack: true, val: rows[i].Idc1 });
+            await adapter.setStateAsync(rows[i].Serial + ".Idc2", { ack: true, val: rows[i].Idc2 });
+            await adapter.setStateAsync(rows[i].Serial + ".Udc1", { ack: true, val: rows[i].Udc1 });
+            await adapter.setStateAsync(rows[i].Serial + ".Udc2", { ack: true, val: rows[i].Udc2 });
 
-            adapter.setState(rows[i].Serial + ".Pac1", { ack: true, val: rows[i].Pac1 });
-            adapter.setState(rows[i].Serial + ".Pac2", { ack: true, val: rows[i].Pac2 });
-            adapter.setState(rows[i].Serial + ".Pac3", { ack: true, val: rows[i].Pac3 });
-            adapter.setState(rows[i].Serial + ".Iac1", { ack: true, val: rows[i].Iac1 });
-            adapter.setState(rows[i].Serial + ".Iac2", { ack: true, val: rows[i].Iac2 });
-            adapter.setState(rows[i].Serial + ".Iac3", { ack: true, val: rows[i].Iac3 });
-            adapter.setState(rows[i].Serial + ".Uac1", { ack: true, val: rows[i].Uac1 });
-            adapter.setState(rows[i].Serial + ".Uac2", { ack: true, val: rows[i].Uac2 });
-            adapter.setState(rows[i].Serial + ".Uac3", { ack: true, val: rows[i].Uac3 });
+            await adapter.setStateAsync(rows[i].Serial + ".Pac1", { ack: true, val: rows[i].Pac1 });
+            await adapter.setStateAsync(rows[i].Serial + ".Pac2", { ack: true, val: rows[i].Pac2 });
+            await adapter.setStateAsync(rows[i].Serial + ".Pac3", { ack: true, val: rows[i].Pac3 });
+            await adapter.setStateAsync(rows[i].Serial + ".Iac1", { ack: true, val: rows[i].Iac1 });
+            await adapter.setStateAsync(rows[i].Serial + ".Iac2", { ack: true, val: rows[i].Iac2 });
+            await adapter.setStateAsync(rows[i].Serial + ".Iac3", { ack: true, val: rows[i].Iac3 });
+            await adapter.setStateAsync(rows[i].Serial + ".Uac1", { ack: true, val: rows[i].Uac1 });
+            await adapter.setStateAsync(rows[i].Serial + ".Uac2", { ack: true, val: rows[i].Uac2 });
+            await adapter.setStateAsync(rows[i].Serial + ".Uac3", { ack: true, val: rows[i].Uac3 });
 
 
             adapter.log.debug("### " + nDay + "." + nMonth + "." + nYear + " = " + nDayToday + "." + nMonthToday + "." + nYearToday);
 
             if (nDay == nDayToday && nMonth == nMonthToday && nYear == nYearToday) {
-                adapter.setState(rows[i].Serial + ".EToday", { ack: true, val: rows[i].EToday });
+                await adapter.setStateAsync(rows[i].Serial + ".EToday", { ack: true, val: rows[i].EToday });
             } else {
-                adapter.setState(rows[i].Serial + ".EToday", { ack: true, val: 0 });
+                await adapter.setStateAsync(rows[i].Serial + ".EToday", { ack: true, val: 0 });
             }
-            adapter.setState(rows[i].Serial + ".ETotal", { ack: true, val: rows[i].ETotal });
-            adapter.setState(rows[i].Serial + ".Frequency", { ack: true, val: rows[i].Frequency });
-            adapter.setState(rows[i].Serial + ".BT_Signal", { ack: true, val: rows[i].BT_Signal });
+            await adapter.setStateAsync(rows[i].Serial + ".ETotal", { ack: true, val: rows[i].ETotal });
+            await adapter.setStateAsync(rows[i].Serial + ".Frequency", { ack: true, val: rows[i].Frequency });
+            await adapter.setStateAsync(rows[i].Serial + ".BT_Signal", { ack: true, val: rows[i].BT_Signal });
         }
 
-        DB_CalcHistory_LastMonth(serial);
+        //await DB_CalcHistory_LastMonth(serial);
 
     } else {
         adapter.log.error("Error while performing Query in GetInverterData. " + err);
@@ -976,8 +1158,12 @@ function GetInverterData(err, rows, serial) {
 }
 
 
-function DB_CalcHistory_LastMonth(serial) {
 
+
+
+async function DB_CalcHistory_LastMonth(serial) {
+
+    let retRows;
     try {
         //täglich im aktuellen Monat
         //SELECT from_unixtime(TimeStamp, '%Y-%m-%d') as date, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '2000562095' AND TimeStamp>= 1501542000 AND TimeStamp<= 1504133999 Group By from_unixtime(TimeStamp, '%Y-%m-%d')
@@ -1002,32 +1188,35 @@ function DB_CalcHistory_LastMonth(serial) {
         }
         adapter.log.debug(query);
         if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
-            mysql_connection.query(query, function (err, rows, fields) {
 
-                CalcHistory_LastMonth(err, rows, serial);
-            });
+            const [rows, fields] = await mysql_connection.execute(query);
+
+            retRows = rows;
+            //await calcHistory_LastMonth(0, rows, serial);
+
+            
         } else {
 
             const stmt = sqlite_db.prepare(query);
 
             const rows = stmt.all();
+            retRows = rows;
+            //await CalcHistory_LastMonth(0, rows, serial);
 
-            CalcHistory_LastMonth(0, rows, serial);
-
-            /*
-            sqlite_db.all(query, function (err, rows) {
-
-                CalcHistory_LastMonth(err, rows, serial);
-            });
-            */
+            
         }
     }
     catch (e) {
         adapter.log.error("exception in DB_CalcHistory_LastMonth [" + e + "]");
     }
+
+    return retRows;
 }
 
-function CalcHistory_LastMonth(err, rows, serial) {
+
+
+
+async function CalcHistory_LastMonth(err, rows, serial) {
 
     if (!err) {
         adapter.log.debug("rows " + JSON.stringify(rows));
@@ -1050,9 +1239,9 @@ function CalcHistory_LastMonth(err, rows, serial) {
 
         }
 
-        adapter.setState(serial + ".history.last30Days", { ack: true, val: JSON.stringify(oLastDays) });
+        await adapter.setStateAsync(serial + ".history.last30Days", { ack: true, val: JSON.stringify(oLastDays) });
 
-        DB_CalcHistory_Prepare(serial);
+        //await DB_CalcHistory_Prepare(serial);
     } else {
         adapter.log.error("Error while performing Query in CalcHistory_LastMonth. " + err);
     }
@@ -1060,8 +1249,11 @@ function CalcHistory_LastMonth(err, rows, serial) {
 }
 
 
-function DB_CalcHistory_Prepare(serial) {
 
+
+async function DB_CalcHistory_Prepare(serial) {
+
+    let retRows;
     try {
         //var dateto = new Date(); //today
 
@@ -1075,32 +1267,34 @@ function DB_CalcHistory_Prepare(serial) {
         adapter.log.debug(query);
 
         if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
-            mysql_connection.query(query, function (err, rows, fields) {
-                CalcHistory_Prepare(err, rows, serial);
-            });
+
+            const [rows, fields] = await mysql_connection.execute(query);
+
+            retRows = rows;
+            //await CalcHistory_Prepare(0, rows, serial);
+
+
         } else {
 
 
             const stmt = sqlite_db.prepare(query);
 
             const rows = stmt.all();
+            retRows = rows;
+            //await CalcHistory_Prepare(0, rows, serial);
 
-            CalcHistory_Prepare(0, rows, serial);
-
-            /*
-
-            sqlite_db.all(query, function (err, rows) {
-                CalcHistory_Prepare(err, rows, serial);
-            });
-            */
         }
     }
     catch (e) {
         adapter.log.error("exception in DB_CalcHistory_Prepare [" + e + "]");
     }
+
+    return retRows;
 }
 
-function CalcHistory_Prepare(err, rows, serial) {
+
+
+async function CalcHistory_Prepare(err, rows, serial) {
     if (!err) {
         adapter.log.debug("prepare: rows " + JSON.stringify(rows));
 
@@ -1114,15 +1308,18 @@ function CalcHistory_Prepare(err, rows, serial) {
             adapter.log.debug(FirstDate4History + " " + FirstValue4History);
         }
 
-        DB_CalcHistory_Today(serial);
+        //await DB_CalcHistory_Today(serial);
     } else {
         adapter.log.error("Error while performing Query in CalcHistory_Prepare. " + err);
     }
 }
 
 
-function DB_CalcHistory_Today(serial) {
 
+
+async function DB_CalcHistory_Today(serial) {
+
+    let retRows;
     try {
         const dateto = new Date(); //today
 
@@ -1140,31 +1337,35 @@ function DB_CalcHistory_Today(serial) {
         }
         adapter.log.debug(query);
         if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
-            mysql_connection.query(query, function (err, rows, fields) {
-                CalcHistory_Today(err, rows, serial);
-            });
+
+            const [rows, fields] = await mysql_connection.execute(query);
+            retRows = rows;
+
+            //await CalcHistory_Today(0, rows, serial);
+
+            
         } else {
 
             const stmt = sqlite_db.prepare(query);
 
             const rows = stmt.all();
+            retRows = rows;
+            //await CalcHistory_Today(0, rows, serial);
 
-            CalcHistory_Today(0, rows, serial);
-
-            /*
-
-            sqlite_db.all(query, function (err, rows) {
-                CalcHistory_Today(err, rows, serial);
-            });
-            */
+           
         }
     }
     catch (e) {
         adapter.log.error("exception in DB_CalcHistory_Today [" + e + "]");
     }
+
+
+    return retRows;
 }
 
-function CalcHistory_Today(err, rows, serial) {
+
+
+async function CalcHistory_Today(err, rows, serial) {
     if (!err) {
         adapter.log.debug("rows " + JSON.stringify(rows));
 
@@ -1182,17 +1383,21 @@ function CalcHistory_Today(err, rows, serial) {
             //adapter.log.debug(JSON.stringify(oLastDays));
         }
 
-        adapter.setState(serial + ".history.today", { ack: true, val: JSON.stringify(oLastDays) });
+        await adapter.setStateAsync(serial + ".history.today", { ack: true, val: JSON.stringify(oLastDays) });
 
-        DB_CalcHistory_Years(serial);
+        //await DB_CalcHistory_Years(serial);
     } else {
         adapter.log.error("Error while performing Query in CalcHistory_Today. " + err);
     }
 }
 
 
-function DB_CalcHistory_Years(serial) {
 
+
+
+async function DB_CalcHistory_Years(serial) {
+
+    let retRows;
     try {
         //SELECT from_unixtime(TimeStamp, '%Y') as date, Max(`ETotal`) as ertrag FROM `SpotData` WHERE `Serial` = '2000562095'  Group By from_unixtime(TimeStamp, '%Y')
 
@@ -1204,32 +1409,38 @@ function DB_CalcHistory_Years(serial) {
         }
         adapter.log.debug(query);
         if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
-            mysql_connection.query(query, function (err, rows, fields) {
-                CalcHistory_Years(err, rows, serial);
-            });
+
+            const [rows, fields] = await mysql_connection.execute(query);
+
+            retRows = rows;
+            //await CalcHistory_Years(0, rows, serial);
+
+           
         } else {
 
             const stmt = sqlite_db.prepare(query);
 
             const rows = stmt.all();
+            retRows = rows;
 
-            CalcHistory_Years(0, rows, serial);
+            //await CalcHistory_Years(0, rows, serial);
 
-            /*
-            sqlite_db.all(query, function (err, rows) {
-                CalcHistory_Years(err, rows, serial);
-            });
-            */
+            
 
         }
     }
     catch (e) {
         adapter.log.error("exception in DB_CalcHistory_Years [" + e + "]");
     }
+
+    return retRows;
 }
 
 
-function CalcHistory_Years(err, rows, serial) {
+
+
+
+async function CalcHistory_Years(err, rows, serial) {
     if (!err) {
         adapter.log.debug("rows " + JSON.stringify(rows));
 
@@ -1289,12 +1500,7 @@ function CalcHistory_Years(err, rows, serial) {
                     });
                 }
 
-                /*
-                oLastYears.push({
-                    "year": data["date"],
-                    "value": data["ertrag"]
-                });
-                */
+                
             } else {
 
 
@@ -1311,16 +1517,19 @@ function CalcHistory_Years(err, rows, serial) {
 
         }
         adapter.log.debug(JSON.stringify(oLastYears));
-        adapter.setState(serial + ".history.years", { ack: true, val: JSON.stringify(oLastYears) });
+        await adapter.setStateAsync(serial + ".history.years", { ack: true, val: JSON.stringify(oLastYears) });
 
-        DB_CalcHistory_Months(serial);
+        //await DB_CalcHistory_Months(serial);
     } else {
         adapter.log.error("Error while performing Query in CalcHistory_Years. " + err);
     }
 }
 
-function DB_CalcHistory_Months(serial) {
 
+
+async function DB_CalcHistory_Months(serial) {
+
+    let retRows;
     try {
         const dateto = new Date(); //today
 
@@ -1343,33 +1552,33 @@ function DB_CalcHistory_Months(serial) {
         }
         adapter.log.debug(query);
         if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
-            mysql_connection.query(query, function (err, rows, fields) {
-                CalcHistory_Months(err, rows, serial);
-            });
+
+            const [rows, fields] = await mysql_connection.execute(query);
+            retRows = rows;
+            //await CalcHistory_Months(0, rows, serial);
+
+
         } else {
 
             const stmt = sqlite_db.prepare(query);
 
             const rows = stmt.all();
+            retRows = rows;
+            //await CalcHistory_Months(0, rows, serial);
 
-            CalcHistory_Months(0, rows, serial);
-
-            /*
-
-            sqlite_db.all(query, function (err, rows) {
-                CalcHistory_Months(err, rows, serial);
-            });
-
-*/
-
+           
         }
     }
     catch (e) {
         adapter.log.error("exception in DB_CalcHistory_Months [" + e + "]");
     }
+
+    return retRows;
 }
 
-function CalcHistory_Months(err, rows, serial) {
+
+
+async function CalcHistory_Months(err, rows, serial) {
     if (!err) {
         adapter.log.debug("rows " + JSON.stringify(rows));
 
@@ -1387,15 +1596,18 @@ function CalcHistory_Months(err, rows, serial) {
             //adapter.log.debug(JSON.stringify(oLastDays));
         }
 
-        adapter.setState(serial + ".history.last12Months", { ack: true, val: JSON.stringify(oLastMonth) });
+        await adapter.setStateAsync(serial + ".history.last12Months", { ack: true, val: JSON.stringify(oLastMonth) });
 
-        DB_Disconnect();
+        //DB_Disconnect();
     } else {
         adapter.log.error("Error while performing Query in CalcHistory_Months. " + err);
     }
 }
 
-function DB_AddDummyData() {
+
+
+
+async function DB_AddDummyData() {
 
     try {
         adapter.log.debug("add dummy data");
@@ -1410,14 +1622,12 @@ function DB_AddDummyData() {
 
         adapter.log.debug(query);
         if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
-            mysql_connection.query(query, function (err, result) {
 
-                if (err) {
-                    adapter.log.error("error " + err);
-                }
 
-                adapter.terminate ? adapter.terminate(11) : process.exit(11);
-            });
+            await mysql_connection.execute(query);
+
+           
+
         } else {
 
             const stmt = sqlite_db.prepare(query);
@@ -1425,16 +1635,7 @@ function DB_AddDummyData() {
             stmt.all();
 
 
-            /*
-            sqlite_db.all(query, function (err, rows) {
-
-                if (err) {
-                    adapter.log.error("error " + err);
-                }
-
-                adapter.terminate ? adapter.terminate(11) : process.exit(11);
-            });
-            */
+           
 
         }
     }
@@ -1445,36 +1646,35 @@ function DB_AddDummyData() {
 }
 
 
+
+
 function DB_Disconnect() {
 
-    numOfInverters--;
+    //numOfInverters--;
     // wait for all data paths... last data path will close connection
 
-    if (numOfInverters == 0) {
-        adapter.log.debug("disconnect database");
-        if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
-            mysql_connection.end();
-        } else {
-            sqlite_db.close();
-        }
-
-        adapter.log.info("all done ... ");
-
-        if (killTimer) {
-            clearTimeout(killTimer);
-            adapter.log.debug("timer killed");
-        }
-
-        adapter.terminate ? adapter.terminate(11) : process.exit(11);
-
+    //if (numOfInverters == 0) {
+    adapter.log.debug("disconnect database");
+    if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
+        mysql_connection.end();
     } else {
-        adapter.log.debug("need to wait for disconnect");
+        sqlite_db.close();
     }
+
+    adapter.log.info("all done ... ");
+
+    
+    //} else {
+    //    adapter.log.debug("need to wait for disconnect");
+    //}
 }
+
+
 /**
  * @param {string} timeVal
  * @param {string} timeLimit
  */
+/*
 function IsLater(timeVal, timeLimit) {
 
     let ret = false;
@@ -1506,11 +1706,12 @@ function IsLater(timeVal, timeLimit) {
     }
     return ret;
 }
-
+*/
 /**
  * @param {string } timeVal
  * @param {string } [timeLimit]
  */
+/*
 function IsEarlier(timeVal, timeLimit) {
 
     let ret = false;
@@ -1542,11 +1743,12 @@ function IsEarlier(timeVal, timeLimit) {
     }
     return ret;
 }
-
+*/
 /**
  * @param {string} timeVal
  * @param {string} timeLimit
  */
+/*
 function IsEqual(timeVal, timeLimit) {
 
     let ret = false;
@@ -1577,7 +1779,7 @@ function IsEqual(timeVal, timeLimit) {
     }
     return ret;
 }
-
+*/
 
 // If started as allInOne/compact mode => return function to create instance
 if (module && module.parent) {
