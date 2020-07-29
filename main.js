@@ -61,9 +61,9 @@ async function main() {
 
     killTimer = setTimeout(function () {
         //adapter.stop();
-        adapter.log.error("force terminate in connect");
+        adapter.log.error("force terminate ");
         adapter.terminate ? adapter.terminate(11) : process.exit(11);
-    }, 6000);
+    }, 2*60*1000);
 
 
     let daylight = false;
@@ -279,6 +279,8 @@ async function GetSystemDateformat() {
 
 
 async function AddInverterVariables(serial) {
+
+    adapter.log.debug("AddInverterVariables for " + serial );
 
     //This will be refused in future versions.Please report this to the developer.
     //The id 1100173807 has an invalid type!: Expected "string" or "object", received "number".
@@ -886,6 +888,8 @@ async function AddInverterVariables(serial) {
             role: "value",
         }
     });
+
+    adapter.log.debug("AddInverterVariables done " );
 }
 
 
@@ -1054,7 +1058,7 @@ async function GetInverter(i, rows) {
     // await DB_GetInvertersData(rows[i].Serial);
 
 
-
+    adapter.log.debug("GetInverter done");
 
 
 }
@@ -1065,6 +1069,8 @@ async function GetInverter(i, rows) {
 async function DB_GetInvertersData(serial) {
 
     let retRows;
+
+    adapter.log.debug("DB_GetInvertersData for " + serial);
 
     try {
         //SELECT * from SpotData  where Serial ='2000562095' ORDER BY TimeStamp DESC LIMIT 1
@@ -1096,12 +1102,17 @@ async function DB_GetInvertersData(serial) {
         adapter.log.error("exception in DB_GetInvertersData [" + e + "]");
     }
 
+    adapter.log.debug("DB_GetInvertersData done ");
+
     return retRows;
 }
 
 
 
 async function GetInverterData(err, rows, serial) {
+
+    adapter.log.debug("GetInverterData for " + serial);
+
     if (!err) {
         adapter.log.debug("rows " + JSON.stringify(rows));
 
@@ -1155,6 +1166,9 @@ async function GetInverterData(err, rows, serial) {
     } else {
         adapter.log.error("Error while performing Query in GetInverterData. " + err);
     }
+
+    adapter.log.debug("GetInverterData done ");
+
 }
 
 
@@ -1162,6 +1176,8 @@ async function GetInverterData(err, rows, serial) {
 
 
 async function DB_CalcHistory_LastMonth(serial) {
+
+    adapter.log.debug("DB_CalcHistory_LastMonth for " + serial);
 
     let retRows;
     try {
@@ -1218,6 +1234,8 @@ async function DB_CalcHistory_LastMonth(serial) {
 
 async function CalcHistory_LastMonth(err, rows, serial) {
 
+    adapter.log.debug("CalcHistory_LastMonth for " + serial);
+
     if (!err) {
         adapter.log.debug("rows " + JSON.stringify(rows));
 
@@ -1252,6 +1270,9 @@ async function CalcHistory_LastMonth(err, rows, serial) {
 
 
 async function DB_CalcHistory_Prepare(serial) {
+
+
+    adapter.log.debug("DB_CalcHistory_Prepare for " + serial);
 
     let retRows;
     try {
@@ -1295,6 +1316,9 @@ async function DB_CalcHistory_Prepare(serial) {
 
 
 async function CalcHistory_Prepare(err, rows, serial) {
+
+    adapter.log.debug("CalcHistory_Prepare for " + serial);
+
     if (!err) {
         adapter.log.debug("prepare: rows " + JSON.stringify(rows));
 
@@ -1318,6 +1342,8 @@ async function CalcHistory_Prepare(err, rows, serial) {
 
 
 async function DB_CalcHistory_Today(serial) {
+
+    adapter.log.debug("DB_CalcHistory_Today for " + serial);
 
     let retRows;
     try {
@@ -1366,6 +1392,9 @@ async function DB_CalcHistory_Today(serial) {
 
 
 async function CalcHistory_Today(err, rows, serial) {
+
+    adapter.log.debug("CalcHistory_Today for " + serial);
+
     if (!err) {
         adapter.log.debug("rows " + JSON.stringify(rows));
 
@@ -1396,6 +1425,8 @@ async function CalcHistory_Today(err, rows, serial) {
 
 
 async function DB_CalcHistory_Years(serial) {
+
+    adapter.log.debug("DB_CalcHistory_Years for " + serial);
 
     let retRows;
     try {
@@ -1441,6 +1472,10 @@ async function DB_CalcHistory_Years(serial) {
 
 
 async function CalcHistory_Years(err, rows, serial) {
+
+    adapter.log.debug("CalcHistory_Years for " + serial);
+
+
     if (!err) {
         adapter.log.debug("rows " + JSON.stringify(rows));
 
@@ -1529,6 +1564,8 @@ async function CalcHistory_Years(err, rows, serial) {
 
 async function DB_CalcHistory_Months(serial) {
 
+    adapter.log.debug("DB_CalcHistory_Months for " + serial);
+
     let retRows;
     try {
         const dateto = new Date(); //today
@@ -1579,6 +1616,9 @@ async function DB_CalcHistory_Months(serial) {
 
 
 async function CalcHistory_Months(err, rows, serial) {
+
+    adapter.log.debug("CalcHistory_Months for " + serial);
+
     if (!err) {
         adapter.log.debug("rows " + JSON.stringify(rows));
 
