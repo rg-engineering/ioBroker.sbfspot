@@ -48,6 +48,10 @@ sometimes npm intall must be called more then one time to successfully install a
 
 ## Changelog
 
+
+## 4.0.1 (2020-09-22)
+* (René) bug fix based on CI tests
+
 ## 4.0.0 (2020-07-28)
 * (René) rework to use async/await
 * (René) use mysql2

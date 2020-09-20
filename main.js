@@ -94,82 +94,82 @@ async function main() {
 
     if (daylight) {
 
+        let connected = false;
+        connected = await DB_Connect();
 
-        await DB_Connect();
+        if (connected) {
+            const rows = await DB_GetInverters();
 
+            adapter.log.debug("rows " + JSON.stringify(rows));
 
-        const rows = await DB_GetInverters();
+            if (rows.length > 0) {
 
-        adapter.log.debug("rows " + JSON.stringify(rows));
+                for (const i in rows) {
 
-        if (rows.length > 0) {
+                    const serial = rows[i].Serial;
 
-            for (const i in rows) {
-
-                const serial = rows[i].Serial;
-
-                await GetInverter(i, rows);
-
-
-                let rows1 = await DB_GetInvertersData(serial);
-
-                adapter.log.debug("rows " + JSON.stringify(rows1));
+                    await GetInverter(i, rows);
 
 
-                if (rows1 != null) {
+                    let rows1 = await DB_GetInvertersData(serial);
 
-
-                    await GetInverterData(0, rows1, serial);
-
-                    rows1 = await DB_CalcHistory_LastMonth(serial);
+                    adapter.log.debug("rows " + JSON.stringify(rows1));
 
 
                     if (rows1 != null) {
-                        await CalcHistory_LastMonth(0, rows1, serial);
 
-                        
-                        rows1 = await DB_CalcHistory_Prepare(serial);
+
+                        await GetInverterData(0, rows1, serial);
+
+                        rows1 = await DB_CalcHistory_LastMonth(serial);
+
+
                         if (rows1 != null) {
-                            await CalcHistory_Prepare(0, rows1, serial);
+                            await CalcHistory_LastMonth(0, rows1, serial);
 
-                            
-                            rows1 = await DB_CalcHistory_Today(serial);
+
+                            rows1 = await DB_CalcHistory_Prepare(serial);
                             if (rows1 != null) {
-                                await CalcHistory_Today(0, rows1, serial);
+                                await CalcHistory_Prepare(0, rows1, serial);
 
-                                
-                                rows1 = await DB_CalcHistory_Years(serial);
+
+                                rows1 = await DB_CalcHistory_Today(serial);
                                 if (rows1 != null) {
-                                    await CalcHistory_Years(0, rows1, serial);
+                                    await CalcHistory_Today(0, rows1, serial);
 
-                                    rows1 = await DB_CalcHistory_Months(serial);
+
+                                    rows1 = await DB_CalcHistory_Years(serial);
                                     if (rows1 != null) {
-                                        await CalcHistory_Months(0, rows1, serial);
-                                    }
-                                }
-                                
-                            }
-                            
-                        }
-                            
-                    }
+                                        await CalcHistory_Years(0, rows1, serial);
 
+                                        rows1 = await DB_CalcHistory_Months(serial);
+                                        if (rows1 != null) {
+                                            await CalcHistory_Months(0, rows1, serial);
+                                        }
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+
+                    }
 
                 }
 
+
+
+            } else {
+                //
+                adapter.log.debug("no inverter data found");
+                await DB_AddDummyData();
+
+
+
             }
-
-
-
-        } else {
-            //
-            adapter.log.debug("no inverter data found");
-            await DB_AddDummyData();
-
-
-
         }
-        
         DB_Disconnect();
         
 
@@ -192,11 +192,18 @@ async function main() {
 
 async function GetSystemDateformat() {
     const ret = await adapter.getForeignObjectAsync("system.config");
-
-    //dateformat = ret.common.dateFormat;
-    longitude = ret.common.longitude;
-    latitude = ret.common.latitude;
-    adapter.log.debug("system  longitude " + longitude + " latitude " + latitude);
+    
+    if (typeof ret != undefined && ret != null) {
+        //dateformat = ret.common.dateFormat;
+        longitude = ret.common.longitude;
+        latitude = ret.common.latitude;
+        adapter.log.debug("system  longitude " + longitude + " latitude " + latitude);
+    }
+    else {
+        adapter.log.error("system.config not available. longitude and latitude set to Berlin");
+        longitude = 52.520008;
+        latitude = 13.404954;
+    }
 }
 
 /*
@@ -902,6 +909,8 @@ async function CheckInverterVariables() {
 
 async function DB_Connect() {
 
+    let ret = true;
+
     try {
         if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
 
@@ -965,7 +974,10 @@ async function DB_Connect() {
     }
     catch (e) {
         adapter.log.error("exception in DB_Connect [" + e + "]");
+        ret = false;
     }
+
+    return ret;
 }
 
 
