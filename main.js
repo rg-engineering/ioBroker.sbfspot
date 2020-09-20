@@ -1708,9 +1708,13 @@ function DB_Disconnect() {
     //if (numOfInverters == 0) {
     adapter.log.debug("disconnect database");
     if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
-        mysql_connection.end();
+        if (typeof mysql_connection != undefined && mysql_connection != null) {
+            mysql_connection.end();
+        }
     } else {
-        sqlite_db.close();
+        if (typeof sqlite_db != undefined && sqlite_db != null) {
+            sqlite_db.close();
+        }
     }
 
     adapter.log.info("all done ... ");
