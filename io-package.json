@@ -66,6 +66,11 @@
     "type": "hardware",
     "license": "MIT",
     "materialize": true,
+    "plugins": {
+      "sentry": {
+        "dsn": "https://5369ea829c024fdf92b71a7b82f1f410@o390433.ingest.sentry.io/5434783"
+      }
+    },
     "compact": true,
     "authors": [
       {
@@ -74,16 +79,16 @@
       }
     ]
   },
-  "native": {
-    "sbfspotIP": "localhost",
-    "sbfspotPort": 3306,
-    "sbfspotUser": "SBFspotUser",
-    "sbfspotPassword": "",
-    "sbfspotDatabasename": "SBFspot",
-    "databasetype": "mySQL",
-    "sqlite_path": "",
-    "install_date": "2001-08-25",
-    "GetDataOnlyWhenDaylight":  true
+    "native": {
+      "sbfspotIP": "localhost",
+      "sbfspotPort": 3306,
+      "sbfspotUser": "SBFspotUser",
+      "sbfspotPassword": "",
+      "sbfspotDatabasename": "SBFspot",
+      "databasetype": "mySQL",
+      "sqlite_path": "",
+      "install_date": "2001-08-25",
+      "GetDataOnlyWhenDaylight": true
+    }
   }
-}
 
