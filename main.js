@@ -292,6 +292,9 @@ async function AddInverterVariables(serial) {
     //This will be refused in future versions.Please report this to the developer.
     //The id 1100173807 has an invalid type!: Expected "string" or "object", received "number".
     //need a string instead of number as id
+    let key;
+    let obj;
+
     await adapter.setObjectNotExistsAsync(serial.toString(), {
         type: "channel",
         common: {
@@ -300,7 +303,9 @@ async function AddInverterVariables(serial) {
         },
         native: {location: adapter.config.location}
     });
-    await adapter.setObjectNotExistsAsync(serial + ".Type", {
+
+    key = serial + ".Type";
+    await adapter.setObjectNotExistsAsync(key, {
         type: "state",
         common: {
             name: "SMA inverter Serialnumber",
@@ -312,12 +317,21 @@ async function AddInverterVariables(serial) {
         },
         native: { location: serial + ".SerialNo" }
     });
-    await adapter.extendObject(serial + ".Type", {
-        common: {
-            role: "value",
+    obj = await adapter.getObjectAsync(key);
+
+    if (obj != null) {
+
+        if (obj.common.role != "value") {
+            await adapter.extendObject(key, {
+                common: {
+                    role: "value",
+                }
+            });
         }
-    });
-    await adapter.setObjectNotExistsAsync(serial + ".ETotal", {
+    }
+
+    key = serial + ".ETotal";
+    await adapter.setObjectNotExistsAsync(key, {
         type: "state",
         common: {
             name: "SMA inverter Ertrag Total",
@@ -329,12 +343,21 @@ async function AddInverterVariables(serial) {
         },
         native: { location: serial + ".ETotal" }
     });
-    await adapter.extendObject(serial + ".ETotal", {
-        common: {
-            role: "value",
+    obj = await adapter.getObjectAsync(key);
+
+    if (obj != null) {
+
+        if (obj.common.role != "value") {
+            await adapter.extendObject(key, {
+                common: {
+                    role: "value",
+                }
+            });
         }
-    });
-    await adapter.setObjectNotExistsAsync(serial + ".EToday", {
+    }
+
+    key = serial + ".EToday";
+    await adapter.setObjectNotExistsAsync(key, {
         type: "state",
         common: {
             name: "SMA inverter Ertrag Today",
@@ -346,12 +369,21 @@ async function AddInverterVariables(serial) {
         },
         native: { location: serial + ".EToday" }
     });
-    await adapter.extendObject(serial + ".EToday", {
-        common: {
-            role: "value",
+    obj = await adapter.getObjectAsync(key);
+
+    if (obj != null) {
+
+        if (obj.common.role != "value") {
+            await adapter.extendObject(key, {
+                common: {
+                    role: "value",
+                }
+            });
         }
-    });
-    await adapter.setObjectNotExistsAsync(serial + ".SW_Version", {
+    }
+
+    key = serial + ".SW_Version";
+    await adapter.setObjectNotExistsAsync(key, {
         type: "state",
         common: {
             name: "SMA inverter SW Version",
@@ -363,12 +395,21 @@ async function AddInverterVariables(serial) {
         },
         native: { location: serial + ".SW_Version" }
     });
-    await adapter.extendObject(serial + ".SW_Version", {
-        common: {
-            role: "value",
+    obj = await adapter.getObjectAsync(key);
+
+    if (obj != null) {
+
+        if (obj.common.role != "value") {
+            await adapter.extendObject(key, {
+                common: {
+                    role: "value",
+                }
+            });
         }
-    });
-    await adapter.setObjectNotExistsAsync(serial + ".TotalPac", {
+    }
+
+    key = serial + ".TotalPac";
+    await adapter.setObjectNotExistsAsync(key, {
         type: "state",
         common: {
             name: "SMA inverter Total P AC",
@@ -380,13 +421,21 @@ async function AddInverterVariables(serial) {
         },
         native: { location: serial + ".TotalPac" }
     });
-    await adapter.extendObject(serial + ".TotalPac", {
-        common: {
-            name: "SMA inverter Total P AC",
-            role: "value",
+    obj = await adapter.getObjectAsync(key);
+
+    if (obj != null) {
+
+        if (obj.common.role != "value") {
+            await adapter.extendObject(key, {
+                common: {
+                    role: "value",
+                }
+            });
         }
-    });
-    await adapter.setObjectNotExistsAsync(serial + ".OperatingTime", {
+    }
+
+    key = serial + ".OperatingTime";
+    await adapter.setObjectNotExistsAsync(key, {
         type: "state",
         common: {
             name: "SMA inverter Operating Time",
@@ -398,12 +447,21 @@ async function AddInverterVariables(serial) {
         },
         native: { location: serial + ".OperatingTime" }
     });
-    await adapter.extendObject(serial + ".OperatingTime", {
-        common: {
-            role: "value",
+    obj = await adapter.getObjectAsync(key);
+
+    if (obj != null) {
+
+        if (obj.common.role != "value") {
+            await adapter.extendObject(key, {
+                common: {
+                    role: "value",
+                }
+            });
         }
-    });
-    await adapter.setObjectNotExistsAsync(serial + ".FeedInTime", {
+    }
+
+    key = serial + ".FeedInTime";
+    await adapter.setObjectNotExistsAsync(key, {
         type: "state",
         common: {
             name: "SMA inverter Feed In Time",
@@ -415,12 +473,21 @@ async function AddInverterVariables(serial) {
         },
         native: { location: serial + ".FeedInTime" }
     });
-    await adapter.extendObject(serial + ".FeedInTime", {
-        common: {
-            role: "value",
+    obj = await adapter.getObjectAsync(key);
+
+    if (obj != null) {
+
+        if (obj.common.role != "value") {
+            await adapter.extendObject(key, {
+                common: {
+                    role: "value",
+                }
+            });
         }
-    });
-    await adapter.setObjectNotExistsAsync(serial + ".Status", {
+    }
+
+    key = serial + ".Status";
+    await adapter.setObjectNotExistsAsync(key, {
         type: "state",
         common: {
             name: "SMA inverter Status",
@@ -434,12 +501,21 @@ async function AddInverterVariables(serial) {
             location: serial + ".Status"
         }
     });
-    await adapter.extendObject(serial + ".Status", {
-        common: {
-            role: "value",
+    obj = await adapter.getObjectAsync(key);
+
+    if (obj != null) {
+
+        if (obj.common.role != "value") {
+            await adapter.extendObject(key, {
+                common: {
+                    role: "value",
+                }
+            });
         }
-    });
-    await adapter.setObjectNotExistsAsync(serial + ".GridRelay", {
+    }
+
+    key = serial + ".GridRelay";
+    await adapter.setObjectNotExistsAsync(key, {
         type: "state",
         common: {
             name: "SMA inverter Status",
@@ -453,12 +529,21 @@ async function AddInverterVariables(serial) {
             location: serial + ".GridRelay"
         }
     });
-    await adapter.extendObject(serial + ".GridRelay", {
-        common: {
-            role: "value",
+    obj = await adapter.getObjectAsync(key);
+
+    if (obj != null) {
+
+        if (obj.common.role != "value") {
+            await adapter.extendObject(key, {
+                common: {
+                    role: "value",
+                }
+            });
         }
-    });
-    await adapter.setObjectNotExistsAsync(serial + ".Temperature", {
+    }
+
+    key = serial + ".Temperature";
+    await adapter.setObjectNotExistsAsync(key, {
         type: "state",
         common: {
             name: "SMA inverter Status",
@@ -472,12 +557,21 @@ async function AddInverterVariables(serial) {
             location: serial + ".Temperature"
         }
     });
-    await adapter.extendObject(serial + ".Temperature", {
-        common: {
-            role: "value.temperature",
+    obj = await adapter.getObjectAsync(key);
+
+    if (obj != null) {
+
+        if (obj.common.role != "value.temperature") {
+            await adapter.extendObject(key, {
+                common: {
+                    role: "value.temperature",
+                }
+            });
         }
-    });
-    await adapter.setObjectNotExistsAsync(serial + ".Pdc1", {
+    }
+
+    key = serial + ".Pdc1";
+    await adapter.setObjectNotExistsAsync(key, {
         type: "state",
         common: {
             name: "SMA inverter Power DC 1",
@@ -491,12 +585,21 @@ async function AddInverterVariables(serial) {
             location: serial + ".Pdc1"
         }
     });
-    await adapter.extendObject(serial + ".Pdc1", {
-        common: {
-            role: "value",
+    obj = await adapter.getObjectAsync(key);
+
+    if (obj != null) {
+
+        if (obj.common.role != "value") {
+            await adapter.extendObject(key, {
+                common: {
+                    role: "value",
+                }
+            });
         }
-    });
-    await adapter.setObjectNotExistsAsync(serial + ".Pdc2", {
+    }
+
+    key = serial + ".Pdc2";
+    await adapter.setObjectNotExistsAsync(key, {
         type: "state",
         common: {
             name: "SMA inverter Power DC 2",
@@ -510,12 +613,21 @@ async function AddInverterVariables(serial) {
             location: serial + ".Pdc2"
         }
     });
-    await adapter.extendObject(serial + ".Pdc2", {
-        common: {
-            role: "value",
+    obj = await adapter.getObjectAsync(key);
+
+    if (obj != null) {
+
+        if (obj.common.role != "value") {
+            await adapter.extendObject(key, {
+                common: {
+                    role: "value",
+                }
+            });
         }
-    });
-    await adapter.setObjectNotExistsAsync(serial + ".Idc1", {
+    }
+
+    key = serial + ".Idc1";
+    await adapter.setObjectNotExistsAsync(key, {
         type: "state",
         common: {
             name: "SMA inverter Current DC 1",
@@ -527,12 +639,21 @@ async function AddInverterVariables(serial) {
         },
         native: { location: serial + ".Idc1" }
     });
-    await adapter.extendObject(serial + ".Idc1", {
-        common: {
-            role: "value.current",
+    obj = await adapter.getObjectAsync(key);
+
+    if (obj != null) {
+
+        if (obj.common.role != "value.current") {
+            await adapter.extendObject(key, {
+                common: {
+                    role: "value.current",
+                }
+            });
         }
-    });
-    await adapter.setObjectNotExistsAsync(serial + ".Idc2", {
+    }
+
+    key = serial + ".Idc2";
+    await adapter.setObjectNotExistsAsync(key, {
         type: "state",
         common: {
             name: "SMA inverter Current DC 2",
@@ -544,12 +665,21 @@ async function AddInverterVariables(serial) {
         },
         native: { location: serial + ".Idc2" }
     });
-    await adapter.extendObject(serial + ".Idc2", {
-        common: {
-            role: "value.current",
+    obj = await adapter.getObjectAsync(key);
+
+    if (obj != null) {
+
+        if (obj.common.role != "value.current") {
+            await adapter.extendObject(key, {
+                common: {
+                    role: "value.current",
+                }
+            });
         }
-    });
-    await adapter.setObjectNotExistsAsync(serial + ".Udc1", {
+    }
+
+    key = serial + ".Udc1";
+    await adapter.setObjectNotExistsAsync(key, {
         type: "state",
         common: {
             name: "SMA inverter Voltage DC 1",
@@ -561,11 +691,20 @@ async function AddInverterVariables(serial) {
         },
         native: { location: serial + ".Udc1" }
     });
-    await adapter.extendObject(serial + ".Udc1", {
-        common: {
-            role: "value.voltage",
+    obj = await adapter.getObjectAsync(key);
+
+    if (obj != null) {
+
+        if (obj.common.role != "value.voltage") {
+            await adapter.extendObject(key, {
+                common: {
+                    role: "value.voltage",
+                }
+            });
         }
-    });
+    }
+
+    key = serial + ".Udc2";
     await adapter.setObjectNotExistsAsync(serial + ".Udc2", {
         type: "state",
         common: {
@@ -578,12 +717,21 @@ async function AddInverterVariables(serial) {
         },
         native: { location: serial + ".Udc2" }
     });
-    await adapter.extendObject(serial + ".Udc2", {
-        common: {
-            role: "value.voltage",
+    obj = await adapter.getObjectAsync(key);
+
+    if (obj != null) {
+
+        if (obj.common.role != "value.voltage") {
+            await adapter.extendObject(key, {
+                common: {
+                    role: "value.voltage",
+                }
+            });
         }
-    });
-    await adapter.setObjectNotExistsAsync(serial + ".Pac1", {
+    }
+
+    key = serial + ".Pac1";
+    await adapter.setObjectNotExistsAsync(key, {
         type: "state",
         common: {
             name: "SMA inverter Power AC 1",
@@ -595,12 +743,21 @@ async function AddInverterVariables(serial) {
         },
         native: { location: serial + ".Pac1" }
     });
-    await adapter.extendObject(serial + ".Pac1", {
-        common: {
-            role: "value",
+    obj = await adapter.getObjectAsync(key);
+
+    if (obj != null) {
+
+        if (obj.common.role != "value") {
+            await adapter.extendObject(key, {
+                common: {
+                    role: "value",
+                }
+            });
         }
-    });
-    await adapter.setObjectNotExistsAsync(serial + ".Pac2", {
+    }
+
+    key = serial + ".Pac2";
+    await adapter.setObjectNotExistsAsync(key, {
         type: "state",
         common: {
             name: "SMA inverter Power AC 2",
@@ -612,12 +769,21 @@ async function AddInverterVariables(serial) {
         },
         native: { location: serial + ".Pac2" }
     });
-    await adapter.extendObject(serial + ".Pac2", {
-        common: {
-            role: "value",
+    obj = await adapter.getObjectAsync(key);
+
+    if (obj != null) {
+
+        if (obj.common.role != "value") {
+            await adapter.extendObject(key, {
+                common: {
+                    role: "value",
+                }
+            });
         }
-    });
-    await adapter.setObjectNotExistsAsync(serial + ".Pac3", {
+    }
+
+    key = serial + ".Pac3";
+    await adapter.setObjectNotExistsAsync(key, {
         type: "state",
         common: {
             name: "SMA inverter Power AC 3",
@@ -629,12 +795,21 @@ async function AddInverterVariables(serial) {
         },
         native: { location: serial + ".Pac3" }
     });
-    await adapter.extendObject(serial + ".Pac3", {
-        common: {
-            role: "value",
+    obj = await adapter.getObjectAsync(key);
+
+    if (obj != null) {
+
+        if (obj.common.role != "value") {
+            await adapter.extendObject(key, {
+                common: {
+                    role: "value",
+                }
+            });
         }
-    });
-    await adapter.setObjectNotExistsAsync(serial + ".Iac1", {
+    }
+
+    key = serial + ".Iac1";
+    await adapter.setObjectNotExistsAsync(key, {
         type: "state",
         common: {
             name: "SMA inverter Current AC 1",
@@ -646,12 +821,21 @@ async function AddInverterVariables(serial) {
         },
         native: { location: serial + ".Iac1" }
     });
-    await adapter.extendObject(serial + ".Iac1", {
-        common: {
-            role: "value.current",
+    obj = await adapter.getObjectAsync(key);
+
+    if (obj != null) {
+
+        if (obj.common.role != "value.current") {
+            await adapter.extendObject(key, {
+                common: {
+                    role: "value.current",
+                }
+            });
         }
-    });
-    await adapter.setObjectNotExistsAsync(serial + ".Iac2", {
+    }
+
+    key = serial + ".Iac2";
+    await adapter.setObjectNotExistsAsync(key, {
         type: "state",
         common: {
             name: "SMA inverter Current AC 2",
@@ -663,12 +847,21 @@ async function AddInverterVariables(serial) {
         },
         native: { location: serial + ".Iac2" }
     });
-    await adapter.extendObject(serial + ".Iac2", {
-        common: {
-            role: "value.current",
+    obj = await adapter.getObjectAsync(key);
+
+    if (obj != null) {
+
+        if (obj.common.role != "value.current") {
+            await adapter.extendObject(key, {
+                common: {
+                    role: "value.current",
+                }
+            });
         }
-    });
-    await adapter.setObjectNotExistsAsync(serial + ".Iac3", {
+    }
+
+    key = serial + ".Iac3";
+    await adapter.setObjectNotExistsAsync(key, {
         type: "state",
         common: {
             name: "SMA inverter Current AC 3",
@@ -680,12 +873,21 @@ async function AddInverterVariables(serial) {
         },
         native: { location: serial + ".Iac3" }
     });
-    await adapter.extendObject(serial + ".Iac3", {
-        common: {
-            role: "value.current",
+    obj = await adapter.getObjectAsync(key);
+
+    if (obj != null) {
+
+        if (obj.common.role != "value.current") {
+            await adapter.extendObject(key, {
+                common: {
+                    role: "value.current",
+                }
+            });
         }
-    });
-    await adapter.setObjectNotExistsAsync(serial + ".Uac1", {
+    }
+
+    key = serial + ".Uac1";
+    await adapter.setObjectNotExistsAsync(key, {
         type: "state",
         common: {
             name: "SMA inverter Voltage AC 1",
@@ -697,12 +899,21 @@ async function AddInverterVariables(serial) {
         },
         native: { location: serial + ".Uac1" }
     });
-    await adapter.extendObject(serial + ".Uac1", {
-        common: {
-            role: "value.voltage",
+    obj = await adapter.getObjectAsync(key);
+
+    if (obj != null) {
+
+        if (obj.common.role != "value.voltage") {
+            await adapter.extendObject(key, {
+                common: {
+                    role: "value.voltage",
+                }
+            });
         }
-    });
-    await adapter.setObjectNotExistsAsync(serial + ".Uac2", {
+    }
+
+    key = serial + ".Uac2";
+    await adapter.setObjectNotExistsAsync(key, {
         type: "state",
         common: {
             name: "SMA inverter Voltage AC 2",
@@ -714,12 +925,21 @@ async function AddInverterVariables(serial) {
         },
         native: { location: serial + ".Uac2" }
     });
-    await adapter.extendObject(serial + ".Uac2", {
-        common: {
-            role: "value.voltage",
+    obj = await adapter.getObjectAsync(key);
+
+    if (obj != null) {
+
+        if (obj.common.role != "value.voltage") {
+            await adapter.extendObject(key, {
+                common: {
+                    role: "value.voltage",
+                }
+            });
         }
-    });
-    await adapter.setObjectNotExistsAsync(serial + ".Uac3", {
+    }
+
+    key = serial + ".Uac3";
+    await adapter.setObjectNotExistsAsync(key, {
         type: "state",
         common: {
             name: "SMA inverter Voltage AC 3",
@@ -731,12 +951,23 @@ async function AddInverterVariables(serial) {
         },
         native: { location: serial + ".Uac3" }
     });
-    await adapter.extendObject(serial + ".Uac3", {
-        common: {
-            role: "value.voltage",
+    obj = await adapter.getObjectAsync(key);
+
+    if (obj != null) {
+
+        if (obj.common.role != "value.voltage") {
+            await adapter.extendObject(key, {
+                common: {
+                    role: "value.voltage",
+                }
+            });
         }
-    });
-    await adapter.setObjectNotExistsAsync(serial + ".Frequency", {
+    }
+
+    
+
+    key = serial + ".Frequency";
+    await adapter.setObjectNotExistsAsync(key, {
         type: "state",
         common: {
             name: "SMA inverter Frequency",
@@ -748,12 +979,21 @@ async function AddInverterVariables(serial) {
         },
         native: { location: serial + ".Frequency" }
     });
-    await adapter.extendObject(serial + ".Frequency", {
-        common: {
-            role: "value",
+    obj = await adapter.getObjectAsync(key);
+
+    if (obj != null) {
+
+        if (obj.common.role != "value") {
+            await adapter.extendObject(key, {
+                common: {
+                    role: "value",
+                }
+            });
         }
-    });
-    await adapter.setObjectNotExistsAsync(serial + ".BT_Signal", {
+    }
+
+    key = serial + ".BT_Signal";
+    await adapter.setObjectNotExistsAsync(key, {
         type: "state",
         common: {
             name: "SMA inverter BT_Signal",
@@ -765,12 +1005,21 @@ async function AddInverterVariables(serial) {
         },
         native: { location: serial + ".BT_Signal" }
     });
-    await adapter.extendObject(serial + ".BT_Signal", {
-        common: {
-            role: "value",
+    obj = await adapter.getObjectAsync(key);
+
+    if (obj != null) {
+
+        if (obj.common.role != "value") {
+            await adapter.extendObject(key, {
+                common: {
+                    role: "value",
+                }
+            });
         }
-    });
-    await adapter.setObjectNotExistsAsync(serial + ".timestamp", {
+    }
+
+    key = serial + ".timestamp";
+    await adapter.setObjectNotExistsAsync(key, {
         type: "state",
         common: {
             name: "SMA inverter timestamp",
@@ -782,12 +1031,21 @@ async function AddInverterVariables(serial) {
         },
         native: { location: serial + ".timestamp" }
     });
-    await adapter.extendObject(serial + ".timestamp", {
-        common: {
-            role: "value",
+    obj = await adapter.getObjectAsync(key);
+
+    if (obj != null) {
+
+        if (obj.common.role != "value") {
+            await adapter.extendObject(key, {
+                common: {
+                    role: "value",
+                }
+            });
         }
-    });
-    await adapter.setObjectNotExistsAsync(serial + ".lastup", {
+    }
+
+    key = serial + ".lastup";
+    await adapter.setObjectNotExistsAsync(key, {
         type: "state",
         common: {
             name: "SMA inverter lastup",
@@ -801,12 +1059,21 @@ async function AddInverterVariables(serial) {
             location: serial + ".lastup"
         }
     });
-    await adapter.extendObject(serial + ".lastup", {
-        common: {
-            role: "value",
+    obj = await adapter.getObjectAsync(key);
+
+    if (obj != null) {
+
+        if (obj.common.role != "value") {
+            await adapter.extendObject(key, {
+                common: {
+                    role: "value",
+                }
+            });
         }
-    });
-    await adapter.setObjectNotExistsAsync(serial + ".error", {
+    }
+
+    key = serial + ".error";
+    await adapter.setObjectNotExistsAsync(key, {
         type: "state",
         common: {
             name: "SMA inverter error",
@@ -820,12 +1087,21 @@ async function AddInverterVariables(serial) {
             location: serial + ".error"
         }
     });
-    await adapter.extendObject(serial + ".error", {
-        common: {
-            role: "value",
+    obj = await adapter.getObjectAsync(key);
+
+    if (obj != null) {
+
+        if (obj.common.role != "value") {
+            await adapter.extendObject(key, {
+                common: {
+                    role: "value",
+                }
+            });
         }
-    });
-    await adapter.setObjectNotExistsAsync(serial + ".history.today", {
+    }
+
+    key = serial + ".history.today";
+    await adapter.setObjectNotExistsAsync(key, {
         type: "state",
         common: {
             name: "SMA inverter history today (JSON)",
@@ -839,12 +1115,21 @@ async function AddInverterVariables(serial) {
             location: serial + ".history.today"
         }
     });
-    await adapter.extendObject(serial + ".history.today", {
-        common: {
-            role: "value",
+    obj = await adapter.getObjectAsync(key);
+
+    if (obj != null) {
+
+        if (obj.common.role != "value") {
+            await adapter.extendObject(key, {
+                common: {
+                    role: "value",
+                }
+            });
         }
-    });
-    await adapter.setObjectNotExistsAsync(serial + ".history.last30Days", {
+    }
+
+    key = serial + ".history.last30Days";
+    await adapter.setObjectNotExistsAsync(key, {
         type: "state",
         common: {
             name: "SMA inverter history last 30 days (JSON)",
@@ -856,12 +1141,21 @@ async function AddInverterVariables(serial) {
         },
         native: { location: serial + ".history.last30Days" }
     });
-    await adapter.extendObject(serial + ".history.last30Days", {
-        common: {
-            role: "value",
+    obj = await adapter.getObjectAsync(key);
+
+    if (obj != null) {
+
+        if (obj.common.role != "value") {
+            await adapter.extendObject(key, {
+                common: {
+                    role: "value",
+                }
+            });
         }
-    });
-    await adapter.setObjectNotExistsAsync(serial + ".history.last12Months", {
+    }
+
+    key = serial + ".history.last12Months";
+    await adapter.setObjectNotExistsAsync(key, {
         type: "state",
         common: {
             name: "SMA inverter history last 12 Months (JSON)",
@@ -873,12 +1167,21 @@ async function AddInverterVariables(serial) {
         },
         native: { location: serial + ".history.last12Months" }
     });
-    await adapter.extendObject(serial + ".history.last12Months", {
-        common: {
-            role: "value",
+    obj = await adapter.getObjectAsync(key);
+
+    if (obj != null) {
+
+        if (obj.common.role != "value") {
+            await adapter.extendObject(key, {
+                common: {
+                    role: "value",
+                }
+            });
         }
-    });
-    await adapter.setObjectNotExistsAsync(serial + ".history.years", {
+    }
+
+    key = serial + ".history.years";
+    await adapter.setObjectNotExistsAsync(key, {
         type: "state",
         common: {
             name: "SMA inverter history years (JSON)",
@@ -890,11 +1193,18 @@ async function AddInverterVariables(serial) {
         },
         native: { location: serial + ".history.years" }
     });
-    await adapter.extendObject(serial + ".history.years", {
-        common: {
-            role: "value",
+    obj = await adapter.getObjectAsync(key);
+
+    if (obj != null) {
+
+        if (obj.common.role != "value") {
+            await adapter.extendObject(key, {
+                common: {
+                    role: "value",
+                }
+            });
         }
-    });
+    }
 
     adapter.log.debug("AddInverterVariables done " );
 }
