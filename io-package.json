@@ -3,6 +3,19 @@
     "name": "sbfspot",
     "version": "4.0.1",
     "news": {
+      "4.0.1": {
+        "en": "small bug fixes",
+        "de": "kleine Fehlerbehebungen",
+        "ru": "мелкие исправления ошибок",
+        "pt": "pequenas correções de bugs",
+        "nl": "kleine bugfixes",
+        "fr": "petites corrections de bugs",
+        "it": "piccole correzioni di bug",
+        "es": "pequeñas correcciones de errores",
+        "pl": "małe poprawki błędów",
+        "zh-cn": "小错误修复"
+      }
+      },
       "4.0.0": {
         "en": "rework to \"async/await\"",
         "de": "Überarbeitung auf \"async / await\"",
