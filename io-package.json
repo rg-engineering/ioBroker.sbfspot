@@ -1,9 +1,9 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "4.0.1",
+    "version": "4.0.2",
     "news": {
-      "4.0.1": {
+      "4.0.2": {
         "en": "small bug fixes",
         "de": "kleine Fehlerbehebungen",
         "ru": "мелкие исправления ошибок",
@@ -14,7 +14,6 @@
         "es": "pequeñas correcciones de errores",
         "pl": "małe poprawki błędów",
         "zh-cn": "小错误修复"
-      }
       },
       "4.0.0": {
         "en": "rework to \"async/await\"",
