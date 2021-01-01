@@ -102,7 +102,7 @@ async function main() {
 
             adapter.log.debug("rows " + JSON.stringify(rows));
 
-            if (rows.length > 0) {
+            if (rows != null && rows.length > 0) {
 
                 for (const i in rows) {
 
@@ -171,7 +171,7 @@ async function main() {
             }
         }
         DB_Disconnect();
-        
+
 
     }
     else {
