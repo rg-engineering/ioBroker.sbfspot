@@ -158,16 +158,10 @@ async function main() {
                     }
 
                 }
-
-
-
             } else {
                 //
-                adapter.log.debug("no inverter data found");
+                adapter.log.error("no inverter data found, adding dummy data...");
                 await DB_AddDummyData();
-
-
-
             }
         }
         DB_Disconnect();
