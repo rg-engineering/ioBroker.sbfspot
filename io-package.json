@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "4.0.3",
+    "version": "4.0.4",
     "news": {
+      "4.0.4": {
+        "en": "dependencies updated",
+        "de": "Abhängigkeiten aktualisiert",
+        "ru": "зависимости обновлены",
+        "pt": "dependências atualizadas",
+        "nl": "afhankelijkheden bijgewerkt",
+        "fr": "dépendances mises à jour",
+        "it": "dipendenze aggiornate",
+        "es": "dependencias actualizadas",
+        "pl": "zaktualizowane zależności",
+        "zh-cn": "依赖关系已更新"
+      },
       "4.0.3": {
         "en": "small bug fixes",
         "de": "kleine Fehlerbehebungen",
@@ -93,16 +105,16 @@
     "connectionType": "local",
     "dataSource": "push"
   },
-    "native": {
-      "sbfspotIP": "localhost",
-      "sbfspotPort": 3306,
-      "sbfspotUser": "SBFspotUser",
-      "sbfspotPassword": "",
-      "sbfspotDatabasename": "SBFspot",
-      "databasetype": "mySQL",
-      "sqlite_path": "",
-      "install_date": "2001-08-25",
-      "GetDataOnlyWhenDaylight": true
-    }
+  "native": {
+    "sbfspotIP": "localhost",
+    "sbfspotPort": 3306,
+    "sbfspotUser": "SBFspotUser",
+    "sbfspotPassword": "",
+    "sbfspotDatabasename": "SBFspot",
+    "databasetype": "mySQL",
+    "sqlite_path": "",
+    "install_date": "2001-08-25",
+    "GetDataOnlyWhenDaylight": true
   }
+}
 
