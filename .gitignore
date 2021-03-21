@@ -22,3 +22,5 @@ hs_err_pid*
 *_neu.*
 /.project
 /.settings/
+/bin/*
+/obj/Debug/*
