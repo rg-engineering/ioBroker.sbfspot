@@ -20,7 +20,7 @@
   "dependencies": {
     "@iobroker/adapter-core": "2.4.0",
     "@sentry/node": "6.2.2",
-    "better-sqlite3": "7.1.2",
+    "better-sqlite3": "7.1.4",
     "mysql2": "2.2.5",
     "suncalc2": "1.8.1"
   },
