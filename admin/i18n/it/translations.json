@@ -1,0 +1,17 @@
+{
+    "Attention": "adattatore, sbfspot e database dovrebbero essere eseguiti sullo stesso sistema",
+    "GetDataOnlyWhenDaylight": "ottenere i dati solo alla luce del giorno",
+    "install_date": "installare data PV-System",
+    "install_date_desc": "utilizzato per il calcolo della cronologia nel widget vis",
+    "path_to_DB_file": "percorso per il file di database sqlite",
+    "path_to_DB_file_descr": "inserisci il percorso completo incl. nome del file di database, ad es. /home/pi/sbfspot/smadata/SBFspot.db",
+    "sbfspot_DB_IP": "IP del databaseL",
+    "sbfspot_DB_IP_descr": "puoi usare 'localhost' come IP",
+    "sbfspot_DB_databasename": "nome del database",
+    "sbfspot_DB_password": "password del database",
+    "sbfspot_DB_port": "Porta del database",
+    "sbfspot_DB_port_descr": "predefinito 3306",
+    "sbfspot_DB_user": "utente del database",
+    "sbfspot_adapter_settings": "impostazioni dell'adattatore sbfspot",
+    "type_of_DB": "tipo di database"
+}

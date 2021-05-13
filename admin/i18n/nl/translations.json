@@ -1,0 +1,17 @@
+{
+    "Attention": "adapter, sbfspot en database moeten op hetzelfde systeem worden uitgevoerd",
+    "GetDataOnlyWhenDaylight": "krijg alleen gegevens bij daglicht",
+    "install_date": "installeer datum PV-systeem",
+    "install_date_desc": "gebruikt voor de berekening van de geschiedenis in vis widget",
+    "path_to_DB_file": "pad naar sqlite databasebestand",
+    "path_to_DB_file_descr": "vul het complete pad in incl. databasebestandsnaam, b.v. /home/pi/sbfspot/smadata/SBFspot.db",
+    "sbfspot_DB_IP": "database IP",
+    "sbfspot_DB_IP_descr": "u kunt 'localhost' als IP gebruiken",
+    "sbfspot_DB_databasename": "databasenaam",
+    "sbfspot_DB_password": "database wachtwoord",
+    "sbfspot_DB_port": "MariaDB databasepoort",
+    "sbfspot_DB_port_descr": "standaard 3306",
+    "sbfspot_DB_user": "mySQL-databasegebruiker",
+    "sbfspot_adapter_settings": "sbfspot-adapterinstellingen",
+    "type_of_DB": "type database"
+}
