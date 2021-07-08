@@ -1,8 +1,20 @@
 {
     "common": {
         "name": "sbfspot",
-        "version": "4.0.5",
+        "version": "4.0.6",
         "news": {
+            "4.0.6": {
+                "en": "bug fix data types",
+                "de": "Bugfix-Datentypen",
+                "ru": "типы данных исправления ошибок",
+                "pt": "tipos de dados de correção de bug",
+                "nl": "bug fix datatypes",
+                "fr": "types de données de correction de bogues",
+                "it": "tipi di dati di correzione di bug",
+                "es": "tipos de datos de corrección de errores",
+                "pl": "naprawa błędów typów danych",
+                "zh-cn": "错误修复数据类型"
+            },
             "4.0.5": {
                 "en": "dependencies updated",
                 "de": "Abhängigkeiten aktualisiert",
