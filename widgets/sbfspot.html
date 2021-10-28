@@ -790,6 +790,7 @@
                         minDate.setMonth(0);
                         var i = minDate.getTime();
                         var curDate;
+                        let limit = 0;
                         do {
                             markings.push({ xaxis: { from: i, to: i + 12 * 30 * 24 * 60 * 60 * 1000 }, color: MarkingColor });
 
@@ -805,8 +806,9 @@
                             console.log('GridMarkings (1): ' + minDate.toLocaleString());
 
                             i = minDate.getTime();
+                            limit++;
 
-                        } while (i < axes.xaxis.max);
+                        } while (i < axes.xaxis.max || limit > 200);
                     }
 
                     else if (dayDiff > 30) { // in months
@@ -818,6 +820,7 @@
                         minDate.setDate(1);
                         var i = minDate.getTime();
                         var curDate;
+                        let limit = 0;
                         do {
                             markings.push({ xaxis: { from: i, to: i + 30 * 24 * 60 * 60 * 1000 }, color: MarkingColor });
 
@@ -832,7 +835,8 @@
                             console.log('GridMarkings  (2): ' + minDate.toLocaleString());
 
                             i = minDate.getTime();
-                        } while (i < axes.xaxis.max);
+                            limit++;
+                        } while (i < axes.xaxis.max || limit > 200);
                     }
                     else if (dayDiff > 10) {
 
@@ -842,29 +846,34 @@
                         minDate.setHours(12);
                         minDate.setMinutes(0);
                         var i = minDate.getTime();
+                        let limit = 0;
                         do {
                             markings.push({ xaxis: { from: i, to: i + 5 * 24 * 60 * 60 * 1000 }, color: MarkingColor });
                             i += 2 * 5 * 24 * 60 * 60 * 1000; //plus 5 days
-                        } while (i < axes.xaxis.max);
+                            limit++;
+                        } while (i < axes.xaxis.max || limit > 200);
                     }
 
                     //if we only few hours then we need markings per hour otherwise per day
                     else if (dayDiff > 2) {
                         console.log('for more than 2 days');
-
+                        let limit = 0;
                         do {
                             markings.push({ xaxis: { from: i, to: i + 24 * 60 * 60 * 1000 }, color: MarkingColor });
                             i += 2 * 24 * 60 * 60 * 1000;
-                        } while (i < axes.xaxis.max);
+                            limit++;
+                        } while (i < axes.xaxis.max || limit > 200);
 
                     }
                     else {
 
                         console.log('for hours');
+                        let limit = 0;
                         do {
                             markings.push({ xaxis: { from: i, to: i + 60 * 60 * 1000 }, color: MarkingColor });
                             i += 2 * 60 * 60 * 1000;
-                        } while (i < axes.xaxis.max);
+                            limit++;
+                        } while (i < axes.xaxis.max || limit>200);
                     }
                     return markings;
 
@@ -891,6 +900,7 @@
                         minDate.setMonth(5);
                         var i = minDate.getTime();
                         var curDate;
+                        let limit = 0;
                         do {
                             ticks.push([i]);
 
@@ -906,8 +916,9 @@
                             console.log('CalcTicks4X (1): ' + minDate.toLocaleString());
 
                             i = minDate.getTime();
+                            limit++;
 
-                        } while (i < axis.max);
+                        } while (i < axis.max || limit>200);
                     }
 
                     else if (dayDiff > 30) { // in months
@@ -916,6 +927,7 @@
                         minDate.setDate(15);
                         var i = minDate.getTime();
                         var curDate;
+                        let limit = 0;
                         do {
                             ticks.push([i]);
                             i += 30 * 24 * 60 * 60 * 1000; //plus one month
@@ -929,17 +941,20 @@
                             console.log('CalcTicks4X  (2): ' + minDate.toLocaleString());
 
                             i = minDate.getTime();
-                        } while (i < axis.max);
+                            limit++;
+                        } while (i < axis.max || limit>200);
                     }
                     else if (dayDiff > 10) {
                         //if (dayDiff > 2) {
                         minDate.setHours(12);
                         minDate.setMinutes(0);
                         var i = minDate.getTime();
+                        let limit = 0;
                         do {
                             ticks.push([i]);
                             i += 5 * 24 * 60 * 60 * 1000; //plus 5 days
-                        } while (i < axis.max);
+                            limit++;
+                        } while (i < axis.max || limit>200);
                     }
 
                     else if (dayDiff > 2) {
@@ -947,19 +962,23 @@
                         minDate.setHours(12);
                         minDate.setMinutes(0);
                         var i = minDate.getTime();
+                        let limit = 0;
                         do {
                             ticks.push([i]);
                             i += 24 * 60 * 60 * 1000; //plus a day
-                        } while (i < axis.max);
+                            limit++;
+                        } while (i < axis.max || limit>200);
                     }
                     else {
                         minDate.setHours(0);
                         minDate.setMinutes(0);
                         var i = minDate.getTime();
+                        let limit = 0;
                         do {
                             ticks.push([i]);
                             i += 6 * 60 * 60 * 1000; //plus 6 hours
-                        } while (i < axis.max);
+                            limit++;
+                        } while (i < axis.max || limit>200);
                     }
                     return ticks;
                 }
@@ -1349,15 +1368,16 @@
                     var oid_value = data.oid_value;
                     console.log("bind " + oid_value);
                     vis.states.bind(oid_value + '.val', function () {
-                        vis.binds.sbfspot.history.update($div);
+                        update();
                     });
 
 
 
                     // update every x seconds
                     if (!vis.editMode) {
+                        console.log("interval " + vis.binds.sbfspot.setup.intervals[data.time_interval]);
                         $div.data('timer', setInterval(function () {
-                            vis.binds.sbfspot.history.update($div);
+                            update();
                         }, parseInt(vis.binds.sbfspot.setup.intervals[data.time_interval] / (parseInt(data.points, 10) || 10), 10)));
                     }
                 }
