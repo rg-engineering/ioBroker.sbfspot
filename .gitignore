@@ -10,3 +10,11 @@ lib/i18n/*/flat.txt
 /*.njsproj
 /.project
 /.settings/
+/bin/
+*.orig
+/obj/
+/admin/sbfspot_alt.png
+/package_neu.json
+/readme.txt
+/main_neu.js
+/typings/
