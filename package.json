@@ -21,7 +21,7 @@
     "@iobroker/adapter-core": "2.5.1",
     "@sentry/node": "6.14.1",
     "better-sqlite3": "7.4.4",
-    "mysql2": "2.3.2",
+    "mysql2": "2.3.3",
     "suncalc2": "1.8.1"
   },
   "devDependencies": {
