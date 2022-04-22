@@ -1,105 +1,108 @@
 {
     "common": {
         "name": "sbfspot",
-        "version": "4.0.8",
-        "news": {
-            "4.0.8": {
-                "en": "bug fix color of labels in widget",
-                "de": "Fehlerkorrektur Farbe der Labels im Widget",
-                "ru": "исправлена ​​ошибка цвета меток в виджете",
-                "pt": "correção de bug de cor de rótulos no widget",
-                "nl": "bug fix kleur van labels in widget",
-                "fr": "correction de bogues couleur des étiquettes dans le widget",
-                "it": "bug fix colore delle etichette nel widget",
-                "es": "corrección de errores de color de las etiquetas en el widget",
-                "pl": "naprawa błędu koloru etykiet w widżecie",
-                "zh-cn": "错误修复小部件中标签的颜色"
-            },
-            "4.0.7": {
-                "en": "avoid endles loops",
-                "de": "Endlosschleifen vermeiden",
-                "ru": "избегать петель endles",
-                "pt": "evite loops de endles",
-                "nl": "vermijd eindeloze lussen",
-                "fr": "éviter les boucles sans fin",
-                "it": "evita i loop infiniti",
-                "es": "evitar bucles endles",
-                "pl": "unikaj niekończących się pętli",
-                "zh-cn": "避免无限循环"
-            },
-            "4.0.6": {
-                "en": "bug fix data types",
-                "de": "Bugfix-Datentypen",
-                "ru": "типы данных исправления ошибок",
-                "pt": "tipos de dados de correção de bug",
-                "nl": "bug fix datatypes",
-                "fr": "types de données de correction de bogues",
-                "it": "tipi di dati di correzione di bug",
-                "es": "tipos de datos de corrección de errores",
-                "pl": "naprawa błędów typów danych",
-                "zh-cn": "错误修复数据类型"
-            },
-            "4.0.5": {
-                "en": "dependencies updated",
-                "de": "Abhängigkeiten aktualisiert",
-                "ru": "зависимости обновлены",
-                "pt": "dependências atualizadas",
-                "nl": "afhankelijkheden bijgewerkt",
-                "fr": "dépendances mises à jour",
-                "it": "dipendenze aggiornate",
-                "es": "dependencias actualizadas",
-                "pl": "zaktualizowane zależności",
-                "zh-cn": "依赖关系已更新"
-            },
-            "4.0.4": {
-                "en": "dependencies updated",
-                "de": "Abhängigkeiten aktualisiert",
-                "ru": "зависимости обновлены",
-                "pt": "dependências atualizadas",
-                "nl": "afhankelijkheden bijgewerkt",
-                "fr": "dépendances mises à jour",
-                "it": "dipendenze aggiornate",
-                "es": "dependencias actualizadas",
-                "pl": "zaktualizowane zależności",
-                "zh-cn": "依赖关系已更新"
-            },
-            "4.0.3": {
-                "en": "small bug fixes",
-                "de": "kleine Fehlerbehebungen",
-                "ru": "мелкие исправления ошибок",
-                "pt": "pequenas correções de bugs",
-                "nl": "kleine bugfixes",
-                "fr": "petites corrections de bugs",
-                "it": "piccole correzioni di bug",
-                "es": "pequeñas correcciones de errores",
-                "pl": "małe poprawki błędów",
-                "zh-cn": "小错误修复"
-            },
-            "4.0.0": {
-                "en": "rework to \"async/await\"",
-                "de": "Überarbeitung auf \"async / await\"",
-                "ru": "переделать в \"асинхронный / ждать\"",
-                "pt": "retrabalho para \"assíncrono / aguardar\"",
-                "nl": "herwerken naar \"async / await\"",
-                "fr": "retravailler en \"asynchroniser / attendre\"",
-                "it": "rilavorazione per \"asincrona / attendi\"",
-                "es": "retrabajo a \"async / wait\"",
-                "pl": "przerobienie na „async / await”",
-                "zh-cn": "返工为“异步/等待”"
-            },
-            "3.0.0": {
-                "en": "package sqlite3 replaced",
-                "de": "Paket sqlite3 ersetzt",
-                "ru": "пакет sqlite3 заменен",
-                "pt": "pacote sqlite3 substituído",
-                "nl": "pakket sqlite3 vervangen",
-                "fr": "paquet sqlite3 remplacé",
-                "it": "pacchetto sqlite3 sostituito",
-                "es": "paquete sqlite3 reemplazado",
-                "pl": "pakiet sqlite3 zastąpiony",
-                "zh-cn": "软件包sqlite3替换为"
-            }
+        "version": "4.1.0",
+      "news": {
+        "4.1.0": {
+          "en": "add datapoint to show when data uploaded to sbfspot"
         },
+        "4.0.8": {
+          "en": "bug fix color of labels in widget",
+          "de": "Fehlerkorrektur Farbe der Labels im Widget",
+          "ru": "исправлена ​​ошибка цвета меток в виджете",
+          "pt": "correção de bug de cor de rótulos no widget",
+          "nl": "bug fix kleur van labels in widget",
+          "fr": "correction de bogues couleur des étiquettes dans le widget",
+          "it": "bug fix colore delle etichette nel widget",
+          "es": "corrección de errores de color de las etiquetas en el widget",
+          "pl": "naprawa błędu koloru etykiet w widżecie",
+          "zh-cn": "错误修复小部件中标签的颜色"
+        },
+        "4.0.7": {
+          "en": "avoid endles loops",
+          "de": "Endlosschleifen vermeiden",
+          "ru": "избегать петель endles",
+          "pt": "evite loops de endles",
+          "nl": "vermijd eindeloze lussen",
+          "fr": "éviter les boucles sans fin",
+          "it": "evita i loop infiniti",
+          "es": "evitar bucles endles",
+          "pl": "unikaj niekończących się pętli",
+          "zh-cn": "避免无限循环"
+        },
+        "4.0.6": {
+          "en": "bug fix data types",
+          "de": "Bugfix-Datentypen",
+          "ru": "типы данных исправления ошибок",
+          "pt": "tipos de dados de correção de bug",
+          "nl": "bug fix datatypes",
+          "fr": "types de données de correction de bogues",
+          "it": "tipi di dati di correzione di bug",
+          "es": "tipos de datos de corrección de errores",
+          "pl": "naprawa błędów typów danych",
+          "zh-cn": "错误修复数据类型"
+        },
+        "4.0.5": {
+          "en": "dependencies updated",
+          "de": "Abhängigkeiten aktualisiert",
+          "ru": "зависимости обновлены",
+          "pt": "dependências atualizadas",
+          "nl": "afhankelijkheden bijgewerkt",
+          "fr": "dépendances mises à jour",
+          "it": "dipendenze aggiornate",
+          "es": "dependencias actualizadas",
+          "pl": "zaktualizowane zależności",
+          "zh-cn": "依赖关系已更新"
+        },
+        "4.0.4": {
+          "en": "dependencies updated",
+          "de": "Abhängigkeiten aktualisiert",
+          "ru": "зависимости обновлены",
+          "pt": "dependências atualizadas",
+          "nl": "afhankelijkheden bijgewerkt",
+          "fr": "dépendances mises à jour",
+          "it": "dipendenze aggiornate",
+          "es": "dependencias actualizadas",
+          "pl": "zaktualizowane zależności",
+          "zh-cn": "依赖关系已更新"
+        },
+        "4.0.3": {
+          "en": "small bug fixes",
+          "de": "kleine Fehlerbehebungen",
+          "ru": "мелкие исправления ошибок",
+          "pt": "pequenas correções de bugs",
+          "nl": "kleine bugfixes",
+          "fr": "petites corrections de bugs",
+          "it": "piccole correzioni di bug",
+          "es": "pequeñas correcciones de errores",
+          "pl": "małe poprawki błędów",
+          "zh-cn": "小错误修复"
+        },
+        "4.0.0": {
+          "en": "rework to \"async/await\"",
+          "de": "Überarbeitung auf \"async / await\"",
+          "ru": "переделать в \"асинхронный / ждать\"",
+          "pt": "retrabalho para \"assíncrono / aguardar\"",
+          "nl": "herwerken naar \"async / await\"",
+          "fr": "retravailler en \"asynchroniser / attendre\"",
+          "it": "rilavorazione per \"asincrona / attendi\"",
+          "es": "retrabajo a \"async / wait\"",
+          "pl": "przerobienie na „async / await”",
+          "zh-cn": "返工为“异步/等待”"
+        },
+        "3.0.0": {
+          "en": "package sqlite3 replaced",
+          "de": "Paket sqlite3 ersetzt",
+          "ru": "пакет sqlite3 заменен",
+          "pt": "pacote sqlite3 substituído",
+          "nl": "pakket sqlite3 vervangen",
+          "fr": "paquet sqlite3 remplacé",
+          "it": "pacchetto sqlite3 sostituito",
+          "es": "paquete sqlite3 reemplazado",
+          "pl": "pakiet sqlite3 zastąpiony",
+          "zh-cn": "软件包sqlite3替换为"
+        }
+      },
         "title": "SMA inverter (sbfspot)",
         "titleLang": {
             "en": "SMA inverter (sbfspot)",

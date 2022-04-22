@@ -15,7 +15,11 @@ Copyright(C)[2016-2020][René Glaß]
 "use strict";
 
 const utils = require("@iobroker/adapter-core");
+//const { json } = require("stream/consumers");
 const SunCalc = require("suncalc2");
+
+
+
 
 let adapter;
 function startAdapter(options) {
@@ -110,6 +114,7 @@ async function main() {
 
                     await GetInverter(i, rows);
 
+                    await DB_CheckLastUploads(serial);
 
                     let rows1 = await DB_GetInvertersData(serial);
 
@@ -151,12 +156,8 @@ async function main() {
                                 }
 
                             }
-
                         }
-
-
                     }
-
                 }
             } else {
                 //
@@ -165,8 +166,6 @@ async function main() {
             }
         }
         DB_Disconnect();
-
-
     }
     else {
         adapter.log.info("nothing to do, because no daylight ... ");
@@ -324,6 +323,9 @@ async function AddInverterVariables(serial) {
     await AddObject(serial.toString() + ".history.last12Months", "state", "SMA inverter history last 12 Months (JSON)", "string", "value", "", true, false);
     await AddObject(serial.toString() + ".history.years", "state", "SMA inverter history years (JSON)", "string", "value", "", true, false);
 
+    await AddObject(serial.toString() + ".sbfspot.LastUpload", "state", "date/time of last upload to sbfspot", "string", "value", "", true, false);
+    await AddObject(serial.toString() + ".sbfspot.notUploaded", "state", "number of datapoints waiting for upload", "number", "value", "", true, false);
+
 
     adapter.log.debug("AddInverterVariables done " );
 }
@@ -467,7 +469,64 @@ async function DB_Connect() {
     return ret;
 }
 
+async function DB_Query(query) {
 
+    adapter.log.debug(query);
+    let retRows;
+
+    if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
+
+        const [rows, fields] = await mysql_connection.execute(query);
+        retRows = rows;
+
+    } else {
+        const stmt = sqlite_db.prepare(query);
+
+        const rows = stmt.all();
+        retRows = rows;
+    }
+
+    adapter.log.debug(JSON.stringify(retRows));
+
+    return retRows;
+}
+
+async function DB_CheckLastUploads(serial) {
+
+    try {
+        let query = "SELECT `TimeStamp` FROM `DayData` WHERE `PVoutput` is null    ";
+
+        let rows = await DB_Query(query);
+
+        let notUploaded = rows.length;
+
+        await adapter.setStateAsync(serial + ".sbfspot.notUploaded", { ack: true, val: notUploaded });
+
+        query = "SELECT `TimeStamp` FROM `DayData` WHERE `PVoutput` = 1 ORDER BY TimeStamp DESC LIMIT 1   ";
+
+        rows = await DB_Query(query);
+
+        if (rows.length > 0) {
+            let updateTimestamp = rows[0].TimeStamp;
+            const oDate = new Date(updateTimestamp * 1000);
+            const oDateNow = new Date();
+
+            oDateNow.setDate(oDateNow.getDate() - 1);
+
+
+            if (oDate < oDateNow) {
+                adapter.log.error("no upload to sbfspot since " + oDate.toLocaleString());
+            }
+
+            let lastUpload = oDate.toLocaleString();
+
+            await adapter.setStateAsync(serial + ".sbfspot.LastUpload", { ack: true, val: lastUpload });
+        }
+    }
+    catch (e) {
+        adapter.log.error("exception in DB_CheckLastUploads [" + e + "]");
+    }
+}
 
 
 
@@ -476,39 +535,11 @@ async function DB_GetInverters() {
     let retRows;
     try {
         const query = "SELECT * from Inverters";
-        //numOfInverters = 0;
-        adapter.log.debug(query);
-
-
-
-        if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
-
-            const [rows, fields] = await mysql_connection.execute(query);
-
-            retRows = rows;
-
-            //await GetInverter(0, rows);
-
-           
-        } else {
-
-            const stmt = sqlite_db.prepare(query);
-
-            const rows = stmt.all();
-            retRows = rows;
-            //await GetInverter(0, rows);
-
-            
-        }
-
-        
-
-
+        retRows = await DB_Query(query);
     }
     catch (e) {
         adapter.log.error("exception in DB_GetInverters [" + e + "]");
     }
-
 
     return retRows;
 }
@@ -574,28 +605,7 @@ async function DB_GetInvertersData(serial) {
     try {
         //SELECT * from SpotData  where Serial ='2000562095' ORDER BY TimeStamp DESC LIMIT 1
         const query = "SELECT * from SpotData  where Serial =" + serial + " ORDER BY TimeStamp DESC LIMIT 1";
-        adapter.log.debug(query);
-        if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
-            //we only get one row = last one
-
-            const [rows, fields] = await mysql_connection.execute(query);
-
-            retRows = rows;
-            //await GetInverterData(0, rows, serial);
-
-            
-        } else {
-
-            const stmt = sqlite_db.prepare(query);
-
-            const rows = stmt.all();
-
-            retRows = rows;
-
-            //await GetInverterData(0, rows, serial);
-
-            
-        }
+        retRows = await DB_Query(query);
     }
     catch (e) {
         adapter.log.error("exception in DB_GetInvertersData [" + e + "]");
@@ -701,25 +711,7 @@ async function DB_CalcHistory_LastMonth(serial) {
         } else {
             query = "SELECT strftime('%Y-%m-%d', datetime(TimeStamp, 'unixepoch')) as date, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By strftime('%Y-%m-%d', datetime(TimeStamp, 'unixepoch'))";
         }
-        adapter.log.debug(query);
-        if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
-
-            const [rows, fields] = await mysql_connection.execute(query);
-
-            retRows = rows;
-            //await calcHistory_LastMonth(0, rows, serial);
-
-            
-        } else {
-
-            const stmt = sqlite_db.prepare(query);
-
-            const rows = stmt.all();
-            retRows = rows;
-            //await CalcHistory_LastMonth(0, rows, serial);
-
-            
-        }
+        retRows = await DB_Query(query);
     }
     catch (e) {
         adapter.log.error("exception in DB_CalcHistory_LastMonth [" + e + "]");
@@ -784,26 +776,7 @@ async function DB_CalcHistory_Prepare(serial) {
         } else {
             query = "SELECT strftime('%Y-%m-%d', datetime(TimeStamp, 'unixepoch')) as date, ETotal  FROM `SpotData` WHERE `Serial` = '" + serial + "' ORDER by `TimeStamp` ASC LIMIT  1";
         }
-        adapter.log.debug(query);
-
-        if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
-
-            const [rows, fields] = await mysql_connection.execute(query);
-
-            retRows = rows;
-            //await CalcHistory_Prepare(0, rows, serial);
-
-
-        } else {
-
-
-            const stmt = sqlite_db.prepare(query);
-
-            const rows = stmt.all();
-            retRows = rows;
-            //await CalcHistory_Prepare(0, rows, serial);
-
-        }
+        retRows = await DB_Query(query);
     }
     catch (e) {
         adapter.log.error("exception in DB_CalcHistory_Prepare [" + e + "]");
@@ -860,25 +833,7 @@ async function DB_CalcHistory_Today(serial) {
         } else {
             query = "SELECT strftime('%H:%m', datetime(TimeStamp, 'unixepoch')) as time, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By strftime('%H-%m', datetime(TimeStamp, 'unixepoch'))";
         }
-        adapter.log.debug(query);
-        if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
-
-            const [rows, fields] = await mysql_connection.execute(query);
-            retRows = rows;
-
-            //await CalcHistory_Today(0, rows, serial);
-
-            
-        } else {
-
-            const stmt = sqlite_db.prepare(query);
-
-            const rows = stmt.all();
-            retRows = rows;
-            //await CalcHistory_Today(0, rows, serial);
-
-           
-        }
+        retRows = await DB_Query(query);
     }
     catch (e) {
         adapter.log.error("exception in DB_CalcHistory_Today [" + e + "]");
@@ -908,12 +863,11 @@ async function CalcHistory_Today(err, rows, serial) {
                 "time": data["time"],
                 "value": data["ertrag"]
             });
-            //adapter.log.debug(JSON.stringify(oLastDays));
+
         }
 
         await adapter.setStateAsync(serial + ".history.today", { ack: true, val: JSON.stringify(oLastDays) });
 
-        //await DB_CalcHistory_Years(serial);
     } else {
         adapter.log.error("Error while performing Query in CalcHistory_Today. " + err);
     }
@@ -937,27 +891,7 @@ async function DB_CalcHistory_Years(serial) {
         } else {
             query = "SELECT strftime('%Y', datetime(TimeStamp, 'unixepoch')) as date, Max(`ETotal`) as ertrag, Min(`ETotal`) as startertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' Group By strftime('%Y', datetime(TimeStamp, 'unixepoch'))";
         }
-        adapter.log.debug(query);
-        if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
-
-            const [rows, fields] = await mysql_connection.execute(query);
-
-            retRows = rows;
-            //await CalcHistory_Years(0, rows, serial);
-
-           
-        } else {
-
-            const stmt = sqlite_db.prepare(query);
-
-            const rows = stmt.all();
-            retRows = rows;
-
-            //await CalcHistory_Years(0, rows, serial);
-
-            
-
-        }
+        retRows = await DB_Query(query);
     }
     catch (e) {
         adapter.log.error("exception in DB_CalcHistory_Years [" + e + "]");
@@ -1053,7 +987,6 @@ async function CalcHistory_Years(err, rows, serial) {
         adapter.log.debug(JSON.stringify(oLastYears));
         await adapter.setStateAsync(serial + ".history.years", { ack: true, val: JSON.stringify(oLastYears) });
 
-        //await DB_CalcHistory_Months(serial);
     } else {
         adapter.log.error("Error while performing Query in CalcHistory_Years. " + err);
     }
@@ -1086,24 +1019,7 @@ async function DB_CalcHistory_Months(serial) {
         } else {
             query = "SELECT strftime('%Y-%m', datetime(TimeStamp, 'unixepoch')) as date, Max(`ETotal`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By strftime('%Y-%m', datetime(TimeStamp, 'unixepoch'))";
         }
-        adapter.log.debug(query);
-        if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
-
-            const [rows, fields] = await mysql_connection.execute(query);
-            retRows = rows;
-            //await CalcHistory_Months(0, rows, serial);
-
-
-        } else {
-
-            const stmt = sqlite_db.prepare(query);
-
-            const rows = stmt.all();
-            retRows = rows;
-            //await CalcHistory_Months(0, rows, serial);
-
-           
-        }
+        retRows = await DB_Query(query);
     }
     catch (e) {
         adapter.log.error("exception in DB_CalcHistory_Months [" + e + "]");
@@ -1122,7 +1038,6 @@ async function CalcHistory_Months(err, rows, serial) {
         adapter.log.debug("rows " + JSON.stringify(rows));
 
         const oLastMonth = [];
-        //var monthdata = {};
 
         for (const i in rows) {
 
@@ -1132,12 +1047,11 @@ async function CalcHistory_Months(err, rows, serial) {
                 "month": data["date"],
                 "value": data["ertrag"]
             });
-            //adapter.log.debug(JSON.stringify(oLastDays));
+
         }
 
         await adapter.setStateAsync(serial + ".history.last12Months", { ack: true, val: JSON.stringify(oLastMonth) });
 
-        //DB_Disconnect();
     } else {
         adapter.log.error("Error while performing Query in CalcHistory_Months. " + err);
     }
@@ -1189,10 +1103,6 @@ async function DB_AddDummyData() {
 
 function DB_Disconnect() {
 
-    //numOfInverters--;
-    // wait for all data paths... last data path will close connection
-
-    //if (numOfInverters == 0) {
     adapter.log.debug("disconnect database");
     if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
         if (typeof mysql_connection != undefined && mysql_connection != null) {
@@ -1205,124 +1115,10 @@ function DB_Disconnect() {
     }
 
     adapter.log.info("all done ... ");
-
-    
-    //} else {
-    //    adapter.log.debug("need to wait for disconnect");
-    //}
 }
 
 
-/**
- * @param {string} timeVal
- * @param {string} timeLimit
- */
-/*
-function IsLater(timeVal, timeLimit) {
 
-    let ret = false;
-    try {
-        adapter.log.debug("check IsLater : " + timeVal + " " + timeLimit);
-
-        if (typeof timeVal === "string" && typeof timeLimit === "string") {
-            const valIn = timeVal.split(":");
-            const valLimits = timeLimit.split(":");
-
-            if (valIn.length > 1 && valLimits.length > 1) {
-
-                if (parseInt(valIn[0]) > parseInt(valLimits[0])
-                    || (parseInt(valIn[0]) == parseInt(valLimits[0]) && parseInt(valIn[1]) > parseInt(valLimits[1]))) {
-                    ret = true;
-                    adapter.log.debug("yes, IsLater : " + timeVal + " " + timeLimit);
-                }
-            }
-            else {
-                adapter.log.error("string does not contain : " + timeVal + " " + timeLimit);
-            }
-        }
-        else {
-            adapter.log.error("not a string " + typeof timeVal + " " + typeof timeLimit);
-        }
-    }
-    catch (e) {
-        adapter.log.error("exception in IsLater [" + e + "]");
-    }
-    return ret;
-}
-*/
-/**
- * @param {string } timeVal
- * @param {string } [timeLimit]
- */
-/*
-function IsEarlier(timeVal, timeLimit) {
-
-    let ret = false;
-    try {
-        adapter.log.debug("check IsEarlier : " + timeVal + " " + timeLimit);
-
-        if (typeof timeVal === "string" && typeof timeLimit === "string") {
-            const valIn = timeVal.split(":");
-            const valLimits = timeLimit.split(":");
-
-            if (valIn.length > 1 && valLimits.length > 1) {
-
-                if (parseInt(valIn[0]) < parseInt(valLimits[0])
-                    || (parseInt(valIn[0]) == parseInt(valLimits[0]) && parseInt(valIn[1]) < parseInt(valLimits[1]))) {
-                    ret = true;
-                    adapter.log.debug("yes, IsEarlier : " + timeVal + " " + timeLimit);
-                }
-            }
-            else {
-                adapter.log.error("string does not contain : " + timeVal + " " + timeLimit);
-            }
-        }
-        else {
-            adapter.log.error("not a string " + typeof timeVal + " " + typeof timeLimit);
-        }
-    }
-    catch (e) {
-        adapter.log.error("exception in IsEarlier [" + e + "]");
-    }
-    return ret;
-}
-*/
-/**
- * @param {string} timeVal
- * @param {string} timeLimit
- */
-/*
-function IsEqual(timeVal, timeLimit) {
-
-    let ret = false;
-    try {
-        adapter.log.debug("check IsEqual : " + timeVal + " " + timeLimit);
-
-        if (typeof timeVal === "string" && typeof timeLimit === "string") {
-            const valIn = timeVal.split(":");
-            const valLimits = timeLimit.split(":");
-
-            if (valIn.length > 1 && valLimits.length > 1) {
-
-                if (parseInt(valIn[0]) === parseInt(valLimits[0]) && parseInt(valIn[1]) === parseInt(valLimits[1])) {
-                    ret = true;
-                    adapter.log.debug("yes, IsEqual : " + timeVal + " " + timeLimit);
-                }
-            }
-            else {
-                adapter.log.error("string does not contain : " + timeVal + " " + timeLimit);
-            }
-        }
-        else {
-            adapter.log.error("not a string " + typeof timeVal + " " + typeof timeLimit);
-        }
-    }
-    catch (e) {
-        adapter.log.error("exception in IsEqual [" + e + "]");
-    }
-    return ret;
-}
-*/
 
 // If started as allInOne/compact mode => return function to create instance
 if (module && module.parent) {
