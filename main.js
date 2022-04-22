@@ -184,18 +184,23 @@ async function main() {
 }
 
 async function GetSystemDateformat() {
-    const ret = await adapter.getForeignObjectAsync("system.config");
-    
-    if (typeof ret != undefined && ret != null) {
-        //dateformat = ret.common.dateFormat;
-        longitude = ret.common.longitude;
-        latitude = ret.common.latitude;
-        adapter.log.debug("system  longitude " + longitude + " latitude " + latitude);
+    try {
+        const ret = await adapter.getForeignObjectAsync("system.config");
+
+        if (typeof ret != undefined && ret != null) {
+            //dateformat = ret.common.dateFormat;
+            longitude = ret.common.longitude;
+            latitude = ret.common.latitude;
+            adapter.log.debug("system: longitude " + longitude + " latitude " + latitude);
+        }
+        else {
+            adapter.log.error("system.config not available. longitude and latitude set to Berlin");
+            longitude = 52.520008;
+            latitude = 13.404954;
+        }
     }
-    else {
-        adapter.log.error("system.config not available. longitude and latitude set to Berlin");
-        longitude = 52.520008;
-        latitude = 13.404954;
+    catch (e) {
+        adapter.log.error("exception in GetSystemDateformat [" + e + "]");
     }
 }
 
