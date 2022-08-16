@@ -7,8 +7,13 @@
 <!--
 <script language="javascript" type="text/javascript" src="widgets/sbfspot/lib/js/flot/jquery.js"></script>
 -->
+<script language="javascript" type="text/javascript" src="widgets/sbfspot/lib/js/lib/jquery.event.drag.js"></script>
+<script language="javascript" type="text/javascript" src="widgets/sbfspot/lib/js/lib/jquery.mousewheel.js"></script>
+
 <script language="javascript" type="text/javascript" src="widgets/sbfspot/lib/js/flot/jquery.canvaswrapper.js"></script>
 <script language="javascript" type="text/javascript" src="widgets/sbfspot/lib/js/flot/jquery.colorhelpers.js"></script>
+
+
 <script language="javascript" type="text/javascript" src="widgets/sbfspot/lib/js/flot/jquery.flot.js"></script>
 <script language="javascript" type="text/javascript" src="widgets/sbfspot/lib/js/flot/jquery.flot.saturated.js"></script>
 <script language="javascript" type="text/javascript" src="widgets/sbfspot/lib/js/flot/jquery.flot.browser.js"></script>
@@ -16,8 +21,13 @@
 <script language="javascript" type="text/javascript" src="widgets/sbfspot/lib/js/flot/jquery.flot.uiConstants.js"></script>
 <script language="javascript" type="text/javascript" src="widgets/sbfspot/lib/js/flot/jquery.flot.time.js"></script>
 <script language="javascript" type="text/javascript" src="widgets/sbfspot/lib/js/flot/jquery.flot.legend.js"></script>
+<script language="javascript" type="text/javascript" src="widgets/sbfspot/lib/js/flot/jquery.flot.navigate.js"></script>
+<script language="javascript" type="text/javascript" src="widgets/sbfspot/lib/js/flot/jquery.flot.touchNavigate.js"></script>
+<script language="javascript" type="text/javascript" src="widgets/sbfspot/lib/js/flot/jquery.flot.hover.js"></script>
+<script language="javascript" type="text/javascript" src="widgets/sbfspot/lib/js/flot/jquery.flot.touch.js"></script>
+<script language="javascript" type="text/javascript" src="widgets/sbfspot/lib/js/flot/jquery.flot.selection.js"></script>
 
-<script language="javascript" type="text/javascript" src="widgets/sbfspot/lib/js/flot/jquery.flot.axislabels_V2.js"></script>
+<script language="javascript" type="text/javascript" src="widgets/sbfspot/lib/js/flot/jquery.flot.axislabels.js"></script>
 
 <!-- doku for flot : -->
 <!--  https://github.com/flot/flot/blob/master/API.md -->
@@ -682,6 +692,30 @@
                 "es": "posición de leyenda",
                 "pl": "pozycja legendy",
                 "zh-cn": "图例位置"
+            },
+            "WithHOver": {
+                "en": "With Value box",
+                "de": "Mit Wertbox",
+                "ru": "С коробкой ценности",
+                "pt": "Com caixa de valor",
+                "nl": "Met Value box",
+                "fr": "Avec boîte de valeur",
+                "it": "Con Valore",
+                "es": "Con caja de valor",
+                "pl": "Wagon z Value",
+                "zh-cn": "价值箱"
+            },
+            "WithPoints": {
+                "en": "with points",
+                "de": "mit Punkten",
+                "ru": "с точками",
+                "pt": "com pontos",
+                "nl": "met punten",
+                "fr": "avec points",
+                "it": "con punti",
+                "es": "con puntos",
+                "pl": "punkty",
+                "zh-cn": "要点"
             }
         });
     }
@@ -1240,6 +1274,7 @@
                                 xaxis: 1,
                                 yaxis: 1,
                                 lines: { show: false },
+                                points: { show: data.WithPoints },
                                 bars:
                                 {
                                     show: true,
@@ -1328,6 +1363,10 @@
                                     ],
                                 grid:
                                 {
+                                    //hover
+                                    hoverable: true, //to trigger plothover event on mouse hover or tap on a point
+                                    clickable: true, //to trigger plotclick event on mouse hover
+
                                     markings: data.withmarking ? GridMarkings : null,
 
                                     // backgroundColor: data.nobgcolor ? null : { colors: ["#fff", "#eee"] },
@@ -1359,7 +1398,46 @@
                             }
                         );
 
+                        //****************************************************************************************
+                        //hover
 
+                        console.log("hover start " + widgetID + " " + data.WithHOver);
+                        if (data.WithHOver) {
+                            console.log("hover start " + widgetID);
+                            $('#' + widgetID).bind("plotclick", function (event, pos, item) {
+                                console.log("clicked at " + pos.x + ", " + pos.y);
+                                // axis coordinates for other axes, if present, are in pos.x2, pos.x3, ...
+                                // if you need global screen coordinates, they are pos.pageX, pos.pageY
+
+                                if (item) {
+
+                                    let x = item.datapoint[0];
+                                    let y = item.datapoint[1].toFixed(2);
+
+                                    var xDate = new Date(x);
+
+                                    console.log("clicked a point!" + item.series.label + " " + y + " on " + xDate.toLocaleString());
+
+                                    $("#tooltip").html("Wert " + y)
+                                        .css({ top: item.pageY + 5, left: item.pageX + 5 })
+                                        .fadeIn(200);
+
+                                }
+                                else {
+                                    $("#tooltip").stop().hide();
+                                }
+                            });
+
+                            $("<div id='tooltip'></div>").css({
+                                position: "absolute",
+                                display: "none",
+                                border: "1px solid #fdd",
+                                padding: "2px",
+                                "background-color": "#fee",
+                                opacity: 0.80
+                            }).appendTo("body");
+                            //****************************************************************************************
+                        }
                     }
                 };
 
@@ -1474,7 +1552,7 @@
         data-vis-type="sbfspot"
         data-vis-update-style="true"
         data-vis-prev='<img src="widgets/sbfspot/img/Prev_tplSbfspot.png"></img>'
-        data-vis-attrs="sbfspotinstance/sbfspot/onInstanceChanged;time_interval[30 minutes]/select,1 second,10 seconds,30 seconds,1 minute,2 minutes,5 minutes,10 minutes,30 minutes,1 hour,2 hours,4 hours,8 hours,12 hours,24 hours;serial//onInstanceChanged;valueselect[sel_today]/select,sel_today,sel_last30days,sel_last12months,sel_years/onInstanceChanged;"
+        data-vis-attrs="sbfspotinstance/sbfspot/onInstanceChanged;time_interval[30 minutes]/select,1 second,10 seconds,30 seconds,1 minute,2 minutes,5 minutes,10 minutes,30 minutes,1 hour,2 hours,4 hours,8 hours,12 hours,24 hours;serial//onInstanceChanged;valueselect[sel_today]/select,sel_today,sel_last30days,sel_last12months,sel_years/onInstanceChanged;WithHOver[true]/checkbox;WithPoints[true]/checkbox;"
         data-vis-attrs0="withxaxix[true]/checkbox;axislabelcolor[#f1f113]/color;tickscolor[#f1f113]/color;LabelFontSize[8];LabelFontFamily[Arial]/fontname;withmarking[true]/checkbox;markingcolor[#eaebe5]/color;"
         data-vis-attrs1="borderWidth[1];bordercolor[#000000]/color;nobgcolor[true]/checkbox;bgcolor[#FFFFFF]/color;withlegend[false]/checkbox;legendposition[ne]/select,ne,nw,se,sw;"
         data-vis-attrs2="group.graph;graphName;graphcolor[#f1f113]/color;coloraxis[#f1f113]/color;colorticklabel[#f1f113]/color;withyaxix[true]/checkbox;graphDateFormat[%H:%M];tickLength[5];showMinorTicks[true]/checkbox;showTicks[true]/checkbox;tickDecimals[1];tickSize[3];minTickSize[2];labelwidth[30];"
