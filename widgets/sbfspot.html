@@ -5,7 +5,7 @@
     Copyright 10.2015-2017 René G. <info@rg-engineering.eu>
 -->
 <!--
-<script language="javascript" type="text/javascript" src="widgets/weather/lib/js/flot/jquery.js"></script>
+<script language="javascript" type="text/javascript" src="widgets/sbfspot/lib/js/flot/jquery.js"></script>
 -->
 <script language="javascript" type="text/javascript" src="widgets/sbfspot/lib/js/flot/jquery.canvaswrapper.js"></script>
 <script language="javascript" type="text/javascript" src="widgets/sbfspot/lib/js/flot/jquery.colorhelpers.js"></script>
@@ -622,7 +622,7 @@
                 "pl": "min. rozmiar kleszcza",
                 "zh-cn": "分钟刻度大小"
             },
-             "labelwidth": {
+            "labelwidth": {
                 "en": "label width",
                 "de": "Labelbreite",
                 "ru": "ширина этикетки",
@@ -634,7 +634,7 @@
                 "pl": "szerokość etykiety",
                 "zh-cn": "标签宽度"
             },
-             
+
             "coloraxis": {
                 "en": "color of axis",
                 "de": "Farbe der Achse",
@@ -686,7 +686,7 @@
         });
     }
 
- 
+
 
 
     vis.binds.sbfspot = {
@@ -873,7 +873,7 @@
                             markings.push({ xaxis: { from: i, to: i + 60 * 60 * 1000 }, color: MarkingColor });
                             i += 2 * 60 * 60 * 1000;
                             limit++;
-                        } while (i < axes.xaxis.max || limit>200);
+                        } while (i < axes.xaxis.max || limit > 200);
                     }
                     return markings;
 
@@ -918,7 +918,7 @@
                             i = minDate.getTime();
                             limit++;
 
-                        } while (i < axis.max || limit>200);
+                        } while (i < axis.max || limit > 200);
                     }
 
                     else if (dayDiff > 30) { // in months
@@ -942,7 +942,7 @@
 
                             i = minDate.getTime();
                             limit++;
-                        } while (i < axis.max || limit>200);
+                        } while (i < axis.max || limit > 200);
                     }
                     else if (dayDiff > 10) {
                         //if (dayDiff > 2) {
@@ -954,7 +954,7 @@
                             ticks.push([i]);
                             i += 5 * 24 * 60 * 60 * 1000; //plus 5 days
                             limit++;
-                        } while (i < axis.max || limit>200);
+                        } while (i < axis.max || limit > 200);
                     }
 
                     else if (dayDiff > 2) {
@@ -967,7 +967,7 @@
                             ticks.push([i]);
                             i += 24 * 60 * 60 * 1000; //plus a day
                             limit++;
-                        } while (i < axis.max || limit>200);
+                        } while (i < axis.max || limit > 200);
                     }
                     else {
                         minDate.setHours(0);
@@ -978,7 +978,7 @@
                             ticks.push([i]);
                             i += 6 * 60 * 60 * 1000; //plus 6 hours
                             limit++;
-                        } while (i < axis.max || limit>200);
+                        } while (i < axis.max || limit > 200);
                     }
                     return ticks;
                 }

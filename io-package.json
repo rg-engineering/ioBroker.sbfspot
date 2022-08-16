@@ -1,19 +1,31 @@
 {
     "common": {
         "name": "sbfspot",
-        "version": "4.1.0",
+        "version": "4.1.1",
         "news": {
+            "4.1.1": {
+                "en": "widget with tooltip",
+                "de": "Widget mit Tooltip",
+                "ru": "виджет с подсказкой",
+                "pt": "widget com dica de ferramenta",
+                "nl": "widget met knopinfo",
+                "fr": "widget avec info-bulle",
+                "it": "widget con descrizione comando",
+                "es": "widget con información sobre herramientas",
+                "pl": "widżet z podpowiedź",
+                "zh-cn": "带有工具提示的小部件"
+            },
             "4.1.0": {
-                "en": "add datapoint to show when data uploaded to sbfspot",
-                "de": "Datenpunkt hinzufügen, um anzuzeigen, wann Daten auf sbfspot hochgeladen wurden",
-                "ru": "добавить точку данных, чтобы показать, когда данные загружаются в sbfspot",
-                "pt": "adicionar ponto de dados para mostrar quando os dados são carregados no sbfspot",
-                "nl": "voeg datapunt toe om te laten zien wanneer gegevens zijn geüpload naar sbfspot",
-                "fr": "ajouter un point de données pour montrer quand les données sont téléchargées sur sbfspot",
-                "it": "aggiungi datapoint per mostrare quando i dati sono stati caricati su sbfspot",
-                "es": "agregue un punto de datos para mostrar cuándo se cargan los datos en sbfspot",
-                "pl": "dodaj punkt danych, aby pokazać, kiedy dane zostały przesłane do sbfspot",
-                "zh-cn": "添加数据点以显示何时将数据上传到 sbfspot"
+                "en": "datapoint added to show when data uploaded to pvoutput.org",
+                "de": "Datenpunkt hinzugefügt, um anzuzeigen, wann Daten auf pvoutput.org hochgeladen wurden",
+                "ru": "добавлена ​​точка данных, чтобы показать, когда данные загружаются на pvoutput.org",
+                "pt": "datapoint adicionado para mostrar quando os dados são enviados para pvoutput.org",
+                "nl": "datapunt toegevoegd om te laten zien wanneer gegevens zijn geüpload naar pvoutput.org",
+                "fr": "point de données ajouté pour indiquer quand les données sont téléchargées sur pvoutput.org",
+                "it": "datapoint aggiunto per mostrare quando i dati sono stati caricati su pvoutput.org",
+                "es": "Se agregó un punto de datos para mostrar cuándo se cargaron los datos en pvoutput.org.",
+                "pl": "dodano punkt danych, aby pokazać, kiedy dane zostały przesłane do pvoutput.org",
+                "zh-cn": "添加数据点以显示数据何时上传到 pvoutput.org"
             },
             "4.0.8": {
                 "en": "bug fix color of labels in widget",
