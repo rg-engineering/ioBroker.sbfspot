@@ -776,14 +776,23 @@
 
                 function xwhFormatter(val, axis) {
 
-                    console.log('xwhFormatter for ' + val);
+                    let myval;
+                    if (typeof val == "string") {
+                        console.log('xwhFormatter convert to number ');
+                        myval = Number(val);
+                    }
+                    else {
+                        myval = val;
+                    }
 
-                    if (val > 1000000)
-                        return (val / 1000000).toFixed(axis.tickDecimals) + " MWh";
-                    else if (val > 1000)
-                        return (val / 1000).toFixed(axis.tickDecimals) + " kWh";
+                    console.log('xwhFormatter for ' + val + " " + typeof val);
+
+                    if (myval > 1000000)
+                        return (myval / 1000000).toFixed(axis.tickDecimals) + " MWh";
+                    else if (myval > 1000)
+                        return (myval / 1000).toFixed(axis.tickDecimals) + " kWh";
                     else
-                        return val.toFixed(axis.tickDecimals) + " Wh";
+                        return (myval*1).toFixed(axis.tickDecimals) + " Wh";
                 }
 
                 function legendformater(label, series) {
@@ -1416,9 +1425,9 @@
 
                                     var xDate = new Date(x);
 
-                                    console.log("clicked a point!" + item.series.label + " " + y + " on " + xDate.toLocaleString());
+                                    console.log("clicked a point!" + item.series.label + " " + y + " on " + xDate.toLocaleString() + " = " + $.plot.formatDate(xDate, data.graphDateFormat));
 
-                                    $("#tooltip").html("Wert " + y)
+                                    $("#tooltip").html($.plot.formatDate(xDate, data.graphDateFormat) + "<br> " + item.series.yaxis.tickFormatter(y, item.series.yaxis))
                                         .css({ top: item.pageY + 5, left: item.pageX + 5 })
                                         .fadeIn(200);
 
@@ -1428,13 +1437,14 @@
                                 }
                             });
 
+                            //damit Tooltip in Vordergrund erscheind, muss z-index vom widget 0 sein...
                             $("<div id='tooltip'></div>").css({
                                 position: "absolute",
                                 display: "none",
                                 border: "1px solid #fdd",
                                 padding: "2px",
                                 "background-color": "#fee",
-                                opacity: 0.80
+                                opacity: 1
                             }).appendTo("body");
                             //****************************************************************************************
                         }
