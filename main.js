@@ -61,7 +61,7 @@ async function main() {
         adapter.terminate ? adapter.terminate(11) : process.exit(11);
     }
 
-    await CheckInverterVariables();
+    //await CheckInverterVariables();
 
     killTimer = setTimeout(function () {
         //adapter.stop();
@@ -336,11 +336,45 @@ async function AddInverterVariables(serial) {
 }
 
 
+async function CreateObject(key, obj) {
+
+    const obj_new = await adapter.getObjectAsync(key);
+    //adapter.log.warn("got object " + JSON.stringify(obj_new));
+
+    if (obj_new != null) {
+
+        if ((obj_new.common.role != obj.common.role
+            || obj_new.common.type != obj.common.type
+            || (obj_new.common.unit != obj.common.unit && obj.common.unit != null)
+            || obj_new.common.read != obj.common.read
+            || obj_new.common.write != obj.common.write
+            || obj_new.common.name != obj.common.name)
+            && obj.type === "state"
+        ) {
+            adapter.log.warn("change object " + JSON.stringify(obj) + " " + JSON.stringify(obj_new));
+            await adapter.extendObject(key, {
+                common: {
+                    name: obj.common.name,
+                    role: obj.common.role,
+                    type: obj.common.type,
+                    unit: obj.common.unit,
+                    read: obj.common.read,
+                    write: obj.common.write
+                }
+            });
+        }
+    }
+    else {
+        await adapter.setObjectNotExistsAsync(key, obj);
+    }
+}
+
+
 async function AddObject(key, type, common_name, common_type, common_role, common_unit, common_read, common_write) {
 
     adapter.log.debug("addObject " + key);
 
-    await adapter.setObjectNotExistsAsync(key, {
+    obj= {
         type: type,
         common: {
             name: common_name,
@@ -353,37 +387,9 @@ async function AddObject(key, type, common_name, common_type, common_role, commo
         native: {
             location: key
         }
-    });
+    };
 
-    const obj = await adapter.getObjectAsync(key);
-
-    if (obj != null) {
-        //adapter.log.debug(" got Object " + JSON.stringify(obj));
-        if (obj.type != type
-            || obj.common.name != common_name
-            || obj.common.type != common_type
-            || obj.common.role != common_role
-            || obj.common.unit != common_unit
-            || obj.common.read != common_read
-            || obj.common.write != common_write ) {
-            adapter.log.debug(" !!! need to extend for " + key);
-            await adapter.extendObject(key, {
-                type: type,
-                common: {
-                    name: common_name,
-                    type: common_type,
-                    role: common_role,
-                    unit: common_unit,
-                    read: common_read,
-                    write: common_write
-                },
-                native: {
-                    location: key
-                }
-            });
-        }
-
-    }
+    await CreateObject(key, obj);
 }
 
 
@@ -394,11 +400,11 @@ sbfspot.0	2021-07-08 19:30:13.024	info	State value to set for "sbfspot.0.2000562
 sbfspot.0	2021-07-08 19:30:12.888	info	State value to set for "sbfspot.0.2000562095.history.last30Days" has to be type "number" but received type "string"
  */
 
-
+/*
 async function CheckInverterVariables() {
 
 }
-
+*/
 
 
 async function DB_Connect() {

@@ -51,7 +51,7 @@ sometimes npm intall must be called more then one time to successfully install a
 
 ## Changelog
 
-### 4.1.1 (2022-08-16)
+### 4.1.1 (2022-08-18)
 * (René) tooltip in wizard added
 * (René) flot and dependencies updated
 
