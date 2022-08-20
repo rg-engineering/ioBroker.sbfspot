@@ -374,7 +374,7 @@ async function AddObject(key, type, common_name, common_type, common_role, commo
 
     adapter.log.debug("addObject " + key);
 
-    obj= {
+    let obj= {
         type: type,
         common: {
             name: common_name,
