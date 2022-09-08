@@ -18,7 +18,7 @@
     "url": "https://github.com/rg-engineering/ioBroker.sbfspot"
   },
   "dependencies": {
-    "@iobroker/adapter-core": "2.6.0",
+    "@iobroker/adapter-core": "2.6.2",
     "better-sqlite3": "7.6.2",
     "mysql2": "2.3.3",
     "suncalc2": "1.8.1"
