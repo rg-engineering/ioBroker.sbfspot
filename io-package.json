@@ -13,7 +13,8 @@
                 "it": "widget con descrizione comando",
                 "es": "widget con información sobre herramientas",
                 "pl": "widżet z podpowiedź",
-                "zh-cn": "带有工具提示的小部件"
+                "zh-cn": "带有工具提示的小部件",
+                "uk": "віджет із підказкою"
             },
             "4.0.8": {
                 "en": "bug fix color of labels in widget",
@@ -25,7 +26,8 @@
                 "it": "bug fix colore delle etichette nel widget",
                 "es": "corrección de errores de color de las etiquetas en el widget",
                 "pl": "naprawa błędu koloru etykiet w widżecie",
-                "zh-cn": "错误修复小部件中标签的颜色"
+                "zh-cn": "错误修复小部件中标签的颜色",
+                "uk": "виправлено помилку кольору міток у віджеті"
             },
             "4.0.7": {
                 "en": "avoid endles loops",
@@ -37,7 +39,8 @@
                 "it": "evita i loop infiniti",
                 "es": "evitar bucles endles",
                 "pl": "unikaj niekończących się pętli",
-                "zh-cn": "避免无限循环"
+                "zh-cn": "避免无限循环",
+                "uk": "уникайте нескінченних циклів"
             },
             "4.0.6": {
                 "en": "bug fix data types",
@@ -49,7 +52,8 @@
                 "it": "tipi di dati di correzione di bug",
                 "es": "tipos de datos de corrección de errores",
                 "pl": "naprawa błędów typów danych",
-                "zh-cn": "错误修复数据类型"
+                "zh-cn": "错误修复数据类型",
+                "uk": "типи даних виправлення помилок"
             },
             "4.0.5": {
                 "en": "dependencies updated",
@@ -61,7 +65,8 @@
                 "it": "dipendenze aggiornate",
                 "es": "dependencias actualizadas",
                 "pl": "zaktualizowane zależności",
-                "zh-cn": "依赖关系已更新"
+                "zh-cn": "依赖关系已更新",
+                "uk": "залежності оновлено"
             },
             "4.0.4": {
                 "en": "dependencies updated",
@@ -73,7 +78,8 @@
                 "it": "dipendenze aggiornate",
                 "es": "dependencias actualizadas",
                 "pl": "zaktualizowane zależności",
-                "zh-cn": "依赖关系已更新"
+                "zh-cn": "依赖关系已更新",
+                "uk": "залежності оновлено"
             },
             "4.0.3": {
                 "en": "small bug fixes",
@@ -85,7 +91,8 @@
                 "it": "piccole correzioni di bug",
                 "es": "pequeñas correcciones de errores",
                 "pl": "małe poprawki błędów",
-                "zh-cn": "小错误修复"
+                "zh-cn": "小错误修复",
+                "uk": "невеликі виправлення помилок"
             },
             "4.0.0": {
                 "en": "rework to \"async/await\"",
@@ -97,7 +104,8 @@
                 "it": "rilavorazione per \"asincrona / attendi\"",
                 "es": "retrabajo a \"async / wait\"",
                 "pl": "przerobienie na „async / await”",
-                "zh-cn": "返工为“异步/等待”"
+                "zh-cn": "返工为“异步/等待”",
+                "uk": "переробити на \"async/wait\""
             },
             "3.0.0": {
                 "en": "package sqlite3 replaced",
@@ -109,10 +117,10 @@
                 "it": "pacchetto sqlite3 sostituito",
                 "es": "paquete sqlite3 reemplazado",
                 "pl": "pakiet sqlite3 zastąpiony",
-                "zh-cn": "软件包sqlite3替换为"
+                "zh-cn": "软件包sqlite3替换为",
+                "uk": "пакет sqlite3 замінено"
             }
         },
-        "title": "SMA inverter (sbfspot)",
         "titleLang": {
             "en": "SMA inverter (sbfspot)",
             "de": "SMA Wechselrichter (sbfspot)",
@@ -123,7 +131,8 @@
             "it": "Inverter SMA (sbfspot)",
             "es": "Inversor SMA (sbfspot)",
             "pl": "Falownika SMA (sbfspot)",
-            "zh-cn": "SMA逆变器（sbfspot）"
+            "zh-cn": "SMA逆变器（sbfspot）",
+            "uk": "SMA інвертор (sbfspot)"
         },
         "desc": {
             "en": "SMA inverter (sbfspot) Adapter with vis widget",
@@ -135,7 +144,8 @@
             "it": "Adattatore SMA (sbfspot) Adattatore con widget vis",
             "es": "Adaptador de inversor SMA (sbfspot) con widget de vis",
             "pl": "Adapter falownika SMA (sbfspot) z wid?etem vis",
-            "zh-cn": "带有vis小部件的SMA逆变器（sbfspot）适配器"
+            "zh-cn": "带有vis小部件的SMA逆变器（sbfspot）适配器",
+            "uk": "Адаптер інвертора SMA (sbfspot) із віджетом vis"
         },
         "platform": "Javascript/Node.js",
         "mode": "schedule",

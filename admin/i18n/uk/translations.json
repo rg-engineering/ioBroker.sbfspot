@@ -1,0 +1,17 @@
+{
+    "Attention": "адаптер, sbfspot і база даних повинні працювати в одній системі",
+    "GetDataOnlyWhenDaylight": "отримувати дані тільки вдень",
+    "install_date": "дата встановлення PV-системи",
+    "install_date_desc": "використовується для обчислення історії у віджеті vis",
+    "path_to_DB_file": "шлях до файлу бази даних sqlite",
+    "path_to_DB_file_descr": "введіть повний шлях, вкл. назва файлу бази даних, напр. /home/pi/sbfspot/smadata/SBFspot.db",
+    "sbfspot_DB_IP": "IP бази даних",
+    "sbfspot_DB_IP_descr": "ви можете використовувати 'localhost' як IP",
+    "sbfspot_DB_databasename": "ім'я бази даних",
+    "sbfspot_DB_password": "пароль бази даних",
+    "sbfspot_DB_port": "порт бази даних",
+    "sbfspot_DB_port_descr": "за замовчуванням 3306",
+    "sbfspot_DB_user": "користувач бази даних",
+    "sbfspot_adapter_settings": "налаштування адаптера sbfspot",
+    "type_of_DB": "тип бази даних"
+}
