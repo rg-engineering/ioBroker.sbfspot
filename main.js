@@ -18,7 +18,7 @@ const utils = require("@iobroker/adapter-core");
 //const { json } = require("stream/consumers");
 const SunCalc = require("suncalc2");
 
-
+//const bluetooth_test = require("./lib/SMA_Bluetooth").test;
 
 
 let adapter;
@@ -55,6 +55,10 @@ let mysql_connection;
 let killTimer;
 
 async function main() {
+
+
+    //bluetooth_test();
+
 
     if (typeof adapter.config.databasetype == "undefined") {
         adapter.log.error("databasetype not defined. check and update settings and save");
