@@ -60,7 +60,7 @@ async function main() {
     //bluetooth_test();
 
 
-    if (typeof adapter.config.databasetype == "undefined") {
+    if (adapter.config.databasetype === undefined) {
         adapter.log.error("databasetype not defined. check and update settings and save");
         adapter.terminate ? adapter.terminate(11) : process.exit(11);
     }
@@ -191,7 +191,7 @@ async function GetSystemDateformat() {
     try {
         const ret = await adapter.getForeignObjectAsync("system.config");
 
-        if (typeof ret != undefined && ret != null) {
+        if (ret !== undefined && ret != null) {
             //dateformat = ret.common.dateFormat;
             longitude = ret.common.longitude;
             latitude = ret.common.latitude;
@@ -1120,11 +1120,11 @@ function DB_Disconnect() {
 
     adapter.log.debug("disconnect database");
     if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
-        if (typeof mysql_connection != undefined && mysql_connection != null) {
+        if (mysql_connection !== undefined && mysql_connection != null) {
             mysql_connection.end();
         }
     } else {
-        if (typeof sqlite_db != undefined && sqlite_db != null) {
+        if (sqlite_db !== undefined && sqlite_db != null) {
             sqlite_db.close();
         }
     }
