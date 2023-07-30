@@ -1,9 +1,9 @@
 {
     "common": {
         "name": "sbfspot",
-        "version": "4.1.4",
+        "version": "4.1.5",
         "news": {
-            "4.1.4": {
+            "4.1.5": {
                 "en": "dependencies updated",
                 "de": "Abhängigkeiten aktualisiert",
                 "ru": "зависимости обновлены",
@@ -65,9 +65,9 @@
             }
         ],
         "plugins": {
-          "sentry": {
-            "dsn": "https://5369ea829c024fdf92b71a7b82f1f410@o390433.ingest.sentry.io/5434783"
-          }
+            "sentry": {
+                "dsn": "https://5369ea829c024fdf92b71a7b82f1f410@o390433.ingest.sentry.io/5434783"
+            }
         },
         "compact": true,
         "authors": [
