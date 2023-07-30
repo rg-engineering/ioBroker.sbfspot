@@ -1,9 +1,9 @@
 {
     "common": {
         "name": "sbfspot",
-        "version": "4.1.5",
+        "version": "4.1.6",
         "news": {
-            "4.1.5": {
+            "4.1.6": {
                 "en": "dependencies updated",
                 "de": "Abhängigkeiten aktualisiert",
                 "ru": "зависимости обновлены",

@@ -51,7 +51,7 @@ sometimes npm intall must be called more then one time to successfully install a
 
 ## Changelog
 
-### 4.1.5 (2023-07-30)
+### 4.1.6 (2023-07-30)
 * (René) dependencies updated
 
 ### 4.1.4 (2023-04-07)
