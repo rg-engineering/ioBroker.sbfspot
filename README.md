@@ -51,6 +51,11 @@ sometimes npm intall must be called more then one time to successfully install a
 
 ## Changelog
 
+<!--
+  Placeholder for the next version (at the beginning of the line):
+  ### **WORK IN PROGRESS**
+-->
+
 ### 4.1.6 (2023-07-30)
 * (René) dependencies updated
 
