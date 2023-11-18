@@ -56,6 +56,9 @@ sometimes npm intall must be called more then one time to successfully install a
   ### **WORK IN PROGRESS**
 -->
 
+### **WORK IN PROGRESS**
+* (René) dependencies updated
+
 ### 4.1.6 (2023-07-30)
 * (René) dependencies updated
 
