@@ -1,96 +1,109 @@
 {
-    "common": {
-        "name": "sbfspot",
-        "version": "4.1.7",
-        "news": {
-            "4.1.7": {
-                "en": "dependencies updated",
-                "de": "Abhängigkeiten aktualisiert",
-                "ru": "зависимости обновлены",
-                "pt": "dependências atualizadas",
-                "nl": "afhankelijkheden bijgewerkt",
-                "fr": "dépendances mises à jour",
-                "it": "dipendenze aggiornate",
-                "es": "dependencias actualizadas",
-                "pl": "zaktualizowane zależności",
-                "uk": "залежності оновлено",
-                "zh-cn": "依赖更新"
-            }
-        },
-        "titleLang": {
-            "en": "SMA inverter (sbfspot)",
-            "de": "SMA Wechselrichter (sbfspot)",
-            "ru": "Преобразователь SMA (sbfspot)",
-            "pt": "SMA inversor (sbfspot)",
-            "nl": "SMA-omvormer (sbfspot)",
-            "fr": "d'onduleur SMA (sbfspot)",
-            "it": "Inverter SMA (sbfspot)",
-            "es": "Inversor SMA (sbfspot)",
-            "pl": "Falownika SMA (sbfspot)",
-            "zh-cn": "SMA逆变器（sbfspot）",
-            "uk": "SMA інвертор (sbfspot)"
-        },
-        "desc": {
-            "en": "SMA inverter (sbfspot) Adapter with vis widget",
-            "de": "SMA-Wechselrichter (sbfspot) Adapter mit Vis-Widget",
-            "ru": "Преобразователь SMA (sbfspot) с vis-виджетами",
-            "pt": "Inversor SMA (sbfspot) Adaptador com vis widget",
-            "nl": "SMA-omvormer (sbfspot) Adapter met vis-widget",
-            "fr": "SMA inverter (sbfspot) Adaptateur avec vis widget",
-            "it": "Adattatore SMA (sbfspot) Adattatore con widget vis",
-            "es": "Adaptador de inversor SMA (sbfspot) con widget de vis",
-            "pl": "Adapter falownika SMA (sbfspot) z wid?etem vis",
-            "zh-cn": "带有vis小部件的SMA逆变器（sbfspot）适配器",
-            "uk": "Адаптер інвертора SMA (sbfspot) із віджетом vis"
-        },
-        "platform": "Javascript/Node.js",
-        "mode": "schedule",
-        "schedule": "*/15 * * * *",
-        "icon": "sbfspot.png",
-        "enabled": true,
-        "messagebox": true,
-        "extIcon": "https://raw.githubusercontent.com/rg-engineering/ioBroker.sbfspot/master/admin/sbfspot.png",
-        "keywords": [
-            "sbfspot"
-        ],
-        "readme": "https://github.com/rg-engineering/ioBroker.sbfspot/blob/master/README.md",
-        "loglevel": "info",
-        "stopBeforeUpdate": true,
-        "type": "hardware",
-        "license": "MIT",
-        "materialize": true,
-        "dependencies": [
-            {
-                "js-controller": ">=2.0.0"
-            }
-        ],
-        "plugins": {
-            "sentry": {
-                "dsn": "https://5369ea829c024fdf92b71a7b82f1f410@o390433.ingest.sentry.io/5434783"
-            }
-        },
-        "compact": true,
-        "authors": [
-            {
-                "name": "René G.",
-                "email": "info@rg-engineering.eu"
-            }
-        ],
-        "connectionType": "local",
-        "dataSource": "push",
-        "adminUI": {
-            "config": "materialize"
-        }
+  "common": {
+    "name": "sbfspot",
+    "version": "4.2.0",
+    "news": {
+      "4.2.0": {
+        "en": "(René) dependencies updated",
+        "de": "(René)",
+        "ru": "(René) обновления зависимости",
+        "pt": "(René) dependências atualizadas",
+        "nl": "Afhankelijkheid",
+        "fr": "(René) dépendances mises à jour",
+        "it": "(René) dipendenze aggiornate",
+        "es": "(René) dependencies updated",
+        "pl": "(René) zależności od aktualizacji",
+        "uk": "(René) залежностей оновлено",
+        "zh-cn": "(单位:千美元)"
+      },
+      "4.1.7": {
+        "en": "dependencies updated",
+        "de": "Abhängigkeiten aktualisiert",
+        "ru": "зависимости обновлены",
+        "pt": "dependências atualizadas",
+        "nl": "afhankelijkheden bijgewerkt",
+        "fr": "dépendances mises à jour",
+        "it": "dipendenze aggiornate",
+        "es": "dependencias actualizadas",
+        "pl": "zaktualizowane zależności",
+        "uk": "залежності оновлено",
+        "zh-cn": "依赖更新"
+      }
     },
-    "native": {
-        "sbfspotIP": "localhost",
-        "sbfspotPort": 3306,
-        "sbfspotUser": "SBFspotUser",
-        "sbfspotPassword": "",
-        "sbfspotDatabasename": "SBFspot",
-        "databasetype": "mySQL",
-        "sqlite_path": "",
-        "install_date": "2001-08-25",
-        "GetDataOnlyWhenDaylight": true
+    "titleLang": {
+      "en": "SMA inverter (sbfspot)",
+      "de": "SMA Wechselrichter (sbfspot)",
+      "ru": "Преобразователь SMA (sbfspot)",
+      "pt": "SMA inversor (sbfspot)",
+      "nl": "SMA-omvormer (sbfspot)",
+      "fr": "d'onduleur SMA (sbfspot)",
+      "it": "Inverter SMA (sbfspot)",
+      "es": "Inversor SMA (sbfspot)",
+      "pl": "Falownika SMA (sbfspot)",
+      "zh-cn": "SMA逆变器（sbfspot）",
+      "uk": "SMA інвертор (sbfspot)"
+    },
+    "desc": {
+      "en": "SMA inverter (sbfspot) Adapter with vis widget",
+      "de": "SMA-Wechselrichter (sbfspot) Adapter mit Vis-Widget",
+      "ru": "Преобразователь SMA (sbfspot) с vis-виджетами",
+      "pt": "Inversor SMA (sbfspot) Adaptador com vis widget",
+      "nl": "SMA-omvormer (sbfspot) Adapter met vis-widget",
+      "fr": "SMA inverter (sbfspot) Adaptateur avec vis widget",
+      "it": "Adattatore SMA (sbfspot) Adattatore con widget vis",
+      "es": "Adaptador de inversor SMA (sbfspot) con widget de vis",
+      "pl": "Adapter falownika SMA (sbfspot) z wid?etem vis",
+      "zh-cn": "带有vis小部件的SMA逆变器（sbfspot）适配器",
+      "uk": "Адаптер інвертора SMA (sbfspot) із віджетом vis"
+    },
+    "platform": "Javascript/Node.js",
+    "mode": "schedule",
+    "schedule": "*/15 * * * *",
+    "icon": "sbfspot.png",
+    "enabled": true,
+    "messagebox": true,
+    "extIcon": "https://raw.githubusercontent.com/rg-engineering/ioBroker.sbfspot/master/admin/sbfspot.png",
+    "keywords": [
+      "sbfspot"
+    ],
+    "readme": "https://github.com/rg-engineering/ioBroker.sbfspot/blob/master/README.md",
+    "loglevel": "info",
+    "stopBeforeUpdate": true,
+    "type": "hardware",
+    "license": "MIT",
+    "materialize": true,
+    "dependencies": [
+      {
+        "js-controller": ">=2.0.0"
+      }
+    ],
+    "plugins": {
+      "sentry": {
+        "dsn": "https://5369ea829c024fdf92b71a7b82f1f410@o390433.ingest.sentry.io/5434783"
+      }
+    },
+    "compact": true,
+    "authors": [
+      {
+        "name": "René G.",
+        "email": "info@rg-engineering.eu"
+      }
+    ],
+    "connectionType": "local",
+    "dataSource": "push",
+    "adminUI": {
+      "config": "materialize"
     }
+  },
+  "native": {
+    "sbfspotIP": "localhost",
+    "sbfspotPort": 3306,
+    "sbfspotUser": "SBFspotUser",
+    "sbfspotPassword": "",
+    "sbfspotDatabasename": "SBFspot",
+    "databasetype": "mySQL",
+    "sqlite_path": "",
+    "install_date": "2001-08-25",
+    "GetDataOnlyWhenDaylight": true
+  }
 }
