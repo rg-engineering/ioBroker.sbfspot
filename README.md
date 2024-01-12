@@ -63,7 +63,7 @@ sometimes npm intall must be called more then one time to successfully install a
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 4.2.2 (2024-01-12)
 * (René) dependencies updated
 
 ### 4.2.1 (2023-12-11)

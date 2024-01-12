@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "4.2.1",
+    "version": "4.2.2",
     "news": {
+      "4.2.2": {
+        "en": "(René) dependencies updated",
+        "de": "(René)",
+        "ru": "(René)",
+        "pt": "(René) dependências atualizadas",
+        "nl": "(René) bijgewerkte afhankelijkheden",
+        "fr": "(René) dépendances mises à jour",
+        "it": "(René) dipendenze aggiornate",
+        "es": "(René) dependencies updated",
+        "pl": "Aktualizacja zależności (René)",
+        "uk": "(René) залежностей оновлено",
+        "zh-cn": "(René) 更新的依赖关系"
+      },
       "4.2.1": {
         "en": "(René) dependencies updated",
         "de": "(René)",
