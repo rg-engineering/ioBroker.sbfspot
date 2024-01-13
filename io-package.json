@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "4.2.3",
+    "version": "4.2.4",
     "news": {
+      "4.2.4": {
+        "en": "(René) upgrade better-sqlite",
+        "de": "(René) Upgrade besser-sqlite",
+        "ru": "(René) апгрейд",
+        "pt": "(René) upgrade better-sqlite",
+        "nl": "(René) upgrade better-sqlite",
+        "fr": "(René) mise à niveau meilleure-sqlite",
+        "it": "(René) aggiornamento migliore-sqlite",
+        "es": "(René) upgrade better-sqlite",
+        "pl": "(René) upgrade better- sqlite",
+        "uk": "(René) модернізація",
+        "zh-cn": "(René)升级更好的sqlite"
+      },
       "4.2.3": {
         "en": "(René) downgrade better-sqlite",
         "de": "(René) Abstieg besser-sqlite",

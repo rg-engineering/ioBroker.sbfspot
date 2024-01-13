@@ -63,7 +63,7 @@ sometimes npm intall must be called more then one time to successfully install a
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 4.2.4 (2024-01-13)
 * (René) upgrade better-sqlite
 
 ### 4.2.3 (2024-01-12)
