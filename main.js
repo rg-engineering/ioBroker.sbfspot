@@ -378,7 +378,7 @@ async function AddObject(key, type, common_name, common_type, common_role, commo
 
     adapter.log.debug("addObject " + key);
 
-    let obj= {
+    const obj= {
         type: type,
         common: {
             name: common_name,
@@ -513,7 +513,7 @@ async function DB_CheckLastUploads(serial) {
 
         let rows = await DB_Query(query);
 
-        let notUploaded = rows.length;
+        const notUploaded = rows.length;
 
         await adapter.setStateAsync(serial + ".sbfspot.notUploaded", { ack: true, val: notUploaded });
 
@@ -522,7 +522,7 @@ async function DB_CheckLastUploads(serial) {
         rows = await DB_Query(query);
 
         if (rows.length > 0) {
-            let updateTimestamp = rows[0].TimeStamp;
+            const updateTimestamp = rows[0].TimeStamp;
             const oDate = new Date(updateTimestamp * 1000);
             const oDateNow = new Date();
 
@@ -533,7 +533,7 @@ async function DB_CheckLastUploads(serial) {
                 adapter.log.error("no upload to sbfspot since " + oDate.toLocaleString());
             }
 
-            let lastUpload = oDate.toLocaleString();
+            const lastUpload = oDate.toLocaleString();
 
             await adapter.setStateAsync(serial + ".sbfspot.LastUpload", { ack: true, val: lastUpload });
         }
