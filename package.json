@@ -21,7 +21,7 @@
     "node": ">= 16"
   },
   "dependencies": {
-    "@iobroker/adapter-core": "3.0.4",
+    "@iobroker/adapter-core": "3.0.6",
     "better-sqlite3": "9.4.3",
     "mysql2": "3.9.2",
     "suncalc2": "1.8.1"
