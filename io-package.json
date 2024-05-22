@@ -1,161 +1,174 @@
 {
-    "common": {
-        "name": "sbfspot",
-        "version": "4.2.4",
-        "news": {
-            "4.2.4": {
-                "en": "(René) upgrade better-sqlite",
-                "de": "(René) Upgrade besser-sqlite",
-                "ru": "(René) апгрейд",
-                "pt": "(René) upgrade better-sqlite",
-                "nl": "(René) upgrade better-sqlite",
-                "fr": "(René) mise à niveau meilleure-sqlite",
-                "it": "(René) aggiornamento migliore-sqlite",
-                "es": "(René) upgrade better-sqlite",
-                "pl": "(René) upgrade better- sqlite",
-                "uk": "(René) модернізація",
-                "zh-cn": "(René)升级更好的sqlite"
-            },
-            "4.2.3": {
-                "en": "(René) downgrade better-sqlite",
-                "de": "(René) Abstieg besser-sqlite",
-                "ru": "(René) ухудшить лучше-склит",
-                "pt": "(René) downgrade better-sqlite",
-                "nl": "(René) downgrade better-sqlite",
-                "fr": "(René) dégradation de la qualité meilleure-sqlite",
-                "it": "(René) qualità migliore-sqlite",
-                "es": "(René) downgrade better-sqlite",
-                "pl": "(René) obniżenie jakości lepsze -sqlite",
-                "uk": "(René) нижчий краще",
-                "zh-cn": "(René) 降级更好"
-            },
-            "4.2.2": {
-                "en": "(René) dependencies updated",
-                "de": "(René)",
-                "ru": "(René)",
-                "pt": "(René) dependências atualizadas",
-                "nl": "(René) bijgewerkte afhankelijkheden",
-                "fr": "(René) dépendances mises à jour",
-                "it": "(René) dipendenze aggiornate",
-                "es": "(René) dependencies updated",
-                "pl": "Aktualizacja zależności (René)",
-                "uk": "(René) залежностей оновлено",
-                "zh-cn": "(René) 更新的依赖关系"
-            },
-            "4.2.1": {
-                "en": "(René) dependencies updated",
-                "de": "(René)",
-                "ru": "(René) обновления зависимости",
-                "pt": "(René) dependências atualizadas",
-                "nl": "Afhankelijkheid",
-                "fr": "(René) dépendances mises à jour",
-                "it": "(René) dipendenze aggiornate",
-                "es": "(René) dependencies updated",
-                "pl": "(René) zależności od aktualizacji",
-                "uk": "(René) залежностей оновлено",
-                "zh-cn": "(单位:千美元)"
-            },
-            "4.2.0": {
-                "en": "(René) dependencies updated",
-                "de": "(René)",
-                "ru": "(René) обновления зависимости",
-                "pt": "(René) dependências atualizadas",
-                "nl": "Afhankelijkheid",
-                "fr": "(René) dépendances mises à jour",
-                "it": "(René) dipendenze aggiornate",
-                "es": "(René) dependencies updated",
-                "pl": "(René) zależności od aktualizacji",
-                "uk": "(René) залежностей оновлено",
-                "zh-cn": "(单位:千美元)"
-            },
-            "4.1.7": {
-                "en": "dependencies updated",
-                "de": "Abhängigkeiten aktualisiert",
-                "ru": "зависимости обновлены",
-                "pt": "dependências atualizadas",
-                "nl": "afhankelijkheden bijgewerkt",
-                "fr": "dépendances mises à jour",
-                "it": "dipendenze aggiornate",
-                "es": "dependencias actualizadas",
-                "pl": "zaktualizowane zależności",
-                "uk": "залежності оновлено",
-                "zh-cn": "依赖更新"
-            }
-        },
-        "titleLang": {
-            "en": "SMA inverter (sbfspot)",
-            "de": "SMA Wechselrichter (sbfspot)",
-            "ru": "Преобразователь SMA (sbfspot)",
-            "pt": "SMA inversor (sbfspot)",
-            "nl": "SMA-omvormer (sbfspot)",
-            "fr": "d'onduleur SMA (sbfspot)",
-            "it": "Inverter SMA (sbfspot)",
-            "es": "Inversor SMA (sbfspot)",
-            "pl": "Falownika SMA (sbfspot)",
-            "zh-cn": "SMA逆变器（sbfspot）",
-            "uk": "SMA інвертор (sbfspot)"
-        },
-        "desc": {
-            "en": "SMA inverter (sbfspot) Adapter with vis widget",
-            "de": "SMA-Wechselrichter (sbfspot) Adapter mit Vis-Widget",
-            "ru": "Преобразователь SMA (sbfspot) с vis-виджетами",
-            "pt": "Inversor SMA (sbfspot) Adaptador com vis widget",
-            "nl": "SMA-omvormer (sbfspot) Adapter met vis-widget",
-            "fr": "SMA inverter (sbfspot) Adaptateur avec vis widget",
-            "it": "Adattatore SMA (sbfspot) Adattatore con widget vis",
-            "es": "Adaptador de inversor SMA (sbfspot) con widget de vis",
-            "pl": "Adapter falownika SMA (sbfspot) z wid?etem vis",
-            "zh-cn": "带有vis小部件的SMA逆变器（sbfspot）适配器",
-            "uk": "Адаптер інвертора SMA (sbfspot) із віджетом vis"
-        },
-        "platform": "Javascript/Node.js",
-        "mode": "schedule",
-        "schedule": "*/15 * * * *",
-        "icon": "sbfspot.png",
-        "enabled": true,
-        "messagebox": true,
-        "extIcon": "https://raw.githubusercontent.com/rg-engineering/ioBroker.sbfspot/master/admin/sbfspot.png",
-        "keywords": [
-            "sbfspot"
-        ],
-        "readme": "https://github.com/rg-engineering/ioBroker.sbfspot/blob/master/README.md",
-        "loglevel": "info",
-        "stopBeforeUpdate": true,
-        "type": "hardware",
-        "license": "MIT",
-        "materialize": true,
-        "dependencies": [
-            {
-                "js-controller": ">=5.0.0"
-            }
-        ],
-        "plugins": {
-            "sentry": {
-                "dsn": "https://5369ea829c024fdf92b71a7b82f1f410@o390433.ingest.sentry.io/5434783"
-            }
-        },
-        "compact": true,
-        "authors": [
-            {
-                "name": "René G.",
-                "email": "info@rg-engineering.eu"
-            }
-        ],
-        "connectionType": "local",
-        "dataSource": "push",
-        "adminUI": {
-            "config": "materialize"
-        }
+  "common": {
+    "name": "sbfspot",
+    "version": "4.3.0",
+    "news": {
+      "4.3.0": {
+        "en": "(René) data history prepared for VIS-2: just a option here in the adapter and new widget (at this moment GeneralChart widget in vis-2-widgets-weather can be used)",
+        "de": "(René) Datenhistorie für VIS-2 vorbereitet: nur eine Option hier im Adapter und neues Widget (in diesem Moment kann GeneralChart Widget in vis-2-widgets-weather verwendet werden)",
+        "ru": "(René) история данных, подготовленная для VIS-2: просто вариант здесь в адаптере и новом виджете (в этот момент виджет GeneralChart в vis-2-widgets-weather может быть использован)",
+        "pt": "(René) histórico de dados preparado para VIS-2: apenas uma opção aqui no adaptador e novo widget (neste momento o widget GeneralChart em vis-2-widgets-weather pode ser usado)",
+        "nl": "(René) data geschiedenis voorbereid voor VIS-2: alleen een optie hier in de adapter en nieuwe widget (op dit moment GeneralChart widget in vis-2-widgets-weer kan worden gebruikt)",
+        "fr": "(René) historique de données préparé pour VIS-2: juste une option ici dans l'adaptateur et le nouveau widget (à ce moment le widget GeneralChart dans vis-2-widgets-weather peut être utilisé)",
+        "it": "(René) cronologia dei dati preparati per VIS-2: solo un'opzione qui nell'adattatore e nuovo widget (in questo momento GeneralChart widget in vis-2-widgets-weather può essere utilizzato)",
+        "es": "(René) historial de datos preparado para VIS-2: sólo una opción aquí en el adaptador y nuevo widget (en este momento se puede utilizar el widget GeneralChart en vis-2-widgets-weather)",
+        "pl": "(René) Historia danych przygotowana dla VIS-2: tylko opcja tutaj w adapterze i nowy widget (w tym momencie GeneralChart widget w vis- 2-widgets- pogoda może być użyta)",
+        "uk": "(René) історії даних, підготовлених для VIS-2: просто варіант тут в адаптері і новому віджеті (з цього моменту можна використовувати GeneralChart віджет в vis-2-widgets-weather)",
+        "zh-cn": "(René)为VIS-2准备的数据历史:仅在适配器和新部件中设置一个选项(此时可使用GeneralChart部件相对-2-widgets-weather)"
+      },
+      "4.2.4": {
+        "en": "(René) upgrade better-sqlite",
+        "de": "(René) Upgrade besser-sqlite",
+        "ru": "(René) апгрейд",
+        "pt": "(René) upgrade better-sqlite",
+        "nl": "(René) upgrade better-sqlite",
+        "fr": "(René) mise à niveau meilleure-sqlite",
+        "it": "(René) aggiornamento migliore-sqlite",
+        "es": "(René) upgrade better-sqlite",
+        "pl": "(René) upgrade better- sqlite",
+        "uk": "(René) модернізація",
+        "zh-cn": "(René)升级更好的sqlite"
+      },
+      "4.2.3": {
+        "en": "(René) downgrade better-sqlite",
+        "de": "(René) Abstieg besser-sqlite",
+        "ru": "(René) ухудшить лучше-склит",
+        "pt": "(René) downgrade better-sqlite",
+        "nl": "(René) downgrade better-sqlite",
+        "fr": "(René) dégradation de la qualité meilleure-sqlite",
+        "it": "(René) qualità migliore-sqlite",
+        "es": "(René) downgrade better-sqlite",
+        "pl": "(René) obniżenie jakości lepsze -sqlite",
+        "uk": "(René) нижчий краще",
+        "zh-cn": "(René) 降级更好"
+      },
+      "4.2.2": {
+        "en": "(René) dependencies updated",
+        "de": "(René)",
+        "ru": "(René)",
+        "pt": "(René) dependências atualizadas",
+        "nl": "(René) bijgewerkte afhankelijkheden",
+        "fr": "(René) dépendances mises à jour",
+        "it": "(René) dipendenze aggiornate",
+        "es": "(René) dependencies updated",
+        "pl": "Aktualizacja zależności (René)",
+        "uk": "(René) залежностей оновлено",
+        "zh-cn": "(René) 更新的依赖关系"
+      },
+      "4.2.1": {
+        "en": "(René) dependencies updated",
+        "de": "(René)",
+        "ru": "(René) обновления зависимости",
+        "pt": "(René) dependências atualizadas",
+        "nl": "Afhankelijkheid",
+        "fr": "(René) dépendances mises à jour",
+        "it": "(René) dipendenze aggiornate",
+        "es": "(René) dependencies updated",
+        "pl": "(René) zależności od aktualizacji",
+        "uk": "(René) залежностей оновлено",
+        "zh-cn": "(单位:千美元)"
+      },
+      "4.2.0": {
+        "en": "(René) dependencies updated",
+        "de": "(René)",
+        "ru": "(René) обновления зависимости",
+        "pt": "(René) dependências atualizadas",
+        "nl": "Afhankelijkheid",
+        "fr": "(René) dépendances mises à jour",
+        "it": "(René) dipendenze aggiornate",
+        "es": "(René) dependencies updated",
+        "pl": "(René) zależności od aktualizacji",
+        "uk": "(René) залежностей оновлено",
+        "zh-cn": "(单位:千美元)"
+      },
+      "4.1.7": {
+        "en": "dependencies updated",
+        "de": "Abhängigkeiten aktualisiert",
+        "ru": "зависимости обновлены",
+        "pt": "dependências atualizadas",
+        "nl": "afhankelijkheden bijgewerkt",
+        "fr": "dépendances mises à jour",
+        "it": "dipendenze aggiornate",
+        "es": "dependencias actualizadas",
+        "pl": "zaktualizowane zależności",
+        "uk": "залежності оновлено",
+        "zh-cn": "依赖更新"
+      }
     },
-    "native": {
-        "sbfspotIP": "localhost",
-        "sbfspotPort": 3306,
-        "sbfspotUser": "SBFspotUser",
-        "sbfspotPassword": "",
-        "sbfspotDatabasename": "SBFspot",
-        "databasetype": "mySQL",
-        "sqlite_path": "",
-        "install_date": "2001-08-25",
-        "GetDataOnlyWhenDaylight": true
+    "titleLang": {
+      "en": "SMA inverter (sbfspot)",
+      "de": "SMA Wechselrichter (sbfspot)",
+      "ru": "Преобразователь SMA (sbfspot)",
+      "pt": "SMA inversor (sbfspot)",
+      "nl": "SMA-omvormer (sbfspot)",
+      "fr": "d'onduleur SMA (sbfspot)",
+      "it": "Inverter SMA (sbfspot)",
+      "es": "Inversor SMA (sbfspot)",
+      "pl": "Falownika SMA (sbfspot)",
+      "zh-cn": "SMA逆变器（sbfspot）",
+      "uk": "SMA інвертор (sbfspot)"
+    },
+    "desc": {
+      "en": "SMA inverter (sbfspot) Adapter with vis widget",
+      "de": "SMA-Wechselrichter (sbfspot) Adapter mit Vis-Widget",
+      "ru": "Преобразователь SMA (sbfspot) с vis-виджетами",
+      "pt": "Inversor SMA (sbfspot) Adaptador com vis widget",
+      "nl": "SMA-omvormer (sbfspot) Adapter met vis-widget",
+      "fr": "SMA inverter (sbfspot) Adaptateur avec vis widget",
+      "it": "Adattatore SMA (sbfspot) Adattatore con widget vis",
+      "es": "Adaptador de inversor SMA (sbfspot) con widget de vis",
+      "pl": "Adapter falownika SMA (sbfspot) z wid?etem vis",
+      "zh-cn": "带有vis小部件的SMA逆变器（sbfspot）适配器",
+      "uk": "Адаптер інвертора SMA (sbfspot) із віджетом vis"
+    },
+    "platform": "Javascript/Node.js",
+    "mode": "schedule",
+    "schedule": "*/15 * * * *",
+    "icon": "sbfspot.png",
+    "enabled": true,
+    "messagebox": true,
+    "extIcon": "https://raw.githubusercontent.com/rg-engineering/ioBroker.sbfspot/master/admin/sbfspot.png",
+    "keywords": [
+      "sbfspot"
+    ],
+    "readme": "https://github.com/rg-engineering/ioBroker.sbfspot/blob/master/README.md",
+    "loglevel": "info",
+    "stopBeforeUpdate": true,
+    "type": "hardware",
+    "license": "MIT",
+    "materialize": true,
+    "dependencies": [
+      {
+        "js-controller": ">=5.0.0"
+      }
+    ],
+    "plugins": {
+      "sentry": {
+        "dsn": "https://5369ea829c024fdf92b71a7b82f1f410@o390433.ingest.sentry.io/5434783"
+      }
+    },
+    "compact": true,
+    "authors": [
+      {
+        "name": "René G.",
+        "email": "info@rg-engineering.eu"
+      }
+    ],
+    "connectionType": "local",
+    "dataSource": "push",
+    "adminUI": {
+      "config": "materialize"
     }
+  },
+  "native": {
+    "sbfspotIP": "localhost",
+    "sbfspotPort": 3306,
+    "sbfspotUser": "SBFspotUser",
+    "sbfspotPassword": "",
+    "sbfspotDatabasename": "SBFspot",
+    "databasetype": "mySQL",
+    "sqlite_path": "",
+    "install_date": "2001-08-25",
+    "GetDataOnlyWhenDaylight": true
+  }
 }
