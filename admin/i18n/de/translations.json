@@ -1,8 +1,9 @@
 {
-    "Attention": "adapter, sbfspot und database sollten auf demselben system laufen",
+    "Attention": "adapter, sbfspot und Datenbank sollten auf demselben System laufen",
     "GetDataOnlyWhenDaylight": "Daten nur bei Tageslicht abrufen",
+    "History4Vis2": "History für VIS-2-Widgets erstellen",
     "install_date": "Installationsdatum PV-Anlage",
-    "install_date_desc": "verwendet für die Berechnung der Geschichte in vis Widget",
+    "install_date_desc": "verwendet für die Berechnung der History in vis Widget",
     "path_to_DB_file": "Pfad zur SQLite-Datenbankdatei",
     "path_to_DB_file_descr": "geben Sie den kompletten Pfad inkl. Datenbankdateiname z.B. /home/pi/sbfspot/smadata/SBFspot.db",
     "sbfspot_DB_IP": "Datenbank-IP",

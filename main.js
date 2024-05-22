@@ -208,83 +208,6 @@ async function GetSystemDateformat() {
     }
 }
 
-/*
-
-2020-07-27 19:30:06.897 - info: sbfspot.0 (6113) Terminated (ADAPTER_REQUESTED_TERMINATION): Without reason
-2020-07-27 19:30:07.015 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807 is invalid: obj.common.name has an invalid type! Expected "string" or "object", received "number"
-2020-07-27 19:30:07.018 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
-2020-07-27 19:30:07.063 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.Type is invalid: obj.type has to exist
-2020-07-27 19:30:07.065 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
-2020-07-27 19:30:07.068 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.ETotal is invalid: obj.type has to exist
-2020-07-27 19:30:07.070 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
-2020-07-27 19:30:07.073 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.EToday is invalid: obj.type has to exist
-2020-07-27 19:30:07.076 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
-2020-07-27 19:30:07.078 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.SW_Version is invalid: obj.type has to exist
-2020-07-27 19:30:07.081 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
-2020-07-27 19:30:07.084 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.TotalPac is invalid: obj.type has to exist
-2020-07-27 19:30:07.086 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
-2020-07-27 19:30:07.088 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.OperatingTime is invalid: obj.type has to exist
-2020-07-27 19:30:07.090 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
-2020-07-27 19:30:07.093 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.FeedInTime is invalid: obj.type has to exist
-2020-07-27 19:30:07.095 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
-2020-07-27 19:30:07.098 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.Status is invalid: obj.type has to exist
-2020-07-27 19:30:07.100 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
-2020-07-27 19:30:07.103 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.GridRelay is invalid: obj.type has to exist
-2020-07-27 19:30:07.105 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
-2020-07-27 19:30:07.107 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.Temperature is invalid: obj.type has to exist
-2020-07-27 19:30:07.109 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
-2020-07-27 19:30:07.112 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.Pdc1 is invalid: obj.type has to exist
-2020-07-27 19:30:07.114 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
-2020-07-27 19:30:07.116 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.Pdc2 is invalid: obj.type has to exist
-2020-07-27 19:30:07.118 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
-2020-07-27 19:30:07.121 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.Idc1 is invalid: obj.type has to exist
-2020-07-27 19:30:07.123 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
-2020-07-27 19:30:07.125 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.Idc2 is invalid: obj.type has to exist
-2020-07-27 19:30:07.127 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
-2020-07-27 19:30:07.130 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.Udc1 is invalid: obj.type has to exist
-2020-07-27 19:30:07.132 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
-2020-07-27 19:30:07.134 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.Udc2 is invalid: obj.type has to exist
-2020-07-27 19:30:07.136 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
-2020-07-27 19:30:07.139 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.Pac1 is invalid: obj.type has to exist
-2020-07-27 19:30:07.141 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
-2020-07-27 19:30:07.143 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.Pac2 is invalid: obj.type has to exist
-2020-07-27 19:30:07.145 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
-2020-07-27 19:30:07.148 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.Pac3 is invalid: obj.type has to exist
-2020-07-27 19:30:07.149 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
-2020-07-27 19:30:07.152 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.Iac1 is invalid: obj.type has to exist
-2020-07-27 19:30:07.154 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
-2020-07-27 19:30:07.156 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.Iac2 is invalid: obj.type has to exist
-2020-07-27 19:30:07.158 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
-2020-07-27 19:30:07.161 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.Iac3 is invalid: obj.type has to exist
-2020-07-27 19:30:07.163 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
-2020-07-27 19:30:07.165 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.Uac1 is invalid: obj.type has to exist
-2020-07-27 19:30:07.175 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
-2020-07-27 19:30:07.178 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.Uac2 is invalid: obj.type has to exist
-2020-07-27 19:30:07.180 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
-2020-07-27 19:30:07.183 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.Uac3 is invalid: obj.type has to exist
-2020-07-27 19:30:07.185 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
-2020-07-27 19:30:07.187 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.Frequency is invalid: obj.type has to exist
-2020-07-27 19:30:07.189 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
-2020-07-27 19:30:07.191 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.BT_Signal is invalid: obj.type has to exist
-2020-07-27 19:30:07.193 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
-2020-07-27 19:30:07.196 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.timestamp is invalid: obj.type has to exist
-2020-07-27 19:30:07.198 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
-2020-07-27 19:30:07.200 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.lastup is invalid: obj.type has to exist
-2020-07-27 19:30:07.202 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
-2020-07-27 19:30:07.205 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.error is invalid: obj.type has to exist
-2020-07-27 19:30:07.206 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
-2020-07-27 19:30:07.209 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.history.today is invalid: obj.type has to exist
-2020-07-27 19:30:07.211 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
-2020-07-27 19:30:07.213 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.history.last30Days is invalid: obj.type has to exist
-2020-07-27 19:30:07.215 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
-2020-07-27 19:30:07.218 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.history.last12Months is invalid: obj.type has to exist
-2020-07-27 19:30:07.220 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
-2020-07-27 19:30:07.222 - warn: sbfspot.0 (6113) Object sbfspot.0.1100173807.history.years is invalid: obj.type has to exist
-2020-07-27 19:30:07.224 - warn: sbfspot.0 (6113) This object will not be created in future versions. Please report this to the developer.
-2020-07-27 19:30:07.538 - info: host.orangepizero instance system.adapter.sbfspot.0 terminated with code 11 (ADAPTER_REQUESTED_TERMINATION)
-
-*/
-
 
 
 async function AddInverterVariables(serial) {
@@ -396,19 +319,6 @@ async function AddObject(key, type, common_name, common_type, common_role, commo
     await CreateObject(key, obj);
 }
 
-
-/*
-sbfspot.0	2021-07-08 19:30:16.081	info	State value to set for "sbfspot.0.2000562095.history.last12Months" has to be type "number" but received type "string"
-sbfspot.0	2021-07-08 19:30:14.909	info	State value to set for "sbfspot.0.2000562095.history.years" has to be type "number" but received type "string"
-sbfspot.0	2021-07-08 19:30:13.024	info	State value to set for "sbfspot.0.2000562095.history.today" has to be type "number" but received type "string"
-sbfspot.0	2021-07-08 19:30:12.888	info	State value to set for "sbfspot.0.2000562095.history.last30Days" has to be type "number" but received type "string"
- */
-
-/*
-async function CheckInverterVariables() {
-
-}
-*/
 
 
 async function DB_Connect() {
@@ -755,10 +665,21 @@ async function CalcHistory_LastMonth(err, rows, serial) {
 
             const data = rows[i];
 
-            oLastDays.push({
-                "date": data["date"],
-                "value": data["ertrag"]
-            });
+            if (adapter.config.History4Vis2) {
+                //for vis-2
+                oLastDays.push(
+                    [
+                        data["date"],
+                        data["ertrag"]
+                    ]);
+            }
+            else {
+                oLastDays.push({
+                    "date": data["date"],
+                    "value": data["ertrag"]
+                });
+            }
+
             //adapter.log.debug(JSON.stringify(oLastDays));
 
         }
@@ -874,10 +795,21 @@ async function CalcHistory_Today(err, rows, serial) {
 
             const data = rows[i];
 
-            oLastDays.push({
-                "time": data["time"],
-                "value": data["ertrag"]
-            });
+            if (adapter.config.History4Vis2) {
+                //for vis-2
+                oLastDays.push(
+                    [
+                        data["time"],
+                        data["ertrag"]
+                    ]);
+            }
+            else {
+                oLastDays.push({
+                    "time": data["time"],
+                    "value": data["ertrag"]
+                });
+
+            }
 
         }
 
@@ -1057,12 +989,20 @@ async function CalcHistory_Months(err, rows, serial) {
         for (const i in rows) {
 
             const data = rows[i];
-
-            oLastMonth.push({
-                "month": data["date"],
-                "value": data["ertrag"]
-            });
-
+            if (adapter.config.History4Vis2) {
+                //for vis-2
+                oLastMonth.push(
+                    [
+                        data["date"],
+                        data["ertrag"]
+                    ]);
+            }
+            else {
+                oLastMonth.push({
+                    "month": data["date"],
+                    "value": data["ertrag"]
+                });
+            }
         }
 
         await adapter.setStateAsync(serial + ".history.last12Months", { ack: true, val: JSON.stringify(oLastMonth) });

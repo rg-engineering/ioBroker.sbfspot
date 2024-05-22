@@ -1,6 +1,7 @@
 {
     "Attention": "adapter, sbfspot en database moeten op hetzelfde systeem worden uitgevoerd",
     "GetDataOnlyWhenDaylight": "krijg alleen gegevens bij daglicht",
+    "History4Vis2": "Creëer geschiedeniswaarde voor VIS-2 widget",
     "install_date": "installeer datum PV-systeem",
     "install_date_desc": "gebruikt voor de berekening van de geschiedenis in vis widget",
     "path_to_DB_file": "pad naar sqlite databasebestand",
