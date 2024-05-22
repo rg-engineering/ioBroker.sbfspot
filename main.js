@@ -909,13 +909,23 @@ async function CalcHistory_Years(err, rows, serial) {
 
                     adapter.log.debug("fillup " + (installyear + n) + " " + yearvalue);
 
-                    oLastYears.push({
-                        "year": installyear + n,
-                        "value": parseInt(yearvalue)
-                    });
+                    if (adapter.config.History4Vis2) {
+                        //for vis-2
+                        oLastYears.push(
+                            [
+                                installyear + n,
+                                parseInt(yearvalue)
+                            ]);
+                    }
+                    else {
+                        oLastYears.push({
+                            "year": installyear + n,
+                            "value": parseInt(yearvalue)
+                        });
+                    }
                 }
 
-                
+
             } else {
 
 
@@ -923,10 +933,23 @@ async function CalcHistory_Years(err, rows, serial) {
 
                 adapter.log.debug(data["date"] + " " + yearvalue);
 
-                oLastYears.push({
-                    "year": data["date"],
-                    "value": yearvalue
-                });
+                if (adapter.config.History4Vis2) {
+                    //for vis-2
+                    oLastYears.push(
+                        [
+                            data["date"],
+                            yearvalue
+                        ]);
+                }
+                else {
+
+                    oLastYears.push({
+                        "year": data["date"],
+                        "value": yearvalue
+                    });
+                }
+
+
             }
             firstyear = false;
 
