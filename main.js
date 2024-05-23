@@ -666,12 +666,27 @@ async function CalcHistory_LastMonth(err, rows, serial) {
             const data = rows[i];
 
             if (adapter.config.History4Vis2) {
+
+                const oDate = new Date(data["date"]);
+                oDate.setHours(12);
+                oDate.setMinutes(0);
+
                 //for vis-2
                 oLastDays.push(
                     [
-                        data["date"],
+                        oDate,
                         data["ertrag"]
                     ]);
+
+                /*
+                    [
+                        ["2024-04-23T00:00:00.000Z",12551],
+                        ["2024-04-24T00:00:00.000Z",5898],
+                        ["2024-04-25T00:00:00.000Z",8373]
+                    ]
+
+                */
+
             }
             else {
                 oLastDays.push({
@@ -796,12 +811,37 @@ async function CalcHistory_Today(err, rows, serial) {
             const data = rows[i];
 
             if (adapter.config.History4Vis2) {
+
+
+                const oDate = new Date();
+
+                const times = data["time"].split(":");
+                oDate.setHours(parseInt(times[0]));
+                oDate.setMinutes(parseInt(times[1]));
+                oDate.setSeconds(0);
+
+                adapter.log.debug("### " + data["time"] + " " + JSON.stringify(times) + " " + oDate.toLocaleString());
+
                 //for vis-2
                 oLastDays.push(
                     [
-                        data["time"],
+                        oDate,
                         data["ertrag"]
                     ]);
+
+                /*
+                    [
+                        ["2024-05-23T14:45:07.403Z",1],
+                        ["2024-05-23T14:45:07.403Z",3],
+                        ["2024-05-23T14:45:07.403Z",4],
+                        ["2024-05-23T14:45:07.403Z",6],
+                        ["2024-05-23T14:45:07.403Z",9],
+                        ["2024-05-23T14:45:07.403Z",12],
+                        ["2024-05-23T14:45:07.404Z",16],
+                        ["2024-05-23T14:45:07.404Z",20]]
+
+                */
+
             }
             else {
                 oLastDays.push({
@@ -910,12 +950,27 @@ async function CalcHistory_Years(err, rows, serial) {
                     adapter.log.debug("fillup " + (installyear + n) + " " + yearvalue);
 
                     if (adapter.config.History4Vis2) {
+
+                        const year = installyear + n;
+                        const oDate = new Date(year);
+
                         //for vis-2
                         oLastYears.push(
                             [
-                                installyear + n,
+                                oDate,
                                 parseInt(yearvalue)
                             ]);
+
+                        /*
+                        [
+                            ["2008-01-01T00:00:00.000Z",7000],
+                            ["2009-01-01T00:00:00.000Z",2309000],
+                            ["2010-01-01T00:00:00.000Z",4445000],
+                            ["2011-01-01T00:00:00.000Z",7019000],["2012-01-01T00:00:00.000Z",9371000],["2013-01-01T00:00:00.000Z",11393000],["2014-01-01T00:00:00.000Z",13666000],["2015-01-01T00:00:00.000Z",16034000],["2016-01-01T00:00:00.000Z",18052202],["2017-01-01T00:00:00.000Z",20172891],["2018-01-01T00:00:00.000Z",22476037],["2019-01-01T00:00:00.000Z",24617484],["2020-01-01T00:00:00.000Z",26802727],["2021-01-01T00:00:00.000Z",28673935],["2022-01-01T00:00:00.000Z",30710918],["2023-01-01T00:00:00.000Z",32662549],["2024-01-01T00:00:00.000Z",33370608]]
+
+
+                        */
+
                     }
                     else {
                         oLastYears.push({
@@ -934,10 +989,12 @@ async function CalcHistory_Years(err, rows, serial) {
                 adapter.log.debug(data["date"] + " " + yearvalue);
 
                 if (adapter.config.History4Vis2) {
+
+                    const oDate = new Date(data["date"]);
                     //for vis-2
                     oLastYears.push(
                         [
-                            data["date"],
+                            oDate,
                             yearvalue
                         ]);
                 }
@@ -1013,12 +1070,25 @@ async function CalcHistory_Months(err, rows, serial) {
 
             const data = rows[i];
             if (adapter.config.History4Vis2) {
+
+                const oDate = new Date(data["date"]);
                 //for vis-2
                 oLastMonth.push(
                     [
-                        data["date"],
+                        oDate,
                         data["ertrag"]
                     ]);
+
+                /*
+                    [
+                        ["2023-05-01T00:00:00.000Z",31422838],
+                        ["2023-06-01T00:00:00.000Z",31732951],
+                        ["2023-07-01T00:00:00.000Z",32009703],
+                        ["2023-08-01T00:00:00.000Z",32245904],["2023-09-01T00:00:00.000Z",32505135],["2023-10-01T00:00:00.000Z",32615574],["2023-11-01T00:00:00.000Z",32645852],["2023-12-01T00:00:00.000Z",32662549],["2024-01-01T00:00:00.000Z",32689084],["2024-02-01T00:00:00.000Z",32754174],["2024-03-01T00:00:00.000Z",32940065],["2024-04-01T00:00:00.000Z",33184421],["2024-05-01T00:00:00.000Z",33370608]]
+
+
+                */
+
             }
             else {
                 oLastMonth.push({
