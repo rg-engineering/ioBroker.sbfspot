@@ -63,8 +63,7 @@ sometimes npm intall must be called more then one time to successfully install a
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 4.3.1 (2024-05-23)
 * (René) bug fix for data history in VIS-2
 
 ### 4.3.0 (2024-05-22)
