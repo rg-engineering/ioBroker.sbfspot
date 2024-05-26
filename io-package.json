@@ -135,7 +135,10 @@
     "loglevel": "info",
     "stopBeforeUpdate": true,
     "type": "hardware",
-    "license": "MIT",
+    "licenseInformation": {
+      "license": "MIT",
+      "type": "free"
+    },
     "materialize": true,
     "dependencies": [
       {
