@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "4.3.1",
+    "version": "4.3.2",
     "news": {
+      "4.3.2": {
+        "en": "(René) change of dependencies",
+        "de": "(René) Veränderung der Abhängigkeiten",
+        "ru": "(René) изменение зависимостей",
+        "pt": "(René) mudança de dependências",
+        "nl": "(René) verandering van afhankelijkheden",
+        "fr": "(René) changement de dépendances",
+        "it": "(René) cambiamento delle dipendenze",
+        "es": "(René) cambio de dependencia",
+        "pl": "(René) zmiana zależności",
+        "uk": "(Рене) зміна залежностей",
+        "zh-cn": "(René) 属地变化"
+      },
       "4.3.1": {
         "en": "(René) bug fix for data history in VIS-2",
         "de": "Fehlerbehebung für die Datenhistorie in VIS-2",
@@ -69,19 +82,6 @@
         "zh-cn": "(René) 更新的依赖关系"
       },
       "4.2.1": {
-        "en": "(René) dependencies updated",
-        "de": "(René)",
-        "ru": "(René) обновления зависимости",
-        "pt": "(René) dependências atualizadas",
-        "nl": "Afhankelijkheid",
-        "fr": "(René) dépendances mises à jour",
-        "it": "(René) dipendenze aggiornate",
-        "es": "(René) dependencies updated",
-        "pl": "(René) zależności od aktualizacji",
-        "uk": "(René) залежностей оновлено",
-        "zh-cn": "(单位:千美元)"
-      },
-      "4.2.0": {
         "en": "(René) dependencies updated",
         "de": "(René)",
         "ru": "(René) обновления зависимости",
