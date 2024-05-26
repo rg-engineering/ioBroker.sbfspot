@@ -135,6 +135,7 @@
     "loglevel": "info",
     "stopBeforeUpdate": true,
     "type": "hardware",
+    "tier": 3,
     "licenseInformation": {
       "license": "MIT",
       "type": "free"
