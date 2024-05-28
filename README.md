@@ -65,6 +65,7 @@ sometimes npm intall must be called more then one time to successfully install a
 -->
 ### **WORK IN PROGRESS**
 * (René) change of dependencies
+* (René) mySql dependency update
 
 ### 4.3.1 (2024-05-23)
 * (René) bug fix for data history in VIS-2
