@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "4.3.2",
+    "version": "4.3.3",
     "news": {
+      "4.3.3": {
+        "en": "(René) change of dependencies\n(René) mySql dependency update",
+        "de": "(René) Veränderung der Abhängigkeiten\n(René) mySql Abhängigkeitsupdate",
+        "ru": "(René) изменение зависимостей\n(René) обновление зависимости mySql",
+        "pt": "(René) mudança de dependências\n(René) atualização de dependência mySql",
+        "nl": "(René) verandering van afhankelijkheden\n(René) mySql afhankelijkheidsupdate",
+        "fr": "(René) changement de dépendances\n(René) Mise à jour de la dépendance mySql",
+        "it": "(René) cambiamento delle dipendenze\n(René) aggiornamento di dipendenza mySql",
+        "es": "(René) cambio de dependencia\n(René) mySql dependency update",
+        "pl": "(René) zmiana zależności\nAktualizacja zależności mySql",
+        "uk": "(Рене) зміна залежностей\n(René) mySql оновлення залежності",
+        "zh-cn": "(René) 属地变化\n(René) MySql 依赖性更新"
+      },
       "4.3.2": {
         "en": "(René) change of dependencies",
         "de": "(René) Veränderung der Abhängigkeiten",
@@ -80,19 +93,6 @@
         "pl": "Aktualizacja zależności (René)",
         "uk": "(René) залежностей оновлено",
         "zh-cn": "(René) 更新的依赖关系"
-      },
-      "4.2.1": {
-        "en": "(René) dependencies updated",
-        "de": "(René)",
-        "ru": "(René) обновления зависимости",
-        "pt": "(René) dependências atualizadas",
-        "nl": "Afhankelijkheid",
-        "fr": "(René) dépendances mises à jour",
-        "it": "(René) dipendenze aggiornate",
-        "es": "(René) dependencies updated",
-        "pl": "(René) zależności od aktualizacji",
-        "uk": "(René) залежностей оновлено",
-        "zh-cn": "(单位:千美元)"
       }
     },
     "titleLang": {

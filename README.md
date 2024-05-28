@@ -63,7 +63,7 @@ sometimes npm intall must be called more then one time to successfully install a
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 4.3.3 (2024-05-28)
 * (René) change of dependencies
 * (René) mySql dependency update
 
