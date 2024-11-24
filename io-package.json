@@ -55,7 +55,6 @@
         "uk": "(René) Виправлення помилок для історії даних в VIS-2",
         "zh-cn": "(René) VIS-2中数据历史的错误修正"
       }
-     
     },
     "titleLang": {
       "en": "SMA inverter (sbfspot)",
@@ -123,7 +122,49 @@
     "dataSource": "push",
     "adminUI": {
       "config": "materialize"
-    }
+    },
+    "messages": [
+      {
+        "condition": {
+          "operand": "and",
+          "rules": [
+            "oldVersion<4.3.5",
+            "newVersion>=4.3.5"
+          ]
+        },
+        "title": {
+          "en": "widgets are installed again",
+          "de": "Widgets werden erneut installiert",
+          "ru": "виджеты установлены снова",
+          "pt": "widgets são instalados novamente",
+          "nl": "widgets zijn opnieuw geïnstalleerd",
+          "fr": "les widgets sont à nouveau installés",
+          "it": "i widget vengono installati di nuovo",
+          "es": "Los widgets se instalan nuevamente.",
+          "pl": "widżety zostaną ponownie zainstalowane",
+          "uk": "віджети встановлюються знову",
+          "zh-cn": "再次安装小部件"
+        },
+        "text": {
+          "en": "widgets for vis are installed again. It might be necessary to upload complete vis again. For vis-2 users a new general widget set is available.",
+          "de": "Widgets für vis werden erneut installiert. Es kann erforderlich sein, die vollständige Vis erneut hochzuladen. Für vis-2-Benutzer ist ein neues allgemeines Widget-Set verfügbar.",
+          "ru": "виджеты для вис установлены заново. Возможно, потребуется снова загрузить полную версию. Для пользователей vis-2 доступен новый общий набор виджетов.",
+          "pt": "widgets para vis são instalados novamente. Pode ser necessário carregar o vis completo novamente. Para usuários do vis-2, um novo conjunto geral de widgets está disponível.",
+          "nl": "widgets voor vis zijn opnieuw geïnstalleerd. Het kan nodig zijn om de volledige vis opnieuw te uploaden. Voor vis-2-gebruikers is een nieuwe algemene widgetset beschikbaar.",
+          "fr": "les widgets pour vis sont à nouveau installés. Il peut être nécessaire de télécharger à nouveau la vis complète. Pour les utilisateurs vis-2, un nouvel ensemble de widgets généraux est disponible.",
+          "it": "i widget per vis vengono installati di nuovo. Potrebbe essere necessario caricare nuovamente la vis completa. Per gli utenti vis-2 è disponibile un nuovo set di widget generali.",
+          "es": "Los widgets para vis se instalan nuevamente. Puede que sea necesario volver a cargar el vis completo. Para los usuarios de vis-2 hay disponible un nuevo conjunto de widgets generales.",
+          "pl": "widżety dla vis zostały ponownie zainstalowane. Może być konieczne ponowne przesłanie kompletnego vis. Dla użytkowników vis-2 dostępny jest nowy ogólny zestaw widżetów.",
+          "uk": "знову встановлені віджети для vis. Можливо, доведеться знову завантажити повний віз. Для користувачів vis-2 доступний новий загальний набір віджетів.",
+          "zh-cn": "vis 小部件再次安装。可能需要再次上传完整的 vis。对于 vis-2 用户，可以使用新的通用小部件集。"
+        },
+        "level": "warn",
+        "buttons": [
+          "agree",
+          "cancel"
+        ]
+      }
+    ]
   },
   "native": {
     "sbfspotIP": "localhost",
