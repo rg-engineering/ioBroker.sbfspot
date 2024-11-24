@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "4.3.4",
+    "version": "4.3.5",
     "news": {
+      "4.3.5": {
+        "en": "see issue #417: test with nodejs@22\nissue  #435: install widgets again",
+        "de": "siehe ausgabe #417: test mit nodejs@22\nausgabe #435: widgets erneut installieren",
+        "ru": "#417: тест с nodejs@22\n#435: установить виджеты снова",
+        "pt": "veja a edição #417: teste com nodejs@22\nedição #435: instalar widgets novamente",
+        "nl": "zie nummer 417: test met nodejs@22\nprobleem #435: opnieuw widgets installeren",
+        "fr": "voir numéro #417: test avec nodejs@22\nnuméro #435: installez à nouveau des widgets",
+        "it": "vedi numero #417: prova con nodejs@22\nnumero #435: installare nuovamente i widget",
+        "es": "ver número #417: prueba con nodejs@22\nedición #435: instalar widgets de nuevo",
+        "pl": "zob. numer # 417: test z nodejs @ 22\nwydanie # 435: zainstalować widżety ponownie",
+        "uk": "переглянути номер #417: тест з nodejs@22\nproblem #435: встановити віджети знову",
+        "zh-cn": "参见第417期:带节点的测试@22\n第435期: 再次安装部件"
+      },
       "4.3.4": {
         "en": "update dependencies\nbug fixes based on adapter checker recommendation",
         "de": "aktualisierung der abhängigkeiten\nfehlerbehebungen basierend auf adapter-checker empfehlung",
