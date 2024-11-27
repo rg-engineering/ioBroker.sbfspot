@@ -1,0 +1,54 @@
+{
+  "type": "tabs",
+  "i18n": true,
+  "items": {
+    "tab-main": {
+      "type": "panel",
+      "label": "Main settings",
+      "items": {
+        "install_date": {
+          "type": "text",
+          "label": "install_date",
+          "help": "used to calculate statistics",
+          "xs": 12,
+          "sm": 12,
+          "md": 4,
+          "lg": 4,
+          "xl": 4
+        }
+      }
+    },
+    "tab-mysql": {
+      "type": "panel",
+      "label": "page-mysql",
+      "items": {
+        "sbfspotIP": {
+          "type": "text",
+          "label": "sbfspot_DB_IP",
+          "help": "",
+          "xs": 12,
+          "sm": 12,
+          "md": 4,
+          "lg": 4,
+          "xl": 4
+        }
+      }
+    },
+    "tab-sqlite": {
+      "type": "panel",
+      "label": "page-sqlite",
+      "items": {
+        "sqlite_path": {
+          "type": "text",
+          "label": "path_to_DB_file",
+          "help": "",
+          "xs": 12,
+          "sm": 12,
+          "md": 4,
+          "lg": 4,
+          "xl": 4
+        }
+      }
+    }
+  }
+}
