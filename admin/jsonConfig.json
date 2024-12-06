@@ -6,6 +6,25 @@
       "type": "panel",
       "label": "Main settings",
       "items": {
+
+        "icontest": {
+          "type": "staticImage",
+          "src": "sbfspot.png",
+          "newLine": true,
+          "xs": 7,
+          "sm": 3,
+          "md": 3,
+          "lg": 1.2,
+          "xl": 1.2
+        },
+
+        "dividerHdr1": {
+          "newLine": true,
+          "type": "header",
+          "text": "configuration",
+          "size": 2
+        },
+
         "install_date": {
           "type": "text",
           "label": "install_date",
@@ -15,16 +34,117 @@
           "md": 4,
           "lg": 4,
           "xl": 4
+        },
+
+        "databasetype": {
+          "newLine": true,
+          "type": "select",
+          "label": "type_of_DB",
+          "options": [
+            {
+              "label": { "en": "mySQL" },
+              "value": "mySQL"
+            },
+            {
+              "label": { "en": "MariaDB" },
+              "value": "MariaDB"
+            },
+            {
+              "label": { "en": "sqlite" },
+              "value": "sqlite"
+            }
+          ],
+          "xs": 12,
+          "sm": 12,
+          "md": 4,
+          "lg": 4,
+          "xl": 4
+        },
+        "GetDataOnlyWhenDaylight": {
+          "newLine": true,
+          "type": "checkbox",
+          "label": "GetDataOnlyWhenDaylight",
+          "xs": 12,
+          "sm": 12,
+          "md": 4,
+          "lg": 4,
+          "xl": 4
+        },
+        "History4Vis2": {
+          "newLine": true,
+          "type": "checkbox",
+          "label": "History4Vis2",
+          "xs": 12,
+          "sm": 12,
+          "md": 4,
+          "lg": 4,
+          "xl": 4
         }
+
+
+
       }
     },
     "tab-mysql": {
       "type": "panel",
       "label": "page-mysql",
+      "hidden": "if (data.databasetype == 'sqlite') return true;",
       "items": {
+
+        "dividerHdr2": {
+          "newLine": true,
+          "type": "header",
+          "text": "mySQL, MariaDB configuration",
+          "size": 2
+        },
+
+
         "sbfspotIP": {
           "type": "text",
           "label": "sbfspot_DB_IP",
+          "help": "",
+          "xs": 12,
+          "sm": 12,
+          "md": 4,
+          "lg": 4,
+          "xl": 4
+        },
+        "sbfspotPort": {
+          "newLine": true,
+          "type": "number",
+          "label": "sbfspot_DB_port",
+          "xs": 12,
+          "sm": 12,
+          "md": 4,
+          "lg": 4,
+          "xl": 4
+        },
+        "sbfspotUser": {
+          "newLine": true,
+          "type": "text",
+          "label": "sbfspot_DB_user",
+          "help": "",
+          "xs": 12,
+          "sm": 12,
+          "md": 4,
+          "lg": 4,
+          "xl": 4
+        },
+        "sbfspotPassword": {
+          "newLine": true,
+          "type": "password",
+          "label": "sbfspot_DB_password",
+          "help": "",
+          "xs": 12,
+          "sm": 12,
+          "md": 4,
+          "lg": 4,
+          "xl": 4
+        },
+        "sbfspotDatabasename": {
+          "newLine": true,
+          "type": "text",
+          "label": "sbfspot_DB_databasename",
           "help": "",
           "xs": 12,
           "sm": 12,
@@ -37,7 +157,16 @@
     "tab-sqlite": {
       "type": "panel",
       "label": "page-sqlite",
+      "hidden": "if (data.databasetype != 'sqlite') return true;",
       "items": {
+        "dividerHdr3": {
+          "newLine": true,
+          "type": "header",
+          "text": "sqlite configuration",
+          "size": 2
+        },
+
+
         "sqlite_path": {
           "type": "text",
           "label": "path_to_DB_file",

@@ -134,7 +134,6 @@
     "connectionType": "local",
     "dataSource": "push",
     "adminUI": {
-      
       "config": "json"
     },
     "messages": [
