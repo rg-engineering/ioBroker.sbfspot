@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "4.3.5",
+    "version": "4.4.0",
     "news": {
+      "4.4.0": {
+        "en": "migration to admin 5 UI (jsonConfig)",
+        "de": "migration zu admin 5 UI (jsonConfig)",
+        "ru": "admin 5 UI (jsonConfig)",
+        "pt": "migração para administrador 5 UI (jsonConfig)",
+        "nl": "migratie naar admin 5 UI (jsonConfig)",
+        "fr": "migration vers admin 5 UI (jsonConfig)",
+        "it": "migrazione a admin 5 UI (jsonConfig)",
+        "es": "migración a admin 5 UI (jsonConfig)",
+        "pl": "migracja do admin 5 UI (jsonConfig)",
+        "uk": "міграція до адмін 5 UI (jsonConfig)",
+        "zh-cn": "迁移到管理员 5 UI (jsonConfig)"
+      },
       "4.3.5": {
         "en": "see issue #417: test with nodejs@22\nissue  #435: install widgets again",
         "de": "siehe ausgabe #417: test mit nodejs@22\nausgabe #435: widgets erneut installieren",
