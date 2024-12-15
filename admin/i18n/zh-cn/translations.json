@@ -2,8 +2,12 @@
     "Attention": "适配器，sbfspot和数据库应在同一系统上运行",
     "GetDataOnlyWhenDaylight": "仅在白天时获取数据",
     "History4Vis2": "为 VIS-2 小部件创建历史值",
+    "configuration": "配置",
     "install_date": "安装日期PV-System",
     "install_date_desc": "用于计算vis小部件中的历史记录",
+    "mySQL, MariaDB configuration": "mySQL、MariaDB 配置",
+    "page-mysql": "mysql / 玛丽亚数据库",
+    "page-sqlite": "SQLite",
     "path_to_DB_file": "sqlite数据库文件的路径",
     "path_to_DB_file_descr": "输入完整的路径，包括",
     "sbfspot_DB_IP": "数据库IP",
@@ -14,5 +18,7 @@
     "sbfspot_DB_port_descr": "默认值3306",
     "sbfspot_DB_user": "数据库用户",
     "sbfspot_adapter_settings": "sbfspot适配器设置",
-    "type_of_DB": "数据库类型"
+    "sqlite configuration": "SQLite配置",
+    "type_of_DB": "数据库类型",
+    "used to calculate statistics": "用于计算统计数据"
 }

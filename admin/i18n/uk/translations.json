@@ -2,8 +2,12 @@
     "Attention": "адаптер, sbfspot і база даних повинні працювати в одній системі",
     "GetDataOnlyWhenDaylight": "отримувати дані тільки вдень",
     "History4Vis2": "Створення значення історії для віджета VIS-2",
+    "configuration": "конфігурація",
     "install_date": "дата встановлення PV-системи",
     "install_date_desc": "використовується для обчислення історії у віджеті vis",
+    "mySQL, MariaDB configuration": "конфігурація mySQL, MariaDB",
+    "page-mysql": "mySQL / MariaDB",
+    "page-sqlite": "SQLite",
     "path_to_DB_file": "шлях до файлу бази даних sqlite",
     "path_to_DB_file_descr": "введіть повний шлях, вкл. назва файлу бази даних, напр. /home/pi/sbfspot/smadata/SBFspot.db",
     "sbfspot_DB_IP": "IP бази даних",
@@ -14,5 +18,7 @@
     "sbfspot_DB_port_descr": "за замовчуванням 3306",
     "sbfspot_DB_user": "користувач бази даних",
     "sbfspot_adapter_settings": "налаштування адаптера sbfspot",
-    "type_of_DB": "тип бази даних"
+    "sqlite configuration": "Конфігурація SQLite",
+    "type_of_DB": "тип бази даних",
+    "used to calculate statistics": "використовується для розрахунку статистичних даних"
 }

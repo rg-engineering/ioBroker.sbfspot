@@ -2,8 +2,12 @@
     "Attention": "adapter, sbfspot en database moeten op hetzelfde systeem worden uitgevoerd",
     "GetDataOnlyWhenDaylight": "krijg alleen gegevens bij daglicht",
     "History4Vis2": "Creëer geschiedeniswaarde voor VIS-2 widget",
+    "configuration": "configuratie",
     "install_date": "installeer datum PV-systeem",
     "install_date_desc": "gebruikt voor de berekening van de geschiedenis in vis widget",
+    "mySQL, MariaDB configuration": "mySQL, MariaDB-configuratie",
+    "page-mysql": "mySQL / MariaDB",
+    "page-sqlite": "SQLiet",
     "path_to_DB_file": "pad naar sqlite databasebestand",
     "path_to_DB_file_descr": "vul het complete pad in incl. databasebestandsnaam, b.v. /home/pi/sbfspot/smadata/SBFspot.db",
     "sbfspot_DB_IP": "database IP",
@@ -14,5 +18,7 @@
     "sbfspot_DB_port_descr": "standaard 3306",
     "sbfspot_DB_user": "mySQL-databasegebruiker",
     "sbfspot_adapter_settings": "sbfspot-adapterinstellingen",
-    "type_of_DB": "type database"
+    "sqlite configuration": "SQLite-configuratie",
+    "type_of_DB": "type database",
+    "used to calculate statistics": "gebruikt om statistische gegevens te berekenen"
 }

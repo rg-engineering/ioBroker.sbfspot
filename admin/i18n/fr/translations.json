@@ -2,8 +2,12 @@
     "Attention": "L'adaptateur, sbfspot et la base de données doivent fonctionner sur le même système",
     "GetDataOnlyWhenDaylight": "obtenir des données uniquement lorsque la lumière du jour",
     "History4Vis2": "Créer une valeur historique pour le widget VIS-2",
+    "configuration": "configuration",
     "install_date": "date d'installation PV-System",
     "install_date_desc": "utilisé pour le calcul de l'histoire dans vis widget",
+    "mySQL, MariaDB configuration": "configuration mySQL, MariaDB",
+    "page-mysql": "MySQL / MariaDB",
+    "page-sqlite": "SQLite",
     "path_to_DB_file": "chemin vers le fichier de base de données sqlite",
     "path_to_DB_file_descr": "entrez le chemin complet incl. nom de fichier de base de données, par ex. /home/pi/sbfspot/smadata/SBFspot.db",
     "sbfspot_DB_IP": "base de données IP",
@@ -14,5 +18,7 @@
     "sbfspot_DB_port_descr": "par défaut 3306",
     "sbfspot_DB_user": "utilisateur de base de données",
     "sbfspot_adapter_settings": "Paramètres de l'adaptateur sbfspot",
-    "type_of_DB": "type de base de données"
+    "sqlite configuration": "Configuration SQLite",
+    "type_of_DB": "type de base de données",
+    "used to calculate statistics": "utilisé pour calculer des données statistiques"
 }

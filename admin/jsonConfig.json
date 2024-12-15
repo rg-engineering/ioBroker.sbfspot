@@ -102,7 +102,7 @@
         "sbfspotIP": {
           "type": "text",
           "label": "sbfspot_DB_IP",
-          "help": "",
+          "help": "sbfspot_DB_IP_descr",
           "xs": 12,
           "sm": 12,
           "md": 4,
@@ -113,6 +113,7 @@
           "newLine": true,
           "type": "number",
           "label": "sbfspot_DB_port",
+          "help": "sbfspot_DB_port_descr",
           "xs": 12,
           "sm": 12,
           "md": 4,
@@ -170,7 +171,7 @@
         "sqlite_path": {
           "type": "text",
           "label": "path_to_DB_file",
-          "help": "",
+          "help": "path_to_DB_file_descr",
           "xs": 12,
           "sm": 12,
           "md": 4,
