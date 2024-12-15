@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "4.4.0",
+    "version": "4.4.1",
     "news": {
+      "4.4.1": {
+        "en": "translations",
+        "de": "übersetzungen",
+        "ru": "перевод",
+        "pt": "traduções",
+        "nl": "vertalingen",
+        "fr": "traductions",
+        "it": "traduzioni",
+        "es": "traducciones",
+        "pl": "tłumaczenia",
+        "uk": "переклади",
+        "zh-cn": "翻译"
+      },
       "4.4.0": {
         "en": "migration to admin 5 UI (jsonConfig)",
         "de": "migration zu admin 5 UI (jsonConfig)",
