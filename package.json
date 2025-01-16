@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@iobroker/adapter-core": "^3.2.3",
-    "better-sqlite3": "^11.6.0",
+    "better-sqlite3": "^11.8.0",
     "mysql2": "^3.11.5",
     "suncalc2": "^1.8.1"
   },
