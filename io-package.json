@@ -220,5 +220,11 @@
     "sqlite_path": "",
     "install_date": "2001-08-25",
     "GetDataOnlyWhenDaylight": true
-  }
+  },
+  "protectedNative": [
+    "sbfspotPassword"
+  ],
+  "encryptedNative": [
+    "sbfspotPassword"
+  ]
 }
