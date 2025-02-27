@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "4.4.1",
+    "version": "4.4.2",
     "news": {
+      "4.4.2": {
+        "en": "changes requested by adapter checker\ndependencies updated",
+        "de": "änderungen, die von adapter checker angefordert werden\naktualisierte abhängigkeiten",
+        "ru": "изменения, запрошенные adapter checker\nобновленные зависимости",
+        "pt": "alterações solicitadas pelo verificador do adaptador\ndependências atualizadas",
+        "nl": "wijzigingen gevraagd door adaptercontrole\nafhankelijkheden bijgewerkt",
+        "fr": "modifications demandées par l'adaptateur checker\ndépendances mises à jour",
+        "it": "modifiche richieste da adattatore checker\ndipendenze aggiornate",
+        "es": "cambios solicitados por el adaptador\ndependencias actualizadas",
+        "pl": "zmiany wymagane przez sprawdzacz adaptera\nzaktualizowane zależności",
+        "uk": "зміни, які вимагаються перевіркою адаптера\nоновлені залежності",
+        "zh-cn": "适配器检查器要求的更改\n更新依赖关系"
+      },
       "4.4.1": {
         "en": "translations",
         "de": "übersetzungen",
@@ -80,19 +93,6 @@
         "pl": "(René) zmiana zależności",
         "uk": "(Рене) зміна залежностей",
         "zh-cn": "(René) 属地变化"
-      },
-      "4.3.1": {
-        "en": "(René) bug fix for data history in VIS-2",
-        "de": "Fehlerbehebung für die Datenhistorie in VIS-2",
-        "ru": "(René) исправление ошибок для истории данных в VIS-2",
-        "pt": "(René) correção de bugs para histórico de dados no VIS-2",
-        "nl": "(René) bug fix voor gegevensgeschiedenis in VIS-2",
-        "fr": "Correction du bogue (René) pour l'historique des données dans VIS-2",
-        "it": "(René) bug fix per la cronologia dei dati in VIS-2",
-        "es": "(René) bug fix for data history in VIS-2",
-        "pl": "(René) fix dla historii danych w VIS-2",
-        "uk": "(René) Виправлення помилок для історії даних в VIS-2",
-        "zh-cn": "(René) VIS-2中数据历史的错误修正"
       }
     },
     "titleLang": {
