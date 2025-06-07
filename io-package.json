@@ -122,7 +122,7 @@
       "uk": "Адаптер інвертора SMA (sbfspot) із віджетом vis"
     },
     "platform": "Javascript/Node.js",
-    "mode": "schedule",
+    "mode": "daemon",
     "schedule": "*/15 * * * *",
     "icon": "sbfspot.png",
     "enabled": true,
@@ -207,7 +207,30 @@
           "agree",
           "cancel"
         ]
+      },
+      {
+        "condition": {
+          "operand": "and",
+          "rules": [
+            "oldVersion<=4.4.2",
+            "newVersion>4.4.2"
+          ]
+        },
+        "title": {
+          "en": "type of adapter changed"
+
+        },
+        "text": {
+          "en": "type of adapter changed to deamon. It might be necessary to create a new instance of adapter."
+          
+        },
+        "level": "warn",
+        "buttons": [
+          "agree",
+          "cancel"
+        ]
       }
+
     ]
   },
   "native": {

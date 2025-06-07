@@ -18,6 +18,141 @@
           "xl": 1.2
         },
 
+        "InstallUpdatehdr": {
+          "type": "header",
+          "text": "Update hint",
+          "size": 2
+        },
+
+        "currentversiontxt": {
+          "type": "staticText",
+          "newLine": true,
+          "text": "current installed version",
+          "xs": 12,
+          "sm": 2,
+          "md": 2,
+          "lg": 2,
+          "xl": 2
+        },
+
+        "currentversion": {
+          "type": "textSendTo",
+          "label": "current istalled sbfspot version",
+          "command": "checkCurrentVersion",
+          "jsonData": "{\"test\": \"aaa\", \"test2\": \"bbb\" }",
+          "alsoDependsOn": [ "checkCurrentVersion" ],
+          "xs": 12,
+          "sm": 12,
+          "md": 6,
+          "lg": 4,
+          "xl": 4
+
+        },
+
+        "installableversiontxt": {
+          "type": "staticText",
+          "newLine": true,
+          "text": "available version",
+          "xs": 12,
+          "sm": 2,
+          "md": 2,
+          "lg": 2,
+          "xl": 2
+        },
+        "installableversion": {
+          "type": "textSendTo",
+          "label": "available version",
+          "command": "checkInstallableversion",
+          "jsonData": "{\"test\": \"aaa\", \"test2\": \"bbb\" }",
+          "alsoDependsOn": [ "checkInstallableversion" ],
+          "xs": 12,
+          "sm": 12,
+          "md": 6,
+          "lg": 4,
+          "xl": 4
+        },
+
+        "supportedversiontxt": {
+          "type": "staticText",
+          "newLine": true,
+          "text": "supported version",
+          "xs": 12,
+          "sm": 2,
+          "md": 2,
+          "lg": 2,
+          "xl": 2
+        },
+        "supportedversion": {
+          "type": "textSendTo",
+          "label": "supported version",
+          "command": "checkSupportedVersion",
+          "jsonData": "{\"test\": \"aaa\", \"test2\": \"bbb\" }",
+          "alsoDependsOn": [ "checkSupportedversion" ],
+          "xs": 12,
+          "sm": 12,
+          "md": 6,
+          "lg": 4,
+          "xl": 4
+
+        },
+
+
+
+        //just a link
+        "EbusReadme": {
+          "type": "staticLink",
+          "text": "link to sbfspot wiki with installation instruction",
+          "href": "https://github.com/SBFspot/SBFspot/wiki",
+          "button": true,
+          "icon": "info",
+          "newLine": true,
+          "xs": 12,
+          "sm": 12,
+          "md": 6,
+          "lg": 4,
+          "xl": 4
+        },
+        //für debian based systeme
+        /*
+        "sbfspothintinstallUpdate": {
+          "type": "staticText",
+          "text": "hint_sbfspot_installupdate",
+          "newLine": true,
+          "xs": 12,
+          "sm": 12,
+          "md": 12,
+          "lg": 12,
+          "xl": 12
+        } ,
+        */
+        /* "Install": {
+          "type": "sendTo",
+         "command": "Install",
+          "label": "InstallBtn",
+          "tooltip": "InstallBtnHint",
+          "newLine": true,
+          "xs": 12,
+          "sm": 12,
+          "md": 12,
+          "lg": 12,
+          "xl": 12
+        },
+        "Update": {
+          "type": "sendTo",
+          "command": "Update",
+          "label": "UpdateBtn",
+          "tooltip": "UpdateBtnHint",
+          "newLine": true,
+          "xs": 12,
+          "sm": 12,
+          "md": 12,
+          "lg": 12,
+          "xl": 12
+        }
+  */
+
+
+
         "dividerHdr1": {
           "newLine": true,
           "type": "header",
@@ -79,10 +214,20 @@
           "md": 4,
           "lg": 4,
           "xl": 4
+        },
+        "readInterval": {
+          "newLine": true,
+          "type": "number",
+          "label": "readIntervalsbfspot",
+          "min": 5,
+          "max": 300,
+          "default": 5,
+          "xs": 12,
+          "sm": 12,
+          "md": 4,
+          "lg": 4,
+          "xl": 4
         }
-
-
-
       }
     },
     "tab-mysql": {
@@ -135,6 +280,7 @@
           "newLine": true,
           "type": "password",
           "label": "sbfspot_DB_password",
+          "visible": true,
           "help": "",
           "xs": 12,
           "sm": 12,
@@ -166,7 +312,6 @@
           "text": "sqlite configuration",
           "size": 2
         },
-
 
         "sqlite_path": {
           "type": "text",

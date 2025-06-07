@@ -17,9 +17,14 @@ Copyright(C)[2016-2020][René Glaß]
 const utils = require("@iobroker/adapter-core");
 //const { json } = require("stream/consumers");
 const SunCalc = require("suncalc2");
+const axios = require("axios");
+const { promisify } = require('util');
+const exec = promisify(require('child_process').exec)
+const os = require('os');
 
 //const bluetooth_test = require("./lib/SMA_Bluetooth").test;
 
+const supportedVersion="3.9.12"
 
 let adapter;
 function startAdapter(options) {
@@ -33,7 +38,60 @@ function startAdapter(options) {
             } catch (e) {
                 adapter.log.error("exception catch after ready [" + e + "]");
             }
+        },
+
+        //#######################################
+        //  is called when adapter shuts down
+        unload: function (callback) {
+            try {
+
+                if (intervalID != null) {
+                    clearInterval(intervalID);
+                }
+                if (updateTimerID != null) {
+                    clearTimeout(updateTimerID);
+                }
+                adapter && adapter.log && adapter.log.info && adapter.log.info("cleaned everything up...");
+                //to do stop intervall
+                callback();
+            } catch (e) {
+                callback();
+            }
+        },
+
+        stateChange: async (id, state) => {
+            //await HandleStateChange(id, state);
+        },
+
+        //#######################################
+        //
+        message: async (obj) => {
+            if (obj) {
+                switch (obj.command) {
+                    case "Install":
+                        adapter.log.debug("message install called");
+                        break;
+                    case "Update":
+                        adapter.log.debug("message update called");
+                        break;
+                    case "checkInstallableversion":
+                        await CheckVersion("installable", obj);
+                        break;
+                    case "checkCurrentVersion":
+                        await CheckVersion("current", obj);
+                        break;
+                    case "checkSupportedVersion":
+                        await CheckVersion("supported", obj);
+                        break;
+                    default:
+                        adapter.log.error("unknown message " + obj.command);
+                        break;
+                }
+            }
         }
+        //#######################################
+
+
     });
     adapter = new utils.Adapter(options);
     return adapter;
@@ -53,25 +111,45 @@ let sqlite_db;
 let mysql_connection;
 
 let killTimer;
+let intervalID = null;
+
 
 async function main() {
+
+    let readInterval = 5;
+    if (parseInt(adapter.config.readInterval) > 0) {
+        readInterval = adapter.config.readInterval;
+    }
+    adapter.log.debug("read every  " + readInterval + " minutes");
+    intervalID = setInterval(Do, readInterval * 60 * 1000);
+
+
+    //read at adapterstart
+    await Do();
+}
+
+
+async function Do() {
 
 
     //bluetooth_test();
 
 
+    //todo check access righst for sqlite file and folder...
+
+
     if (adapter.config.databasetype === undefined) {
         adapter.log.error("databasetype not defined. check and update settings and save");
-        adapter.terminate ? adapter.terminate(11) : process.exit(11);
+    //    adapter.terminate ? adapter.terminate(11) : process.exit(11);
     }
 
     //await CheckInverterVariables();
 
-    killTimer = setTimeout(function () {
-        //adapter.stop();
-        adapter.log.error("force terminate ");
-        adapter.terminate ? adapter.terminate(11) : process.exit(11);
-    }, 2*60*1000);
+    //killTimer = setTimeout(function () {
+    //    //adapter.stop();
+    //    adapter.log.error("force terminate ");
+    //    adapter.terminate ? adapter.terminate(11) : process.exit(11);
+    //}, 2*60*1000);
 
 
     let daylight = false;
@@ -177,12 +255,12 @@ async function main() {
     }
 
 
-    if (killTimer) {
-        clearTimeout(killTimer);
-        adapter.log.debug("timer killed");
-    }
+    //if (killTimer) {
+    //    clearTimeout(killTimer);
+    //    adapter.log.debug("timer killed");
+    //}
 
-    adapter.terminate ? adapter.terminate(11) : process.exit(11);
+    //adapter.terminate ? adapter.terminate(11) : process.exit(11);
 
 
 }
@@ -1163,6 +1241,87 @@ function DB_Disconnect() {
     }
 
     adapter.log.info("all done ... ");
+}
+
+
+async function CheckVersion(version, msg) {
+
+    if (version == "installable") {
+
+        const version = await GetLatestVersionGithub();
+
+        adapter.sendTo(msg.from, msg.command, version, msg.callback);
+    }
+    else if (version == "current") {
+
+        const version = await GetInstalledVersion();
+
+        adapter.sendTo(msg.from, msg.command, version, msg.callback);
+    }
+    else if (version == "supported") {
+        adapter.sendTo(msg.from, msg.command, supportedVersion, msg.callback);
+    }
+
+}
+
+
+async function GetLatestVersionGithub() {
+
+    let latestVersion = "unknown";
+
+    try {
+        const url = " https://api.github.com/repos/SBFspot/SBFspot/releases/latest";
+        adapter.log.debug("call " + url);
+
+        let result = await axios.get(url, { timeout: 5000 });
+
+        if (result != null && result.status == 200 && result.data != null) {
+            adapter.log.info("installable version " + JSON.stringify(result.data.name));
+
+            latestVersion = result.data.name;
+        }
+        else {
+            latestVersion = "unknown / no result";
+        }
+    }
+    catch (e) {
+        adapter.log.error("exception in GetLatestVersionGithub [" + e + "]");
+        latestVersion = "unknown / error";
+    }
+    return latestVersion;
+
+
+}
+
+
+
+async function GetInstalledVersion() {
+
+    let Version = "unknown";
+
+    try {
+        if (os.type() == "Linux") {
+            const cmd = " /usr/local/bin/sbfspot.3/SBFspot -version";
+
+            adapter.log.debug("call " + cmd);
+
+            let res = await exec(cmd);
+
+            Version = res.stdout;
+
+            adapter.log.info("result " + Version);
+        }
+        else {
+            adapter.log.error("sbfspot version cannot be detected on  " + os.type());
+            Version = "unknown on " + os.type();
+        }
+    }
+    catch (e) {
+        adapter.log.error("exception in GetInstalledVersion [" + e + "]");
+        Version = "unknown / error"
+    }
+    return Version;
+
 }
 
 
