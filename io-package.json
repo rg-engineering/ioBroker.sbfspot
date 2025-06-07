@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "4.4.2",
+    "version": "5.0.0",
     "news": {
+      "5.0.0": {
+        "en": "ATTENTION breaking change: adapter type changed from scheduled to daemon\nupdate hints added to admin\nsuggestions from adapter checker",
+        "de": "ATTENTION Brechwechsel: Adaptertyp geändert von geplant nach Daemon\nupdate-hinweise zu admin hinzugefügt\nvorschläge von adapter checker",
+        "ru": "Изменение типа адаптера: переход с запланированного на демон\nобновление подсказок, добавленных в admin\nпредложения от adapter checker",
+        "pt": "Alteração de ruptura ATTENÇÃO: tipo de adaptador alterado de programado para daemon\natualizar dicas adicionadas ao administrador\nsugestões do verificador do adaptador",
+        "nl": "ATTENTIE break change: adapter type veranderd van gepland naar daemon\nhints aan admin bijwerken\nsuggesties van adaptercontrole",
+        "fr": "Changement de rupture ATTENTION : le type d'adaptateur est passé de programmé à démon\nmise à jour des conseils ajoutés à admin\nsuggestions de l'adaptateur checker",
+        "it": "ATTENZIONE cambio di rottura: tipo adattatore cambiato da programmato a demone\naggiornamento suggerimenti aggiunti a admin\nsuggerimenti da adattatore checker",
+        "es": "Cambio de ruptura de ATTENTION: tipo de adaptador cambiado de programado a daemon\nsugerencias de actualización añadidos a admin\nsugerencias del adaptador",
+        "pl": "UWAGA zmiana łamania: typ adaptera zmieniony z zaplanowanego na demona\naktualizacji wskazówki dodane do admin\nsugestie z sprawdzania adaptera",
+        "uk": "Зміна зміни тенції: тип адаптера змінено з запланованого на дамон\nоновлення натяків додано в адмін\nпропозиції від адаптера",
+        "zh-cn": "注意断开更改:适配器类型从预定更改为守护进程\n添加到管理员的更新提示\n来自适配器检查器的建议"
+      },
       "4.4.2": {
         "en": "changes requested by adapter checker\ndependencies updated",
         "de": "änderungen, die von adapter checker angefordert werden\naktualisierte abhängigkeiten",
@@ -80,19 +93,6 @@
         "pl": "(René) zmiana zależności\nAktualizacja zależności mySql",
         "uk": "(Рене) зміна залежностей\n(René) mySql оновлення залежності",
         "zh-cn": "(René) 属地变化\n(René) MySql 依赖性更新"
-      },
-      "4.3.2": {
-        "en": "(René) change of dependencies",
-        "de": "(René) Veränderung der Abhängigkeiten",
-        "ru": "(René) изменение зависимостей",
-        "pt": "(René) mudança de dependências",
-        "nl": "(René) verandering van afhankelijkheden",
-        "fr": "(René) changement de dépendances",
-        "it": "(René) cambiamento delle dipendenze",
-        "es": "(René) cambio de dependencia",
-        "pl": "(René) zmiana zależności",
-        "uk": "(Рене) зміна залежностей",
-        "zh-cn": "(René) 属地变化"
       }
     },
     "titleLang": {
@@ -218,11 +218,9 @@
         },
         "title": {
           "en": "type of adapter changed"
-
         },
         "text": {
           "en": "type of adapter changed to deamon. It might be necessary to create a new instance of adapter."
-          
         },
         "level": "warn",
         "buttons": [
@@ -230,7 +228,6 @@
           "cancel"
         ]
       }
-
     ]
   },
   "native": {
