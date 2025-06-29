@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "5.0.0",
+    "version": "5.0.1",
     "news": {
+      "5.0.1": {
+        "en": "new testing",
+        "de": "neue tests",
+        "ru": "новые испытания",
+        "pt": "novos testes",
+        "nl": "nieuwe tests",
+        "fr": "nouveaux essais",
+        "it": "nuovi test",
+        "es": "nuevas pruebas",
+        "pl": "nowe badania",
+        "uk": "новий тест",
+        "zh-cn": "新测试"
+      },
       "5.0.0": {
         "en": "ATTENTION breaking change: adapter type changed from scheduled to daemon\nupdate hints added to admin\nsuggestions from adapter checker",
         "de": "ATTENTION Brechwechsel: Adaptertyp geändert von geplant nach Daemon\nupdate-hinweise zu admin hinzugefügt\nvorschläge von adapter checker",
@@ -80,19 +93,6 @@
         "pl": "aktualizacji zależności\npoprawki błędów oparte na rekomendacji sprawdzania adaptera",
         "uk": "оновлення залежності\nвиправлення помилок на основі рекомендації адаптера",
         "zh-cn": "更新依赖关系\n根据适配器检查器建议修正错误"
-      },
-      "4.3.3": {
-        "en": "(René) change of dependencies\n(René) mySql dependency update",
-        "de": "(René) Veränderung der Abhängigkeiten\n(René) mySql Abhängigkeitsupdate",
-        "ru": "(René) изменение зависимостей\n(René) обновление зависимости mySql",
-        "pt": "(René) mudança de dependências\n(René) atualização de dependência mySql",
-        "nl": "(René) verandering van afhankelijkheden\n(René) mySql afhankelijkheidsupdate",
-        "fr": "(René) changement de dépendances\n(René) Mise à jour de la dépendance mySql",
-        "it": "(René) cambiamento delle dipendenze\n(René) aggiornamento di dipendenza mySql",
-        "es": "(René) cambio de dependencia\n(René) mySql dependency update",
-        "pl": "(René) zmiana zależności\nAktualizacja zależności mySql",
-        "uk": "(Рене) зміна залежностей\n(René) mySql оновлення залежності",
-        "zh-cn": "(René) 属地变化\n(René) MySql 依赖性更新"
       }
     },
     "titleLang": {
