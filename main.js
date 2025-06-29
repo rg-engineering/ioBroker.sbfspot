@@ -1,10 +1,11 @@
-﻿/*
+﻿/* eslint-disable prefer-template */
+/*
  * sbfspot adapter für iobroker
  *
  * Created: 15.09.2016 21:31:28
  *  Author: Rene
 
-Copyright(C)[2016-2020][René Glaß]
+Copyright(C)[2016-2025][René Glaß]
 
 
 
@@ -24,7 +25,9 @@ const os = require('os');
 
 //const bluetooth_test = require("./lib/SMA_Bluetooth").test;
 
-const supportedVersion="3.9.12"
+const supportedVersion = "3.9.12"
+
+let updateTimerID = null;
 
 let adapter;
 function startAdapter(options) {
@@ -55,13 +58,14 @@ function startAdapter(options) {
                 //to do stop intervall
                 callback();
             } catch (e) {
+                adapter.log.error("exception catch after unload [" + e + "]");
                 callback();
             }
         },
 
-        stateChange: async (id, state) => {
+        //stateChange: async (id, state) => {
             //await HandleStateChange(id, state);
-        },
+        //},
 
         //#######################################
         //
@@ -110,7 +114,7 @@ let sqlite_db;
 //---------- mySQL
 let mysql_connection;
 
-let killTimer;
+//let killTimer;
 let intervalID = null;
 
 
@@ -172,8 +176,7 @@ async function Do() {
             && (now.getHours() < times.sunset.getHours() || (now.getHours() == times.sunset.getHours() && now.getMinutes() < times.sunset.getMinutes()))) {
             daylight = true;
         }
-    }
-    else {
+    } else {
         //always
         daylight = true;
     }
@@ -248,8 +251,7 @@ async function Do() {
             }
         }
         DB_Disconnect();
-    }
-    else {
+    } else {
         adapter.log.info("nothing to do, because no daylight ... ");
        
     }
@@ -274,14 +276,12 @@ async function GetSystemDateformat() {
             longitude = ret.common.longitude;
             latitude = ret.common.latitude;
             adapter.log.debug("system: longitude " + longitude + " latitude " + latitude);
-        }
-        else {
+        } else {
             adapter.log.error("system.config not available. longitude and latitude set to Berlin");
             longitude = 52.520008;
             latitude = 13.404954;
         }
-    }
-    catch (e) {
+    } catch (e) {
         adapter.log.error("exception in GetSystemDateformat [" + e + "]");
     }
 }
@@ -368,8 +368,7 @@ async function CreateObject(key, obj) {
                 }
             });
         }
-    }
-    else {
+    } else {
         await adapter.setObjectNotExistsAsync(key, obj);
     }
 }
@@ -463,8 +462,7 @@ async function DB_Connect() {
 
         }
 
-    }
-    catch (e) {
+    } catch (e) {
         adapter.log.error("exception in DB_Connect [" + e + "]");
         ret = false;
     }
@@ -479,7 +477,7 @@ async function DB_Query(query) {
 
     if (adapter.config.databasetype == "mySQL" || adapter.config.databasetype == "MariaDB") {
 
-        const [rows, fields] = await mysql_connection.execute(query);
+        const [rows] = await mysql_connection.execute(query);
         retRows = rows;
 
     } else {
@@ -525,8 +523,7 @@ async function DB_CheckLastUploads(serial) {
 
             await adapter.setStateAsync(serial + ".sbfspot.LastUpload", { ack: true, val: lastUpload });
         }
-    }
-    catch (e) {
+    } catch (e) {
         adapter.log.error("exception in DB_CheckLastUploads [" + e + "]");
     }
 }
@@ -539,8 +536,7 @@ async function DB_GetInverters() {
     try {
         const query = "SELECT * from Inverters";
         retRows = await DB_Query(query);
-    }
-    catch (e) {
+    } catch (e) {
         adapter.log.error("exception in DB_GetInverters [" + e + "]");
     }
 
@@ -609,8 +605,7 @@ async function DB_GetInvertersData(serial) {
         //SELECT * from SpotData  where Serial ='2000562095' ORDER BY TimeStamp DESC LIMIT 1
         const query = "SELECT * from SpotData  where Serial =" + serial + " ORDER BY TimeStamp DESC LIMIT 1";
         retRows = await DB_Query(query);
-    }
-    catch (e) {
+    } catch (e) {
         adapter.log.error("exception in DB_GetInvertersData [" + e + "]");
     }
 
@@ -715,8 +710,7 @@ async function DB_CalcHistory_LastMonth(serial) {
             query = "SELECT strftime('%Y-%m-%d', datetime(TimeStamp, 'unixepoch')) as date, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By strftime('%Y-%m-%d', datetime(TimeStamp, 'unixepoch'))";
         }
         retRows = await DB_Query(query);
-    }
-    catch (e) {
+    } catch (e) {
         adapter.log.error("exception in DB_CalcHistory_LastMonth [" + e + "]");
     }
 
@@ -765,11 +759,10 @@ async function CalcHistory_LastMonth(err, rows, serial) {
 
                 */
 
-            }
-            else {
+            } else {
                 oLastDays.push({
-                    "date": data["date"],
-                    "value": data["ertrag"]
+                    date: data["date"],
+                    value: data["ertrag"]
                 });
             }
 
@@ -806,8 +799,7 @@ async function DB_CalcHistory_Prepare(serial) {
             query = "SELECT strftime('%Y-%m-%d', datetime(TimeStamp, 'unixepoch')) as date, ETotal  FROM `SpotData` WHERE `Serial` = '" + serial + "' ORDER by `TimeStamp` ASC LIMIT  1";
         }
         retRows = await DB_Query(query);
-    }
-    catch (e) {
+    } catch (e) {
         adapter.log.error("exception in DB_CalcHistory_Prepare [" + e + "]");
     }
 
@@ -863,8 +855,7 @@ async function DB_CalcHistory_Today(serial) {
             query = "SELECT strftime('%H:%m', datetime(TimeStamp, 'unixepoch')) as time, Max(`EToday`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By strftime('%H-%m', datetime(TimeStamp, 'unixepoch'))";
         }
         retRows = await DB_Query(query);
-    }
-    catch (e) {
+    } catch (e) {
         adapter.log.error("exception in DB_CalcHistory_Today [" + e + "]");
     }
 
@@ -920,11 +911,10 @@ async function CalcHistory_Today(err, rows, serial) {
 
                 */
 
-            }
-            else {
+            } else {
                 oLastDays.push({
-                    "time": data["time"],
-                    "value": data["ertrag"]
+                    time: data["time"],
+                    value: data["ertrag"]
                 });
 
             }
@@ -957,8 +947,7 @@ async function DB_CalcHistory_Years(serial) {
             query = "SELECT strftime('%Y', datetime(TimeStamp, 'unixepoch')) as date, Max(`ETotal`) as ertrag, Min(`ETotal`) as startertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' Group By strftime('%Y', datetime(TimeStamp, 'unixepoch'))";
         }
         retRows = await DB_Query(query);
-    }
-    catch (e) {
+    } catch (e) {
         adapter.log.error("exception in DB_CalcHistory_Years [" + e + "]");
     }
 
@@ -1049,11 +1038,10 @@ async function CalcHistory_Years(err, rows, serial) {
 
                         */
 
-                    }
-                    else {
+                    } else {
                         oLastYears.push({
-                            "year": installyear + n,
-                            "value": parseInt(yearvalue)
+                            year: installyear + n,
+                            value: parseInt(yearvalue)
                         });
                     }
                 }
@@ -1075,12 +1063,11 @@ async function CalcHistory_Years(err, rows, serial) {
                             oDate,
                             yearvalue
                         ]);
-                }
-                else {
+                } else {
 
                     oLastYears.push({
-                        "year": data["date"],
-                        "value": yearvalue
+                        year: data["date"],
+                        value: yearvalue
                     });
                 }
 
@@ -1125,8 +1112,7 @@ async function DB_CalcHistory_Months(serial) {
             query = "SELECT strftime('%Y-%m', datetime(TimeStamp, 'unixepoch')) as date, Max(`ETotal`) as ertrag FROM `SpotData` WHERE `Serial` = '" + serial + "' AND TimeStamp>= " + datefrom.getTime() / 1000 + " AND TimeStamp<= " + dateto.getTime() / 1000 + " Group By strftime('%Y-%m', datetime(TimeStamp, 'unixepoch'))";
         }
         retRows = await DB_Query(query);
-    }
-    catch (e) {
+    } catch (e) {
         adapter.log.error("exception in DB_CalcHistory_Months [" + e + "]");
     }
 
@@ -1167,11 +1153,10 @@ async function CalcHistory_Months(err, rows, serial) {
 
                 */
 
-            }
-            else {
+            } else {
                 oLastMonth.push({
-                    "month": data["date"],
-                    "value": data["ertrag"]
+                    month: data["date"],
+                    value: data["ertrag"]
                 });
             }
         }
@@ -1217,8 +1202,7 @@ async function DB_AddDummyData() {
            
 
         }
-    }
-    catch (e) {
+    } catch (e) {
         adapter.log.error("exception in DB_AddDummyData [" + e + "]");
     }
 
@@ -1251,14 +1235,12 @@ async function CheckVersion(version, msg) {
         const version = await GetLatestVersionGithub();
 
         adapter.sendTo(msg.from, msg.command, version, msg.callback);
-    }
-    else if (version == "current") {
+    } else if (version == "current") {
 
         const version = await GetInstalledVersion();
 
         adapter.sendTo(msg.from, msg.command, version, msg.callback);
-    }
-    else if (version == "supported") {
+    } else if (version == "supported") {
         adapter.sendTo(msg.from, msg.command, supportedVersion, msg.callback);
     }
 
@@ -1270,7 +1252,7 @@ async function GetLatestVersionGithub() {
     let latestVersion = "unknown";
 
     try {
-        const url = " https://api.github.com/repos/SBFspot/SBFspot/releases/latest";
+        const url = "https://api.github.com/repos/SBFspot/SBFspot/releases/latest";
         adapter.log.debug("call " + url);
 
         let result = await axios.get(url, { timeout: 5000 });
@@ -1279,12 +1261,10 @@ async function GetLatestVersionGithub() {
             adapter.log.info("installable version " + JSON.stringify(result.data.name));
 
             latestVersion = result.data.name;
-        }
-        else {
+        } else {
             latestVersion = "unknown / no result";
         }
-    }
-    catch (e) {
+    } catch (e) {
         adapter.log.error("exception in GetLatestVersionGithub [" + e + "]");
         latestVersion = "unknown / error";
     }
@@ -1310,13 +1290,11 @@ async function GetInstalledVersion() {
             Version = res.stdout;
 
             adapter.log.info("result " + Version);
-        }
-        else {
+        } else {
             adapter.log.error("sbfspot version cannot be detected on  " + os.type());
             Version = "unknown on " + os.type();
         }
-    }
-    catch (e) {
+    } catch (e) {
         adapter.log.error("exception in GetInstalledVersion [" + e + "]");
         Version = "unknown / error"
     }
