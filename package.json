@@ -24,7 +24,7 @@
     "@iobroker/adapter-core": "^3.2.3",
     "axios": "^1.10.0",
     "better-sqlite3": "^12.2.0",
-    "mysql2": "^3.14.1",
+    "mysql2": "^3.14.4",
     "suncalc2": "^1.8.1"
   },
   "devDependencies": {
