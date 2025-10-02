@@ -23,7 +23,7 @@
   "dependencies": {
     "@iobroker/adapter-core": "^3.2.3",
     "axios": "^1.10.0",
-    "better-sqlite3": "^12.2.0",
+    "better-sqlite3": "^12.4.1",
     "mysql2": "^3.14.1",
     "suncalc2": "^1.8.1"
   },
