@@ -19,3 +19,5 @@ lib/i18n/*/flat.txt
 /main_neu.js
 /typings/
 /lib/SMA_Bluetooth.js
+.commitinfo
+/.vscode/extensions.json
