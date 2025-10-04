@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "5.0.1",
+    "version": "5.0.2",
     "news": {
+      "5.0.2": {
+        "en": "(René) update dependencies + changes based on adapter checker",
+        "de": "(René) aktualisieren Abhängigkeiten + Änderungen basierend auf Adapter-Checker",
+        "ru": "Зависимости обновления + изменения на основе проверки адаптера",
+        "pt": "(René) atualizar dependências + alterações com base no verificador do adaptador",
+        "nl": "(René) update afhankelijkheden + wijzigingen op basis van adaptercontrole",
+        "fr": "(René) mettre à jour les dépendances + les changements basés sur adaptateur checker",
+        "it": "(René) aggiornamento dipendenze + modifiche in base all'adattatore checker",
+        "es": "(René) dependencias de actualización + cambios basados en el control de adaptador",
+        "pl": "(René) update dependences + changes based on adapter checker",
+        "uk": "(René) оновлення залежності + зміни на основі перевірки адаптера",
+        "zh-cn": "(René) 基于适配器检查器更新依赖性+变化"
+      },
       "5.0.1": {
         "en": "new testing",
         "de": "neue tests",
@@ -80,19 +93,6 @@
         "pl": "zob. numer # 417: test z nodejs @ 22\nwydanie # 435: zainstalować widżety ponownie",
         "uk": "переглянути номер #417: тест з nodejs@22\nproblem #435: встановити віджети знову",
         "zh-cn": "参见第417期:带节点的测试@22\n第435期: 再次安装部件"
-      },
-      "4.3.4": {
-        "en": "update dependencies\nbug fixes based on adapter checker recommendation",
-        "de": "aktualisierung der abhängigkeiten\nfehlerbehebungen basierend auf adapter-checker empfehlung",
-        "ru": "обновление зависимостей\nисправления ошибок на основе рекомендации адаптера",
-        "pt": "dependências\ncorreções de bugs com base na recomendação do verificador do adaptador",
-        "nl": "afhankelijkheden bijwerken\nbug fixes op basis van adaptercontrole aanbeveling",
-        "fr": "mettre à jour les dépendances\ncorrection des bugs en fonction de la recommandation du vérificateur d'adaptateur",
-        "it": "aggiornamento dipendenze\ncorrezioni di bug in base alla raccomandazione dell'adattatore checker",
-        "es": "dependencias de actualización\ncorrecciones de errores basado en la recomendación de control de adaptador",
-        "pl": "aktualizacji zależności\npoprawki błędów oparte na rekomendacji sprawdzania adaptera",
-        "uk": "оновлення залежності\nвиправлення помилок на основі рекомендації адаптера",
-        "zh-cn": "更新依赖关系\n根据适配器检查器建议修正错误"
       }
     },
     "titleLang": {
