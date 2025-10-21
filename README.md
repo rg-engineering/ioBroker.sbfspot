@@ -68,6 +68,7 @@ sometimes npm intall must be called more then one time to successfully install a
 
 ### **WORK IN PROGRESS**
 * (René) see issue #510: read interval minimum reduced to 1 minute
+* (René) update dependencies + changes based on adapter checker
 
 ### 5.0.2 (2025-10-04)
 * (René) update dependencies + changes based on adapter checker
