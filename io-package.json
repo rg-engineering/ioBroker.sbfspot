@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "5.0.2",
+    "version": "5.0.3",
     "news": {
+      "5.0.3": {
+        "en": "see issue #510: read interval minimum reduced to 1 minute\nupdate dependencies + changes based on adapter checker",
+        "de": "siehe ausgabe #510: leseintervall minimal auf 1 minute reduziert\naktualisierung abhängigkeiten + änderungen basierend auf adapter-checker",
+        "ru": "#510: минимальный интервал чтения уменьшен до 1 минуты\nзависимости обновления + изменения на основе проверки адаптера",
+        "pt": "ver número 510: intervalo de leitura mínimo reduzido para 1 minuto\natualizar dependências + alterações com base no verificador de adaptadores",
+        "nl": "zie nummer #510: leesinterval minimaal gereduceerd tot 1 minuut\nupdate afhankelijkheden + wijzigingen op basis van adaptercontrole",
+        "fr": "voir numéro 510: lire l'intervalle minimal réduit à 1 minute\nmettre à jour les dépendances + les changements basés sur le vérificateur d'adaptateur",
+        "it": "vedi numero #510: intervallo di lettura minimo ridotto a 1 minuto\naggiornamento dipendenze + modifiche in base all'adattatore checker",
+        "es": "ver número #510: leer intervalo mínimo reducido a 1 minuto\ndependencias de actualización + cambios basados en el control de adaptador",
+        "pl": "zob. numer # 510: minimalny przedział odczytu zredukowany do 1 minuty\naktualizacja zależności + zmiany w oparciu o sprawdzacz adaptera",
+        "uk": "див. питання #510: інтервал читання мінімум скорочений до 1 хвилину\nоновлення залежності + зміни на основі перевірки адаптера",
+        "zh-cn": "参见第510期:读取间隔最小减为1分钟\n根据适配器检查器更新依赖性+变化"
+      },
       "5.0.2": {
         "en": "(René) update dependencies + changes based on adapter checker",
         "de": "(René) aktualisieren Abhängigkeiten + Änderungen basierend auf Adapter-Checker",
@@ -80,19 +93,6 @@
         "pl": "migracja do admin 5 UI (jsonConfig)",
         "uk": "міграція до адмін 5 UI (jsonConfig)",
         "zh-cn": "迁移到管理员 5 UI (jsonConfig)"
-      },
-      "4.3.5": {
-        "en": "see issue #417: test with nodejs@22\nissue  #435: install widgets again",
-        "de": "siehe ausgabe #417: test mit nodejs@22\nausgabe #435: widgets erneut installieren",
-        "ru": "#417: тест с nodejs@22\n#435: установить виджеты снова",
-        "pt": "veja a edição #417: teste com nodejs@22\nedição #435: instalar widgets novamente",
-        "nl": "zie nummer 417: test met nodejs@22\nprobleem #435: opnieuw widgets installeren",
-        "fr": "voir numéro #417: test avec nodejs@22\nnuméro #435: installez à nouveau des widgets",
-        "it": "vedi numero #417: prova con nodejs@22\nnumero #435: installare nuovamente i widget",
-        "es": "ver número #417: prueba con nodejs@22\nedición #435: instalar widgets de nuevo",
-        "pl": "zob. numer # 417: test z nodejs @ 22\nwydanie # 435: zainstalować widżety ponownie",
-        "uk": "переглянути номер #417: тест з nodejs@22\nproblem #435: встановити віджети знову",
-        "zh-cn": "参见第417期:带节点的测试@22\n第435期: 再次安装部件"
       }
     },
     "titleLang": {
