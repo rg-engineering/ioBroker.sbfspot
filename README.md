@@ -65,8 +65,7 @@ sometimes npm intall must be called more then one time to successfully install a
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 5.0.4 (2025-10-26)
 * (René) bug fix sentry
 
 ### 5.0.3 (2025-10-21)

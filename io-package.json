@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "5.0.3",
+    "version": "5.0.4",
     "news": {
+      "5.0.4": {
+        "en": "bug fix sentry",
+        "de": "fehlerbehebung gesendet",
+        "ru": "исправлять ошибки",
+        "pt": "corrigir o erro sentinela",
+        "nl": "bug repareren wacht",
+        "fr": "correction du bug sentinelle",
+        "it": "bug fix sendry",
+        "es": "bug fix centry",
+        "pl": "bug fix sentry",
+        "uk": "виправлення помилок",
+        "zh-cn": "错误修正哨兵"
+      },
       "5.0.3": {
         "en": "see issue #510: read interval minimum reduced to 1 minute\nupdate dependencies + changes based on adapter checker",
         "de": "siehe ausgabe #510: leseintervall minimal auf 1 minute reduziert\naktualisierung abhängigkeiten + änderungen basierend auf adapter-checker",
@@ -80,19 +93,6 @@
         "pl": "tłumaczenia",
         "uk": "переклади",
         "zh-cn": "翻译"
-      },
-      "4.4.0": {
-        "en": "migration to admin 5 UI (jsonConfig)",
-        "de": "migration zu admin 5 UI (jsonConfig)",
-        "ru": "admin 5 UI (jsonConfig)",
-        "pt": "migração para administrador 5 UI (jsonConfig)",
-        "nl": "migratie naar admin 5 UI (jsonConfig)",
-        "fr": "migration vers admin 5 UI (jsonConfig)",
-        "it": "migrazione a admin 5 UI (jsonConfig)",
-        "es": "migración a admin 5 UI (jsonConfig)",
-        "pl": "migracja do admin 5 UI (jsonConfig)",
-        "uk": "міграція до адмін 5 UI (jsonConfig)",
-        "zh-cn": "迁移到管理员 5 UI (jsonConfig)"
       }
     },
     "titleLang": {
