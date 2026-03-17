@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "5.0.4",
+    "version": "5.0.5",
     "news": {
+      "5.0.5": {
+        "en": "update dependencies + changes based on adapter checker\n",
+        "de": "aktualisierung abhängigkeiten + änderungen basierend auf adapter-checker\n",
+        "ru": "зависимости обновления + изменения на основе проверки адаптера\n",
+        "pt": "atualizar dependências + alterações com base no verificador de adaptadores\n",
+        "nl": "update afhankelijkheden + wijzigingen op basis van adaptercontrole\n",
+        "fr": "mettre à jour les dépendances + les changements basés sur le vérificateur d'adaptateur\n",
+        "it": "aggiornamento dipendenze + modifiche in base all'adattatore checker\n",
+        "es": "dependencias de actualización + cambios basados en el control de adaptador\n",
+        "pl": "aktualizacja zależności + zmiany w oparciu o sprawdzacz adaptera\n",
+        "uk": "оновлення залежності + зміни на основі перевірки адаптера\n",
+        "zh-cn": "根据适配器检查器更新依赖性+变化\n"
+      },
       "5.0.4": {
         "en": "bug fix sentry",
         "de": "fehlerbehebung gesendet",
@@ -80,19 +93,6 @@
         "pl": "zmiany wymagane przez sprawdzacz adaptera\nzaktualizowane zależności",
         "uk": "зміни, які вимагаються перевіркою адаптера\nоновлені залежності",
         "zh-cn": "适配器检查器要求的更改\n更新依赖关系"
-      },
-      "4.4.1": {
-        "en": "translations",
-        "de": "übersetzungen",
-        "ru": "перевод",
-        "pt": "traduções",
-        "nl": "vertalingen",
-        "fr": "traductions",
-        "it": "traduzioni",
-        "es": "traducciones",
-        "pl": "tłumaczenia",
-        "uk": "переклади",
-        "zh-cn": "翻译"
       }
     },
     "titleLang": {
