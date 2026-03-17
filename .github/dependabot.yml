@@ -1,6 +1,7 @@
 # Dependabot will run on day 12 of each month at 03:28 (Europe/Berlin timezone)
 version: 2
 updates:
+
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
