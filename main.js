@@ -19,9 +19,9 @@ const utils = require("@iobroker/adapter-core");
 //const { json } = require("stream/consumers");
 const SunCalc = require("suncalc2");
 const axios = require("axios");
-const { promisify } = require('util');
-const exec = promisify(require('child_process').exec)
-const os = require('os');
+const { promisify } = require('node:util');
+const exec = promisify(require('node:child_process').exec)
+const os = require('node:os');
 
 //const bluetooth_test = require("./lib/SMA_Bluetooth").test;
 
@@ -447,7 +447,7 @@ async function DB_Connect() {
         } else {
             adapter.log.info("start with sqlite");
 
-            const path = require("path");
+            const path = require("node:path");
 
             const file_path = adapter.config.sqlite_path;
             const dbPath = path.resolve(__dirname, file_path.trim());
