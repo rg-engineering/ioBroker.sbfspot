@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "5.0.5",
+    "version": "5.0.6",
     "news": {
       "5.0.6": {
         "en": " changes based on adapter checker",
@@ -93,19 +93,6 @@
         "pl": "UWAGA zmiana łamania: typ adaptera zmieniony z zaplanowanego na demona\naktualizacji wskazówki dodane do admin\nsugestie z sprawdzania adaptera",
         "uk": "Зміна зміни тенції: тип адаптера змінено з запланованого на дамон\nоновлення натяків додано в адмін\nпропозиції від адаптера",
         "zh-cn": "注意断开更改:适配器类型从预定更改为守护进程\n添加到管理员的更新提示\n来自适配器检查器的建议"
-      },
-      "4.4.2": {
-        "en": "changes requested by adapter checker\ndependencies updated",
-        "de": "änderungen, die von adapter checker angefordert werden\naktualisierte abhängigkeiten",
-        "ru": "изменения, запрошенные adapter checker\nобновленные зависимости",
-        "pt": "alterações solicitadas pelo verificador do adaptador\ndependências atualizadas",
-        "nl": "wijzigingen gevraagd door adaptercontrole\nafhankelijkheden bijgewerkt",
-        "fr": "modifications demandées par l'adaptateur checker\ndépendances mises à jour",
-        "it": "modifiche richieste da adattatore checker\ndipendenze aggiornate",
-        "es": "cambios solicitados por el adaptador\ndependencias actualizadas",
-        "pl": "zmiany wymagane przez sprawdzacz adaptera\nzaktualizowane zależności",
-        "uk": "зміни, які вимагаються перевіркою адаптера\nоновлені залежності",
-        "zh-cn": "适配器检查器要求的更改\n更新依赖关系"
       }
     },
     "titleLang": {

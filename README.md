@@ -58,8 +58,7 @@ in /opt/iobroker/node_modules/iobroker.sbfspot/lib/scripts you can find a script
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 5.0.6 (2026-04-06)
 * (René) changes based on adapter checker
 
 ### 5.0.5 (2026-03-17)
