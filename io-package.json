@@ -3,6 +3,19 @@
     "name": "sbfspot",
     "version": "5.0.5",
     "news": {
+      "5.0.6": {
+        "en": " changes based on adapter checker",
+        "de": " Änderungen auf der Grundlage des Adapter-Checkers",
+        "ru": " изменения на основе проверки адаптера",
+        "pt": " alterações baseadas no verificador de adaptadores",
+        "nl": " wijzigingen op basis van adapterchecker",
+        "fr": " modifications basées sur le vérificateur d'adaptateur",
+        "it": " modifiche basate sul checker dell'adattatore",
+        "es": " cambios basados en el verificador de adaptadores",
+        "pl": " zmiany oparte na narzędziu do sprawdzania adapterów",
+        "uk": " зміни на основі перевірки адаптера",
+        "zh-cn": " changes based on adapter checker"
+      },
       "5.0.5": {
         "en": "update dependencies + changes based on adapter checker\n",
         "de": "aktualisierung abhängigkeiten + änderungen basierend auf adapter-checker\n",
