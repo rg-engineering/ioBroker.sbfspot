@@ -38,7 +38,7 @@
   },
   "main": "main.js",
   "bugs": {
-    "url": "https://github.com/rg-engineering/ioBroker.sbfspot"
+    "url": "https://github.com/rg-engineering/ioBroker.sbfspot/issues"
   },
   "scripts": {
     "test": "npm run test:package",
