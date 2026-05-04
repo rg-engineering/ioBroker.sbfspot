@@ -241,6 +241,8 @@ in /opt/iobroker/node_modules/iobroker.sbfspot/lib/scripts you can find a script
 ### 0.0.1
 * (René) initial release
 
+[Older changelogs can be found there](CHANGELOG_OLD.md)
+
 ## License
 MIT License
 
