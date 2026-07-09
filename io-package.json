@@ -123,7 +123,6 @@
     },
     "platform": "Javascript/Node.js",
     "mode": "daemon",
-    "schedule": "*/15 * * * *",
     "icon": "sbfspot.png",
     "enabled": true,
     "messagebox": true,

@@ -61,6 +61,7 @@ in /opt/iobroker/node_modules/iobroker.sbfspot/lib/scripts you can find a script
 ### **WORK IN PROGRESS**
 * (copilot) Adapter requires node.js >= 22 now
 * (René) update dependencies
+* (René) changes based on adapter checker
 
 ### 5.0.6 (2026-04-06)
 * (René) changes based on adapter checker
