@@ -217,10 +217,30 @@
           ]
         },
         "title": {
-          "en": "type of adapter changed"
+          "en": "type of adapter changed",
+          "de": "Der Adaptertyp wurde geändert",
+          "ru": "тип адаптера изменен",
+          "pt": "tipo de adaptador alterado",
+          "nl": "type adapter gewijzigd",
+          "fr": "type d'adaptateur changé",
+          "it": "tipo di adattatore cambiato",
+          "es": "tipo de adaptador cambiado",
+          "pl": "zmieniono typ adaptera",
+          "uk": "змінений тип адаптера",
+          "zh-cn": "适配器类型已更改"
         },
         "text": {
-          "en": "type of adapter changed to deamon. It might be necessary to create a new instance of adapter."
+          "en": "type of adapter changed to deamon. It might be necessary to create a new instance of adapter.",
+          "de": "Der Adaptertyp wurde in Deamon geändert. Möglicherweise muss eine neue Instanz des Adapters erstellt werden.",
+          "ru": "тип адаптера изменен на daamon. Возможно, потребуется создать новый экземпляр адаптера.",
+          "pt": "tipo de adaptador alterado para deamon. Pode ser necessário criar uma nova instância do adaptador.",
+          "nl": "type adapter gewijzigd in deamon. Het kan nodig zijn om een ​​nieuw exemplaar van de adapter te maken.",
+          "fr": "type d'adaptateur changé en démon. Il peut être nécessaire de créer une nouvelle instance d'adaptateur.",
+          "it": "tipo di adattatore cambiato in demone. Potrebbe essere necessario creare una nuova istanza dell'adattatore.",
+          "es": "tipo de adaptador cambiado a demonio. Puede que sea necesario crear una nueva instancia de adaptador.",
+          "pl": "typ adaptera zmieniony na demon. Może być konieczne utworzenie nowej instancji adaptera.",
+          "uk": "тип адаптера змінено на deamon. Можливо, знадобиться створити новий екземпляр адаптера.",
+          "zh-cn": "适配器类型更改为守护程序。可能需要创建一个新的适配器实例。"
         },
         "level": "warn",
         "buttons": [

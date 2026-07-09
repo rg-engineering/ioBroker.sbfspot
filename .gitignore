@@ -21,3 +21,4 @@ lib/i18n/*/flat.txt
 /lib/SMA_Bluetooth.js
 .commitinfo
 /.vscode/extensions.json
+/.github/copilot-instructions.md

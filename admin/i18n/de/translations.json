@@ -2,14 +2,19 @@
   "Attention": "adapter, sbfspot und Datenbank sollten auf demselben System laufen",
   "GetDataOnlyWhenDaylight": "Daten nur bei Tageslicht abrufen",
   "History4Vis2": "History für VIS-2-Widgets erstellen",
+  "Update hint": "Updatehinweis für SBFspot",
+  "available version": "verfügbare Version",
   "configuration": "Konfiguration",
+  "current installed version": "aktuell installierte Version",
   "install_date": "Installationsdatum der PV-Anlage",
   "install_date_desc": "verwendet für die Berechnung der History in vis Widget",
+  "link to sbfspot wiki with installation instruction": "Link zum SBFspot-Wiki mit Installationsanweisungen",
   "mySQL, MariaDB configuration": "mySQL, MariaDB-Konfiguration",
   "page-mysql": "mySQL / MariaDB",
   "page-sqlite": "SQLite",
   "path_to_DB_file": "Pfad zur SQLite-Datenbankdatei",
   "path_to_DB_file_descr": "geben Sie den kompletten Pfad inkl. Datenbankdateiname an, z.B. /home/pi/sbfspot/smadata/SBFspot.db",
+  "readIntervalsbfspot": "Intervall zum Lesen von Daten aus der SBFspot-Datenbank [min]",
   "sbfspot_DB_IP": "Datenbank-IP",
   "sbfspot_DB_IP_descr": "Sie können \"localhost\" als IP verwenden",
   "sbfspot_DB_databasename": "Datenbank-Name",
@@ -19,14 +24,7 @@
   "sbfspot_DB_user": "Benutzer der Datenbank",
   "sbfspot_adapter_settings": "sbfspot Adapter Einstellungen",
   "sqlite configuration": "SQLite-Konfiguration",
-  "type_of_DB": "Type der Datenbank",
-  "used to calculate statistics": "Wird zur Berechnung statistischer Daten verwendet",
-
-
-  "current installed version": "aktuell installierte Version",
-  "available version": "verfügbare Version",
   "supported version": "derzeit vom Adapter unterstützte Version",
-  "Update hint": "Updatehinweis für SBFspot",
-  "link to sbfspot wiki with installation instruction": "Link zum SBFspot-Wiki mit Installationsanweisungen",
-  "readIntervalsbfspot": "Intervall zum Lesen von Daten aus der SBFspot-Datenbank [min]"
+  "type_of_DB": "Type der Datenbank",
+  "used to calculate statistics": "Wird zur Berechnung statistischer Daten verwendet"
 }
