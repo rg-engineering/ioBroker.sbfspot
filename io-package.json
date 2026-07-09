@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "5.0.6",
+    "version": "5.0.7",
     "news": {
+      "5.0.7": {
+        "en": "Adapter requires node.js >= 22 now\nupdate dependencies\nchanges based on adapter checker",
+        "de": "Der Adapter benötigt jetzt Node.js >= 22.\nAbhängigkeiten aktualisieren\nÄnderungen basierend auf der Adapterprüfung",
+        "ru": "Для работы адаптера требуется Node.js версии >= 22.\nобновить зависимости\nизменения на основе проверки адаптера",
+        "pt": "O adaptador agora requer Node.js >= 22.\natualizar dependências\nalterações com base no verificador de adaptadores",
+        "nl": "De adapter vereist nu Node.js versie 22 of hoger.\nafhankelijkheden bijwerken\nwijzigingen op basis van adaptercontrole",
+        "fr": "L'adaptateur nécessite désormais Node.js >= 22.\nmettre à jour les dépendances\nmodifications basées sur le vérificateur d'adaptateur",
+        "it": "L'adattatore ora richiede Node.js >= 22\naggiornare le dipendenze\nmodifiche basate sul controllo dell'adattatore",
+        "es": "El adaptador ahora requiere node.js >= 22.\nactualizar dependencias\ncambios basados en el verificador del adaptador",
+        "pl": "Adapter wymaga teraz node.js >= 22\naktualizuj zależności\nzmiany oparte na sprawdzaniu adapterów",
+        "uk": "Адаптер тепер вимагає node.js >= 22\nоновити залежності\nзміни на основі перевірки адаптера",
+        "zh-cn": "适配器现在需要 node.js 版本 >= 22。\n更新依赖项\n根据适配器检查器进行更改"
+      },
       "5.0.6": {
         "en": " changes based on adapter checker",
         "de": " Änderungen auf der Grundlage des Adapter-Checkers",
@@ -80,19 +93,6 @@
         "pl": "nowe badania",
         "uk": "новий тест",
         "zh-cn": "新测试"
-      },
-      "5.0.0": {
-        "en": "ATTENTION breaking change: adapter type changed from scheduled to daemon\nupdate hints added to admin\nsuggestions from adapter checker",
-        "de": "ATTENTION Brechwechsel: Adaptertyp geändert von geplant nach Daemon\nupdate-hinweise zu admin hinzugefügt\nvorschläge von adapter checker",
-        "ru": "Изменение типа адаптера: переход с запланированного на демон\nобновление подсказок, добавленных в admin\nпредложения от adapter checker",
-        "pt": "Alteração de ruptura ATTENÇÃO: tipo de adaptador alterado de programado para daemon\natualizar dicas adicionadas ao administrador\nsugestões do verificador do adaptador",
-        "nl": "ATTENTIE break change: adapter type veranderd van gepland naar daemon\nhints aan admin bijwerken\nsuggesties van adaptercontrole",
-        "fr": "Changement de rupture ATTENTION : le type d'adaptateur est passé de programmé à démon\nmise à jour des conseils ajoutés à admin\nsuggestions de l'adaptateur checker",
-        "it": "ATTENZIONE cambio di rottura: tipo adattatore cambiato da programmato a demone\naggiornamento suggerimenti aggiunti a admin\nsuggerimenti da adattatore checker",
-        "es": "Cambio de ruptura de ATTENTION: tipo de adaptador cambiado de programado a daemon\nsugerencias de actualización añadidos a admin\nsugerencias del adaptador",
-        "pl": "UWAGA zmiana łamania: typ adaptera zmieniony z zaplanowanego na demona\naktualizacji wskazówki dodane do admin\nsugestie z sprawdzania adaptera",
-        "uk": "Зміна зміни тенції: тип адаптера змінено з запланованого на дамон\nоновлення натяків додано в адмін\nпропозиції від адаптера",
-        "zh-cn": "注意断开更改:适配器类型从预定更改为守护进程\n添加到管理员的更新提示\n来自适配器检查器的建议"
       }
     },
     "titleLang": {
