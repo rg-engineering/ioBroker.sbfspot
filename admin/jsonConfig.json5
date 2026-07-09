@@ -177,15 +177,15 @@
           "label": "type_of_DB",
           "options": [
             {
-              "label": { "en": "mySQL" },
+              "label": "mySQL" ,
               "value": "mySQL"
             },
             {
-              "label": { "en": "MariaDB" },
+              "label": "MariaDB",
               "value": "MariaDB"
             },
             {
-              "label": { "en": "sqlite" },
+              "label": "sqlite",
               "value": "sqlite"
             }
           ],

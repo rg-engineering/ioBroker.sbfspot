@@ -30,8 +30,8 @@
         "zh-cn": "根据适配器检查器更新依赖性+变化\n"
       },
       "5.0.4": {
-        "en": "bug fix sentry",
-        "de": "fehlerbehebung gesendet",
+        "en": "bug fix based on sentry",
+        "de": "Fehlerbehebung basierend auf Sentry",
         "ru": "исправлять ошибки",
         "pt": "corrigir o erro sentinela",
         "nl": "bug repareren wacht",
@@ -64,9 +64,9 @@
         "fr": "(René) mettre à jour les dépendances + les changements basés sur adaptateur checker",
         "it": "(René) aggiornamento dipendenze + modifiche in base all'adattatore checker",
         "es": "(René) dependencias de actualización + cambios basados en el control de adaptador",
-        "pl": "(René) update dependences + changes based on adapter checker",
         "uk": "(René) оновлення залежності + зміни на основі перевірки адаптера",
-        "zh-cn": "(René) 基于适配器检查器更新依赖性+变化"
+        "zh-cn": "(René) 基于适配器检查器更新依赖性+变化",
+        "pl": "(René) aktualizacja zależności + zmiany w oparciu o moduł sprawdzania adaptera"
       },
       "5.0.1": {
         "en": "new testing",

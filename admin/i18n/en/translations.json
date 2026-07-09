@@ -28,5 +28,9 @@
   "supported version": "supported version",
   "Update hint": "update hint",
   "link to sbfspot wiki with installation instruction": "link to SBFspot wiki with installation instruction",
-  "readIntervalsbfspot": "interval to read data from SBFspot database [min]"
+  "readIntervalsbfspot": "interval to read data from SBFspot database [min]",
+
+  "mySQL": "mySQL",
+  "MariaDB": "MariaDB",
+  "sqlite": "sqlite"
 }
