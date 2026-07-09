@@ -125,7 +125,7 @@ async function main() {
         readInterval = adapter.config.readInterval;
     }
     adapter.log.debug("read every  " + readInterval + " minutes");
-    intervalID = this.setInterval(Do, readInterval * 60 * 1000);
+    intervalID = adapter.setInterval(Do, readInterval * 60 * 1000);
 
 
     //read at adapterstart
