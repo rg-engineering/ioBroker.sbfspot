@@ -50,7 +50,8 @@
     "lint": "eslint",
     "translate": "translate-adapter",
     "release": "release-script",
-    "npm": "npm i"
+    "npm": "npm i",
+    "build": ""
   },
   "files": [
     "admin/",
