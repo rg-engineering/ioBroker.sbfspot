@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "5.0.8",
+    "version": "5.0.9",
     "news": {
+      "5.0.9": {
+        "en": "update dependencies",
+        "de": "Abhängigkeiten updaten",
+        "ru": "обновить зависимости",
+        "pt": "atualizar dependências",
+        "nl": "afhankelijkheden bijwerken",
+        "fr": "mettre à jour les dépendances",
+        "it": "aggiorna dipendenze",
+        "es": "actualizar dependencias",
+        "pl": "aktualizuj zależności",
+        "uk": "оновлення залежностей",
+        "zh-cn": "更新依赖关系"
+      },
       "5.0.8": {
         "en": "update dependencies",
         "de": "Abhängigkeiten updaten",
@@ -80,19 +93,6 @@
         "pl": "zob. numer # 510: minimalny przedział odczytu zredukowany do 1 minuty\naktualizacja zależności + zmiany w oparciu o sprawdzacz adaptera",
         "uk": "див. питання #510: інтервал читання мінімум скорочений до 1 хвилину\nоновлення залежності + зміни на основі перевірки адаптера",
         "zh-cn": "参见第510期:读取间隔最小减为1分钟\n根据适配器检查器更新依赖性+变化"
-      },
-      "5.0.2": {
-        "en": "(René) update dependencies + changes based on adapter checker",
-        "de": "(René) aktualisieren Abhängigkeiten + Änderungen basierend auf Adapter-Checker",
-        "ru": "Зависимости обновления + изменения на основе проверки адаптера",
-        "pt": "(René) atualizar dependências + alterações com base no verificador do adaptador",
-        "nl": "(René) update afhankelijkheden + wijzigingen op basis van adaptercontrole",
-        "fr": "(René) mettre à jour les dépendances + les changements basés sur adaptateur checker",
-        "it": "(René) aggiornamento dipendenze + modifiche in base all'adattatore checker",
-        "es": "(René) dependencias de actualización + cambios basados en el control de adaptador",
-        "uk": "(René) оновлення залежності + зміни на основі перевірки адаптера",
-        "zh-cn": "(René) 基于适配器检查器更新依赖性+变化",
-        "pl": "(René) aktualizacja zależności + zmiany w oparciu o moduł sprawdzania adaptera"
       }
     },
     "titleLang": {
