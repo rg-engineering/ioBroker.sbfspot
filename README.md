@@ -58,6 +58,10 @@ in /opt/iobroker/node_modules/iobroker.sbfspot/lib/scripts you can find a script
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
+
+### **WORK IN PROGRESS**
+* (René) update dependencies
+
 ### 5.0.7 (2026-07-09)
 * (copilot) Adapter requires node.js >= 22 now
 * (René) update dependencies
