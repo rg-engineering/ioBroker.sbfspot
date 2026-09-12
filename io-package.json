@@ -1,8 +1,21 @@
 {
   "common": {
     "name": "sbfspot",
-    "version": "5.0.7",
+    "version": "5.0.8",
     "news": {
+      "5.0.8": {
+        "en": "update dependencies",
+        "de": "Abhängigkeiten updaten",
+        "ru": "обновить зависимости",
+        "pt": "atualizar dependências",
+        "nl": "afhankelijkheden bijwerken",
+        "fr": "mettre à jour les dépendances",
+        "it": "aggiorna dipendenze",
+        "es": "actualizar dependencias",
+        "pl": "aktualizuj zależności",
+        "uk": "оновлення залежностей",
+        "zh-cn": "更新依赖关系"
+      },
       "5.0.7": {
         "en": "Adapter requires node.js >= 22 now\nupdate dependencies\nchanges based on adapter checker",
         "de": "Der Adapter benötigt jetzt Node.js >= 22.\nAbhängigkeiten aktualisieren\nÄnderungen basierend auf der Adapterprüfung",
@@ -80,19 +93,6 @@
         "uk": "(René) оновлення залежності + зміни на основі перевірки адаптера",
         "zh-cn": "(René) 基于适配器检查器更新依赖性+变化",
         "pl": "(René) aktualizacja zależności + zmiany w oparciu o moduł sprawdzania adaptera"
-      },
-      "5.0.1": {
-        "en": "new testing",
-        "de": "neue tests",
-        "ru": "новые испытания",
-        "pt": "novos testes",
-        "nl": "nieuwe tests",
-        "fr": "nouveaux essais",
-        "it": "nuovi test",
-        "es": "nuevas pruebas",
-        "pl": "nowe badania",
-        "uk": "новий тест",
-        "zh-cn": "新测试"
       }
     },
     "titleLang": {

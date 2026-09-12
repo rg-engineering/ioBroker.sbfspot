@@ -1,4 +1,8 @@
 # Older changes
+## 5.0.3 (2025-10-21)
+* (René) see issue #510: read interval minimum reduced to 1 minute
+* (René) update dependencies + changes based on adapter checker
+
 ## 5.0.2 (2025-10-04)
 * (René) update dependencies + changes based on adapter checker
 

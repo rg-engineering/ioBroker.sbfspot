@@ -58,8 +58,7 @@ in /opt/iobroker/node_modules/iobroker.sbfspot/lib/scripts you can find a script
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 5.0.8 (2026-09-12)
 * (René) update dependencies
 
 ### 5.0.7 (2026-07-09)
@@ -75,10 +74,6 @@ in /opt/iobroker/node_modules/iobroker.sbfspot/lib/scripts you can find a script
 
 ### 5.0.4 (2025-10-26)
 * (René) bug fix sentry
-
-### 5.0.3 (2025-10-21)
-* (René) see issue #510: read interval minimum reduced to 1 minute
-* (René) update dependencies + changes based on adapter checker
 
 [Older changelogs can be found there](CHANGELOG_OLD.md)
 
