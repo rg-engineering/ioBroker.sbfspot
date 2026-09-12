@@ -58,8 +58,7 @@ in /opt/iobroker/node_modules/iobroker.sbfspot/lib/scripts you can find a script
   Placeholder for the next version (at the beginning of the line):
   ### **WORK IN PROGRESS**
 -->
-
-### **WORK IN PROGRESS**
+### 5.0.10 (2026-09-12)
 * (René) downgrade of better-sql due to known issues especially in Windows environments
 
 ### 5.0.9 (2026-09-12)
@@ -75,10 +74,6 @@ in /opt/iobroker/node_modules/iobroker.sbfspot/lib/scripts you can find a script
 
 ### 5.0.5 (2026-03-17)
 * (René) update dependencies + changes based on adapter checker
-
-### 5.0.4 (2025-10-26)
-* (René) bug fix sentry
-
 
 [Older changelogs can be found there](CHANGELOG_OLD.md)
 
